@@ -1,0 +1,34 @@
+[
+  {
+    "filename": "foi.jpg",
+    "description": "Image représentant la foi - une personne en prière",
+    "source": "https://unsplash.com/photos/grayscale-photo-of-man-praying-uSzwsZH7-O0",
+    "credit": "Ben White sur Unsplash",
+    "alt_text": "Personne en prière, mains jointes devant une Bible ouverte",
+    "theme": "Foi"
+  },
+  {
+    "filename": "grace.jpg",
+    "description": "Image représentant la grâce - une croix au coucher du soleil",
+    "source": "https://unsplash.com/photos/silhouette-of-cross-during-golden-hour-32J_OhfG1yE",
+    "credit": "Aaron Burden sur Unsplash",
+    "alt_text": "Croix illuminée par les rayons du soleil symbolisant la grâce divine",
+    "theme": "Grâce"
+  },
+  {
+    "filename": "evangile.jpg",
+    "description": "Image représentant l'évangile - une Bible ouverte",
+    "source": "https://unsplash.com/photos/white-book-page-RVX2HqNHLik",
+    "credit": "Aaron Burden sur Unsplash",
+    "alt_text": "Bible ouverte sur une table en bois, illuminée par une lumière douce",
+    "theme": "Évangile"
+  },
+  {
+    "filename": "esperance.jpg",
+    "description": "Image représentant l'espérance - un lever de soleil sur la montagne",
+    "source": "https://unsplash.com/photos/sunrise-over-mountains-xCKS6dAZ0lk",
+    "credit": "Greg Rakozy sur Unsplash",
+    "alt_text": "Lever de soleil majestueux sur des montagnes symbolisant l'espérance chrétienne",
+    "theme": "Espérance"
+  }
+] 

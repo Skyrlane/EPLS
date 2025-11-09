@@ -1,0 +1,23 @@
+[
+  {
+    "filename": "communaute.jpg",
+    "description": "Photo de la communauté de l'église réunie pour un moment de partage",
+    "source": "https://unsplash.com/photos/people-sitting-on-chairs-inside-room-7I4xJGiGUqA",
+    "credit": "John Price sur Unsplash",
+    "alt_text": "Communauté chrétienne réunie en cercle lors d'une étude biblique"
+  },
+  {
+    "filename": "bible-etude.jpg",
+    "description": "Photo d'une Bible ouverte avec des notes d'étude",
+    "source": "https://unsplash.com/photos/person-writing-on-white-paper-beside-book-YrCVN_MKy1w",
+    "credit": "Wyron A sur Unsplash",
+    "alt_text": "Bible ouverte avec cahier de notes et crayon lors d'une étude biblique"
+  },
+  {
+    "filename": "culte-louange.jpg",
+    "description": "Moment de louange lors d'un culte",
+    "source": "https://unsplash.com/photos/a-group-of-people-standing-in-front-of-a-crowd-YpiTb2L60QY",
+    "credit": "Kelvin Octa sur Unsplash",
+    "alt_text": "Groupe de louange dirigeant un temps d'adoration lors du culte dominical"
+  }
+] 

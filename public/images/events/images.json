@@ -1,0 +1,23 @@
+[
+  {
+    "filename": "culte.jpg",
+    "description": "Photo d'un culte dominical",
+    "source": "https://unsplash.com/photos/group-of-people-sitting-near-table-with-foods-dQWRO45hMK4",
+    "credit": "Priscilla Du Preez sur Unsplash",
+    "alt_text": "Communauté rassemblée dans une église lors d'un culte dominical"
+  },
+  {
+    "filename": "etude-biblique.jpg",
+    "description": "Photo d'un groupe d'étude biblique",
+    "source": "https://unsplash.com/photos/a-group-of-people-sitting-at-a-table-with-laptops-4YmvZO2YIBk",
+    "credit": "Alexis Brown sur Unsplash",
+    "alt_text": "Groupe de personnes étudiant la Bible ensemble autour d'une table"
+  },
+  {
+    "filename": "priere.jpg",
+    "description": "Moment de prière communautaire",
+    "source": "https://unsplash.com/photos/three-woman-sitting-inside-room-LFx5nZtbU4I",
+    "credit": "Rosie Sun sur Unsplash",
+    "alt_text": "Groupe de personnes en prière, mains jointes"
+  }
+] 

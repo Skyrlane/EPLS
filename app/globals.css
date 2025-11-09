@@ -1,0 +1,981 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    @apply scroll-smooth transition-colors duration-300;
+  }
+  
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+  
+  /* Styles pour les transitions du mode sombre/clair */
+  main, header, footer, section, article, nav, aside, div {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+  
+  /* Styles de typographie améliorés */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold leading-tight tracking-tight;
+  }
+
+  /* Standardisation des marges et des tailles pour les éléments de texte */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl mb-6 mt-8;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl mb-5 mt-8;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl mb-4 mt-6;
+  }
+  
+  h4 {
+    @apply text-xl md:text-2xl mb-3 mt-5;
+  }
+  
+  h5 {
+    @apply text-lg md:text-xl mb-2 mt-4;
+  }
+  
+  h6 {
+    @apply text-base md:text-lg mb-2 mt-3;
+  }
+  
+  p {
+    @apply mb-4 leading-relaxed;
+  }
+  
+  section {
+    @apply py-12 md:py-16;
+  }
+  
+  /* Palette de couleurs - Mode clair */
+  :root {
+    /* Couleurs de base */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    
+    /* Couleurs des cartes */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    
+    /* Couleurs des popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    
+    /* Couleur primaire - Bleu église */
+    --primary: 217 91% 48%;
+    --primary-foreground: 210 40% 98%;
+    
+    /* Couleur secondaire - Ocre doux */
+    --secondary: 39 70% 75%;
+    --secondary-foreground: 222 47% 11%;
+    
+    /* Couleurs atténuées */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    
+    /* Couleurs d'accent */
+    --accent: 217 60% 90%;
+    --accent-foreground: 222 47% 11%;
+    
+    /* Couleurs d'alerte */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    
+    /* Couleurs d'interface */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 48%;
+    
+    /* Arrondi */
+    --radius: 0.5rem;
+  }
+  
+  /* Palette de couleurs - Mode sombre */
+  .dark {
+    /* Couleurs de base */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    
+    /* Couleurs des cartes */
+    --card: 222 47% 13%;
+    --card-foreground: 210 40% 98%;
+    
+    /* Couleurs des popover */
+    --popover: 222 47% 13%;
+    --popover-foreground: 210 40% 98%;
+    
+    /* Couleur primaire - Bleu église plus lumineux */
+    --primary: 217 91% 75%;
+    --primary-foreground: 210 40% 98%;
+    
+    /* Couleur secondaire - Ocre adapté au mode sombre */
+    --secondary: 39 80% 60%;
+    --secondary-foreground: 210 40% 98%;
+    
+    /* Couleurs atténuées */
+    --muted: 217 33% 25%;
+    --muted-foreground: 215 30% 90%;
+    
+    /* Couleurs d'accent */
+    --accent: 217 33% 30%;
+    --accent-foreground: 210 40% 98%;
+    
+    /* Couleurs d'alerte */
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 210 40% 98%;
+    
+    /* Couleurs d'interface */
+    --border: 217 33% 30%;
+    --input: 217 33% 30%;
+    --ring: 217 91% 75%;
+  }
+  
+  /* Amélioration du rendu des images en mode sombre */
+  .dark img:not([src*=".svg"]) {
+    @apply brightness-90 saturate-[1.05];
+  }
+  
+  /* Amélioration du rendu des éléments de code en mode sombre */
+  .dark pre, .dark code {
+    @apply bg-accent border border-border;
+  }
+}
+
+/* Amélioration des styles pour les liens et boutons */
+@layer base {
+  a {
+    @apply text-primary transition-colors duration-200 relative outline-none;
+  }
+  
+  a:hover {
+    @apply text-primary/80;
+  }
+  
+  /* Animation de soulignement pour les liens */
+  a:not(.btn):not([role="button"]):not(.no-underline):after {
+    @apply content-[''] absolute left-0 -bottom-[2px] h-[1px] w-0 bg-primary transition-all duration-300;
+  }
+  
+  a:not(.btn):not([role="button"]):not(.no-underline):hover:after {
+    @apply w-full;
+  }
+
+  /* Focus visible amélioré pour l'accessibilité */
+  a:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background rounded-sm;
+  }
+
+  button,
+  [role="button"] {
+    @apply transition-all duration-200 outline-none;
+  }
+  
+  /* États interactifs des boutons */
+  button:not(:disabled):hover,
+  [role="button"]:not(:disabled):hover {
+    @apply transform scale-[1.02] shadow-md;
+  }
+  
+  button:not(:disabled):active,
+  [role="button"]:not(:disabled):active {
+    @apply transform scale-[0.98] shadow-none;
+  }
+  
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+  
+  /* Style pour éléments désactivés */
+  button:disabled,
+  [role="button"]:disabled {
+    @apply opacity-60 cursor-not-allowed;
+  }
+  
+  /* Styles pour assurer un texte blanc sur fond bleu en mode sombre */
+  .dark .btn-primary,
+  .dark button[class*="bg-blue-"],
+  .dark [role="button"][class*="bg-blue-"] {
+    color: white;
+  }
+}
+
+/* Animation du changement de thème */
+.theme-transition * {
+  @apply transition-colors duration-300 ease-in-out;
+}
+
+/* Correction du contraste pour les boutons en mode sombre */
+.dark button[class*="bg-blue-"],
+.dark [role="button"][class*="bg-blue-"],
+.dark .btn-primary {
+  color: white;
+}
+
+/* Effet de focus amélioré */
+:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background rounded-sm;
+}
+
+/* Styles personnalisés pour les boutons */
+.btn {
+  @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background shadow-sm transition-all duration-200;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary/90 hover:text-white active:scale-[0.98] px-4 py-2;
+}
+
+.btn-outline {
+  @apply border-2 border-primary text-primary hover:bg-primary/10 active:scale-[0.98] px-4 py-2;
+}
+
+.btn-secondary {
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 active:scale-[0.98] px-4 py-2;
+}
+
+.btn-outline-secondary {
+  @apply border-2 border-input bg-background hover:bg-accent hover:text-accent-foreground active:scale-[0.98] px-4 py-2;
+}
+
+.btn-ghost {
+  @apply bg-transparent hover:bg-accent text-foreground hover:text-accent-foreground active:scale-[0.98] px-4 py-2;
+}
+
+/* Accessibilité */
+.skip-to-content {
+  @apply absolute left-0 -top-full p-2 bg-primary text-white focus:top-0 z-50 transition-all;
+}
+
+/* Navigation */
+.breadcrumbs {
+  @apply flex flex-wrap items-center space-x-1 text-sm;
+}
+
+/* Animation au survol pour les cards */
+.card-hover {
+  @apply transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01];
+}
+
+/* Animation pour le bouton en bas à droite */
+.floating-button {
+  @apply fixed bottom-6 right-6 z-50 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-110 active:scale-95;
+}
+
+/* Style pour améliorer le contraste des badges */
+.badge {
+  @apply font-medium transition-colors duration-200;
+}
+
+/* Animation pour le chargement */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Styles pour les tableaux */
+table {
+  @apply w-full border-collapse;
+}
+
+thead {
+  @apply bg-muted;
+}
+
+th {
+  @apply py-3 px-4 text-left font-semibold text-foreground border-b border-border;
+}
+
+td {
+  @apply py-2 px-4 border-b border-border;
+}
+
+tbody tr {
+  @apply hover:bg-muted/50 transition-colors;
+}
+
+/* Styles pour la sélection de texte */
+::selection {
+  @apply bg-primary/30 text-foreground;
+}
+
+.dark ::selection {
+  @apply bg-primary/40 text-foreground;
+}
+
+/* Styles spécifiques pour la cohérence générale du site */
+.section-spacing {
+  @apply py-12 md:py-16;
+}
+
+.section-spacing-sm {
+  @apply py-8 md:py-10;
+}
+
+.content-container {
+  @apply container mx-auto px-4 md:px-6;
+}
+
+.page-header {
+  @apply bg-slate-100 dark:bg-slate-800 py-8 md:py-12 mb-8;
+}
+
+/* Style pour les espacements verticaux cohérents */
+.vertical-rhythm > * + * {
+  @apply mt-6;
+}
+
+.vertical-rhythm > h2 {
+  @apply mt-10;
+}
+
+.vertical-rhythm > h3 {
+  @apply mt-8;
+}
+
+/* Grilles cohérentes */
+.grid-cols-auto-fit {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+/* Styles pour la prose (texte riche) */
+.prose {
+  @apply max-w-none;
+}
+
+.prose h1, 
+.prose h2, 
+.prose h3, 
+.prose h4, 
+.prose h5, 
+.prose h6 {
+  @apply text-foreground font-bold mb-4 mt-6;
+}
+
+.prose h1 {
+  @apply text-3xl md:text-4xl;
+}
+
+.prose h2 {
+  @apply text-2xl md:text-3xl border-b pb-2 border-border;
+}
+
+.prose h3 {
+  @apply text-xl md:text-2xl;
+}
+
+.prose p, 
+.prose ul, 
+.prose ol {
+  @apply mb-4 leading-relaxed;
+}
+
+.prose ul {
+  @apply list-disc pl-8;
+}
+
+.prose ol {
+  @apply list-decimal pl-8;
+}
+
+.prose li {
+  @apply mb-1;
+}
+
+.prose a {
+  @apply text-primary;
+}
+
+.prose a:hover {
+  @apply text-primary/80;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary/30 pl-4 italic text-muted-foreground my-6;
+}
+
+.prose img {
+  @apply my-8 rounded-md overflow-hidden max-w-full h-auto mx-auto;
+}
+
+.prose code {
+  @apply px-1.5 py-0.5 rounded bg-muted text-foreground font-mono text-sm;
+}
+
+.prose pre {
+  @apply p-4 rounded-md overflow-x-auto bg-muted border border-border my-6;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-sm block;
+}
+
+.prose table {
+  @apply w-full my-6;
+}
+
+.prose hr {
+  @apply border-border my-8;
+}
+
+/* Dark mode customizations for prose */
+.dark .prose {
+  @apply text-gray-100;
+}
+
+.dark .prose blockquote {
+  @apply border-primary/40 text-foreground/90;
+}
+
+.dark .prose code {
+  @apply bg-accent text-accent-foreground;
+}
+
+.dark .prose pre {
+  @apply bg-accent border-border;
+}
+
+/* Améliorations spécifiques pour le contraste en mode sombre */
+.dark .text-muted-foreground {
+  @apply text-opacity-95 text-gray-200;
+}
+
+.dark a.text-muted-foreground:hover {
+  @apply text-opacity-100 text-gray-100;
+}
+
+/* Correction des classes text-gray-600 en mode sombre */
+.dark .text-gray-600 {
+  @apply text-gray-200;
+}
+
+/* Amélioration des classes text-gray-500 en mode sombre */
+.dark .text-gray-500 {
+  @apply text-gray-300;
+}
+
+/* Correction des éléments bg-slate-50 en mode sombre */
+.dark .bg-slate-50 {
+  @apply bg-slate-800 text-gray-100 border border-slate-700;
+}
+
+/* Correction bg-white en mode sombre */
+.dark .bg-white {
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* Renforcement de la visibilité des informations bancaires en mode sombre */
+.dark div[class*="bg-slate-50"] p {
+  @apply text-gray-100;
+}
+
+.dark div[class*="bg-slate-50"] p.font-medium {
+  @apply text-white font-semibold;
+}
+
+/* Amélioration du contraste pour les badges */
+.dark .badge, .dark span[class*="text-gray"] {
+  @apply text-gray-200;
+}
+
+/* Ajustements pour les tableaux en mode sombre */
+.dark table {
+  @apply border-slate-700;
+}
+
+.dark thead {
+  @apply bg-slate-800;
+}
+
+.dark th {
+  @apply text-gray-100 border-slate-700;
+}
+
+.dark td {
+  @apply border-slate-700 text-gray-200;
+}
+
+.dark tbody tr:hover {
+  @apply bg-slate-800/70;
+}
+
+/* Styles spécifiques pour la navigation */
+.dark header.bg-background {
+  @apply bg-slate-900 border-slate-800;
+}
+
+.dark nav a:not(.text-primary) {
+  @apply text-gray-100;
+}
+
+.dark nav a:hover:not(.text-primary) {
+  @apply text-primary/80;
+}
+
+/* Correction pour les éléments de formulaire en mode sombre */
+.dark input, 
+.dark textarea, 
+.dark select {
+  @apply bg-slate-800 border-slate-700 text-gray-100;
+}
+
+.dark input::placeholder, 
+.dark textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* Amélioration supplémentaire du contraste pour les textes en mode sombre */
+.dark .prose {
+  @apply text-gray-100;
+}
+
+/* Amélioration des contrastes pour les textes des boutons */
+.dark .btn,
+.dark button:not(.text-primary) {
+  @apply text-gray-100 border-gray-600;
+}
+
+/* Correction des liens dans les cartes et sections */
+.dark a:not(.btn):not([role="button"]) {
+  @apply text-primary hover:text-primary/80;
+}
+
+/* Amélioration des liens discrets en pied de page */
+.dark footer a:not(.text-primary) {
+  @apply text-gray-300 hover:text-primary/90;
+}
+
+/* Améliorer la lisibilité des paragraphes dans les sections sombres */
+.dark section p {
+  @apply text-gray-200;
+}
+
+/* Amélioration des badge et étiquettes */
+.dark .badge {
+  @apply border-gray-700;
+}
+
+/* Améliorer le contraste des sous-titres et légendes */
+.dark .text-sm.text-gray-500,
+.dark .text-xs.text-gray-500 {
+  @apply text-gray-300;
+}
+
+/* Contraste amélioré pour les infobulles et popups */
+.dark div[role="tooltip"],
+.dark div[role="dialog"] {
+  @apply text-gray-200 border-gray-700;
+}
+
+/* Amélioration des badges de thème en mode sombre */
+.dark .badge[class*="bg-blue-100"] {
+  @apply bg-blue-900 text-blue-100 border-blue-800;
+}
+
+.dark .badge[class*="bg-purple-100"] {
+  @apply bg-purple-900 text-purple-100 border-purple-800;
+}
+
+.dark .badge[class*="bg-red-100"] {
+  @apply bg-red-900 text-red-100 border-red-800;
+}
+
+.dark .badge[class*="bg-green-100"] {
+  @apply bg-green-900 text-green-100 border-green-800;
+}
+
+.dark .badge[class*="bg-yellow-100"] {
+  @apply bg-yellow-900 text-yellow-100 border-yellow-800;
+}
+
+.dark .badge[class*="bg-pink-100"] {
+  @apply bg-pink-900 text-pink-100 border-pink-800;
+}
+
+.dark .badge[class*="bg-indigo-100"] {
+  @apply bg-indigo-900 text-indigo-100 border-indigo-800;
+}
+
+.dark .badge[class*="bg-teal-100"] {
+  @apply bg-teal-900 text-teal-100 border-teal-800;
+}
+
+.dark .badge[class*="bg-gray-100"] {
+  @apply bg-gray-800 text-gray-100 border-gray-700;
+}
+
+/* Amélioration du contraste des arrière-plans bleus et sections spéciales en mode sombre */
+.dark [class*="bg-blue-"] {
+  @apply text-white;
+}
+
+/* Section "Rejoignez notre communauté" avec bg-blue-* */
+.dark div[style*="background-color"][style*="rgb(59, 130, 246)"],
+.dark div[style*="background-color"][style*="rgb(96, 165, 250)"],
+.dark div[style*="background-color"][style*="rgb(147, 197, 253)"] {
+  @apply bg-blue-900 text-white;
+}
+
+/* Boutons transparents sur fond bleu */
+.dark div[style*="background-color"][style*="rgb(59, 130, 246)"] button,
+.dark div[style*="background-color"][style*="rgb(96, 165, 250)"] button,
+.dark div[style*="background-color"][style*="rgb(147, 197, 253)"] button {
+  @apply bg-slate-800/90 hover:bg-slate-800 text-white border-white/20;
+}
+
+/* En-têtes de section sur fond bleu en mode sombre */
+.dark div[style*="background-color"][style*="rgb(59, 130, 246)"] h1,
+.dark div[style*="background-color"][style*="rgb(96, 165, 250)"] h1,
+.dark div[style*="background-color"][style*="rgb(147, 197, 253)"] h1,
+.dark div[style*="background-color"][style*="rgb(59, 130, 246)"] h2,
+.dark div[style*="background-color"][style*="rgb(96, 165, 250)"] h2,
+.dark div[style*="background-color"][style*="rgb(147, 197, 253)"] h2 {
+  @apply text-white font-bold;
+}
+
+/* Texte dans les sections sur fond bleu en mode sombre */
+.dark div[style*="background-color"][style*="rgb(59, 130, 246)"] p,
+.dark div[style*="background-color"][style*="rgb(96, 165, 250)"] p,
+.dark div[style*="background-color"][style*="rgb(147, 197, 253)"] p {
+  @apply text-gray-100;
+}
+
+/* Correction pour les boutons bg-white et les boutons avec fond bleu clair en mode sombre */
+.dark button.bg-white,
+.dark a.bg-white {
+  @apply bg-slate-800 text-white border-slate-700 hover:bg-slate-700;
+}
+
+/* Correction spécifique pour les boutons avec fond bleu clair */
+.dark button.bg-blue-100,
+.dark a.bg-blue-100,
+.dark button.bg-blue-200,
+.dark a.bg-blue-200,
+.dark button.bg-blue-300,
+.dark a.bg-blue-300,
+.dark button.bg-blue-400,
+.dark a.bg-blue-400,
+.dark button.bg-blue-500,
+.dark a.bg-blue-500,
+.dark button.bg-blue-600,
+.dark a.bg-blue-600,
+.dark button.bg-blue-700,
+.dark a.bg-blue-700 {
+  @apply bg-blue-800 text-white border-blue-700;
+}
+
+/* Correction pour les boutons sur les sections avec fond bleu */
+div[style*="background-color:rgb(96, 165, 250)"] button[class*="bg-white"],
+div[style*="background-color:rgb(147, 197, 253)"] button[class*="bg-white"] {
+  @apply text-blue-800 hover:text-blue-900;
+}
+
+/* Correction pour les boutons sur les sections avec fond bleu en mode sombre */
+.dark div[style*="background-color:rgb(96, 165, 250)"] button[class*="bg-white"],
+.dark div[style*="background-color:rgb(147, 197, 253)"] button[class*="bg-white"],
+.dark button.bg-white[class*="text-blue"] {
+  @apply bg-slate-800 text-white hover:bg-slate-700 border-slate-700;
+}
+
+/* Correction générale pour tous les éléments avec un fond bleu clair en mode sombre */
+.dark [class*="bg-blue-100"],
+.dark [class*="bg-blue-200"],
+.dark [class*="bg-blue-300"],
+.dark [class*="bg-blue-400"] {
+  @apply bg-blue-800 text-white border-blue-700;
+}
+
+/* Correction des boutons bleus spécifiques à la page d'accueil */
+.dark button.bg-blue-600,
+.dark a.bg-blue-600,
+.dark [class*="bg-blue-600"] {
+  @apply bg-blue-800 text-white;
+}
+
+/* S'assurer que tous les boutons sur fond bleu ont un texte lisible */
+.dark button[class*="bg-blue-"],
+.dark a[class*="bg-blue-"] {
+  @apply text-white;
+}
+
+/* Correction pour les boutons à fond blanc sur fonds colorés en mode sombre */
+.dark div[class*="bg-blue"] button.bg-white,
+.dark div[class*="bg-blue"] a.bg-white,
+.dark div.bg-blue-400 button,
+.dark div.bg-blue-400 a[class*="bg-white"] {
+  color: white !important;
+  background-color: rgb(30 41 59) !important; /* slate-800 */
+  border-color: rgb(51 65 85) !important; /* slate-700 */
+}
+
+/* Renforcement de la règle pour les boutons de navigation claire sur fonds sombres */
+.dark button[class*="bg-white"],
+.dark a[class*="bg-white"] {
+  color: white !important;
+  background-color: rgb(30 41 59) !important; /* slate-800 */
+  border-color: rgb(51 65 85) !important; /* slate-700 */
+}
+
+/* Force les styles pour les boutons dans les sections call to action */
+.dark section.bg-primary button,
+.dark div.bg-blue-400 button {
+  color: white;
+  background-color: rgb(30 41 59); /* slate-800 */
+  border-color: rgb(51 65 85); /* slate-700 */
+}
+
+/* Amélioration des en-têtes de page */
+.dark div.bg-slate-100 {
+  @apply bg-slate-800;
+}
+
+/* Amélioration des états de survol des liens */
+.dark a:hover:not(.text-primary):not([role="button"]) {
+  @apply text-gray-100;
+}
+
+/* Amélioration des cartes et éléments partout sur le site */
+.dark .card:not([class*="bg-slate-900"]):not([class*="border-slate-800"]) {
+  @apply border-slate-800 bg-slate-900 text-slate-100;
+}
+
+/* Renforcement du contraste du texte gris en mode sombre */
+.dark .text-gray-500 {
+  @apply text-gray-300;
+}
+
+.dark .text-gray-600,
+.dark .text-gray-700 {
+  @apply text-gray-200;
+}
+
+/* Amélioration des tooltips et popups */
+.dark [role="tooltip"],
+.dark [data-radix-popper-content-wrapper] > div {
+  @apply bg-slate-800 border-slate-700 text-gray-100 shadow-lg shadow-black/20;
+}
+
+/* Correction des bordures de champs de formulaire */
+.dark input,
+.dark textarea,
+.dark select {
+  @apply border-slate-700 bg-slate-800/80;
+}
+
+/* Amélioration du contraste des descriptions et étiquettes de formulaire */
+.dark label {
+  @apply text-gray-200;
+}
+
+.dark .form-description,
+.dark [id*="description"] {
+  @apply text-gray-300;
+}
+
+/* Correction des boutons sur fond bleu en mode sombre */
+.dark div.bg-blue-400 button,
+.dark div.bg-blue-500 button,
+.dark div.bg-blue-600 button {
+  @apply bg-slate-800 text-white border-slate-700 hover:bg-slate-700;
+}
+
+/* Amélioration des separateurs et diviseurs */
+.dark hr,
+.dark div[role="separator"] {
+  @apply border-slate-700;
+}
+
+/* Amélioration de la visibilité des icônes et pictogrammes */
+.dark svg:not([class*="text-"]) {
+  @apply text-gray-200;
+}
+
+/* Amélioration du contraste pour les éléments désactivés */
+.dark [disabled],
+.dark [aria-disabled="true"] {
+  @apply opacity-60;
+  color: #9ca3af;
+}
+
+/* Correction de la ligne problématique */
+.dark nav[aria-label="Fil d'Ariane"] span,
+.dark nav[aria-label="Breadcrumb"] span {
+  color: #94a3b8; /* équivalent à text-slate-400 */
+}
+
+/* S'assurer qu'en mode sombre, tout élément avec un background #85B2F9 a un texte blanc */
+.dark [style*="background-color:#85B2F9"],
+.dark [style*="background-color: #85B2F9"],
+.dark [style*="background-color: rgb(133, 178, 249)"],
+.dark [style*="background-color:rgb(133, 178, 249)"],
+.dark [style*="background:#85B2F9"],
+.dark [style*="background: #85B2F9"] {
+  color: white !important;
+}
+
+/* S'assurer que les textes dans les boutons avec cette couleur sont toujours blancs */
+.dark [style*="background-color:#85B2F9"] *,
+.dark [style*="background-color: #85B2F9"] *,
+.dark [style*="background-color: rgb(133, 178, 249)"] *,
+.dark [style*="background-color:rgb(133, 178, 249)"] *,
+.dark [style*="background:#85B2F9"] *,
+.dark [style*="background: #85B2F9"] * {
+  color: white !important;
+}
+
+/* Correction renforcée pour les boutons bleu clair en mode sombre */
+.dark .bg-blue-100,
+.dark .bg-blue-200,
+.dark .bg-blue-300,
+.dark .bg-blue-400,
+.dark .bg-blue-500,
+.dark .bg-blue-600,
+.dark .bg-primary,
+.dark .btn-primary,
+.dark [class*="bg-blue-"] {
+  color: white !important;
+}
+
+.dark .bg-blue-100 *,
+.dark .bg-blue-200 *,
+.dark .bg-blue-300 *,
+.dark .bg-blue-400 *,
+.dark .bg-blue-500 *,
+.dark .bg-blue-600 *,
+.dark .bg-primary *,
+.dark [class*="bg-blue-"] * {
+  color: white !important;
+}
+
+/* Force le texte blanc pour les boutons spécifiques */
+.dark button.bg-primary span,
+.dark button.bg-primary svg,
+.dark a.bg-primary span,
+.dark a.bg-primary svg,
+.dark .btn-primary span,
+.dark .btn-primary svg {
+  color: white !important;
+}
+
+/* Force aussi le texte blanc sur tout ce qui se trouve après :is() */
+.dark :is(button, a, div)[class*="bg-blue"] *,
+.dark :is(button, a, div).bg-primary * {
+  color: white !important;
+}
+
+/* Solution spécifique pour les boutons de navigation */
+.dark header button,
+.dark header a.bg-primary,
+.dark header a[class*="bg-blue"],
+.dark nav button.bg-primary,
+.dark nav a.bg-primary,
+.dark header button.bg-primary,
+.dark header [role="button"].bg-primary,
+.dark nav button[class*="bg-blue"],
+.dark nav a[class*="bg-blue"] {
+  color: white !important;
+}
+
+.dark header button *,
+.dark header a.bg-primary *,
+.dark header a[class*="bg-blue"] *,
+.dark nav button.bg-primary *,
+.dark nav a.bg-primary *,
+.dark header button.bg-primary *,
+.dark header [role="button"].bg-primary *,
+.dark nav button[class*="bg-blue"] *,
+.dark nav a[class*="bg-blue"] * {
+  color: white !important;
+}
+
+/* Solution radicale pour tous les boutons */
+.dark button.bg-\[#85B2F9\],
+.dark a.bg-\[#85B2F9\],
+.dark .bg-\[#85B2F9\],
+.dark [style*="background-color: #85B2F9"],
+.dark [style*="background: #85B2F9"] {
+  color: white !important;
+}
+
+.dark button.bg-\[#85B2F9\] *,
+.dark a.bg-\[#85B2F9\] *,
+.dark .bg-\[#85B2F9\] *,
+.dark [style*="background-color: #85B2F9"] *,
+.dark [style*="background: #85B2F9"] * {
+  color: white !important;
+}
+
+/* Correction spécifique pour l'étiquette Espérance */
+.dark [class*="bg-green-"] {
+  color: white !important;
+}
+
+.dark [class*="bg-green-"] * {
+  color: white !important;
+}
+
+.dark span[class*="bg-green-800"],
+.dark span[class*="bg-green-900"],
+.dark span[class*="bg-green-950"],
+.dark [class*="badge"][class*="bg-green"] {
+  background-color: rgb(5 46 22) !important; /* green-950 */
+  color: rgb(134 239 172) !important; /* green-300 */
+  font-weight: 600 !important;
+  border: 1px solid rgb(34 197 94) !important; /* green-500 */
+  text-shadow: 0 1px 1px rgba(0,0,0,0.7) !important;
+}
+
+/* Sélecteur spécifique basé sur l'ordre des éléments pour cibler l'étiquette Espérance */
+.dark .overflow-hidden .flex .p-6 .flex .badge {
+  background-color: rgb(5 46 22) !important; /* green-950 */
+  color: rgb(134 239 172) !important; /* green-300 */
+  font-weight: 600 !important;
+  border: 1px solid rgb(34 197 94) !important; /* green-500 */
+  text-shadow: 0 1px 1px rgba(0,0,0,0.7) !important;
+}
+
+/* Force le style sur l'étiquette Espérance spécifiquement */
+.dark span:contains("Espérance"),
+.dark div:contains("Espérance") > span,
+.dark badge:contains("Espérance") {
+  background-color: rgb(5 46 22) !important; /* green-950 */
+  color: rgb(134 239 172) !important; /* green-300 */
+  font-weight: 600 !important;
+  border: 1px solid rgb(34 197 94) !important; /* green-500 */
+  text-shadow: 0 1px 1px rgba(0,0,0,0.7) !important;
+  padding: 0.25rem 0.75rem !important;
+}
+
+/* Style très spécifique pour le badge Espérance en utilisant l'attribut data-theme */
+.dark [data-theme="Espérance"] {
+  background-color: rgb(4, 36, 17) !important; /* vert très foncé */
+  color: rgb(187, 247, 208) !important; /* green-200 - vert très clair */
+  font-weight: 700 !important;
+  border: 2px solid rgb(34, 197, 94) !important; /* green-500 */
+  text-shadow: 0 1px 1px rgb(0, 0, 0) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  letter-spacing: 0.02em !important;
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+} 

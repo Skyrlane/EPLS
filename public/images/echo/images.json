@@ -1,0 +1,34 @@
+[
+  {
+    "filename": "echo-avril.jpg",
+    "description": "Couverture du bulletin Echo - Avril 2024",
+    "source": "https://unsplash.com/photos/selective-focus-photography-of-pink-cherry-blossoms-8l9VxXI28Vw",
+    "credit": "Aaron Burden sur Unsplash",
+    "alt_text": "Fleurs de printemps symbolisant le renouveau pascal pour le bulletin d'avril",
+    "edition": "Avril 2024"
+  },
+  {
+    "filename": "echo-mars.jpg", 
+    "description": "Couverture du bulletin Echo - Mars 2024",
+    "source": "https://unsplash.com/photos/brown-cross-on-brown-wooden-surface-eRGvmEMvqHs",
+    "credit": "Aaron Burden sur Unsplash",
+    "alt_text": "Croix en bois pour le bulletin de mars, période de Carême",
+    "edition": "Mars 2024"
+  },
+  {
+    "filename": "echo-fevrier.jpg",
+    "description": "Couverture du bulletin Echo - Février 2024",
+    "source": "https://unsplash.com/photos/open-bible-beside-two-pens-WvXUfVMUFJ8",
+    "credit": "Taylor Wilcox sur Unsplash", 
+    "alt_text": "Bible ouverte et stylos pour le bulletin de février sur le thème de l'étude biblique",
+    "edition": "Février 2024"
+  },
+  {
+    "filename": "echo-janvier.jpg",
+    "description": "Couverture du bulletin Echo - Janvier 2024",
+    "source": "https://unsplash.com/photos/blur-bokeh-bright-celebration-234273",
+    "credit": "Toni Cuenca sur Unsplash",
+    "alt_text": "Lumières scintillantes symbolisant le début d'année pour le bulletin de janvier",
+    "edition": "Janvier 2024"
+  }
+] 

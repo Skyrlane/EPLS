@@ -1,0 +1,42 @@
+[
+  {
+    "filename": "communaute.jpg",
+    "description": "Une communauté diverse et unie",
+    "source": "https://unsplash.com/photos/group-of-people-raising-their-hands-x1w_Q78xb1U", 
+    "credit": "Robert Nyman sur Unsplash",
+    "alt_text": "Groupe de personnes diverses unies dans un moment de communion fraternelle",
+    "valeur": "Fraternité"
+  },
+  {
+    "filename": "enseignement.jpg",
+    "description": "L'importance de l'enseignement biblique",
+    "source": "https://unsplash.com/photos/group-of-people-sitting-inside-room-with-tables-and-chairs-sYhUhse5uT8",
+    "credit": "Nathan Dumlao sur Unsplash",
+    "alt_text": "Groupe d'étude biblique autour d'une table avec des Bibles ouvertes",
+    "valeur": "Enseignement"
+  },
+  {
+    "filename": "service.jpg",
+    "description": "Le service et l'entraide",
+    "source": "https://unsplash.com/photos/group-of-people-Ty4f_NOFO60",
+    "credit": "Rémi Walle sur Unsplash",
+    "alt_text": "Personnes travaillant ensemble à un projet d'entraide communautaire",
+    "valeur": "Service"
+  },
+  {
+    "filename": "priere.jpg",
+    "description": "L'importance de la prière",
+    "source": "https://unsplash.com/photos/man-leaning-on-table-praying-2MxEYTu5uCo",
+    "credit": "Olivia Snow sur Unsplash",
+    "alt_text": "Groupe de personnes en cercle, têtes baissées dans un moment de prière",
+    "valeur": "Prière"
+  },
+  {
+    "filename": "mission.jpg",
+    "description": "L'engagement missionnaire",
+    "source": "https://unsplash.com/photos/group-of-people-walking-on-road-during-daytime-M0OxHrhiTHw",
+    "credit": "Clay Banks sur Unsplash",
+    "alt_text": "Groupe en marche symbolisant l'engagement missionnaire de l'église",
+    "valeur": "Mission"
+  }
+] 
