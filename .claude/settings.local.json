@@ -9,7 +9,14 @@
       "Bash(mkdir:*)",
       "Bash(npm test:*)",
       "mcp__serena__read_file",
-      "mcp__serena__replace_regex"
+      "mcp__serena__replace_regex",
+      "Bash(powershell -Command:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\Users\\Samuel\\Documents\\Perso\\EPLS Dev Website\\template-2\\check-encoding.ps1\")",
+      "Bash(npm run build:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"C:\\Users\\Samuel\\Documents\\Perso\\EPLS Dev Website\\template-2\\convert-to-utf8.ps1\")",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
