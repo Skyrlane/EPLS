@@ -36,3 +36,10 @@ yarn-error.log*
 next-env.d.ts
 
 .env
+
+# Serena
+.serena/
+
+# Keep claude.md (on veut le versionner)
+!claude.md
+nul

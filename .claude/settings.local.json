@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(uv:*)",
+      "Bash(claude mcp add:*)",
+      "Bash(claude mcp list:*)",
+      "Bash(nul)",
+      "Bash(mkdir:*)",
+      "Bash(npm test:*)",
+      "mcp__serena__read_file",
+      "mcp__serena__replace_regex"
     ],
     "deny": [],
     "ask": []
