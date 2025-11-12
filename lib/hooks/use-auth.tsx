@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, createContext, useContext, ReactNode } from "react";
+import { useEffect, useState, createContext, useContext, ReactNode, useMemo, useSyncExternalStore } from "react";
 import { 
   User, 
   Auth, 
@@ -17,6 +17,7 @@ import {
 } from "firebase/auth";
 import { auth, MockAuthInterface } from "../firebase";
 import { useToast } from "@/hooks/use-toast";
+import { authState } from "../auth-state";
 
 // Interface pour le contexte d'authentification
 interface AuthContextType {
@@ -36,39 +37,66 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [, forceUpdate] = useState(0);
   const { toast } = useToast();
   
   // Déterminer si l'instance auth est Auth ou MockAuthInterface
   const authInstance = auth as Auth | MockAuthInterface;
   
   useEffect(() => {
+
+    // Timeout de sécurité : si Firebase ne répond pas après 3 secondes, on arrête le loading
+    const timeoutId = setTimeout(() => {
+      authState.setLoading(false);
+      setLoading(false);
+    }, 3000);
+
     // Écouter les changements d'état de l'authentification
     let unsubscribe: Unsubscribe;
-    
-    if ('onAuthStateChanged' in authInstance) {
-      // Pour le mock
-      unsubscribe = authInstance.onAuthStateChanged((user) => {
-        if (user) {
-          setUser(user);
-        } else {
-          setUser(null);
-        }
-        setLoading(false);
-      });
-    } else {
-      // Pour l'authentification Firebase réelle
-      unsubscribe = onAuthStateChanged(authInstance, (user) => {
-        if (user) {
-          setUser(user);
-        } else {
-          setUser(null);
-        }
-        setLoading(false);
-      });
+
+    try {
+      // Vérifier si c'est le mock (pas de propriété 'app') ou la vraie instance Firebase (a 'app')
+      const isMock = !('app' in authInstance);
+
+      if (isMock) {
+        // Pour le mock
+        unsubscribe = (authInstance as MockAuthInterface).onAuthStateChanged((user) => {
+          clearTimeout(timeoutId);
+          authState.setUser(user);
+          authState.setLoading(false);
+          if (user) {
+            setUser(user);
+          } else {
+            setUser(null);
+          }
+          setLoading(false);
+        });
+      } else {
+        // Pour l'authentification Firebase réelle
+        unsubscribe = onAuthStateChanged(authInstance as Auth, (user) => {
+          clearTimeout(timeoutId);
+          authState.setUser(user);
+          authState.setLoading(false);
+          if (user) {
+            setUser(user);
+          } else {
+            setUser(null);
+          }
+          setLoading(false);
+        });
+      }
+    } catch (error) {
+      clearTimeout(timeoutId);
+      setLoading(false);
     }
 
     // Nettoyer l'écouteur au démontage
-    return () => unsubscribe();
+    return () => {
+      clearTimeout(timeoutId);
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, []);
 
   /**
@@ -244,15 +272,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const value: AuthContextType = {
-    user,
-    loading,
-    login,
-    logout,
-    register,
-    resetPassword,
-    updateDisplayName,
-  };
+  const value: AuthContextType = useMemo(() => {
+    return {
+      user,
+      loading,
+      login,
+      logout,
+      register,
+      resetPassword,
+      updateDisplayName,
+    };
+  }, [user, loading]); // IMPORTANT : Dépendances explicites pour forcer le re-render
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
@@ -262,9 +292,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
  * @returns Le contexte d'authentification
  */
 export function useAuth(): AuthContextType {
+  // Utiliser useSyncExternalStore pour se synchroniser avec le store global
+  const globalUser = useSyncExternalStore(
+    (callback) => {
+      return authState.subscribe((user, loading) => {
+        callback();
+      });
+    },
+    () => {
+      return authState.getUser();
+    }
+  );
+  const globalLoading = useSyncExternalStore(
+    (callback) => {
+      return authState.subscribe(() => callback());
+    },
+    () => {
+      return authState.isLoading();
+    }
+  );
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error("useAuth doit être utilisé à l'intérieur d'un AuthProvider");
   }
-  return context;
+
+  // Retourner le state global au lieu du Context (évite les problèmes de synchronisation)
+  return {
+    ...context,
+    user: globalUser,
+    loading: globalLoading,
+  };
 } 

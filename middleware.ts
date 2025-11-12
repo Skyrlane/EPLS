@@ -32,13 +32,22 @@ export async function middleware(request: NextRequest) {
   
   // Ajouter des en-têtes de sécurité à toutes les réponses
   const response = NextResponse.next();
-  
+
   // Empêcher le clickjacking
   response.headers.set("X-Frame-Options", "DENY");
   // Empêcher le sniffing de MIME
   response.headers.set("X-Content-Type-Options", "nosniff");
-  // Empêcher le XSS
-  response.headers.set("Content-Security-Policy", "frame-ancestors 'none'; default-src 'self'; script-src 'self' 'unsafe-inline' https://apis.google.com; connect-src 'self' https://*.firebase.app https://*.firebaseio.com; img-src 'self' data: https://*.googleusercontent.com;");
+
+  // Content Security Policy - En développement, on autorise 'unsafe-eval' pour le hot reloading
+  const scriptSrc = isDevelopmentMode
+    ? "'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com"
+    : "'self' 'unsafe-inline' https://apis.google.com";
+
+  response.headers.set(
+    "Content-Security-Policy",
+    `frame-ancestors 'none'; default-src 'self'; script-src ${scriptSrc}; connect-src 'self' https://*.firebase.app https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com; img-src 'self' data: https://*.googleusercontent.com https://*.firebasestorage.app;`
+  );
+
   // Empêcher la mise en cache des informations sensibles
   response.headers.set("Cache-Control", "no-store, max-age=0");
   // Strict Transport Security
