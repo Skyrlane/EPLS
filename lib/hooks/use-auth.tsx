@@ -301,6 +301,10 @@ export function useAuth(): AuthContextType {
     },
     () => {
       return authState.getUser();
+    },
+    () => {
+      // getServerSnapshot pour SSR : retourne null côté serveur
+      return null;
     }
   );
   const globalLoading = useSyncExternalStore(
@@ -309,6 +313,10 @@ export function useAuth(): AuthContextType {
     },
     () => {
       return authState.isLoading();
+    },
+    () => {
+      // getServerSnapshot pour SSR : retourne true côté serveur (en chargement)
+      return true;
     }
   );
   const context = useContext(AuthContext);
