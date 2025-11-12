@@ -24,7 +24,7 @@ import {
 import { Loader2 } from 'lucide-react';
 import { doc, updateDoc, Timestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 
 interface AnnouncementEditModalProps {
   announcement: Announcement | null;
@@ -48,6 +48,7 @@ export function AnnouncementEditModal({
   onClose,
   onSaved
 }: AnnouncementEditModalProps) {
+  const { toast } = useToast();
   const [isSaving, setIsSaving] = useState(false);
 
   // Formulaire
@@ -92,15 +93,15 @@ export function AnnouncementEditModal({
 
     // Validation basique
     if (!title.trim()) {
-      toast.error('Le titre est requis');
+      toast({ title: "Erreur", description: 'Le titre est requis', variant: "destructive" });
       return;
     }
     if (!date) {
-      toast.error('La date est requise');
+      toast({ title: "Erreur", description: 'La date est requise', variant: "destructive" });
       return;
     }
     if (!time.trim()) {
-      toast.error('L\'heure est requise');
+      toast({ title: "Erreur", description: 'L\'heure est requise', variant: "destructive" });
       return;
     }
 
@@ -150,12 +151,12 @@ export function AnnouncementEditModal({
       const docRef = doc(firestore, 'announcements', announcement.id);
       await updateDoc(docRef, updateData);
 
-      toast.success('Annonce mise à jour avec succès');
+      toast({ title: "Succès", description: 'Annonce mise à jour avec succès' });
       onSaved();
       onClose();
     } catch (error) {
       console.error('Erreur sauvegarde:', error);
-      toast.error('Erreur lors de la sauvegarde');
+      toast({ title: "Erreur", description: 'Erreur lors de la sauvegarde', variant: "destructive" });
     } finally {
       setIsSaving(false);
     }

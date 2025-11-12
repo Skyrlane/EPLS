@@ -13,7 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Loader2, Upload, CheckCircle2, AlertCircle, Calendar, MapPin, Tag } from 'lucide-react';
 import { collection, addDoc, updateDoc, doc, Timestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 import { formatAnnouncementDate } from '@/lib/announcements-utils';
 
 interface AnnouncementImporterProps {
@@ -31,6 +31,7 @@ export function AnnouncementImporter({
   existingAnnouncements,
   onImportComplete
 }: AnnouncementImporterProps) {
+  const { toast } = useToast();
   const [htmlContent, setHtmlContent] = useState('');
   const [parsedAnnouncements, setParsedAnnouncements] = useState<ParsedWithSelection[]>([]);
   const [isParsing, setIsParsing] = useState(false);
@@ -39,7 +40,7 @@ export function AnnouncementImporter({
   // Parser le HTML
   const handleParse = () => {
     if (!htmlContent.trim()) {
-      toast.error('Veuillez coller du HTML à parser');
+      toast({ title: "Erreur", description: 'Veuillez coller du HTML à parser', variant: "destructive" });
       return;
     }
 
@@ -49,7 +50,7 @@ export function AnnouncementImporter({
       const parsed = parseAnnouncementsHTML(htmlContent);
 
       if (parsed.length === 0) {
-        toast.error('Aucune annonce trouvée dans le HTML');
+        toast({ title: "Erreur", description: 'Aucune annonce trouvée dans le HTML', variant: "destructive" });
         setIsParsing(false);
         return;
       }
@@ -75,10 +76,10 @@ export function AnnouncementImporter({
       ];
 
       setParsedAnnouncements(withSelection);
-      toast.success(`${parsed.length} annonce(s) détectée(s)`);
+      toast({ title: "Succès", description: `${parsed.length} annonce(s) détectée(s)` });
     } catch (error) {
       console.error('Erreur parsing:', error);
-      toast.error('Erreur lors du parsing du HTML');
+      toast({ title: "Erreur", description: 'Erreur lors du parsing du HTML', variant: "destructive" });
     } finally {
       setIsParsing(false);
     }
@@ -96,7 +97,7 @@ export function AnnouncementImporter({
     const selected = parsedAnnouncements.filter(a => a.selected);
 
     if (selected.length === 0) {
-      toast.error('Veuillez sélectionner au moins une annonce');
+      toast({ title: "Erreur", description: 'Veuillez sélectionner au moins une annonce', variant: "destructive" });
       return;
     }
 
@@ -147,13 +148,13 @@ export function AnnouncementImporter({
 
       // Feedback
       if (addedCount > 0) {
-        toast.success(`✅ ${addedCount} annonce(s) ajoutée(s)`);
+        toast({ title: "Succès", description: `${addedCount} annonce(s) ajoutée(s)` });
       }
       if (updatedCount > 0) {
-        toast.success(`🔄 ${updatedCount} annonce(s) mise(s) à jour`);
+        toast({ title: "Succès", description: `${updatedCount} annonce(s) mise(s) à jour` });
       }
       if (errorCount > 0) {
-        toast.error(`❌ ${errorCount} erreur(s)`);
+        toast({ title: "Erreur", description: `${errorCount} erreur(s)`, variant: "destructive" });
       }
 
       // Reset
@@ -162,7 +163,7 @@ export function AnnouncementImporter({
       onImportComplete();
     } catch (error) {
       console.error('Erreur import:', error);
-      toast.error('Erreur lors de l\'import');
+      toast({ title: "Erreur", description: 'Erreur lors de l\'import', variant: "destructive" });
     } finally {
       setIsImporting(false);
     }

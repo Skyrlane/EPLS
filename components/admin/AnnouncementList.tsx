@@ -36,7 +36,7 @@ import {
 } from 'lucide-react';
 import { doc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 
 interface AnnouncementListProps {
   announcements: Announcement[];
@@ -49,6 +49,7 @@ export function AnnouncementList({
   onEdit,
   onRefresh
 }: AnnouncementListProps) {
+  const { toast } = useToast();
   const [showExpired, setShowExpired] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [archiveAllConfirm, setArchiveAllConfirm] = useState(false);
@@ -91,11 +92,11 @@ export function AnnouncementList({
       const { addDoc, collection } = await import('firebase/firestore');
       await addDoc(collection(firestore, 'announcements'), docData);
 
-      toast.success('Annonce dupliquée avec succès');
+      toast({ title: "Succès", description: 'Annonce dupliquée avec succès' });
       onRefresh();
     } catch (error) {
       console.error('Erreur duplication:', error);
-      toast.error('Erreur lors de la duplication');
+      toast({ title: "Erreur", description: 'Erreur lors de la duplication', variant: "destructive" });
     }
   };
 
@@ -108,15 +109,16 @@ export function AnnouncementList({
         updatedAt: Timestamp.now()
       });
 
-      toast.success(
-        announcement.isActive
+      toast({
+        title: "Succès",
+        description: announcement.isActive
           ? 'Annonce désactivée'
           : 'Annonce réactivée'
-      );
+      });
       onRefresh();
     } catch (error) {
       console.error('Erreur toggle active:', error);
-      toast.error('Erreur lors de la modification');
+      toast({ title: "Erreur", description: 'Erreur lors de la modification', variant: "destructive" });
     }
   };
 
@@ -129,15 +131,16 @@ export function AnnouncementList({
         updatedAt: Timestamp.now()
       });
 
-      toast.success(
-        announcement.isPinned
+      toast({
+        title: "Succès",
+        description: announcement.isPinned
           ? 'Annonce désépinglée'
           : 'Annonce épinglée'
-      );
+      });
       onRefresh();
     } catch (error) {
       console.error('Erreur toggle pin:', error);
-      toast.error('Erreur lors de la modification');
+      toast({ title: "Erreur", description: 'Erreur lors de la modification', variant: "destructive" });
     }
   };
 
@@ -147,11 +150,11 @@ export function AnnouncementList({
       const docRef = doc(firestore, 'announcements', id);
       await deleteDoc(docRef);
 
-      toast.success('Annonce supprimée');
+      toast({ title: "Succès", description: 'Annonce supprimée' });
       onRefresh();
     } catch (error) {
       console.error('Erreur suppression:', error);
-      toast.error('Erreur lors de la suppression');
+      toast({ title: "Erreur", description: 'Erreur lors de la suppression', variant: "destructive" });
     } finally {
       setDeleteConfirm(null);
     }
@@ -170,11 +173,11 @@ export function AnnouncementList({
         });
       }
 
-      toast.success(`${expiredAnnouncements.length} annonce(s) archivée(s)`);
+      toast({ title: "Succès", description: `${expiredAnnouncements.length} annonce(s) archivée(s)` });
       onRefresh();
     } catch (error) {
       console.error('Erreur archivage:', error);
-      toast.error('Erreur lors de l\'archivage');
+      toast({ title: "Erreur", description: 'Erreur lors de l\'archivage', variant: "destructive" });
     } finally {
       setArchiveAllConfirm(false);
     }

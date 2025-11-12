@@ -6,7 +6,7 @@ import { firestore } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 import { AnnouncementImporter } from '@/components/admin/AnnouncementImporter';
 import { AnnouncementList } from '@/components/admin/AnnouncementList';
 import type { Announcement } from '@/lib/announcements-utils';
@@ -18,6 +18,7 @@ export default function AdminAnnoncesPage() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
   const { user, loading: authLoading } = useAuth();
+  const { toast } = useToast();
   const router = useRouter();
 
   // Rediriger si non connecté
@@ -65,7 +66,7 @@ export default function AdminAnnoncesPage() {
       setAnnouncements(loadedAnnouncements);
     } catch (error) {
       console.error('Erreur lors du chargement des annonces:', error);
-      toast.error('Erreur lors du chargement des annonces');
+      toast({ title: "Erreur", description: '$1', variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -86,7 +87,7 @@ export default function AdminAnnoncesPage() {
         });
       }
 
-      toast.success(`${importedCount} annonce(s) importée(s) avec succès`);
+      toast({ title: "Succès", description: `$1` });
       await loadAnnouncements();
     } catch (error) {
       console.error('Erreur lors de l\'importation:', error);
@@ -98,22 +99,22 @@ export default function AdminAnnoncesPage() {
     try {
       const docRef = doc(firestore, 'announcements', id);
       await updateDoc(docRef, updates as any);
-      toast.success('Annonce mise à jour');
+      toast({ title: "Succès", description: '$1' });
       await loadAnnouncements();
     } catch (error) {
       console.error('Erreur lors de la mise à jour:', error);
-      toast.error('Erreur lors de la mise à jour');
+      toast({ title: "Erreur", description: '$1', variant: "destructive" });
     }
   };
 
   const handleDelete = async (id: string) => {
     try {
       await deleteDoc(doc(firestore, 'announcements', id));
-      toast.success('Annonce supprimée');
+      toast({ title: "Succès", description: '$1' });
       await loadAnnouncements();
     } catch (error) {
       console.error('Erreur lors de la suppression:', error);
-      toast.error('Erreur lors de la suppression');
+      toast({ title: "Erreur", description: '$1', variant: "destructive" });
     }
   };
 
@@ -130,7 +131,7 @@ export default function AdminAnnoncesPage() {
         });
       }
 
-      toast.success(`${expiredAnnouncements.length} annonce(s) archivée(s)`);
+      toast({ title: "Succès", description: `$1` });
       await loadAnnouncements();
     } catch (error) {
       console.error('Erreur lors de l\'archivage:', error);
