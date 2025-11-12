@@ -71,16 +71,8 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
 
   // Gestion de la soumission du formulaire
   const handleSubmit = async (values: LoginFormValues) => {
-    console.log('🔵 LoginForm.handleSubmit appelé avec:', { email: values.email });
-    console.log('🔵 Firebase auth:', typeof auth, 'app' in auth ? 'Auth réel' : 'Mock Auth');
-    console.log('🔵 Env vars:', {
-      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? 'PRÉSENT' : 'MANQUANT',
-      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ? 'PRÉSENT' : 'MANQUANT',
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? 'PRÉSENT' : 'MANQUANT'
-    });
     clearErrors();
     setErrorMessage(null);
-    console.log('🔵 Validation et nettoyage des erreurs effectués');
     setIsLoading(true);
 
     try {
@@ -96,19 +88,13 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
         await onLogin(values);
       } else {
         // Connexion Firebase directe
-        console.log('🔵 Appel de signInWithEmailAndPassword...');
         const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
-        console.log('🔵 signInWithEmailAndPassword réussi');
         const user = userCredential.user;
         
-        console.log('✅ Connexion réussie:', user.uid);
-
         // Attendre que onAuthStateChanged confirme l'utilisateur
-        console.log('🔵 Attente confirmation onAuthStateChanged...');
         await new Promise<void>((resolve) => {
           const unsubscribe = auth.onAuthStateChanged((authUser) => {
             if (authUser) {
-              console.log('✅ onAuthStateChanged confirmé:', authUser.uid);
               unsubscribe();
               resolve();
             }
@@ -116,14 +102,12 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
           
           // Timeout de sécurité : si pas de confirmation après 5s, on redirige quand même
           setTimeout(() => {
-            console.warn('⏱️ Timeout onAuthStateChanged, redirection forcée');
             unsubscribe();
             resolve();
           }, 5000);
         });
 
         // Redirection avec router (pas de rechargement complet)
-        console.log('🚀 Redirection vers:', callbackUrl);
         router.push(callbackUrl);
       }
     } catch (error: any) {

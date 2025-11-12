@@ -79,8 +79,6 @@ const events = [
 export default function MembresPage() {
   const { user, loading } = useAuth()
   const { toast } = useToast()
-
-  console.log('🔍 MembresPage - État auth:', { user: user?.email, loading })
   const router = useRouter()
   const [searchMembers, setSearchMembers] = useState("")
   const [searchDocuments, setSearchDocuments] = useState("")
@@ -91,7 +89,6 @@ export default function MembresPage() {
     // Cela évite la redirection immédiate après connexion
     const timer = setTimeout(() => {
       if (!loading && !user) {
-        console.log('🔴 Redirection vers /connexion car user non détecté');
         router.push("/connexion")
       }
     }, 1000); // Délai de 1 seconde

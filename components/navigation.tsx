@@ -26,8 +26,6 @@ export default function Navigation() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
 
-  console.log('🔝 Navigation - État auth:', { user: user?.email, hasUser: !!user });
-
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
