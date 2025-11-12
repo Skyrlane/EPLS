@@ -1,11 +1,12 @@
 "use client"
 
-import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore'
+import { firestore } from '@/lib/firebase'
+import type { Announcement } from '@/types'
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, Clock, MapPin, AlertCircle } from "lucide-react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import { ChevronLeft, ChevronRight, Clock, MapPin, AlertCircle, Euro } from "lucide-react"
 import {
   Tooltip,
   TooltipContent,
@@ -17,136 +18,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { importantNotices } from "@/lib/data/notices"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
-import { SectionContainer } from "@/components/ui/section-container"
+import { AnnouncementCard } from "@/components/announcements/announcement-card"
+import { timestampToDate, formatEventDate } from '@/lib/date-helpers'
 
-// Ajout des événements spéciaux correspondant aux annonces importantes
-const specialEvents = [
-  {
-    id: "assemblee-generale-2025",
-    title: "Assemblée Générale ordinaire",
-    date: "2025-03-16", // au format YYYY-MM-DD pour la cohérence
-    time: "16:00",
-    location: "Temple de l'EPLS",
-    description: "Tous les membres sont invités à participer à notre Assemblée Générale annuelle pour faire le point sur la vie de l'église.",
-    type: "reunion"
-  },
-  {
-    id: "formation-evangelisation",
-    title: "Formation au partage de la foi",
-    date: "2025-04-05",
-    time: "14:30 - 17:00",
-    location: "Salle paroissiale",
-    description: "Session de formation pratique pour apprendre à partager sa foi au quotidien.",
-    type: "formation"
-  },
-  {
-    id: "collecte-alimentaire",
-    title: "Collecte alimentaire pour les étudiants",
-    date: "2025-04-01", // Premier jour du mois pour représenter "tout le mois"
-    time: "Tout le mois",
-    location: "Temple de l'EPLS",
-    description: "Apportez des denrées non périssables pour aider les étudiants en difficulté.",
-    type: "solidarite"
-  }
-]
-
-const events = [
-  {
-    id: 1,
-    title: "Culte dominical",
-    date: "2023-06-04",
-    time: "10:30",
-    location: "Temple de l'EPLS",
-    description: "Culte dominical avec Sainte Cène",
-    type: "culte"
-  },
-  {
-    id: 2,
-    title: "Étude biblique",
-    date: "2023-06-07",
-    time: "19:00",
-    location: "Salle paroissiale",
-    description: "Étude du livre des Actes, chapitre 4",
-    type: "etude"
-  },
-  {
-    id: 3,
-    title: "Catéchisme",
-    date: "2023-06-10",
-    time: "14:00",
-    location: "Salle paroissiale",
-    description: "Leçon sur les Sacrements",
-    type: "jeunesse"
-  },
-  {
-    id: 4,
-    title: "Culte dominical",
-    date: "2023-06-11",
-    time: "10:30",
-    location: "Temple de l'EPLS",
-    description: "Culte dominical avec baptême",
-    type: "culte"
-  },
-  {
-    id: 5,
-    title: "Conseil presbytéral",
-    date: "2023-06-13",
-    time: "19:30",
-    location: "Bureau pastoral",
-    description: "Réunion mensuelle du conseil",
-    type: "reunion"
-  },
-  {
-    id: 6,
-    title: "Groupe de prière",
-    date: "2023-06-14",
-    time: "18:30",
-    location: "Chapelle",
-    description: "Intercession pour les besoins de l'église et du monde",
-    type: "priere"
-  },
-  {
-    id: 7,
-    title: "Culte dominical",
-    date: "2023-06-18",
-    time: "10:30",
-    location: "Temple de l'EPLS",
-    description: "Culte dominical avec Sainte Cène",
-    type: "culte"
-  },
-  {
-    id: 8,
-    title: "Formation des anciens",
-    date: "2023-06-21",
-    time: "19:00",
-    location: "Salle paroissiale",
-    description: "Formation sur le leadership serviteur",
-    type: "formation"
-  },
-  {
-    id: 9,
-    title: "Culte dominical",
-    date: "2023-06-25",
-    time: "10:30",
-    location: "Temple de l'EPLS",
-    description: "Culte dominical festif de fin d'année scolaire",
-    type: "culte"
-  },
-  {
-    id: 10,
-    title: "Repas communautaire",
-    date: "2023-06-25",
-    time: "12:30",
-    location: "Jardin de l'église",
-    description: "Repas partagé et temps de communion fraternelle",
-    type: "communaute"
-  }
-]
+// Les événements sont maintenant récupérés depuis Firestore
 
 // Composant pour afficher les détails d'un événement dans une bulle
-const EventPreview = ({ event }: { event: typeof events[0] }) => {
+const EventPreview = ({ event }: { event: Announcement }) => {
   return (
     <div className="space-y-1 max-w-[250px]">
       <div className="font-semibold">{event.title}</div>
@@ -156,36 +41,11 @@ const EventPreview = ({ event }: { event: typeof events[0] }) => {
       </div>
       <div className="text-xs text-muted-foreground flex items-center">
         <MapPin className="h-3 w-3 mr-1" />
-        {event.location}
+        {event.location.name}
       </div>
     </div>
   );
 };
-
-// Cette fonction va chercher un événement par son id
-function getEventById(id: number) {
-  return events.find(event => event.id === id)
-}
-
-// Fonction pour filtrer les événements par mois et année
-function getEventsForMonth(year: number, month: number) {
-  return events.filter(event => {
-    const eventDate = new Date(event.date)
-    return eventDate.getFullYear() === year && eventDate.getMonth() === month
-  })
-}
-
-// Fonction pour obtenir les événements pour un jour donné
-function getEventsForDay(year: number, month: number, day: number) {
-  return events.filter(event => {
-    const eventDate = new Date(event.date)
-    return (
-      eventDate.getFullYear() === year && 
-      eventDate.getMonth() === month && 
-      eventDate.getDate() === day
-    )
-  })
-}
 
 // Fonction pour vérifier si une date correspond à aujourd'hui
 function isToday(year: number, month: number, day: number): boolean {
@@ -197,40 +57,107 @@ function isToday(year: number, month: number, day: number): boolean {
   );
 }
 
-export default function Calendrier({ searchParams }: { searchParams: { eventId?: string } }) {
+export default function Calendrier() {
   // État pour suivre le mois et l'année actuels
   const [currentDate, setCurrentDate] = useState(() => {
-    // Commencer avec le mois de juin 2023 pour correspondre aux données d'exemple
-    return new Date(2023, 5, 1) // JavaScript utilise 0-11 pour les mois
+    // Utiliser la date actuelle (aujourd'hui)
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), 1);
   })
-  
+
+  // État pour les annonces Firestore
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [loading, setLoading] = useState(true);
+
   // État pour l'affichage du popover sur mobile
   const [openPopover, setOpenPopover] = useState<string | null>(null);
-  
+
+  // État pour le Dialog
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedDayEvents, setSelectedDayEvents] = useState<Announcement[]>([]);
+
   const year = currentDate.getFullYear()
   const month = currentDate.getMonth()
-  
+
+  // Récupérer les annonces depuis Firestore
+  useEffect(() => {
+    async function fetchAnnouncements() {
+      try {
+        if (!firestore) {
+          setLoading(false);
+          return;
+        }
+
+        const announcementsRef = collection(firestore, 'announcements');
+        const q = query(
+          announcementsRef,
+          where('status', '==', 'published'),
+          where('isActive', '==', true)
+        );
+
+        const snapshot = await getDocs(q);
+        const fetchedAnnouncements = snapshot.docs.map(doc => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            date: data.date instanceof Timestamp ? data.date.toDate() : new Date(data.date),
+            expiresAt: data.expiresAt instanceof Timestamp ? data.expiresAt.toDate() : data.expiresAt ? new Date(data.expiresAt) : undefined,
+            createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toDate() : new Date(data.createdAt),
+            updatedAt: data.updatedAt instanceof Timestamp ? data.updatedAt.toDate() : new Date(data.updatedAt)
+          } as Announcement;
+        });
+
+        // Filtrer les événements non expirés et trier
+        const today = new Date();
+        const oneDayAgo = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+
+        const filtered = fetchedAnnouncements
+          .filter(a => timestampToDate(a.date) >= oneDayAgo)
+          .sort((a, b) => {
+            if (a.isPinned !== b.isPinned) return a.isPinned ? -1 : 1;
+            if (a.priority !== b.priority) return a.priority - b.priority;
+            return timestampToDate(a.date).getTime() - timestampToDate(b.date).getTime();
+          });
+
+        setAnnouncements(filtered);
+        setLoading(false);
+      } catch (err) {
+        console.error('Erreur chargement annonces calendrier:', err);
+        setLoading(false);
+      }
+    }
+
+    fetchAnnouncements();
+  }, []);
+
   // Calculs pour le calendrier
   const firstDayOfMonth = new Date(year, month, 1).getDay() // 0 = Dimanche, 1 = Lundi, etc.
   const daysInMonth = new Date(year, month + 1, 0).getDate()
-  
+
   // Formater le nom du mois
   const currentMonthName = currentDate.toLocaleDateString("fr-FR", {
     month: "long",
     year: "numeric"
   })
-  
+
   // Événements du mois actuel
-  const eventsThisMonth = getEventsForMonth(year, month)
-  
-  // Jours avec événements pour ce mois
-  const daysWithEvents = eventsThisMonth.reduce((acc, event) => {
-    const day = new Date(event.date).getDate()
-    if (!acc.includes(day)) {
-      acc.push(day)
+  const eventsThisMonth = announcements.filter(announcement => {
+    const eventDate = timestampToDate(announcement.date);
+    return eventDate.getFullYear() === year && eventDate.getMonth() === month;
+  });
+
+  // Jours avec événements pour ce mois (Map pour grouper par jour)
+  const eventsByDay = new Map<number, Announcement[]>();
+  eventsThisMonth.forEach(event => {
+    const day = timestampToDate(event.date).getDate();
+    if (!eventsByDay.has(day)) {
+      eventsByDay.set(day, []);
     }
-    return acc
-  }, [] as number[])
+    eventsByDay.get(day)!.push(event);
+  });
+
+  const daysWithEvents = Array.from(eventsByDay.keys())
 
   // Navigation
   const goToPreviousMonth = () => {
@@ -249,116 +176,19 @@ export default function Calendrier({ searchParams }: { searchParams: { eventId?:
     })
   }
 
-  // Vérifier si nous avons un événement spécial sélectionné
-  const specialEventId = typeof searchParams.eventId === 'string' ? searchParams.eventId : undefined;
-  const selectedSpecialEvent = specialEventId ? 
-    specialEvents.find(event => event.id === specialEventId) : 
-    null;
-  
-  // Si un ID d'événement est fourni dans l'URL, trouver cet événement
-  const selectedEvent = searchParams.eventId ? 
-    (
-      // Essayer de convertir en nombre pour les événements réguliers
-      !isNaN(Number(searchParams.eventId)) ? 
-        getEventById(Number(searchParams.eventId)) : 
-        null
-    ) : 
-    null;
+  // Fonction pour obtenir les événements d'un jour spécifique
+  const getEventsForDay = (year: number, month: number, day: number): Announcement[] => {
+    return eventsByDay.get(day) || [];
+  };
+
+  // Filtrer les annonces importantes (pinned ou haute priorité)
+  const specialEvents = announcements.filter(a => a.isPinned || a.priority <= 2);
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Calendrier des événements</h1>
-      
-      {/* Détails d'un événement spécial sélectionné */}
-      {selectedSpecialEvent && (
-        <Card className="p-6 mb-8">
-          <div className="flex justify-between items-start">
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">{selectedSpecialEvent.title}</h2>
-              <div className="flex items-center mb-2">
-                <Clock className="h-4 w-4 mr-1" />
-                {new Date(selectedSpecialEvent.date).toLocaleDateString("fr-FR", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric"
-                })}{" "}
-                à {selectedSpecialEvent.time}
-              </div>
-              <div className="flex items-center">
-                <MapPin className="h-4 w-4 mr-1" />
-                {selectedSpecialEvent.location}
-              </div>
-            </div>
-            
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/culte/calendrier">
-                Retour au calendrier
-              </Link>
-            </Button>
-          </div>
-          
-          <div className="mt-4">
-            <h3 className="font-medium mb-2">Description</h3>
-            <p>{selectedSpecialEvent.description}</p>
-          </div>
-          
-          <div className="mt-6">
-            <h3 className="font-medium mb-2">Type d'événement</h3>
-            <div className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
-              {selectedSpecialEvent.type.charAt(0).toUpperCase() + selectedSpecialEvent.type.slice(1)}
-            </div>
-          </div>
-        </Card>
-      )}
-      
-      {/* Détails d'un événement régulier sélectionné */}
-      {selectedEvent && (
-        <Card className="p-4 mb-8 border-blue-500">
-          <div className="mb-4">
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/culte/calendrier">
-                <ChevronLeft className="h-4 w-4 mr-1" />
-                Retour au calendrier
-              </Link>
-            </Button>
-          </div>
-          
-          <h2 className="text-2xl font-bold mb-2">{selectedEvent.title}</h2>
-          
-          <div className="text-sm text-gray-600 dark:text-gray-400 mt-1 mb-4">
-            <div className="flex items-center mb-1">
-              <Clock className="h-4 w-4 mr-1" />
-              {new Date(selectedEvent.date).toLocaleDateString("fr-FR", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-              })}{" "}
-              à {selectedEvent.time}
-            </div>
-            <div className="flex items-center">
-              <MapPin className="h-4 w-4 mr-1" />
-              {selectedEvent.location}
-            </div>
-          </div>
-          
-          <div className="mt-4">
-            <h3 className="font-medium mb-2">Description</h3>
-            <p>{selectedEvent.description}</p>
-          </div>
-          
-          <div className="mt-6">
-            <h3 className="font-medium mb-2">Type d'événement</h3>
-            <div className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
-              {selectedEvent.type.charAt(0).toUpperCase() + selectedEvent.type.slice(1)}
-            </div>
-          </div>
-        </Card>
-      )}
 
-      {!selectedEvent && !selectedSpecialEvent && (
-        <>
+      <>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-semibold">{currentMonthName}</h2>
             <div className="flex space-x-2">
@@ -401,29 +231,32 @@ export default function Calendrier({ searchParams }: { searchParams: { eventId?:
                   <Button
                     variant={hasEvents ? "default" : "ghost"}
                     className={`h-12 sm:h-16 w-full rounded-md font-normal relative ${
-                      hasEvents 
-                        ? "bg-blue-100 hover:bg-blue-200 text-blue-800 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 dark:text-blue-200" 
+                      hasEvents
+                        ? "bg-blue-100 hover:bg-blue-200 text-blue-800 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 dark:text-blue-200"
                         : ""
                     } ${
-                      isCurrentDay 
-                        ? "ring-2 ring-primary dark:ring-primary/70" 
+                      isCurrentDay
+                        ? "ring-2 ring-primary dark:ring-primary/70"
                         : ""
                     }`}
-                    asChild
+                    onClick={() => {
+                      if (hasEvents) {
+                        setSelectedDayEvents(dayEvents);
+                        setDialogOpen(true);
+                      }
+                    }}
                   >
-                    <Link href={hasEvents ? `/culte/calendrier?eventId=${eventsThisMonth.find(e => new Date(e.date).getDate() === day)?.id}` : "#"}>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className={`text-sm sm:text-base ${isCurrentDay ? "font-bold" : ""}`}>
-                          {day}
-                          {isCurrentDay && (
-                            <span className="absolute top-1 right-1 h-1.5 w-1.5 bg-primary rounded-full"></span>
-                          )}
-                        </span>
-                        {hasEvents && (
-                          <div className="absolute bottom-1.5 left-1/2 transform -translate-x-1/2 h-1.5 w-1.5 bg-blue-500 rounded-full" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className={`text-sm sm:text-base ${isCurrentDay ? "font-bold" : ""}`}>
+                        {day}
+                        {isCurrentDay && (
+                          <span className="absolute top-1 right-1 h-1.5 w-1.5 bg-primary rounded-full"></span>
                         )}
-                      </div>
-                    </Link>
+                      </span>
+                      {hasEvents && (
+                        <div className="absolute bottom-1.5 left-1/2 transform -translate-x-1/2 h-1.5 w-1.5 bg-blue-500 rounded-full" />
+                      )}
+                    </div>
                   </Button>
                 )
                 
@@ -470,10 +303,17 @@ export default function Calendrier({ searchParams }: { searchParams: { eventId?:
                               ))}
                             </div>
                             <div className="mt-3 pt-2 border-t text-center">
-                              <Button variant="link" size="sm" asChild className="text-xs">
-                                <Link href={`/culte/calendrier?eventId=${dayEvents[0]?.id}`}>
-                                  Voir détails
-                                </Link>
+                              <Button
+                                variant="link"
+                                size="sm"
+                                className="text-xs"
+                                onClick={() => {
+                                  setSelectedDayEvents(dayEvents);
+                                  setDialogOpen(true);
+                                  setOpenPopover(null);
+                                }}
+                              >
+                                Voir détails
                               </Button>
                             </div>
                           </PopoverContent>
@@ -495,52 +335,20 @@ export default function Calendrier({ searchParams }: { searchParams: { eventId?:
           {/* Liste des événements du mois */}
           <div>
             <h2 className="text-2xl font-semibold mb-4">Événements importants & à venir</h2>
-            
+
             <div className="space-y-4">
               {/* Afficher les annonces importantes en premier avec un titre de section */}
               {specialEvents.length > 0 && (
                 <>
-                  <h3 className="text-lg font-medium mt-6 mb-2 text-primary">Annonces importantes</h3>
-                  {specialEvents.map((event) => (
-                    <Card key={event.id} className="p-4 hover:shadow-md transition-shadow border-l-4 border-l-primary">
-                      <Link href={`/culte/calendrier?eventId=${event.id}`} className="block">
-                        <div className="flex items-center gap-1.5 text-primary text-sm font-medium mb-1">
-                          <AlertCircle className="h-4 w-4" />
-                          <span>Annonce importante</span>
-                        </div>
-                        
-                        <h3 className="font-semibold text-lg hover:text-primary transition-colors text-primary">
-                          {event.title}
-                        </h3>
-                        
-                        <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
-                          <div className="flex items-center">
-                            <Clock className="h-4 w-4 mr-1 flex-shrink-0" />
-                            {new Date(event.date).toLocaleDateString("fr-FR", {
-                              weekday: "long",
-                              day: "numeric",
-                              month: "long",
-                              year: "numeric"
-                            })}{" "}
-                            {event.time !== "Tout le mois" ? `à ${event.time}` : "- " + event.time}
-                          </div>
-                          
-                          <div className="flex items-center">
-                            <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
-                            {event.location}
-                          </div>
-                        </div>
-                        
-                        <div className="mt-2 flex justify-between items-center">
-                          <p className="text-sm">{event.description}</p>
-                          
-                          <Badge variant="default" className="px-2 py-1 rounded-full text-xs bg-primary hover:bg-primary/90 text-primary-foreground">
-                            {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
-                          </Badge>
-                        </div>
-                      </Link>
-                    </Card>
-                  ))}
+                  <h3 className="text-lg font-medium mt-2 mb-4 text-primary flex items-center gap-2">
+                    <AlertCircle className="h-5 w-5" />
+                    Annonces importantes
+                  </h3>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {specialEvents.map((announcement) => (
+                      <AnnouncementCard key={announcement.id} announcement={announcement} />
+                    ))}
+                  </div>
                 </>
               )}
               
@@ -549,37 +357,44 @@ export default function Calendrier({ searchParams }: { searchParams: { eventId?:
                 <>
                   <h3 className="text-lg font-medium mt-6 mb-2">Événements de {currentMonthName}</h3>
                   {eventsThisMonth.map((event) => (
-                    <Card key={event.id} className="p-4 hover:shadow-md transition-shadow">
-                      <Link href={`/culte/calendrier?eventId=${event.id}`} className="block">
-                        <h3 className="font-semibold text-lg hover:text-primary transition-colors">
-                          {event.title}
-                        </h3>
-                        
-                        <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
-                          <div className="flex items-center">
-                            <Clock className="h-4 w-4 mr-1" />
-                            {new Date(event.date).toLocaleDateString("fr-FR", {
-                              weekday: "long",
-                              day: "numeric",
-                              month: "long"
-                            })}{" "}
-                            à {event.time}
-                          </div>
-                          
-                          <div className="flex items-center">
-                            <MapPin className="h-4 w-4 mr-1" />
-                            {event.location}
-                          </div>
+                    <Card
+                      key={event.id}
+                      className="p-4 hover:shadow-md transition-shadow cursor-pointer"
+                      onClick={() => {
+                        setSelectedDayEvents([event]);
+                        setDialogOpen(true);
+                      }}
+                    >
+                      <h3 className="font-semibold text-lg hover:text-primary transition-colors">
+                        {event.title}
+                      </h3>
+
+                      <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        <div className="flex items-center">
+                          <Clock className="h-4 w-4 mr-1" />
+                          {new Date(event.date).toLocaleDateString("fr-FR", {
+                            weekday: "long",
+                            day: "numeric",
+                            month: "long"
+                          })}{" "}
+                          à {event.time}
                         </div>
-                        
+
+                        <div className="flex items-center">
+                          <MapPin className="h-4 w-4 mr-1" />
+                          {event.location.name}
+                        </div>
+                      </div>
+
+                      {event.content && (
                         <div className="mt-2 flex justify-between items-center">
-                          <p className="text-sm">{event.description}</p>
-                          
+                          <p className="text-sm">{event.content}</p>
+
                           <div className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
                             {event.type}
                           </div>
                         </div>
-                      </Link>
+                      )}
                     </Card>
                   ))}
                 </>
@@ -592,8 +407,80 @@ export default function Calendrier({ searchParams }: { searchParams: { eventId?:
               )}
             </div>
           </div>
+
+          {/* Dialog pour afficher les événements du jour */}
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>
+                  {selectedDayEvents.length > 0 &&
+                    formatEventDate(selectedDayEvents[0].date, selectedDayEvents[0].time).split(' at ')[0]
+                  }
+                </DialogTitle>
+              </DialogHeader>
+
+              <div className="space-y-4 mt-4">
+                {selectedDayEvents.map((event) => (
+                  <div key={event.id} className="border rounded-lg p-4 space-y-3">
+                    {/* En-tête avec badge */}
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="text-xl font-semibold flex-1">{event.title}</h3>
+                      <Badge
+                        style={{ backgroundColor: event.tagColor }}
+                        className="text-white"
+                      >
+                        {event.tag}
+                      </Badge>
+                    </div>
+
+                    {/* Date et heure */}
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="h-4 w-4" />
+                      <span>{event.time}</span>
+                    </div>
+
+                    {/* Lieu */}
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-sm">
+                        <MapPin className="h-4 w-4" />
+                        <span className="font-medium">{event.location.name}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground ml-6">{event.location.address}</p>
+                    </div>
+
+                    {/* Description */}
+                    {event.content && (
+                      <p className="text-sm leading-relaxed">{event.content}</p>
+                    )}
+
+                    {/* Détails */}
+                    {event.details && event.details.length > 0 && (
+                      <ul className="text-sm space-y-1 ml-4 list-disc">
+                        {event.details.map((detail, idx) => (
+                          <li key={idx}>{detail}</li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {/* Tarifs */}
+                    {event.pricing && (
+                      <div className="border-t pt-3 space-y-1">
+                        <div className="flex items-center gap-2 text-sm font-medium mb-2">
+                          <Euro className="h-4 w-4" />
+                          <span>Tarifs</span>
+                        </div>
+                        {event.pricing.free && <p className="text-sm ml-6">• {event.pricing.free}</p>}
+                        {event.pricing.child && <p className="text-sm ml-6">• {event.pricing.child}</p>}
+                        {event.pricing.student && <p className="text-sm ml-6">• {event.pricing.student}</p>}
+                        {event.pricing.adult && <p className="text-sm ml-6">• {event.pricing.adult}</p>}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </DialogContent>
+          </Dialog>
         </>
-      )}
     </div>
   )
 } 

@@ -129,15 +129,19 @@ export interface FilterOption {
 }
 
 /**
- * Interface pour les échos de l'église
+ * Interface pour les échos de l'église (bulletin mensuel PDF)
  */
 export interface Echo {
   id: string;
-  title: string;
-  date: Date;
-  content: string;
-  imageUrl?: string;
-  pdfUrl?: string;
+  title: string;              // Ex: "L'Écho - Janvier 2025"
+  description?: string;        // (optionnel) Court résumé
+  month: number;              // 1-12
+  year: number;               // 2025
+  pdfUrl: string;             // URL Firebase Storage
+  coverImageUrl?: string;     // (optionnel) Image de couverture
+  fileSize?: number;          // Taille du PDF en bytes
+  publishedAt: Date;          // Date de publication
+  status: "published" | "draft";
 }
 
 /**
@@ -197,4 +201,42 @@ export interface Church {
   telephone: string;
   email: string;
   openingHours: string[];
+}
+
+/**
+ * Interface pour les annonces importantes et événements
+ */
+export interface Announcement {
+  id: string;
+  title: string;              // "L'Idégé de Mi : Les trois yeux de Minéloïda"
+  date: Date;                 // Date complète de l'événement
+  time: string;               // "20h00"
+
+  location: {
+    name: string;             // "Centre Culturel de Brumath"
+    address: string;          // "29 Rue André Malraux, 67380 Brumath"
+  };
+
+  content?: string;           // Description longue (optionnel)
+  details?: string[];         // Liste à puces ["Chants", "Prédication", etc.]
+
+  pricing?: {                 // Optionnel, pour événements payants
+    free?: string;            // "Gratuit jusqu'à 8 ans"
+    child?: string;           // "9-17 ans : 5 €"
+    student?: string;         // "Étudiants : 10 €"
+    adult?: string;           // "Adultes : 15 €"
+  };
+
+  type: "concert" | "culte" | "spectacle" | "reunion" | "formation" | "autre";
+  tag: string;                // "Concert", "Culte", "Spectacle"
+  tagColor: string;           // Couleur du tag (#3B82F6, #10B981, etc.)
+
+  isPinned: boolean;          // Épinglé en haut ?
+  priority: number;           // Ordre d'affichage (1 = en haut)
+  isActive: boolean;          // Visible ou non
+  expiresAt?: Date;           // Auto-expire après l'événement
+
+  status: "published" | "draft";
+  createdAt: Date;
+  updatedAt: Date;
 } 

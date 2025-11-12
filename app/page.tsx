@@ -29,19 +29,13 @@ import { Badge } from "@/components/ui/badge"
 import { MessageLikeButton } from "../components/home/message-like-button"
 import { ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { CalendarCombined } from "../components/calendar/calendar-combined"
-import { LatestEchoSection } from "@/components/home/latest-echo-section"
+import { CurrentMonthEchoSafe } from "@/components/echo/current-month-echo-safe"
 import { LatestMessageCard } from "@/components/home/latest-message-card"
 import { VisioconferenceLink } from "@/components/visioconference/qr-code-link"
 import { ServiceInfoCard } from "@/components/home/service-info-card"
-import { importantNotices } from "@/lib/data/notices"
+import { ImportantAnnouncementsSection } from "@/components/announcements/important-announcements-section"
+import { UpcomingEventsSection } from "@/components/announcements/upcoming-events-section"
 import dynamic from 'next/dynamic'
-
-// Import dynamique du composant client
-const ImportantNotices = dynamic(
-  () => import('@/components/home/important-notices').then(mod => mod.ImportantNotices),
-  { ssr: false }
-)
 
 export const metadata: Metadata = {
   title: "Accueil | Église Protestante Libre de Strasbourg",
@@ -96,17 +90,7 @@ const latestMessage = {
   }
 }
 
-// Données simulées pour le dernier Echo mensuel
-const latestEcho = {
-  id: "echo-2024-04",
-  title: "L'Echo de l'EPLS",
-  edition: "Avril 2024",
-  description:
-    "Retrouvez dans ce numéro les dernières nouvelles de notre communauté, le calendrier des activités du mois, des témoignages inspirants et une méditation sur le thème de Pâques.",
-  coverUrl: "/images/echo/echo-avril.jpg",
-  pdfUrl: "#",
-  year: "2024",
-}
+// Les données de l'Echo sont maintenant gérées par Firebase
 
 // Type pour le message
 interface Message {
@@ -341,7 +325,7 @@ export default async function Home() {
       {/* Section des annonces importantes */}
       <div className="relative z-10 mb-16">
         <div className="container mx-auto px-4">
-          <ImportantNotices notices={importantNotices} className="shadow-md" />
+          <ImportantAnnouncementsSection className="shadow-md" maxAnnouncements={3} />
         </div>
       </div>
 
@@ -380,17 +364,12 @@ export default async function Home() {
           </p>
         </div>
         <div className="max-w-5xl mx-auto">
-          <CalendarCombined 
-            events={upcomingEvents} 
-            title="" 
-            description=""
-            showViewAll={true}
-          />
+          <UpcomingEventsSection maxEvents={3} />
         </div>
       </SectionContainer>
 
       {/* Dernier Echo mensuel */}
-      <LatestEchoSection echo={latestEcho} />
+      <CurrentMonthEchoSafe />
 
       {/* Sections principales */}
       <SectionContainer background="light" className="section-spacing">

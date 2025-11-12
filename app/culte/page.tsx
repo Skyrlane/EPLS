@@ -2,84 +2,45 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  Calendar, 
-  Clock, 
-  Music, 
-  Users, 
-  BookOpen, 
+import {
+  Calendar,
+  Clock,
+  Music,
+  Users,
+  BookOpen,
   Heart,
   ArrowRight,
   ChevronRight
 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { CalendarMiniWithEvents } from "@/components/calendar/calendar-mini-with-events";
 
 export const metadata = {
   title: "Culte & Vie communautaire - Église Protestante Libre de Strasbourg",
   description: "Découvrez la vie communautaire et les cultes de l'Église Protestante Libre de Strasbourg. Un temps pour adorer Dieu et grandir ensemble dans la foi.",
 };
 
-// Exemple de date pour le prochain culte - Dans une application réelle, 
-// cette information serait récupérée dynamiquement depuis une API ou une base de données
+// Prochain culte - Calculé automatiquement pour le dimanche suivant
+function getNextSunday() {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const daysUntilSunday = dayOfWeek === 0 ? 7 : 7 - dayOfWeek;
+  const nextSunday = new Date(today);
+  nextSunday.setDate(today.getDate() + daysUntilSunday);
+  return nextSunday.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
 const prochainCulte = {
-  date: "18 juin 2023",
-  theme: "La Parole vivante",
-  predicateur: "Pasteur Thomas Leroux",
-  special: "Fête de l'église",
-  description: "Un culte spécial pour la fête annuelle de l'église, suivi d'un repas partagé et d'un après-midi festif."
+  date: getNextSunday(),
+  theme: "Culte dominical",
+  predicateur: "Pasteur de l'EPLS",
+  special: "",
+  description: "Rejoignez-nous pour un temps de louange, de prière et d'enseignement biblique."
 };
 
-// Type pour les événements
-type Evenement = {
-  titre: string;
-  heure: string;
-  id?: number; // Ajout de l'ID pour faire le lien avec les événements du calendrier
-};
-
-// Événements de juin 2023 avec leurs IDs correspondants
-const juinEvents: Record<number, Evenement[]> = {
-  4: [{ titre: "Culte dominical avec Sainte Cène", heure: "10h30", id: 1 }],
-  7: [{ titre: "Étude biblique", heure: "19h00", id: 2 }],
-  10: [{ titre: "Catéchisme", heure: "14h00", id: 3 }],
-  11: [{ titre: "Culte dominical avec baptême", heure: "10h30", id: 4 }],
-  13: [{ titre: "Conseil presbytéral", heure: "19h30", id: 5 }],
-  14: [{ titre: "Groupe de prière", heure: "18h30", id: 6 }],
-  18: [{ titre: "Culte dominical - Fête de l'église", heure: "10h30", id: 7 }],
-  21: [{ titre: "Formation des anciens", heure: "19h00", id: 8 }],
-  25: [
-    { titre: "Culte dominical festif de fin d'année scolaire", heure: "10h30", id: 9 },
-    { titre: "Repas communautaire", heure: "12h30", id: 10 }
-  ],
-};
-
-// Mapping des jours vers les IDs d'événements pour faciliter la navigation
-const getEventIdForDay = (day: number): number | undefined => {
-  const events = juinEvents[day];
-  return events?.[0]?.id;
-};
-
-// Fonction pour vérifier si une date correspond à aujourd'hui
-// Pour l'exemple, nous allons considérer un jour spécifique comme "aujourd'hui"
-// En production, cette fonction utiliserait new Date() pour la date réelle
-const isToday = (day: number): boolean => {
-  // Simulons que nous sommes le 19 juin 2023 pour l'exemple
-  return day === 19;
-};
-
-// Fonction pour vérifier si c'est le prochain culte à mettre en évidence
-// Séparé de la logique "aujourd'hui" pour plus de clarté
-const isNextService = (day: number): boolean => {
-  // Plus besoin de mettre en évidence le jour 18 comme "prochain culte"
-  // car cette mise en forme est réservée au jour actuel
-  return false;
-};
+// Les événements sont maintenant récupérés dynamiquement depuis Firestore
+// via le composant CalendarMiniWithEvents
 
 export default function Culte() {
   return (
@@ -324,18 +285,11 @@ export default function Culte() {
                     <p>Consultez le programme détaillé des prochains cultes, avec les thématiques et prédicateurs.</p>
                     <Card className="mb-4">
                       <CardContent className="pt-6">
-                        <div className="flex items-start space-x-3 mb-3">
+                        <div className="flex items-start space-x-3">
                           <Calendar className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Dimanche {prochainCulte.date}</h3>
                             <p className="text-gray-600">{prochainCulte.theme} - {prochainCulte.predicateur}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <Calendar className="h-5 w-5 text-primary mt-0.5" />
-                          <div>
-                            <h3 className="font-medium">Dimanche 25 juin 2023</h3>
-                            <p className="text-gray-600">Culte dominical festif de fin d'année scolaire</p>
                           </div>
                         </div>
                       </CardContent>
@@ -345,120 +299,11 @@ export default function Culte() {
                     </Button>
                   </div>
                 </TabsContent>
-                
+
                 <TabsContent value="calendrier">
                   <div className="space-y-4">
                     <p>Accédez au calendrier interactif de tous les événements de notre église.</p>
-                    <div className="grid grid-cols-7 gap-1 mb-2">
-                      {["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"].map((day) => (
-                        <div key={day} className="text-center font-medium py-2">
-                          {day}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-7 gap-1 mb-4">
-                      {Array.from({ length: 4 }, (_, i) => (
-                        <div key={`empty-${i}`} className="h-9 p-1"></div>
-                      ))}
-                      {Array.from({ length: 30 }, (_, i) => {
-                        const day = i + 1;
-                        const hasEvents = Object.keys(juinEvents).map(Number).includes(day);
-                        const isNextCulte = isNextService(day);
-                        const eventId = getEventIdForDay(day);
-                        const isCurrentDay = isToday(day);
-                        
-                        const dayElement = (
-                          <div
-                            className={`h-9 p-1 border rounded-md flex items-center justify-center relative ${
-                              isCurrentDay
-                                ? "border-primary/70 ring-1 ring-primary bg-primary/5"
-                                : hasEvents
-                                ? "border-blue-300 text-blue-600 font-medium"
-                                : "border-gray-200"
-                            }`}
-                          >
-                            <span className={isCurrentDay ? "font-bold" : ""}>
-                              {day}
-                            </span>
-                            {hasEvents && (
-                              <span className="absolute bottom-1 right-1 w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
-                            )}
-                            {isCurrentDay && (
-                              <span className="absolute top-1 left-1 w-1.5 h-1.5 bg-primary rounded-full"></span>
-                            )}
-                          </div>
-                        );
-                        
-                        // Si le jour a des événements, on ajoute un tooltip
-                        if (hasEvents && eventId) {
-                          return (
-                            <div key={`day-${day}`}>
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <Link href={`/culte/calendrier?eventId=${eventId}`}>
-                                      {dayElement}
-                                    </Link>
-                                  </TooltipTrigger>
-                                  <TooltipContent side="right" align="start" className="max-w-[250px]">
-                                    <div className="space-y-1">
-                                      {juinEvents[day].map((event, eventIndex) => (
-                                        <div 
-                                          key={eventIndex} 
-                                          className={eventIndex > 0 ? "pt-1 border-t border-border/30 mt-1" : ""}
-                                        >
-                                          <div className="font-semibold text-sm">{event.titre}</div>
-                                          <div className="text-xs">{event.heure}</div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            </div>
-                          );
-                        } else if (hasEvents) {
-                          // Cas fallback si l'ID n'est pas trouvé (peu probable avec notre implémentation)
-                          return (
-                            <div key={`day-${day}`}>
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <Link href="/culte/calendrier">
-                                      {dayElement}
-                                    </Link>
-                                  </TooltipTrigger>
-                                  <TooltipContent side="right" align="start" className="max-w-[250px]">
-                                    <div className="space-y-1">
-                                      {juinEvents[day].map((event, eventIndex) => (
-                                        <div 
-                                          key={eventIndex} 
-                                          className={eventIndex > 0 ? "pt-1 border-t border-border/30 mt-1" : ""}
-                                        >
-                                          <div className="font-semibold text-sm">{event.titre}</div>
-                                          <div className="text-xs">{event.heure}</div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            </div>
-                          );
-                        } else if (isCurrentDay) {
-                          // Jour actuel sans événement
-                          return (
-                            <div key={`day-${day}`}>
-                              <Link href="/culte/calendrier">
-                                {dayElement}
-                              </Link>
-                            </div>
-                          );
-                        }
-                        
-                        return <div key={`day-${day}`}>{dayElement}</div>;
-                      })}
-                    </div>
+                    <CalendarMiniWithEvents />
                     <Button asChild>
                       <Link href="/culte/calendrier">Voir le calendrier complet</Link>
                     </Button>
