@@ -103,8 +103,24 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
         
         console.log('✅ Connexion réussie:', user.uid);
 
-        // Attendre un peu que l'état global se synchronise
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Attendre que onAuthStateChanged confirme l'utilisateur
+        console.log('🔵 Attente confirmation onAuthStateChanged...');
+        await new Promise<void>((resolve) => {
+          const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+              console.log('✅ onAuthStateChanged confirmé:', authUser.uid);
+              unsubscribe();
+              resolve();
+            }
+          });
+          
+          // Timeout de sécurité : si pas de confirmation après 5s, on redirige quand même
+          setTimeout(() => {
+            console.warn('⏱️ Timeout onAuthStateChanged, redirection forcée');
+            unsubscribe();
+            resolve();
+          }, 5000);
+        });
 
         // Redirection avec router (pas de rechargement complet)
         console.log('🚀 Redirection vers:', callbackUrl);
