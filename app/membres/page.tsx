@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { AlertCircle, FileIcon, CalendarIcon, UserIcon, LogOutIcon } from "lucide-react"
 import { signOut } from "firebase/auth"
 import { auth } from "@/lib/firebase"
-import { toast } from "sonner"
+import { useToast } from "@/hooks/use-toast"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
 // Données simulées pour les membres
@@ -78,6 +78,7 @@ const events = [
 
 export default function MembresPage() {
   const { user, loading } = useAuth()
+  const { toast } = useToast()
 
   console.log('🔍 MembresPage - État auth:', { user: user?.email, loading })
   const router = useRouter()
@@ -101,7 +102,10 @@ export default function MembresPage() {
   const handleLogout = async () => {
     try {
       await signOut(auth)
-      toast.success("Déconnexion réussie")
+      toast({
+        title: "Déconnexion réussie",
+        variant: "default",
+      })
       router.push("/")
     } catch (error) {
       console.error("Erreur lors de la déconnexion:", error)
