@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/components/auth-provider"
+import { useAuth } from "@/hooks/use-auth"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { AlertCircle, FileIcon, CalendarIcon, UserIcon, LogOutIcon } from "lucide-react"
 import { signOut } from "firebase/auth"
 import { auth } from "@/lib/firebase"
-import { toast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
 // Données simulées pour les membres
@@ -77,26 +77,31 @@ const events = [
 ]
 
 export default function MembresPage() {
-  const { user, loading, isConfigured } = useAuth()
+  const { user, loading } = useAuth()
+
+  console.log('🔍 MembresPage - État auth:', { user: user?.email, loading })
   const router = useRouter()
   const [searchMembers, setSearchMembers] = useState("")
   const [searchDocuments, setSearchDocuments] = useState("")
   const [error, setError] = useState("")
 
   useEffect(() => {
-    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
-    if (!loading && !user) {
-      router.push("/connexion")
-    }
+    // Attendre un peu avant de rediriger pour laisser le temps à l'auth de se synchroniser
+    // Cela évite la redirection immédiate après connexion
+    const timer = setTimeout(() => {
+      if (!loading && !user) {
+        console.log('🔴 Redirection vers /connexion car user non détecté');
+        router.push("/connexion")
+      }
+    }, 1000); // Délai de 1 seconde
+
+    return () => clearTimeout(timer);
   }, [user, loading, router])
 
   const handleLogout = async () => {
     try {
       await signOut(auth)
-      toast({
-        title: "Déconnexion réussie",
-        description: "Vous avez été déconnecté avec succès.",
-      })
+      toast.success("Déconnexion réussie")
       router.push("/")
     } catch (error) {
       console.error("Erreur lors de la déconnexion:", error)
@@ -175,15 +180,7 @@ export default function MembresPage() {
             </Alert>
           )}
 
-          {!isConfigured && (
-            <Alert variant="destructive" className="mb-6">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                La configuration Firebase n&apos;est pas complète. Certaines fonctionnalités peuvent ne pas fonctionner
-                correctement.
-              </AlertDescription>
-            </Alert>
-          )}
+
 
           <div className="mb-8">
             <Card>
@@ -195,9 +192,22 @@ export default function MembresPage() {
               </CardHeader>
               <CardContent>
                 <p>
-                  Vous êtes connecté en tant que <strong>{user.email}</strong>. Vous avez accès à l&apos;annuaire des
+                  Vous êtes connecté en tant que <strong>{user?.displayName || user?.email}</strong>. Vous avez accès à l&apos;annuaire des
                   membres, aux documents internes et au calendrier des activités réservées aux membres.
                 </p>
+
+                {/* Lien admin si disponible */}
+                <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <h3 className="font-semibold mb-2">Accès Administration</h3>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Gestion des annonces et du contenu du site
+                  </p>
+                  <Button asChild variant="outline" size="sm">
+                    <Link href="/admin/annonces">
+                      → Gérer les annonces
+                    </Link>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -354,4 +364,4 @@ export default function MembresPage() {
       </section>
     </>
   )
-} 
+}
