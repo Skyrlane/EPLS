@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useAuth } from "@/components/auth-provider";
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "./ui/button";
 import { signOut } from "firebase/auth";
 import { LogOutIcon, MenuIcon, XIcon, UserIcon } from "lucide-react";
@@ -25,6 +25,8 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const { user, logout } = useAuth();
+
+  console.log('🔝 Navigation - État auth:', { user: user?.email, hasUser: !!user });
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
