@@ -28,9 +28,10 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useFormValidation } from "@/hooks/use-form-validation";
-import { useAuth } from "@/components/auth-provider";
-import { setPersistence, browserLocalPersistence, browserSessionPersistence } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { useAuth } from "@/hooks/use-auth";
+import { setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithEmailAndPassword } from "firebase/auth";
+import { auth, firestore } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 // Schéma de validation Zod pour le formulaire de connexion
 const loginSchema = z.object({
@@ -56,7 +57,6 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const { login } = useAuth();
   const { validate, getFieldError, clearErrors } = useFormValidation(loginSchema);
 
   // Initialisation du formulaire avec React Hook Form et Zod
@@ -71,8 +71,16 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
 
   // Gestion de la soumission du formulaire
   const handleSubmit = async (values: LoginFormValues) => {
+    console.log('🔵 LoginForm.handleSubmit appelé avec:', { email: values.email });
+    console.log('🔵 Firebase auth:', typeof auth, 'app' in auth ? 'Auth réel' : 'Mock Auth');
+    console.log('🔵 Env vars:', {
+      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? 'PRÉSENT' : 'MANQUANT',
+      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ? 'PRÉSENT' : 'MANQUANT',
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? 'PRÉSENT' : 'MANQUANT'
+    });
     clearErrors();
     setErrorMessage(null);
+    console.log('🔵 Validation et nettoyage des erreurs effectués');
     setIsLoading(true);
 
     try {
@@ -84,11 +92,34 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
       }
 
       if (onLogin) {
+        console.log('🔵 Utilisation de la fonction onLogin personnalisée');
         await onLogin(values);
       } else {
-        // Utiliser la fonction login du contexte d'authentification
-        await login(values.email, values.password);
-        router.push(callbackUrl);
+        // Connexion Firebase directe
+        console.log('🔵 Appel de signInWithEmailAndPassword...');
+        const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+        console.log('🔵 signInWithEmailAndPassword réussi');
+        const user = userCredential.user;
+        
+        console.log('✅ Connexion réussie:', user.uid);
+
+        // Récupérer le profil Firestore de manière non-bloquante
+        // Ne pas attendre le profil pour rediriger
+        getDoc(doc(firestore, 'users', user.uid))
+          .then((userDoc) => {
+            if (userDoc.exists()) {
+              console.log('✅ Profil chargé:', userDoc.data());
+            } else {
+              console.warn('⚠️ Profil utilisateur introuvable dans Firestore');
+            }
+          })
+          .catch((firestoreError) => {
+            console.warn('⚠️ Erreur lors de la récupération du profil:', firestoreError);
+          });
+
+        // Redirection immédiate avec rechargement complet
+        console.log('🚀 Redirection vers:', callbackUrl);
+        window.location.href = callbackUrl;
       }
     } catch (error: any) {
       console.error("Erreur de connexion:", error);
