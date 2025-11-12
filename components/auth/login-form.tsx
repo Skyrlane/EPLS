@@ -103,23 +103,12 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
         
         console.log('✅ Connexion réussie:', user.uid);
 
-        // Récupérer le profil Firestore de manière non-bloquante
-        // Ne pas attendre le profil pour rediriger
-        getDoc(doc(firestore, 'users', user.uid))
-          .then((userDoc) => {
-            if (userDoc.exists()) {
-              console.log('✅ Profil chargé:', userDoc.data());
-            } else {
-              console.warn('⚠️ Profil utilisateur introuvable dans Firestore');
-            }
-          })
-          .catch((firestoreError) => {
-            console.warn('⚠️ Erreur lors de la récupération du profil:', firestoreError);
-          });
+        // Attendre un peu que l'état global se synchronise
+        await new Promise(resolve => setTimeout(resolve, 500));
 
-        // Redirection immédiate avec rechargement complet
+        // Redirection avec router (pas de rechargement complet)
         console.log('🚀 Redirection vers:', callbackUrl);
-        window.location.href = callbackUrl;
+        router.push(callbackUrl);
       }
     } catch (error: any) {
       console.error("Erreur de connexion:", error);
