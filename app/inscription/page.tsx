@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/components/auth-provider";
+import { useAuth } from "@/hooks/use-auth";
 import { PageHeader } from "@/components/ui/page-header";
 
 // Schéma de validation Zod pour le formulaire d'inscription

@@ -131,7 +131,7 @@ return <UserDashboard user={user} />;`}
                 <code>{`// Composant protégé nécessitant une authentification
 "use client";
 
-import { useAuth } from "@/components/auth-provider";
+import { useAuth } from "@/hooks/use-auth";
 import { LoginForm } from "@/components/auth/login-form";
 import { ProfileCard } from "@/components/auth/profile-card";
 import { Skeleton } from "@/components/ui/skeleton";

@@ -137,10 +137,16 @@ export interface Echo {
   description?: string;        // (optionnel) Court résumé
   month: number;              // 1-12
   year: number;               // 2025
+  edition?: string;           // Ex: "Janvier 2025" (pour compatibilité)
   pdfUrl: string;             // URL Firebase Storage
+  pdfFileName?: string;       // Nom du fichier PDF
+  coverUrl?: string;          // (optionnel) Image de couverture (alias)
   coverImageUrl?: string;     // (optionnel) Image de couverture
   fileSize?: number;          // Taille du PDF en bytes
+  isActive?: boolean;         // true = visible sur le site
   publishedAt: Date;          // Date de publication
+  createdAt?: Date;           // Date de création
+  updatedAt?: Date;           // Date de mise à jour
   status: "published" | "draft";
 }
 
@@ -240,3 +246,58 @@ export interface Announcement {
   createdAt: Date;
   updatedAt: Date;
 } 
+
+/**
+ * Interface pour une ligne du planning des cultes
+ */
+export interface PlanningRow {
+  date: string;
+  presidence: string;
+  musique: string;
+  predicateur: string;
+  groupeEDD: string;
+  accueil: string;
+  projection: string;
+  zoom: string;
+  menage: string;
+  observations: string;
+}
+
+/**
+ * Interface pour le planning mensuel des cultes
+ */
+export interface Planning {
+  id: string;
+  month: number;        // 1-12
+  year: number;         // 2025
+  title: string;        // "Novembre 2025"
+  rows: PlanningRow[];  // Lignes du tableau
+  isActive: boolean;    // true = visible
+  status: "published" | "draft";
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/**
+ * Interface pour un message/prédication YouTube
+ */
+export interface MessageItem {
+  id: string;
+  title: string;                    // "Le message de la semaine dernière"
+  description: string;              // Description courte
+  youtubeUrl: string;               // "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  youtubeId: string;                // "dQw4w9WgXcQ"
+  embedUrl: string;                 // "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  thumbnailUrl: string;             // Thumbnail YouTube (auto)
+  coverImageUrl?: string;           // Image custom uploadée (optionnel, prioritaire)
+  duration?: string;                // "45:20" format MM:SS
+  date: Date;                       // Date de la prédication
+  pastor: string;                   // "Pasteur Robert"
+  tag: string;                      // "Foi", "Grâce", "Évangile", etc.
+  tagColor: string;                 // Code couleur hexa
+  isActive: boolean;                // true = visible
+  status: "published" | "draft";
+  views?: number;                   // Nombre de vues (optionnel)
+  createdAt: Date;
+  updatedAt: Date;
+}

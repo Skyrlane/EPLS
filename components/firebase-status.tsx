@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@/components/auth-provider";
+import { useAuth } from "@/hooks/use-auth";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { UserIcon, Loader2Icon } from "lucide-react";

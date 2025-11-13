@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useAuth } from "@/components/auth-provider"
+import { useAuth } from "@/hooks/use-auth"
 import { LoginForm } from "@/components/auth/login-form"
 
 export default function ConnexionPage() {

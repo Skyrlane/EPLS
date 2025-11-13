@@ -14,6 +14,7 @@ import { signOut } from "firebase/auth"
 import { auth } from "@/lib/firebase"
 import { useToast } from "@/hooks/use-toast"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { PlanningTable } from "@/components/planning/PlanningTable"
 
 // Données simulées pour les membres
 const churchMembers = [
@@ -200,14 +201,35 @@ export default function MembresPage() {
                 {/* Lien admin si disponible */}
                 <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                   <h3 className="font-semibold mb-2">Accès Administration</h3>
-                  <p className="text-sm text-muted-foreground mb-2">
+                  <p className="text-sm text-muted-foreground mb-4">
                     Gestion des annonces et du contenu du site
                   </p>
-                  <Button asChild variant="outline" size="sm">
-                    <Link href="/admin/annonces">
+                  <div className="space-y-2">
+                    <Link 
+                      href="/admin/annonces" 
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
                       → Gérer les annonces
                     </Link>
-                  </Button>
+                    <Link 
+                      href="/admin/echos" 
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer les échos
+                    </Link>
+                    <Link 
+                      href="/admin/messages" 
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer les messages
+                    </Link>
+                    <Link 
+                      href="/admin/planning-cultes" 
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer le planning des cultes
+                    </Link>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -225,7 +247,7 @@ export default function MembresPage() {
               </TabsTrigger>
               <TabsTrigger value="calendrier" className="flex items-center gap-2">
                 <CalendarIcon className="h-4 w-4" />
-                Calendrier interne
+                Planning des Cultes
               </TabsTrigger>
             </TabsList>
 
@@ -329,35 +351,16 @@ export default function MembresPage() {
               </Card>
             </TabsContent>
 
-            {/* Calendrier interne */}
+            {/* Planning des Cultes */}
             <TabsContent value="calendrier">
               <Card>
                 <CardHeader>
-                  <CardTitle>Calendrier interne</CardTitle>
-                  <CardDescription>Événements et réunions réservés aux membres</CardDescription>
+                  <CardTitle>📅 Planning des Cultes</CardTitle>
+                  <CardDescription>Organisation des services pour le mois en cours</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    {events.map((event) => (
-                      <div key={event.id} className="border rounded-lg p-4 flex items-start gap-3 hover:bg-slate-50">
-                        <div className="bg-primary/10 p-2 rounded">
-                          <CalendarIcon className="h-6 w-6 text-primary" />
-                        </div>
-                        <div>
-                          <h4 className="font-medium">{event.title}</h4>
-                          <p className="text-sm text-gray-500">
-                            Date: {event.date} à {event.time} | Lieu: {event.location}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  <PlanningTable />
                 </CardContent>
-                <CardFooter>
-                  <Button asChild variant="outline" className="w-full">
-                    <Link href="/culte/calendrier">Voir le calendrier complet</Link>
-                  </Button>
-                </CardFooter>
               </Card>
             </TabsContent>
           </Tabs>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/components/auth-provider";
+import { useAuth } from "@/hooks/use-auth";
 import { hasRole } from "@/lib/firebase-helpers";
 
 interface UseProtectedRouteOptions {
