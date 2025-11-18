@@ -1,4 +1,8 @@
 import { notFound } from "next/navigation";
+
+// Forcer le rendu dynamique
+export const dynamic = 'force-dynamic';
+export const revalidate = 300; // Cache 5 minutes
 import { Metadata } from 'next';
 import { collection, getDocs, query, where, doc, getDoc, updateDoc, increment, Timestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
@@ -45,20 +49,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-// Pré-générer les pages pour les articles publiés
-export async function generateStaticParams() {
-  try {
-    const articlesRef = collection(firestore, 'articles');
-    const q = query(
-      articlesRef,
-      where('status', '==', 'published'),
-      where('isActive', '==', true)
-    );
-    const snapshot = await getDocs(q);
-
-    return snapshot.docs.map((doc) => ({
-      slug: doc.data().slug,
-    }));
+// Note: generateStaticParams désactivé car on utilise dynamic = 'force-dynamic'
+// Les pages seront générées à la demande));
   } catch (error) {
     console.error('Erreur generateStaticParams:', error);
     return [];

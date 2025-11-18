@@ -1,4 +1,8 @@
 import React from 'react';
+
+// Forcer le rendu dynamique pour la section blog
+export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"

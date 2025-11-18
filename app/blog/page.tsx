@@ -1,5 +1,9 @@
 import { BlogPageClient } from "@/components/blog/blog-page-client";
 
+// Forcer le rendu dynamique (pas de pré-génération statique)
+export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Revalider toutes les 60 secondes
+
 export const metadata = {
   title: "Blog - Église Protestante Libre de Strasbourg",
   description: "Actualités et articles de l'Église Protestante Libre de Strasbourg",
