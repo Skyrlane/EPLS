@@ -229,6 +229,12 @@ export default function MembresPage() {
                     >
                       → Gérer le planning des cultes
                     </Link>
+                    <Link 
+                      href="/admin/blog" 
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer les articles de blog
+                    </Link>
                   </div>
                 </div>
               </CardContent>
