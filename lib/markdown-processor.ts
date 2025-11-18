@@ -31,33 +31,48 @@ marked.setOptions({
  * Convertit du Markdown en HTML sécurisé
  */
 export function markdownToHtml(markdown: string): string {
-  if (!markdown) return '';
+  // Validation de l'entrée
+  if (!markdown || typeof markdown !== 'string') {
+    console.warn('Contenu Markdown invalide ou vide');
+    return '<p>Contenu vide</p>';
+  }
+  
+  try {
+    // Convertir le Markdown en HTML
+    const rawHtml = marked(markdown) as string;
 
-  // Convertir le Markdown en HTML
-  const rawHtml = marked(markdown) as string;
+    // Sanitize avec DOMPurify
+    const cleanHtml = DOMPurify.sanitize(rawHtml, {
+      ALLOWED_TAGS: [
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'p', 'br', 'hr',
+        'strong', 'em', 'u', 's', 'del', 'ins', 'mark',
+        'a', 'img',
+        'ul', 'ol', 'li',
+        'blockquote', 'pre', 'code',
+        'table', 'thead', 'tbody', 'tr', 'th', 'td',
+        'div', 'span',
+      ],
+      ALLOWED_ATTR: [
+        'href', 'title', 'target', 'rel',
+        'src', 'alt', 'width', 'height',
+        'class', 'id',
+        'start', 'type',
+      ],
+      ALLOW_DATA_ATTR: false,
+    });
 
-  // Sanitize avec DOMPurify
-  const cleanHtml = DOMPurify.sanitize(rawHtml, {
-    ALLOWED_TAGS: [
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-      'p', 'br', 'hr',
-      'strong', 'em', 'u', 's', 'del', 'ins', 'mark',
-      'a', 'img',
-      'ul', 'ol', 'li',
-      'blockquote', 'pre', 'code',
-      'table', 'thead', 'tbody', 'tr', 'th', 'td',
-      'div', 'span',
-    ],
-    ALLOWED_ATTR: [
-      'href', 'title', 'target', 'rel',
-      'src', 'alt', 'width', 'height',
-      'class', 'id',
-      'start', 'type',
-    ],
-    ALLOW_DATA_ATTR: false,
-  });
-
-  return cleanHtml;
+    return cleanHtml;
+    
+  } catch (error) {
+    console.error('Erreur markdownToHtml:', error);
+    // Fallback : retourner le texte avec des <p>
+    const fallback = markdown
+      .split('\n')
+      .map(line => `<p>${line}</p>`)
+      .join('');
+    return fallback;
+  }
 }
 
 /**
