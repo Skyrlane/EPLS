@@ -151,24 +151,61 @@ export interface Echo {
 }
 
 /**
- * Types représentant les articles du blog
+ * Tag de blog avec couleur
+ */
+export interface BlogTag {
+  id: string;
+  label: string;
+  color: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+/**
+ * Article importé depuis Airtable
+ */
+export interface AirtableArticle {
+  id: string;
+  titre: string;
+  contenu: string;
+  resume: string;
+  imageUrl: string;
+  dateRedaction: string;
+}
+
+/**
+ * Article de blog complet
  */
 export interface Article {
   id: string;
   title: string;
   slug: string;
-  excerpt: string;
   content: string;
-  image?: string;
+  excerpt: string;
+  metaDescription: string;
+  coverImageUrl: string;
+  coverImageMobile?: string;
+  coverImageDesktop?: string;
   author: string;
-  authorImage?: string;
-  category: string;
-  date: string;
-  readTime: string;
-  tags?: string[];
-  published: boolean;
-  createdAt: string;
-  updatedAt: string;
+  tag: string;
+  biblicalReference?: string;
+  readingTime: number;
+  status: "draft" | "published" | "scheduled";
+  scheduledFor?: Date;
+  publishedAt?: Date;
+  isActive: boolean;
+  
+  // Tracking Airtable
+  airtableSourceId?: string;
+  airtablePublishedId?: string;
+  syncedToAirtable: boolean;
+  lastSyncedAt?: Date;
+  
+  // Stats
+  views: number;
+  
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 /**

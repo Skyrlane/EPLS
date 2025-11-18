@@ -36,6 +36,7 @@ import { ServiceInfoCard } from "@/components/home/service-info-card"
 import { ImportantAnnouncementsSection } from "@/components/announcements/important-announcements-section"
 import { UpcomingEventsSection } from "@/components/announcements/upcoming-events-section"
 import dynamic from 'next/dynamic'
+import { LatestBlogArticle } from '@/components/home/latest-blog-article'
 
 export const metadata: Metadata = {
   title: "Accueil | Église Protestante Libre de Strasbourg",
@@ -307,6 +308,37 @@ function CallToActionLocal({
 }
 
 export default async function Home() {
+  // Charger le dernier article du blog
+  let latestBlogArticle = null;
+  try {
+    const { collection: firestoreCollection, getDocs, query: firestoreQuery, where, orderBy: firestoreOrderBy, limit } = await import('firebase/firestore');
+    const { firestore } = await import('@/lib/firebase');
+    
+    const articlesRef = firestoreCollection(firestore, 'articles');
+    const q = firestoreQuery(
+      articlesRef,
+      where('status', '==', 'published'),
+      where('isActive', '==', true),
+      firestoreOrderBy('publishedAt', 'desc'),
+      limit(1)
+    );
+    
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
+      const doc = snapshot.docs[0];
+      const data = doc.data();
+      latestBlogArticle = {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt?.toDate(),
+        updatedAt: data.updatedAt?.toDate(),
+        publishedAt: data.publishedAt?.toDate(),
+      };
+    }
+  } catch (error) {
+    console.error('Erreur chargement dernier article:', error);
+  }
+
   return (
     <main className="vertical-rhythm">
       {/* Bannière d'alerte pour la configuration Firebase */}
@@ -413,15 +445,29 @@ export default async function Home() {
 
       {/* Blog et actualités */}
       <SectionContainer background="light" className="section-spacing">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold tracking-tight mb-2">Blog et méditations</h2>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold tracking-tight mb-2">Dernier article</h2>
           <p className="text-muted-foreground max-w-3xl mx-auto">
-            Découvrez nos derniers articles et méditations bibliques
+            Découvrez notre dernier article de blog
           </p>
         </div>
-        <div className="text-center mt-6">
+        
+        {latestBlogArticle ? (
+          <div className="max-w-md mx-auto">
+            <LatestBlogArticle article={latestBlogArticle} />
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <p className="text-muted-foreground">Aucun article publié pour le moment</p>
+          </div>
+        )}
+        
+        <div className="text-center mt-8">
           <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md">
-            <Link href="/blog">Voir tous les articles</Link>
+            <Link href="/blog">
+              Voir tous les articles
+              <ArrowRightIcon className="ml-2 h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </SectionContainer>

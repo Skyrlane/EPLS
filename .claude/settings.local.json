@@ -44,7 +44,8 @@
       "Bash(test:*)",
       "mcp__serena__insert_after_symbol",
       "Bash(if exist \"app\\messages\\[slug]\" rmdir /s /q \"app\\messages\\[slug]\")",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(npx shadcn@latest add radio-group calendar)"
     ],
     "deny": [],
     "ask": []
