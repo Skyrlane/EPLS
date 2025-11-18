@@ -46,7 +46,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       };
     }
 
-    const article = snapshot.docs[0].data() as Article;
+    const data = snapshot.docs[0].data();
+    const article = {
+      ...data,
+      publishedAt: data.publishedAt?.toDate?.(),
+      createdAt: data.createdAt?.toDate?.(),
+      updatedAt: data.updatedAt?.toDate?.(),
+      scheduledFor: data.scheduledFor?.toDate?.(),
+    } as Article;
 
     return {
       title: `${article.title} - Blog EPLS`,
