@@ -46,7 +46,8 @@
       "Bash(if exist \"app\\messages\\[slug]\" rmdir /s /q \"app\\messages\\[slug]\")",
       "Bash(rm:*)",
       "Bash(npx shadcn@latest add radio-group calendar)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "ask": []

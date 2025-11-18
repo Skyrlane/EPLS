@@ -39,7 +39,7 @@ import { VisioconferenceLink } from "@/components/visioconference/qr-code-link"
 import { ServiceInfoCard } from "@/components/home/service-info-card"
 import { ImportantAnnouncementsSection } from "@/components/announcements/important-announcements-section"
 import { UpcomingEventsSection } from "@/components/announcements/upcoming-events-section"
-import dynamic from 'next/dynamic'
+import NextDynamic from 'next/dynamic'
 import { LatestBlogArticle } from '@/components/home/latest-blog-article'
 
 export const metadata: Metadata = {

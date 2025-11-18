@@ -50,12 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 // Note: generateStaticParams désactivé car on utilise dynamic = 'force-dynamic'
-// Les pages seront générées à la demande));
-  } catch (error) {
-    console.error('Erreur generateStaticParams:', error);
-    return [];
-  }
-}
+// Les pages seront générées à la demande
 
 export default async function ArticlePage({ params }: PageProps) {
   const articleDoc = await getArticleBySlug(params.slug);
