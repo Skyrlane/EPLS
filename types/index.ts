@@ -171,6 +171,7 @@ export interface AirtableArticle {
   resume: string;
   imageUrl: string;
   dateRedaction: string;
+  biblicalReference?: string;
 }
 
 /**

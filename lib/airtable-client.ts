@@ -16,7 +16,8 @@ const AIRTABLE_CONFIG = {
         contenu: "Contenu (Markdown)",
         resume: "Résumé/Extrait",
         imageUrl: "URL Image Générée",
-        dateRedaction: "Date de Rédaction"
+        dateRedaction: "Date de Rédaction",
+        passageBiblique: "Passage Biblique"
       }
     },
     published: {
@@ -67,6 +68,7 @@ export async function getUnimportedArticles(): Promise<AirtableArticle[]> {
       resume: record.fields[AIRTABLE_CONFIG.tables.source.columns.resume] || '',
       imageUrl: record.fields[AIRTABLE_CONFIG.tables.source.columns.imageUrl] || '',
       dateRedaction: record.fields[AIRTABLE_CONFIG.tables.source.columns.dateRedaction] || new Date().toISOString(),
+      biblicalReference: record.fields[AIRTABLE_CONFIG.tables.source.columns.passageBiblique] || '',
     }));
 
     return articles;

@@ -125,6 +125,7 @@ export function AirtableImporter() {
           coverImageDesktop: imageUrls?.desktopUrl || '',
           author: article.author,
           tag: article.tag,
+          biblicalReference: article.biblicalReference || '',
           readingTime: calculateReadingTime(article.contenu),
           status: 'draft',
           isActive: true,
