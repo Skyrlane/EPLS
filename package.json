@@ -13,7 +13,8 @@
     "dev:safe": "node scripts/dev.js",
     "verify-images": "node scripts/verifier-images.js",
     "create-images": "node scripts/creer-structure-images.js",
-    "import-echos": "tsx scripts/import-echos.ts"
+    "import-echos": "tsx scripts/import-echos.ts",
+    "test-airtable": "tsx scripts/test-airtable.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.48",

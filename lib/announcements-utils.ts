@@ -147,7 +147,6 @@ export function convertToFirestoreAnnouncement(
     date: parsed.date,
     time: parsed.time,
     location: parsed.location,
-    content: undefined,
     details: parsed.details,
     pricing: parsed.pricing,
     type: parsed.type,
@@ -156,7 +155,6 @@ export function convertToFirestoreAnnouncement(
     isPinned: false,
     priority,
     isActive: true,
-    expiresAt: undefined,
     status: 'published'
   };
 }
