@@ -146,15 +146,58 @@ export function AnnouncementList({
 
   // Supprimer une annonce
   const handleDelete = async (id: string) => {
+    console.log('🗑️ === SUPPRESSION ANNONCE ===');
+    console.log('ID:', id);
+    
     try {
-      const docRef = doc(firestore, 'announcements', id);
-      await deleteDoc(docRef);
+      if (!id) {
+        throw new Error('ID d\'annonce manquant');
+      }
 
-      toast({ title: "Succès", description: 'Annonce supprimée' });
+      // Vérifier que l'annonce existe
+      const docRef = doc(firestore, 'announcements', id);
+      const { getDoc } = await import('firebase/firestore');
+      const announcementSnap = await getDoc(docRef);
+
+      if (!announcementSnap.exists()) {
+        throw new Error('Annonce introuvable');
+      }
+
+      const announcementData = announcementSnap.data();
+      console.log('Annonce trouvée:', announcementData?.title || 'Sans titre');
+      console.log('Status:', announcementData?.isActive ? 'Active' : 'Désactivée');
+
+      // Supprimer le document
+      console.log('Tentative de suppression...');
+      await deleteDoc(docRef);
+      console.log('✅ Annonce supprimée avec succès de Firestore');
+
+      toast({ title: "Succès", description: 'Annonce supprimée avec succès !' });
+      
+      // Recharger la liste
+      console.log('Rechargement de la liste des annonces...');
       onRefresh();
-    } catch (error) {
-      console.error('Erreur suppression:', error);
-      toast({ title: "Erreur", description: 'Erreur lors de la suppression', variant: "destructive" });
+      
+    } catch (error: any) {
+      console.error('❌ Erreur suppression:', error);
+      console.error('Message:', error?.message);
+      console.error('Code:', error?.code);
+      console.error('Stack:', error?.stack);
+
+      // Message d'erreur plus explicite
+      let errorMessage = 'Erreur lors de la suppression';
+      
+      if (error?.code === 'permission-denied') {
+        errorMessage = 'Permission refusée. Vérifiez que vous êtes connecté.';
+      } else if (error?.message) {
+        errorMessage = error.message;
+      }
+
+      toast({ 
+        title: "Erreur", 
+        description: errorMessage, 
+        variant: "destructive" 
+      });
     } finally {
       setDeleteConfirm(null);
     }
