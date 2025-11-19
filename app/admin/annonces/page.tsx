@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { collection, getDocs, doc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, setDoc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -34,6 +34,7 @@ export default function AdminAnnoncesPage() {
   }, []);
 
   const loadAnnouncements = async () => {
+    console.log('🔍 === CHARGEMENT ANNONCES ADMIN ===');
     try {
       setLoading(true);
       const querySnapshot = await getDocs(collection(firestore, 'announcements'));
@@ -41,27 +42,62 @@ export default function AdminAnnoncesPage() {
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
+        
+        // Convertir Timestamp en Date
+        const dateValue = data.date?.toDate ? data.date.toDate() : new Date(data.date);
+        const createdAtValue = data.createdAt?.toDate ? data.createdAt.toDate() : new Date();
+        const updatedAtValue = data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date();
+        
         loadedAnnouncements.push({
           id: doc.id,
           title: data.title,
-          date: data.date?.toDate ? data.date.toDate() : new Date(data.date),
+          date: dateValue,
           time: data.time || '',
-          location: data.location || '',
-          type: data.type || 'event',
-          details: data.details || '',
-          pricing: data.pricing || '',
-          active: data.active ?? true,
-          pinned: data.pinned ?? false,
-          createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : new Date(),
+          location: data.location || { name: data.location || '', address: '' },
+          type: data.type || 'culte',
+          tag: data.tag || 'Culte',
+          tagColor: data.tagColor || '#3B82F6',
+          details: data.details || [],
+          pricing: data.pricing,
+          isPinned: data.isPinned ?? false,
+          priority: data.priority || 100,
+          isActive: data.isActive ?? true, // ✅ Utiliser isActive
+          status: data.status || 'published',
+          createdAt: createdAtValue,
+          updatedAt: updatedAtValue
         });
       });
 
-      // Trier : épinglées d'abord, puis par date
+      // Trier : épinglées d'abord, puis par priorité, puis par date
       loadedAnnouncements.sort((a, b) => {
-        if (a.pinned && !b.pinned) return -1;
-        if (!a.pinned && b.pinned) return 1;
-        return b.date.getTime() - a.date.getTime();
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        if (a.priority !== b.priority) return a.priority - b.priority;
+        return a.date.getTime() - b.date.getTime();
       });
+
+      // Logs de debug
+      const activeAnnouncements = loadedAnnouncements.filter(a => a.isActive);
+      const inactiveAnnouncements = loadedAnnouncements.filter(a => !a.isActive);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const currentAnnouncements = activeAnnouncements.filter(a => a.date >= today);
+      const expiredAnnouncements = activeAnnouncements.filter(a => a.date < today);
+
+      console.log('📊 Résumé des annonces :');
+      console.log(`  Total : ${loadedAnnouncements.length}`);
+      console.log(`  ✅ Actives : ${activeAnnouncements.length}`);
+      console.log(`    - Actuelles (date >= aujourd'hui) : ${currentAnnouncements.length}`);
+      console.log(`    - Expirées (date < aujourd'hui) : ${expiredAnnouncements.length}`);
+      console.log(`  ❌ Désactivées : ${inactiveAnnouncements.length}`);
+
+      // Détail des annonces désactivées
+      if (inactiveAnnouncements.length > 0) {
+        console.log('\n⚠ Annonces désactivées (ne devraient PAS être dans "Annonces Actuelles") :');
+        inactiveAnnouncements.forEach(a => {
+          console.log(`  - ${a.title} (${a.date.toLocaleDateString()})`);
+        });
+      }
 
       setAnnouncements(loadedAnnouncements);
     } catch (error) {
@@ -122,12 +158,13 @@ export default function AdminAnnoncesPage() {
     try {
       const now = new Date();
       const expiredAnnouncements = announcements.filter(
-        (a) => a.date < now && a.active
+        (a) => a.date < now && a.isActive
       );
 
       for (const announcement of expiredAnnouncements) {
         await updateDoc(doc(firestore, 'announcements', announcement.id), {
-          active: false,
+          isActive: false,
+          updatedAt: Timestamp.now()
         });
       }
 

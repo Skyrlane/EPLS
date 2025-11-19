@@ -56,8 +56,10 @@ export function AnnouncementList({
 
   // Filtrer et trier les annonces
   const filteredAnnouncements = useMemo(() => {
-    let filtered = announcements;
+    // Toujours filtrer les annonces désactivées
+    let filtered = announcements.filter(a => a.isActive);
 
+    // Filtrer les expirées si le toggle est désactivé
     if (!showExpired) {
       filtered = filtered.filter(a => !isExpired(a.date));
     }
@@ -65,8 +67,15 @@ export function AnnouncementList({
     return sortAnnouncements(filtered);
   }, [announcements, showExpired]);
 
+  // Compter les annonces actives expirées
   const expiredCount = useMemo(
-    () => announcements.filter(a => isExpired(a.date)).length,
+    () => announcements.filter(a => a.isActive && isExpired(a.date)).length,
+    [announcements]
+  );
+
+  // Compter les annonces désactivées
+  const inactiveCount = useMemo(
+    () => announcements.filter(a => !a.isActive).length,
     [announcements]
   );
 
@@ -233,9 +242,11 @@ export function AnnouncementList({
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Annonces Actuelles ({filteredAnnouncements.length})</CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
-                {expiredCount > 0 && `${expiredCount} annonce(s) expirée(s)`}
-              </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {expiredCount > 0 && `${expiredCount} annonce(s) expirée(s) • `}
+                  {inactiveCount > 0 && `${inactiveCount} annonce(s) désactivée(s)`}
+                  {expiredCount === 0 && inactiveCount === 0 && 'Toutes les annonces sont à jour'}
+                </p>
             </div>
 
             <div className="flex items-center gap-4">
