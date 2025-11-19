@@ -25,12 +25,19 @@ export function formatEventDate(date: Date, time?: string): string {
  * Vérifie si un événement est expiré
  * @param date - Date de l'événement
  * @returns true si l'événement est passé
+ * 
+ * Règle : Une annonce reste visible le jour même de l'événement,
+ * et disparaît à partir du lendemain (J+1)
  */
 export function isEventExpired(date: Date): boolean {
   const now = new Date();
-  // Considère qu'un événement est expiré s'il est passé de plus de 24h
-  const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  return date < oneDayAgo;
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // Aujourd'hui à 00:00:00
+
+  const eventDate = date instanceof Date ? date : new Date(date);
+  const eventDay = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate()); // Jour de l'événement à 00:00:00
+
+  // L'événement est expiré si le jour de l'événement est strictement avant aujourd'hui
+  return eventDay < today;
 }
 
 /**

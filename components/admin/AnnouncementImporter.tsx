@@ -92,6 +92,33 @@ export function AnnouncementImporter({
     );
   };
 
+  // Mettre à jour un champ d'une annonce
+  const updateAnnouncement = (index: number, updates: Partial<ParsedWithSelection>) => {
+    setParsedAnnouncements(prev =>
+      prev.map((a, i) => (i === index ? { ...a, ...updates } : a))
+    );
+  };
+
+  // Formater la date pour input datetime-local
+  const formatDateTimeLocal = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
+  // Parser datetime-local et mettre à jour date + time
+  const handleDateTimeChange = (index: number, dateTimeString: string) => {
+    const newDate = new Date(dateTimeString);
+    const hours = String(newDate.getHours()).padStart(2, '0');
+    const minutes = String(newDate.getMinutes()).padStart(2, '0');
+    const newTime = `${hours}h${minutes}`;
+
+    updateAnnouncement(index, { date: newDate, time: newTime });
+  };
+
   // Importer les annonces sélectionnées
   const handleImport = async () => {
     const selected = parsedAnnouncements.filter(a => a.selected);
@@ -101,17 +128,35 @@ export function AnnouncementImporter({
       return;
     }
 
+    console.log('🚀 === DÉBUT IMPORT ANNONCES ===');
+    console.log('Nombre d\'annonces à importer:', selected.length);
+
     setIsImporting(true);
 
     try {
       let addedCount = 0;
       let updatedCount = 0;
       let errorCount = 0;
+      const errors: string[] = [];
 
       for (const announcement of selected) {
         try {
+          console.log(`📝 Import annonce: "${announcement.title}"`);
+
+          // Validation
+          if (!announcement.title?.trim()) {
+            throw new Error('Titre manquant');
+          }
+          if (!announcement.date) {
+            throw new Error('Date manquante');
+          }
+          if (!announcement.location?.name?.trim()) {
+            throw new Error('Lieu manquant');
+          }
+
           if (announcement.status === 'new') {
             // Créer une nouvelle annonce
+            console.log('  → Création d\'une nouvelle annonce');
             const docData = {
               ...convertToFirestoreAnnouncement(announcement, addedCount + 1),
               date: Timestamp.fromDate(announcement.date),
@@ -119,10 +164,13 @@ export function AnnouncementImporter({
               updatedAt: Timestamp.now()
             };
 
+            console.log('  → Données:', docData);
             await addDoc(collection(firestore, 'announcements'), docData);
+            console.log('  ✅ Annonce créée');
             addedCount++;
           } else if (announcement.status === 'update' && announcement.existingId) {
             // Mettre à jour une annonce existante
+            console.log('  → Mise à jour d\'une annonce existante');
             const docRef = doc(firestore, 'announcements', announcement.existingId);
             const updateData = {
               title: announcement.title,
@@ -137,14 +185,24 @@ export function AnnouncementImporter({
               updatedAt: Timestamp.now()
             };
 
+            console.log('  → Données de mise à jour:', updateData);
             await updateDoc(docRef, updateData);
+            console.log('  ✅ Annonce mise à jour');
             updatedCount++;
           }
         } catch (error) {
-          console.error(`Erreur pour "${announcement.title}":`, error);
+          console.error(`❌ Erreur pour "${announcement.title}":`, error);
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          errors.push(`${announcement.title}: ${errorMessage}`);
           errorCount++;
         }
       }
+
+      // Logs de résumé
+      console.log('=== RÉSULTAT IMPORT ===');
+      console.log(`✅ Ajoutées: ${addedCount}`);
+      console.log(`♻️ Mises à jour: ${updatedCount}`);
+      console.log(`❌ Erreurs: ${errorCount}`);
 
       // Feedback
       if (addedCount > 0) {
@@ -154,13 +212,21 @@ export function AnnouncementImporter({
         toast({ title: "Succès", description: `${updatedCount} annonce(s) mise(s) à jour` });
       }
       if (errorCount > 0) {
+        console.error('Détails des erreurs:', errors);
         toast({ title: "Erreur", description: `${errorCount} erreur(s)`, variant: "destructive" });
+
+        // Afficher les erreurs détaillées
+        errors.forEach(err => {
+          toast({ title: "Détail erreur", description: err, variant: "destructive", duration: 5000 });
+        });
       }
 
-      // Reset
-      setHtmlContent('');
-      setParsedAnnouncements([]);
-      onImportComplete();
+      // Reset seulement si succès total ou partiel
+      if (addedCount > 0 || updatedCount > 0) {
+        setHtmlContent('');
+        setParsedAnnouncements([]);
+        onImportComplete();
+      }
     } catch (error) {
       console.error('Erreur import:', error);
       toast({ title: "Erreur", description: 'Erreur lors de l\'import', variant: "destructive" });
@@ -257,9 +323,23 @@ export function AnnouncementImporter({
                             onCheckedChange={() => toggleSelection(index)}
                             className="mt-1"
                           />
-                          <div className="space-y-1 flex-1">
+                          <div className="space-y-3 flex-1">
+                            {/* Titre éditable */}
+                            <div>
+                              <label className="text-xs font-semibold text-muted-foreground block mb-1">
+                                Titre *
+                              </label>
+                              <input
+                                type="text"
+                                value={announcement.title}
+                                onChange={(e) => updateAnnouncement(index, { title: e.target.value })}
+                                className="w-full px-3 py-2 border border-input rounded-md text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                                placeholder="Titre de l'annonce"
+                              />
+                            </div>
+
+                            {/* Badges de statut */}
                             <div className="flex items-center gap-2 flex-wrap">
-                              <CardTitle className="text-lg">{announcement.title}</CardTitle>
                               {announcement.status === 'new' && (
                                 <Badge variant="default" className="bg-green-600">Nouvelle</Badge>
                               )}
@@ -271,36 +351,78 @@ export function AnnouncementImporter({
                               )}
                             </div>
 
-                            <div className="space-y-1 text-sm text-muted-foreground">
-                              <div className="flex items-center gap-2">
-                                <Calendar className="h-4 w-4" />
-                                <span>{formatAnnouncementDate(announcement.date)} à {announcement.time}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <MapPin className="h-4 w-4" />
-                                <span>{announcement.location.name}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Tag className="h-4 w-4" />
-                                <Badge
-                                  style={{ backgroundColor: announcement.tagColor }}
-                                  className="text-white"
-                                >
-                                  {announcement.tag}
-                                </Badge>
-                              </div>
+                            {/* Date et heure éditables */}
+                            <div>
+                              <label className="text-xs font-semibold text-muted-foreground block mb-1">
+                                Date et heure *
+                              </label>
+                              <input
+                                type="datetime-local"
+                                value={formatDateTimeLocal(announcement.date)}
+                                onChange={(e) => handleDateTimeChange(index, e.target.value)}
+                                className="w-full px-3 py-2 border border-input rounded-md text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                              />
                             </div>
 
-                            {announcement.details && announcement.details.length > 0 && (
-                              <div className="mt-2">
-                                <p className="text-xs font-semibold text-muted-foreground mb-1">Détails :</p>
-                                <ul className="text-xs text-muted-foreground space-y-0.5 list-disc list-inside">
-                                  {announcement.details.map((detail, i) => (
-                                    <li key={i}>{detail}</li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
+                            {/* Lieu éditable */}
+                            <div>
+                              <label className="text-xs font-semibold text-muted-foreground block mb-1">
+                                Lieu *
+                              </label>
+                              <input
+                                type="text"
+                                value={announcement.location.name}
+                                onChange={(e) => updateAnnouncement(index, {
+                                  location: { ...announcement.location, name: e.target.value }
+                                })}
+                                className="w-full px-3 py-2 border border-input rounded-md text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                                placeholder="Nom du lieu"
+                              />
+                            </div>
+
+                            {/* Adresse éditable */}
+                            <div>
+                              <label className="text-xs font-semibold text-muted-foreground block mb-1">
+                                Adresse
+                              </label>
+                              <input
+                                type="text"
+                                value={announcement.location.address}
+                                onChange={(e) => updateAnnouncement(index, {
+                                  location: { ...announcement.location, address: e.target.value }
+                                })}
+                                className="w-full px-3 py-2 border border-input rounded-md text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                                placeholder="Adresse complète (optionnel)"
+                              />
+                            </div>
+
+                            {/* Tag (lecture seule avec badge) */}
+                            <div className="flex items-center gap-2">
+                              <Tag className="h-4 w-4" />
+                              <Badge
+                                style={{ backgroundColor: announcement.tagColor }}
+                                className="text-white"
+                              >
+                                {announcement.tag}
+                              </Badge>
+                            </div>
+
+                            {/* Détails éditables */}
+                            <div>
+                              <label className="text-xs font-semibold text-muted-foreground block mb-1">
+                                Détails (un par ligne)
+                              </label>
+                              <textarea
+                                value={(announcement.details || []).join('\\n')}
+                                onChange={(e) => {
+                                  const lines = e.target.value.split('\\n').filter(l => l.trim());
+                                  updateAnnouncement(index, { details: lines.length > 0 ? lines : undefined });
+                                }}
+                                className="w-full px-3 py-2 border border-input rounded-md text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                                rows={3}
+                                placeholder="Détails supplémentaires (optionnel)&#10;Un détail par ligne"
+                              />
+                            </div>
 
                             {announcement.pricing && (
                               <div className="mt-2">

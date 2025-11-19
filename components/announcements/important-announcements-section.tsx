@@ -64,8 +64,8 @@ export function ImportantAnnouncementsSection({
           // Filtrer les événements non expirés
           .filter(announcement => {
             const eventDate = timestampToDate(announcement.date);
-            const oneDayAgo = new Date(today.getTime() - 24 * 60 * 60 * 1000);
-            return eventDate >= oneDayAgo;
+            const eventDay = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate());
+            return eventDay >= today; // Garder seulement aujourd'hui et futures
           })
           // Trier par priorité puis par date
           .sort((a, b) => {

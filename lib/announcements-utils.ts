@@ -12,18 +12,20 @@ import type { ParsedAnnouncement } from './html-parser';
 
 /**
  * Vérifie si une annonce est expirée
- * Une annonce est expirée si sa date est passée de plus de 1 jour
+ * Une annonce est expirée si sa date est strictement passée (avant aujourd'hui à minuit)
+ * 
+ * Règle : Une annonce reste visible le jour même de l'événement,
+ * et disparaît à partir du lendemain (J+1)
  */
 export function isExpired(date: Date): boolean {
   const now = new Date();
-  now.setHours(0, 0, 0, 0);
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // Aujourd'hui à 00:00:00
 
   const eventDate = new Date(date);
-  eventDate.setHours(0, 0, 0, 0);
+  const eventDay = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate()); // Jour de l'événement à 00:00:00
 
-  const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-
-  return eventDate < oneDayAgo;
+  // L'annonce est expirée si le jour de l'événement est strictement avant aujourd'hui
+  return eventDay < today;
 }
 
 /**
