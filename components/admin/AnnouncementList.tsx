@@ -34,7 +34,7 @@ import {
   Pin,
   PinOff
 } from 'lucide-react';
-import { doc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 
@@ -156,7 +156,6 @@ export function AnnouncementList({
 
       // Vérifier que l'annonce existe
       const docRef = doc(firestore, 'announcements', id);
-      const { getDoc } = await import('firebase/firestore');
       const announcementSnap = await getDoc(docRef);
 
       if (!announcementSnap.exists()) {
