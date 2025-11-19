@@ -257,11 +257,16 @@ export default function AdminBlogPage() {
 
   return (
     <div className="container py-8 max-w-7xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Gestion du Blog</h1>
-        <p className="text-muted-foreground mt-2">
-          Créez et gérez les articles de blog, importez depuis Airtable
-        </p>
+      <div className="mb-8 flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Gestion du Blog</h1>
+          <p className="text-muted-foreground mt-2">
+            Créez et gérez les articles de blog, importez depuis Airtable
+          </p>
+        </div>
+        <Button asChild variant="outline">
+          <Link href="/membres">← Retour à l&apos;espace membres</Link>
+        </Button>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
