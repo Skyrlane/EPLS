@@ -172,18 +172,28 @@ export function AnnouncementImporter({
             // Mettre à jour une annonce existante
             console.log('  → Mise à jour d\'une annonce existante');
             const docRef = doc(firestore, 'announcements', announcement.existingId);
-            const updateData = {
+            // Créer l'objet de mise à jour en omettant les champs undefined
+            const updateData: any = {
               title: announcement.title,
               date: Timestamp.fromDate(announcement.date),
               time: announcement.time,
               location: announcement.location,
-              details: announcement.details,
-              pricing: announcement.pricing,
               type: announcement.type,
               tag: announcement.tag,
               tagColor: announcement.tagColor,
               updatedAt: Timestamp.now()
             };
+
+            // Ajouter les champs optionnels seulement s'ils existent
+            if (announcement.content !== undefined) {
+              updateData.content = announcement.content;
+            }
+            if (announcement.details !== undefined && announcement.details !== null) {
+              updateData.details = announcement.details;
+            }
+            if (announcement.pricing !== undefined && announcement.pricing !== null) {
+              updateData.pricing = announcement.pricing;
+            }
 
             console.log('  → Données de mise à jour:', updateData);
             await updateDoc(docRef, updateData);

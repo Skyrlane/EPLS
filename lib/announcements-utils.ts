@@ -142,13 +142,12 @@ export function convertToFirestoreAnnouncement(
   parsed: ParsedAnnouncement,
   priority: number = 100
 ): Omit<Announcement, 'id' | 'createdAt' | 'updatedAt'> {
-  return {
+  // Créer l'objet de base avec les champs requis
+  const result: any = {
     title: parsed.title,
     date: parsed.date,
     time: parsed.time,
     location: parsed.location,
-    details: parsed.details,
-    pricing: parsed.pricing,
     type: parsed.type,
     tag: parsed.tag,
     tagColor: parsed.tagColor,
@@ -157,6 +156,25 @@ export function convertToFirestoreAnnouncement(
     isActive: true,
     status: 'published'
   };
+
+  // Ajouter les champs optionnels seulement s'ils existent et ne sont pas undefined
+  if (parsed.content !== undefined) {
+    result.content = parsed.content;
+  }
+  
+  if (parsed.details !== undefined && parsed.details !== null) {
+    result.details = parsed.details;
+  }
+  
+  if (parsed.pricing !== undefined && parsed.pricing !== null) {
+    result.pricing = parsed.pricing;
+  }
+  
+  if (parsed.expiresAt !== undefined) {
+    result.expiresAt = parsed.expiresAt;
+  }
+
+  return result;
 }
 
 /**
