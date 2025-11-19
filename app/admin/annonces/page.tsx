@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { collection, getDocs, doc, setDoc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, doc, setDoc, updateDoc, deleteDoc, Timestamp, query, where, orderBy } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,7 +15,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function AdminAnnoncesPage() {
-  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [currentAnnouncements, setCurrentAnnouncements] = useState<Announcement[]>([]);
+  const [expiredAnnouncements, setExpiredAnnouncements] = useState<Announcement[]>([]);
+  const [showExpired, setShowExpired] = useState(false);
   const [loading, setLoading] = useState(true);
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
@@ -35,23 +37,32 @@ export default function AdminAnnoncesPage() {
 
   const loadAnnouncements = async () => {
     console.log('🔍 === CHARGEMENT ANNONCES ADMIN ===');
+    
     try {
       setLoading(true);
-      const querySnapshot = await getDocs(collection(firestore, 'announcements'));
-      const loadedAnnouncements: Announcement[] = [];
-
-      querySnapshot.forEach((doc) => {
+      
+      // Date de référence : début d'aujourd'hui (00:00:00)
+      const now = new Date();
+      const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const timestampStartOfToday = Timestamp.fromDate(startOfToday);
+      
+      console.log('📅 Date de référence (début aujourd\'hui):', startOfToday.toLocaleDateString('fr-FR'));
+      
+      // 1. ANNONCES ACTUELLES : date >= aujourd'hui ET isActive = true
+      const qCurrent = query(
+        collection(firestore, 'announcements'),
+        where('isActive', '==', true),
+        where('date', '>=', timestampStartOfToday),
+        orderBy('date', 'asc')
+      );
+      
+      const currentSnap = await getDocs(qCurrent);
+      const current: Announcement[] = currentSnap.docs.map(doc => {
         const data = doc.data();
-        
-        // Convertir Timestamp en Date
-        const dateValue = data.date?.toDate ? data.date.toDate() : new Date(data.date);
-        const createdAtValue = data.createdAt?.toDate ? data.createdAt.toDate() : new Date();
-        const updatedAtValue = data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date();
-        
-        loadedAnnouncements.push({
+        return {
           id: doc.id,
           title: data.title,
-          date: dateValue,
+          date: data.date?.toDate ? data.date.toDate() : new Date(data.date),
           time: data.time || '',
           location: data.location || { name: data.location || '', address: '' },
           type: data.type || 'culte',
@@ -61,48 +72,63 @@ export default function AdminAnnoncesPage() {
           pricing: data.pricing,
           isPinned: data.isPinned ?? false,
           priority: data.priority || 100,
-          isActive: data.isActive ?? true, // ✅ Utiliser isActive
+          isActive: data.isActive ?? true,
           status: data.status || 'published',
-          createdAt: createdAtValue,
-          updatedAt: updatedAtValue
-        });
+          createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : new Date(),
+          updatedAt: data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date()
+        };
       });
-
-      // Trier : épinglées d'abord, puis par priorité, puis par date
-      loadedAnnouncements.sort((a, b) => {
-        if (a.isPinned && !b.isPinned) return -1;
-        if (!a.isPinned && b.isPinned) return 1;
-        if (a.priority !== b.priority) return a.priority - b.priority;
-        return a.date.getTime() - b.date.getTime();
+      
+      console.log('✅ Annonces actuelles:', current.length);
+      current.forEach(ann => {
+        console.log(`  - ${ann.title}: ${ann.date.toLocaleDateString('fr-FR')}`);
       });
-
-      // Logs de debug
-      const activeAnnouncements = loadedAnnouncements.filter(a => a.isActive);
-      const inactiveAnnouncements = loadedAnnouncements.filter(a => !a.isActive);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const currentAnnouncements = activeAnnouncements.filter(a => a.date >= today);
-      const expiredAnnouncements = activeAnnouncements.filter(a => a.date < today);
-
-      console.log('📊 Résumé des annonces :');
-      console.log(`  Total : ${loadedAnnouncements.length}`);
-      console.log(`  ✅ Actives : ${activeAnnouncements.length}`);
-      console.log(`    - Actuelles (date >= aujourd'hui) : ${currentAnnouncements.length}`);
-      console.log(`    - Expirées (date < aujourd'hui) : ${expiredAnnouncements.length}`);
-      console.log(`  ❌ Désactivées : ${inactiveAnnouncements.length}`);
-
-      // Détail des annonces désactivées
-      if (inactiveAnnouncements.length > 0) {
-        console.log('\n⚠ Annonces désactivées (ne devraient PAS être dans "Annonces Actuelles") :');
-        inactiveAnnouncements.forEach(a => {
-          console.log(`  - ${a.title} (${a.date.toLocaleDateString()})`);
-        });
+      
+      setCurrentAnnouncements(current);
+      
+      // 2. ANNONCES EXPIRÉES : date < aujourd'hui
+      const qExpired = query(
+        collection(firestore, 'announcements'),
+        where('date', '<', timestampStartOfToday),
+        orderBy('date', 'desc')
+      );
+      
+      const expiredSnap = await getDocs(qExpired);
+      const expired: Announcement[] = expiredSnap.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          title: data.title,
+          date: data.date?.toDate ? data.date.toDate() : new Date(data.date),
+          time: data.time || '',
+          location: data.location || { name: data.location || '', address: '' },
+          type: data.type || 'culte',
+          tag: data.tag || 'Culte',
+          tagColor: data.tagColor || '#3B82F6',
+          details: data.details || [],
+          pricing: data.pricing,
+          isPinned: data.isPinned ?? false,
+          priority: data.priority || 100,
+          isActive: data.isActive ?? true,
+          status: data.status || 'published',
+          createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : new Date(),
+          updatedAt: data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date()
+        };
+      });
+      
+      console.log('🕐 Annonces expirées:', expired.length);
+      expired.slice(0, 5).forEach(ann => {
+        console.log(`  - ${ann.title}: ${ann.date.toLocaleDateString('fr-FR')}`);
+      });
+      if (expired.length > 5) {
+        console.log(`  ... et ${expired.length - 5} autres`);
       }
-
-      setAnnouncements(loadedAnnouncements);
+      
+      setExpiredAnnouncements(expired);
+      
     } catch (error) {
-      console.error('Erreur lors du chargement des annonces:', error);
-      toast({ title: "Erreur", description: '$1', variant: "destructive" });
+      console.error('❌ Erreur lors du chargement des annonces:', error);
+      toast({ title: "Erreur", description: 'Erreur lors du chargement des annonces', variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -157,11 +183,11 @@ export default function AdminAnnoncesPage() {
   const handleBulkArchive = async () => {
     try {
       const now = new Date();
-      const expiredAnnouncements = announcements.filter(
-        (a) => a.date < now && a.isActive
+      const announcementsToArchive = expiredAnnouncements.filter(
+        (a) => a.isActive
       );
 
-      for (const announcement of expiredAnnouncements) {
+      for (const announcement of announcementsToArchive) {
         await updateDoc(doc(firestore, 'announcements', announcement.id), {
           isActive: false,
           updatedAt: Timestamp.now()
@@ -208,7 +234,7 @@ export default function AdminAnnoncesPage() {
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="import">Import HTML</TabsTrigger>
           <TabsTrigger value="list">
-            Liste des annonces ({announcements.length})
+            Liste des annonces ({currentAnnouncements.length + expiredAnnouncements.length})
           </TabsTrigger>
         </TabsList>
 
@@ -223,7 +249,7 @@ export default function AdminAnnoncesPage() {
             </CardHeader>
             <CardContent>
               <AnnouncementImporter
-                existingAnnouncements={announcements}
+                existingAnnouncements={[...currentAnnouncements, ...expiredAnnouncements]}
                 onImportComplete={loadAnnouncements}
               />
             </CardContent>
@@ -231,46 +257,106 @@ export default function AdminAnnoncesPage() {
         </TabsContent>
 
         <TabsContent value="list" className="mt-6">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Annonces existantes</CardTitle>
-                  <CardDescription>
-                    Gérez les annonces : éditer, épingler, activer/désactiver,
-                    supprimer
-                  </CardDescription>
-                </div>
-                <Button
-                  variant="outline"
-                  onClick={handleBulkArchive}
-                  disabled={loading}
-                >
-                  Archiver les annonces expirées
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              {loading ? (
-                <div className="text-center py-8">
-                  <p>Chargement des annonces...</p>
-                </div>
-              ) : announcements.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  <p>Aucune annonce pour le moment.</p>
-                  <p className="text-sm mt-2">
-                    Utilisez l'onglet "Import HTML" pour ajouter des annonces.
-                  </p>
-                </div>
-              ) : (
-                <AnnouncementList
-                  announcements={announcements}
-                  onUpdate={handleUpdate}
-                  onDelete={handleDelete}
-                />
-              )}
-            </CardContent>
-          </Card>
+          <div className="space-y-6">
+            {/* Toggle Actuelles / Expirées */}
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={() => setShowExpired(false)}
+                variant={!showExpired ? "default" : "outline"}
+                className={!showExpired ? "bg-blue-600 hover:bg-blue-700" : ""}
+              >
+                📅 Annonces Actuelles ({currentAnnouncements.length})
+              </Button>
+              
+              <Button
+                onClick={() => setShowExpired(true)}
+                variant={showExpired ? "default" : "outline"}
+                className={showExpired ? "bg-orange-600 hover:bg-orange-700" : ""}
+              >
+                🕐 Annonces Expirées ({expiredAnnouncements.length})
+              </Button>
+            </div>
+
+            {/* Section Annonces Actuelles */}
+            {!showExpired && (
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-blue-600">
+                        Annonces Actuelles ({currentAnnouncements.length})
+                      </CardTitle>
+                      <CardDescription>
+                        Annonces à venir (date &gt;= aujourd'hui)
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {loading ? (
+                    <div className="text-center py-8">
+                      <p>Chargement des annonces...</p>
+                    </div>
+                  ) : currentAnnouncements.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <p>Aucune annonce actuelle.</p>
+                      <p className="text-sm mt-2">
+                        Utilisez l'onglet "Import HTML" pour ajouter des annonces.
+                      </p>
+                    </div>
+                  ) : (
+                    <AnnouncementList
+                      announcements={currentAnnouncements}
+                      onEdit={() => {}}
+                      onRefresh={loadAnnouncements}
+                    />
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Section Annonces Expirées */}
+            {showExpired && (
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-orange-600">
+                        Annonces Expirées ({expiredAnnouncements.length})
+                      </CardTitle>
+                      <CardDescription>
+                        Annonces passées (date &lt; aujourd'hui)
+                      </CardDescription>
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={handleBulkArchive}
+                      disabled={loading || expiredAnnouncements.filter(a => a.isActive).length === 0}
+                    >
+                      Archiver toutes les expirées actives
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {loading ? (
+                    <div className="text-center py-8">
+                      <p>Chargement des annonces...</p>
+                    </div>
+                  ) : expiredAnnouncements.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <p>Aucune annonce expirée.</p>
+                    </div>
+                  ) : (
+                    <AnnouncementList
+                      announcements={expiredAnnouncements}
+                      onEdit={() => {}}
+                      onRefresh={loadAnnouncements}
+                    />
+                  )}
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </TabsContent>
       </Tabs>
     </div>
