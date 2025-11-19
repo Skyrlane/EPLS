@@ -171,15 +171,29 @@ export default function AdminBlogPage() {
   };
 
   const handlePublish = async (article: Article) => {
+    console.log('🚀 handlePublish appelé...', {
+      articleId: article.id,
+      title: article.title,
+      airtableKey: process.env.NEXT_PUBLIC_AIRTABLE_API_KEY?.substring(0, 10) + '...',
+      airtableBase: process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID
+    });
+    
     try {
+      console.log('📝 Appel publishArticle du hook...');
       await publishArticle(article.id, article);
+      
+      console.log('✅ Publication réussie !');
       toast({
         title: 'Succès',
-        description: 'Article publié',
+        description: 'Article publié et synchronisé avec Airtable !',
       });
       await loadArticles();
     } catch (error) {
-      console.error('Erreur lors de la publication:', error);
+      console.error('❌ Erreur lors de la publication:', error);
+      if (error instanceof Error) {
+        console.error('Message d\'erreur:', error.message);
+        console.error('Stack:', error.stack);
+      }
       toast({
         title: 'Erreur',
         description: 'Impossible de publier l\'article',

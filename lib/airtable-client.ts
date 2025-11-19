@@ -29,12 +29,10 @@ const AIRTABLE_CONFIG = {
         contenu: "Contenu Complet",
         theme: "Thème Théologique",
         passage: "Passage Biblique",
-        plateforme: "Plateforme",
         datePublication: "Date de Publication",
         idFirestore: "ID Firestore",
         auteur: "Auteur",
-        tempsLecture: "Temps de Lecture",
-        nbVues: "Nombre de Vues"
+        tempsLecture: "Temps de Lecture"
       }
     }
   }
@@ -100,12 +98,10 @@ export async function createPublishedArticle(article: Article): Promise<string> 
             [AIRTABLE_CONFIG.tables.published.columns.contenu]: article.content,
             [AIRTABLE_CONFIG.tables.published.columns.theme]: article.tag,
             [AIRTABLE_CONFIG.tables.published.columns.passage]: article.biblicalReference || '',
-            [AIRTABLE_CONFIG.tables.published.columns.plateforme]: 'Site Web EPLS',
             [AIRTABLE_CONFIG.tables.published.columns.datePublication]: article.publishedAt?.toISOString() || new Date().toISOString(),
             [AIRTABLE_CONFIG.tables.published.columns.idFirestore]: article.id,
             [AIRTABLE_CONFIG.tables.published.columns.auteur]: article.author,
             [AIRTABLE_CONFIG.tables.published.columns.tempsLecture]: article.readingTime,
-            [AIRTABLE_CONFIG.tables.published.columns.nbVues]: article.views || 0,
           }
         }),
       }
@@ -141,7 +137,6 @@ export async function updatePublishedArticle(recordId: string, updates: Partial<
     if (updates.publishedAt) fields[AIRTABLE_CONFIG.tables.published.columns.datePublication] = updates.publishedAt.toISOString();
     if (updates.author) fields[AIRTABLE_CONFIG.tables.published.columns.auteur] = updates.author;
     if (updates.readingTime !== undefined) fields[AIRTABLE_CONFIG.tables.published.columns.tempsLecture] = updates.readingTime;
-    if (updates.views !== undefined) fields[AIRTABLE_CONFIG.tables.published.columns.nbVues] = updates.views;
 
     const response = await fetch(
       `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tables.published.id}/${recordId}`,
@@ -187,3 +182,8 @@ export async function deletePublishedArticle(recordId: string): Promise<void> {
     throw error;
   }
 }
+
+/**
+ * Interface pour les données d'article à publier vers Airtable
+ */
+// Note: pushArticleToAirtable supprimé - maintenant géré par Server Action dans app/actions/publish-article.ts

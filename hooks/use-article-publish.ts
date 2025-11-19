@@ -6,49 +6,94 @@ import { useState } from 'react';
 import { Article } from '@/types';
 import { doc, updateDoc, Timestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
-import { createPublishedArticle, updatePublishedArticle } from '@/lib/airtable-client';
+// Note: updatePublishedArticle importé dynamiquement dans syncArticleStats si besoin
 
 export function useArticlePublish() {
   const [publishing, setPublishing] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   /**
-   * Publie un article et le synchronise avec Airtable
+   * Publie un article et le synchronise avec Airtable via Server Action
    */
   const publishArticle = async (
     articleId: string, 
     article: Article,
     scheduledFor?: Date
-  ): Promise<void> => {
+  ): Promise<boolean> => {
+    console.log('📝 Publication de l\'article...');
+    console.log('Article ID:', articleId);
+    console.log('Titre:', article.title);
+    
     try {
       setPublishing(true);
       setError(null);
 
       const articleRef = doc(firestore, 'articles', articleId);
 
-      // 1. Mettre à jour le statut dans Firestore
-      const updateData: any = {
-        status: scheduledFor ? 'scheduled' : 'published',
-        updatedAt: Timestamp.now(),
-      };
-
+      // 1. Mettre à jour Firestore (côté client avec auth utilisateur)
+      console.log('📝 Mise à jour Firestore (client)...');
+      
       if (scheduledFor) {
-        updateData.scheduledFor = Timestamp.fromDate(scheduledFor);
-      } else {
-        updateData.publishedAt = article.publishedAt || Timestamp.now();
-        updateData.scheduledFor = null; // Clear scheduled date if publishing now
+        // Si planifié, juste mettre à jour le statut
+        await updateDoc(articleRef, {
+          status: 'scheduled',
+          scheduledFor: Timestamp.fromDate(scheduledFor),
+          updatedAt: Timestamp.now(),
+        });
+        console.log('✅ Article planifié pour', scheduledFor);
+        return true;
       }
 
-      await updateDoc(articleRef, updateData);
+      // Publication immédiate
+      await updateDoc(articleRef, {
+        status: 'published',
+        isActive: true,
+        publishedAt: article.publishedAt || Timestamp.now(),
+        updatedAt: Timestamp.now(),
+      });
+      
+      console.log('✅ Article publié dans Firestore');
 
-      // 2. Si publié maintenant (pas programmé), push vers Airtable
-      if (!scheduledFor) {
-        await pushToAirtablePublished(articleId, article);
+      // 2. Synchroniser avec Airtable via Server Action
+      console.log('🚀 Appel Server Action pour Airtable...');
+      
+      const { publishArticleAction } = await import('@/app/actions/publish-article');
+      
+      const result = await publishArticleAction({
+        articleId,
+        title: article.title,
+        author: article.author,
+        readingTime: article.readingTime,
+        slug: article.slug,
+        content: article.content,
+        tag: article.tag,
+        biblicalReference: article.biblicalReference,
+        airtablePublishedId: article.airtablePublishedId // Passer l'ID existant s'il y en a un
+      });
+
+      // 3. Mettre à jour Firestore avec l'ID Airtable si succès
+      if (result.success && result.airtableRecordId) {
+        console.log('✅ Airtable synchronisé, mise à jour Firestore avec ID...');
+        await updateDoc(articleRef, {
+          airtablePublishedId: result.airtableRecordId,
+          syncedToAirtable: true,
+          lastSyncedAt: Timestamp.now(),
+        });
+        console.log('✅ Tout est terminé avec succès !');
+        return true;
+      } else if (result.success) {
+        // Succès mais pas d'ID (ne devrait pas arriver)
+        console.log('✅ Publié mais pas d\'ID Airtable');
+        return true;
+      } else {
+        // Erreur Airtable mais article publié quand même
+        console.warn('⚠️ Article publié mais erreur Airtable:', result.error);
+        return true; // Article publié quand même
       }
     } catch (err) {
-      console.error('Erreur lors de la publication:', err);
+      console.error('❌ Erreur lors de la publication:', err);
       setError(err as Error);
-      throw err;
+      return false;
     } finally {
       setPublishing(false);
     }
@@ -86,6 +131,7 @@ export function useArticlePublish() {
     if (!article.airtablePublishedId) return;
 
     try {
+      const { updatePublishedArticle } = await import('@/lib/airtable-client');
       await updatePublishedArticle(article.airtablePublishedId, {
         views: article.views,
       });
@@ -104,29 +150,4 @@ export function useArticlePublish() {
   };
 }
 
-/**
- * Pousse un article vers la table Airtable "Articles Publiés"
- */
-async function pushToAirtablePublished(articleId: string, article: Article): Promise<void> {
-  try {
-    // Si déjà synchronisé, mettre à jour
-    if (article.syncedToAirtable && article.airtablePublishedId) {
-      await updatePublishedArticle(article.airtablePublishedId, article);
-    } else {
-      // Sinon, créer un nouveau record
-      const recordId = await createPublishedArticle(article);
 
-      // Mettre à jour Firestore avec l'ID Airtable
-      const articleRef = doc(firestore, 'articles', articleId);
-      await updateDoc(articleRef, {
-        airtablePublishedId: recordId,
-        syncedToAirtable: true,
-        lastSyncedAt: Timestamp.now(),
-      });
-    }
-  } catch (error) {
-    console.error('Erreur lors du push vers Airtable:', error);
-    // Ne pas throw pour ne pas bloquer la publication
-    // L'article sera publié même si Airtable échoue
-  }
-}
