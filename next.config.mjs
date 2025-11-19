@@ -22,6 +22,18 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "**.firebasestorage.app",
+      },
+      {
+        protocol: "https",
+        hostname: "**.googleapis.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.airtableusercontent.com",
+      },
+      {
+        protocol: "https",
         hostname: "images.unsplash.com",
         pathname: "/**",
       },

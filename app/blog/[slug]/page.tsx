@@ -158,25 +158,51 @@ export default async function ArticlePage({ params }: PageProps) {
     });
 
     return (
-      <article className="min-h-screen">
-        {/* Header avec image, titre, etc. */}
+      <article className="min-h-screen bg-white dark:bg-gray-950">
+        {/* Header */}
         <BlogArticleHeader article={article} />
-
-        {/* Contenu de l'article */}
-        <div className="container mx-auto px-4 py-12">
-          <div
-            className="prose prose-lg dark:prose-invert max-w-4xl mx-auto"
-            dangerouslySetInnerHTML={{ __html: htmlContent }}
-          />
-
-          {/* Bouton retour */}
-          <div className="max-w-4xl mx-auto mt-12">
-            <Link
-              href="/blog"
-              className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              ← Retour au blog
-            </Link>
+        
+        {/* Contenu principal */}
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-4xl mx-auto">
+            
+            {/* Contenu de l'article */}
+            <div 
+              className="prose prose-lg md:prose-xl dark:prose-invert max-w-none
+                         prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
+                         prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed
+                         prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
+                         prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-semibold
+                         prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+                         prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-4 prose-blockquote:italic
+                         prose-img:rounded-xl prose-img:shadow-lg"
+              dangerouslySetInnerHTML={{ __html: htmlContent }}
+            />
+            
+            {/* Séparateur */}
+            <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+              
+              {/* Info auteur */}
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                  {article.author.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900 dark:text-white">{article.author}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Publié le {article.publishedAt?.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Bouton retour */}
+              <Link 
+                href="/blog"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+              >
+                ← Retour au blog
+              </Link>
+            </div>
           </div>
         </div>
       </article>

@@ -6,10 +6,7 @@
 
 import { Article } from '@/types';
 import Image from 'next/image';
-import { formatDate, formatReadingTime, getTagColor } from '@/lib/blog-utils';
-import { Clock, Calendar, Share2, Facebook, Twitter, Mail, Link2, Check } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Clock, Calendar, Share2, Facebook, Twitter, Mail, Link2 } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -18,172 +15,168 @@ interface BlogArticleHeaderProps {
 }
 
 export function BlogArticleHeader({ article }: BlogArticleHeaderProps) {
-  const tagColor = getTagColor(article.tag);
+  const [showShareMenu, setShowShareMenu] = useState(false);
   const { toast } = useToast();
-  const [copied, setCopied] = useState(false);
-
-  const articleUrl = typeof window !== 'undefined' 
+  
+  const shareUrl = typeof window !== 'undefined' 
     ? window.location.href 
     : '';
-
-  const handleShare = async (platform: 'facebook' | 'twitter' | 'email' | 'copy') => {
-    const title = encodeURIComponent(article.title);
-    const url = encodeURIComponent(articleUrl);
-
-    switch (platform) {
+  
+  const handleShare = (platform: string) => {
+    const title = article.title;
+    const url = shareUrl;
+    
+    switch(platform) {
       case 'facebook':
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
         break;
       case 'twitter':
-        window.open(`https://twitter.com/intent/tweet?text=${title}&url=${url}`, '_blank');
+        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank');
         break;
       case 'email':
-        window.location.href = `mailto:?subject=${title}&body=${url}`;
+        window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`;
         break;
       case 'copy':
-        try {
-          await navigator.clipboard.writeText(articleUrl);
-          setCopied(true);
-          toast({
-            title: 'Lien copié',
-            description: 'Le lien a été copié dans le presse-papier',
-          });
-          setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
-          toast({
-            title: 'Erreur',
-            description: 'Impossible de copier le lien',
-            variant: 'destructive',
-          });
-        }
+        navigator.clipboard.writeText(url);
+        toast({
+          title: 'Lien copié !',
+          description: 'Le lien a été copié dans le presse-papier',
+        });
+        setShowShareMenu(false);
         break;
     }
   };
-
+  
+  const formatDate = (date: any) => {
+    if (!date) return '';
+    const d = date.toDate ? date.toDate() : new Date(date);
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  };
+  
+  const getTagColor = (tag: string) => {
+    return tag === 'À la une' ? '#06B6D4' : '#3B82F6';
+  };
+  
   return (
-    <div className="space-y-6">
-      {/* Image de couverture */}
-      <div className="relative aspect-[21/9] w-full overflow-hidden rounded-lg bg-muted">
-        {article.coverImageUrl ? (
+    <header className="relative">
+      {/* Image de couverture - Hero responsive */}
+      <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] bg-gray-100 dark:bg-gray-800">
+        {article.coverImageUrl && (
           <Image
-            src={article.coverImageDesktop || article.coverImageUrl}
+            src={article.coverImageUrl}
             alt={article.title}
             fill
-            className="object-cover"
             priority
-            sizes="(min-width: 1024px) 1200px, 100vw"
+            className="object-cover"
+            sizes="100vw"
+            quality={85}
           />
-        ) : (
-          <div className="flex h-full items-center justify-center">
-            <span className="text-muted-foreground">Pas d&apos;image</span>
-          </div>
         )}
+        
+        {/* Overlay gradient pour améliorer la lisibilité */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
       </div>
-
-      {/* Métadonnées */}
-      <div className="space-y-4">
-        {/* Badge tag */}
-        <div>
-          <Badge 
-            style={{ 
-              backgroundColor: tagColor,
-              color: 'white',
-              borderColor: tagColor
-            }}
-            className="text-sm"
-          >
-            {article.tag}
-          </Badge>
-        </div>
-
-        {/* Titre */}
-        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-          {article.title}
-        </h1>
-
-        {/* Passage biblique */}
-        {article.biblicalReference && (
-          <p className="text-primary text-lg font-medium italic">
-            📖 {article.biblicalReference}
-          </p>
-        )}
-
-        {/* Infos + Partage */}
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground border-t border-b py-4">
-          {/* Auteur */}
-          <div className="font-medium text-foreground text-base">
-            Par {article.author}
-          </div>
-
-          {/* Date */}
-          {article.publishedAt && (
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              <span>{formatDate(article.publishedAt)}</span>
-            </div>
-          )}
-
-          {/* Temps de lecture */}
-          <div className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            <span>{formatReadingTime(article.readingTime)}</span>
-          </div>
-
-          <div className="flex-1" />
-
-          {/* Boutons de partage */}
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-medium flex items-center gap-1">
-              <Share2 className="h-3 w-3" />
-              Partager :
+      
+      {/* Contenu header - Centré et superposé */}
+      <div className="container mx-auto px-4 -mt-32 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          
+          {/* Badge tag */}
+          <div className="mb-4 flex justify-center">
+            <span 
+              className="inline-block px-4 py-1.5 rounded-full text-sm font-medium text-white shadow-lg"
+              style={{ backgroundColor: getTagColor(article.tag) }}
+            >
+              {article.tag}
             </span>
+          </div>
+          
+          {/* Titre - Centré sur fond blanc/noir semi-transparent */}
+          <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-gray-900 dark:text-white mb-6 leading-tight">
+              {article.title}
+            </h1>
             
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleShare('facebook')}
-              className="h-8 w-8 p-0"
-              title="Partager sur Facebook"
-            >
-              <Facebook className="h-4 w-4" />
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleShare('twitter')}
-              className="h-8 w-8 p-0"
-              title="Partager sur Twitter"
-            >
-              <Twitter className="h-4 w-4" />
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleShare('email')}
-              className="h-8 w-8 p-0"
-              title="Partager par email"
-            >
-              <Mail className="h-4 w-4" />
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleShare('copy')}
-              className="h-8 w-8 p-0"
-              title="Copier le lien"
-            >
-              {copied ? (
-                <Check className="h-4 w-4 text-green-600" />
-              ) : (
-                <Link2 className="h-4 w-4" />
+            {/* Métadonnées - Centrées */}
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm text-gray-600 dark:text-gray-400 mb-6">
+              <div className="flex items-center gap-2">
+                <span className="font-medium">{article.author}</span>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <time>{formatDate(article.publishedAt)}</time>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                <span>{article.readingTime} min de lecture</span>
+              </div>
+            </div>
+            
+            {/* Passage biblique si présent */}
+            {article.biblicalReference && (
+              <div className="text-center mb-6">
+                <span className="inline-block px-4 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm font-medium">
+                  📖 {article.biblicalReference}
+                </span>
+              </div>
+            )}
+            
+            {/* Résumé/Extrait si présent */}
+            {article.excerpt && (
+              <p className="text-lg text-center text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto mb-6">
+                {article.excerpt}
+              </p>
+            )}
+            
+            {/* Boutons de partage */}
+            <div className="flex justify-center gap-3 pt-6 border-t border-gray-200 dark:border-gray-700 relative">
+              <button
+                onClick={() => setShowShareMenu(!showShareMenu)}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                <Share2 className="w-4 h-4" />
+                <span className="text-sm font-medium">Partager</span>
+              </button>
+              
+              {/* Menu de partage */}
+              {showShareMenu && (
+                <div className="absolute top-full mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-2 flex gap-2 z-20">
+                  <button
+                    onClick={() => handleShare('facebook')}
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    title="Partager sur Facebook"
+                  >
+                    <Facebook className="w-5 h-5 text-blue-600" />
+                  </button>
+                  <button
+                    onClick={() => handleShare('twitter')}
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    title="Partager sur Twitter"
+                  >
+                    <Twitter className="w-5 h-5 text-sky-500" />
+                  </button>
+                  <button
+                    onClick={() => handleShare('email')}
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    title="Partager par email"
+                  >
+                    <Mail className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                  </button>
+                  <button
+                    onClick={() => handleShare('copy')}
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    title="Copier le lien"
+                  >
+                    <Link2 className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                  </button>
+                </div>
               )}
-            </Button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
