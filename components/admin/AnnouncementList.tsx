@@ -50,22 +50,13 @@ export function AnnouncementList({
   onRefresh
 }: AnnouncementListProps) {
   const { toast } = useToast();
-  const [showExpired, setShowExpired] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [archiveAllConfirm, setArchiveAllConfirm] = useState(false);
 
-  // Filtrer et trier les annonces
-  const filteredAnnouncements = useMemo(() => {
-    // Toujours filtrer les annonces désactivées
-    let filtered = announcements.filter(a => a.isActive);
-
-    // Filtrer les expirées si le toggle est désactivé
-    if (!showExpired) {
-      filtered = filtered.filter(a => !isExpired(a.date));
-    }
-
-    return sortAnnouncements(filtered);
-  }, [announcements, showExpired]);
+  // Trier les annonces
+  const sortedAnnouncements = useMemo(() => {
+    return sortAnnouncements(announcements);
+  }, [announcements]);
 
   // Compter les annonces actives expirées
   const expiredCount = useMemo(
@@ -241,7 +232,7 @@ export function AnnouncementList({
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Annonces Actuelles ({filteredAnnouncements.length})</CardTitle>
+              <CardTitle>Annonces ({sortedAnnouncements.length})</CardTitle>
                 <p className="text-sm text-muted-foreground mt-1">
                   {expiredCount > 0 && `${expiredCount} annonce(s) expirée(s) • `}
                   {inactiveCount > 0 && `${inactiveCount} annonce(s) désactivée(s)`}
@@ -249,19 +240,7 @@ export function AnnouncementList({
                 </p>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Switch
-                  id="show-expired"
-                  checked={showExpired}
-                  onCheckedChange={setShowExpired}
-                />
-                <Label htmlFor="show-expired" className="text-sm">
-                  Afficher les annonces expirées
-                </Label>
-              </div>
-
-              {expiredCount > 0 && (
+            {expiredCount > 0 && (
                 <Button
                   variant="outline"
                   size="sm"
@@ -271,13 +250,12 @@ export function AnnouncementList({
                   Archiver toutes les expirées
                 </Button>
               )}
-            </div>
           </div>
         </CardHeader>
       </Card>
 
       {/* Liste des annonces */}
-      {filteredAnnouncements.length === 0 ? (
+      {sortedAnnouncements.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center text-muted-foreground">
             Aucune annonce à afficher
@@ -285,7 +263,7 @@ export function AnnouncementList({
         </Card>
       ) : (
         <div className="grid grid-cols-1 gap-4">
-          {filteredAnnouncements.map((announcement) => {
+          {sortedAnnouncements.map((announcement) => {
             const expired = isExpired(announcement.date);
 
             return (
@@ -314,13 +292,11 @@ export function AnnouncementList({
                           </Badge>
                         )}
 
-                        {expired && (
+                        {expired ? (
                           <Badge variant="secondary" className="bg-gray-500 text-white">
                             Expirée
                           </Badge>
-                        )}
-
-                        {announcement.isActive ? (
+                        ) : announcement.isActive ? (
                           <Badge variant="default" className="bg-green-600">Active</Badge>
                         ) : (
                           <Badge variant="secondary">Désactivée</Badge>
