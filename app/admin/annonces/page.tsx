@@ -187,7 +187,7 @@ export default function AdminAnnoncesPage() {
             <CardContent>
               <AnnouncementImporter
                 existingAnnouncements={announcements}
-                onImport={handleImport}
+                onImportComplete={loadAnnouncements}
               />
             </CardContent>
           </Card>
