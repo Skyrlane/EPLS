@@ -334,11 +334,38 @@ export default async function Home() {
         date: data.date?.toDate ? data.date.toDate().toLocaleDateString('fr-FR') : 'Date invalide'
       });
       
+      // Logs de diagnostic pour la miniature
+      console.log('📸 Miniatures disponibles dans Firestore:');
+      console.log('  - coverImageUrl:', data.coverImageUrl || '❌ NON DÉFINI');
+      console.log('  - thumbnailUrl:', data.thumbnailUrl || '❌ NON DÉFINI');
+      console.log('  - youtubeUrl:', data.youtubeUrl || '❌ NON DÉFINI');
+      console.log('  - youtubeId:', data.youtubeId || '❌ NON DÉFINI');
+      
+      // Générer l'URL de miniature YouTube si elle n'existe pas
+      let thumbnailUrl = data.coverImageUrl || data.thumbnailUrl;
+      
+      // Si aucune miniature n'est définie mais qu'on a un youtubeId, générer l'URL
+      if (!thumbnailUrl && data.youtubeId) {
+        thumbnailUrl = `https://img.youtube.com/vi/${data.youtubeId}/maxresdefault.jpg`;
+        console.log('🔧 Miniature YouTube générée depuis youtubeId:', thumbnailUrl);
+      }
+      
+      // Dernière tentative : extraire l'ID depuis l'URL YouTube
+      if (!thumbnailUrl && data.youtubeUrl) {
+        const youtubeIdMatch = data.youtubeUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?\/]+)/);
+        if (youtubeIdMatch && youtubeIdMatch[1]) {
+          thumbnailUrl = `https://img.youtube.com/vi/${youtubeIdMatch[1]}/maxresdefault.jpg`;
+          console.log('🔧 Miniature YouTube générée depuis youtubeUrl:', thumbnailUrl);
+        }
+      }
+      
+      console.log('🖼️ Miniature finale utilisée:', thumbnailUrl || '❌ AUCUNE');
+      
       latestMessageData = {
         id: doc.id,
         title: data.title,
         description: data.description || '',
-        coverImage: data.coverImageUrl || data.thumbnailUrl,
+        coverImage: thumbnailUrl,
         date: data.date?.toDate ? data.date.toDate().toLocaleDateString('fr-FR', {
           day: 'numeric',
           month: 'long',

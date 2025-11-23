@@ -256,6 +256,11 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
       const embedUrl = getYouTubeEmbedUrl(youtubeId);
       const thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
       
+      console.log('💾 === SAUVEGARDE MESSAGE ===');
+      console.log('  - youtubeId:', youtubeId);
+      console.log('  - thumbnailUrl:', thumbnailUrl);
+      console.log('  - coverImageUrl:', coverImageUrl || 'NON DÉFINI');
+      
       const [year, month, day] = date.split('-').map(Number);
       const messageDate = new Date(year, month - 1, day);
 
