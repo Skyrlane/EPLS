@@ -23,6 +23,7 @@ import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube-utils';
 import { useYouTubeMetadata } from '@/hooks/use-youtube-metadata';
 import { uploadMessageThumbnail, compressImage } from '@/lib/upload-message-thumbnail';
 import { ImageIcon, XIcon } from 'lucide-react';
+import { cleanFirestoreData } from '@/lib/firestore-utils';
 
 interface MessageFormProps {
   message?: MessageItem | null;
@@ -264,15 +265,16 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
       const [year, month, day] = date.split('-').map(Number);
       const messageDate = new Date(year, month - 1, day);
 
-      const data = {
+      // Construire l'objet data brut (peut contenir des undefined)
+      const rawData = {
         title: title.trim(),
         description: description.trim(),
         youtubeUrl: youtubeUrl.trim(),
         youtubeId,
         embedUrl,
         thumbnailUrl,
-        coverImageUrl: coverImageUrl || undefined,
-        duration: metadata?.duration || undefined,
+        coverImageUrl,
+        duration: metadata?.duration,
         date: Timestamp.fromDate(messageDate),
         pastor: pastor.trim(),
         tag,
@@ -283,6 +285,9 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
         updatedAt: Timestamp.now()
       };
 
+      // Nettoyer les champs undefined (Firestore ne les accepte pas)
+      const data = cleanFirestoreData(rawData);
+
       if (message) {
         // Mise à jour
         const docRef = doc(firestore, 'messages', message.id);
@@ -290,10 +295,11 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
         toast({ title: "Succès", description: 'Message mis à jour avec succès' });
       } else {
         // Création
-        await addDoc(collection(firestore, 'messages'), {
-          ...data,
+        const createData = cleanFirestoreData({
+          ...rawData,
           createdAt: Timestamp.now()
         });
+        await addDoc(collection(firestore, 'messages'), createData);
         toast({ title: "Succès", description: 'Message créé avec succès' });
         
         // Réinitialiser le formulaire

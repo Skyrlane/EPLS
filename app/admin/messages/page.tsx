@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { collection, getDocs, query, orderBy, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, doc, updateDoc } from 'firebase/firestore';
+import { deleteMessage } from './actions';
 import { firestore } from '@/lib/firebase';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
@@ -108,14 +109,19 @@ export default function AdminMessagesPage() {
   // Supprimer un message
   const handleDelete = async (id: string) => {
     try {
-      await deleteDoc(doc(firestore, 'messages', id));
-      toast({ title: 'Succès', description: 'Message supprimé' });
-      await loadMessages();
+      const result = await deleteMessage(id);
+      
+      if (result.success) {
+        toast({ title: 'Succès', description: 'Message supprimé avec succès' });
+        await loadMessages();
+      } else {
+        throw new Error(result.error || 'Erreur inconnue');
+      }
     } catch (error) {
       console.error('Erreur suppression:', error);
       toast({
         title: 'Erreur',
-        description: 'Erreur lors de la suppression',
+        description: error instanceof Error ? error.message : 'Erreur lors de la suppression',
         variant: 'destructive',
       });
     } finally {
