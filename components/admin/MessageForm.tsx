@@ -21,6 +21,8 @@ import { firestore } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { extractYouTubeId, getYouTubeEmbedUrl } from '@/lib/youtube-utils';
 import { useYouTubeMetadata } from '@/hooks/use-youtube-metadata';
+import { uploadMessageThumbnail, compressImage } from '@/lib/upload-message-thumbnail';
+import { ImageIcon, XIcon } from 'lucide-react';
 
 interface MessageFormProps {
   message?: MessageItem | null;
@@ -56,6 +58,9 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
   const [tagColor, setTagColor] = useState('#3B82F6');
   const [isActive, setIsActive] = useState(true);
   const [status, setStatus] = useState<'published' | 'draft'>('published');
+  const [customThumbnailFile, setCustomThumbnailFile] = useState<File | null>(null);
+  const [customThumbnailPreview, setCustomThumbnailPreview] = useState<string>('');
+  const [uploadingThumbnail, setUploadingThumbnail] = useState(false);
 
   // Auto-fetch YouTube metadata
   const { metadata, loading: fetchingMetadata, error: fetchError } = useYouTubeMetadata(youtubeId);
@@ -77,6 +82,11 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
       setTagColor(message.tagColor);
       setIsActive(message.isActive);
       setStatus(message.status);
+      
+      // Charger la miniature personnalisée si elle existe
+      if (message.coverImageUrl) {
+        setCustomThumbnailPreview(message.coverImageUrl);
+      }
     }
   }, [message]);
 
@@ -99,6 +109,75 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
       if (metadata.description && !description) setDescription(metadata.description);
     }
   }, [metadata, message, title, description]);
+
+  // Gérer le changement de miniature
+  const handleThumbnailChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validation du type
+    if (!file.type.startsWith('image/')) {
+      toast({ 
+        title: 'Erreur', 
+        description: 'Veuillez sélectionner une image', 
+        variant: 'destructive' 
+      });
+      return;
+    }
+
+    // Validation de la taille (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ 
+        title: 'Erreur', 
+        description: 'Image trop grande (max 5MB)', 
+        variant: 'destructive' 
+      });
+      return;
+    }
+
+    try {
+      // Compresser l'image si nécessaire
+      let processedFile = file;
+      if (file.size > 1024 * 1024) { // Si > 1MB, compresser
+        toast({ 
+          title: 'Compression', 
+          description: 'Compression de l\'image en cours...' 
+        });
+        processedFile = await compressImage(file);
+      }
+
+      setCustomThumbnailFile(processedFile);
+
+      // Prévisualisation
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setCustomThumbnailPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(processedFile);
+
+      toast({ 
+        title: 'Succès', 
+        description: 'Miniature sélectionnée' 
+      });
+    } catch (error) {
+      console.error('Erreur traitement image:', error);
+      toast({ 
+        title: 'Erreur', 
+        description: 'Erreur lors du traitement de l\'image', 
+        variant: 'destructive' 
+      });
+    }
+  };
+
+  // Supprimer la miniature personnalisée
+  const handleRemoveCustomThumbnail = () => {
+    setCustomThumbnailFile(null);
+    setCustomThumbnailPreview('');
+    toast({ 
+      title: 'Succès', 
+      description: 'La miniature YouTube sera utilisée' 
+    });
+  };
 
   // Changer tag color quand le tag change
   const handleTagChange = (newTag: string) => {
@@ -139,6 +218,41 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
     setIsSaving(true);
 
     try {
+      // Upload de la miniature personnalisée si elle existe
+      let coverImageUrl = message?.coverImageUrl; // Garder l'ancienne si elle existe
+      
+      if (customThumbnailFile) {
+        setUploadingThumbnail(true);
+        toast({ 
+          title: 'Upload', 
+          description: 'Upload de la miniature en cours...' 
+        });
+        
+        try {
+          // Créer un ID temporaire si c'est un nouveau message
+          const messageIdForUpload = message?.id || `temp-${Date.now()}`;
+          coverImageUrl = await uploadMessageThumbnail(messageIdForUpload, customThumbnailFile);
+          
+          toast({ 
+            title: 'Succès', 
+            description: 'Miniature uploadée avec succès' 
+          });
+        } catch (uploadError) {
+          console.error('Erreur upload miniature:', uploadError);
+          toast({ 
+            title: 'Avertissement', 
+            description: 'Erreur lors de l\'upload de la miniature, la miniature YouTube sera utilisée', 
+            variant: 'destructive' 
+          });
+          coverImageUrl = undefined;
+        } finally {
+          setUploadingThumbnail(false);
+        }
+      } else if (!customThumbnailPreview && message?.coverImageUrl) {
+        // L'utilisateur a supprimé la miniature personnalisée
+        coverImageUrl = undefined;
+      }
+      
       const embedUrl = getYouTubeEmbedUrl(youtubeId);
       const thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
       
@@ -152,6 +266,7 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
         youtubeId,
         embedUrl,
         thumbnailUrl,
+        coverImageUrl: coverImageUrl || undefined,
         duration: metadata?.duration || undefined,
         date: Timestamp.fromDate(messageDate),
         pastor: pastor.trim(),
@@ -183,6 +298,8 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
         setDescription('');
         setPastor('');
         setDate('');
+        setCustomThumbnailFile(null);
+        setCustomThumbnailPreview('');
       }
 
       onSaved?.();
@@ -280,6 +397,86 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
           )}
         </CardContent>
       </Card>
+
+      {/* Miniature personnalisée */}
+      {youtubeId && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <ImageIcon className="h-5 w-5" />
+              Miniature personnalisée (optionnelle)
+            </CardTitle>
+            <CardDescription>
+              Par défaut, la miniature YouTube est utilisée. Uploadez une image personnalisée si nécessaire.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* Prévisualisation */}
+            <div className="space-y-2">
+              <Label>Aperçu de la miniature</Label>
+              <div className="relative w-full max-w-md aspect-video rounded-lg overflow-hidden border bg-muted">
+                <img
+                  src={
+                    customThumbnailPreview ||
+                    `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
+                  }
+                  alt="Aperçu miniature"
+                  className="w-full h-full object-cover"
+                />
+                {customThumbnailPreview && (
+                  <div className="absolute top-2 right-2">
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="h-8 w-8"
+                      onClick={handleRemoveCustomThumbnail}
+                      title="Supprimer la miniature personnalisée"
+                    >
+                      <XIcon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
+              </div>
+              {customThumbnailPreview && (
+                <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
+                  <CheckCircle className="h-3 w-3" />
+                  Miniature personnalisée sélectionnée
+                </p>
+              )}
+            </div>
+
+            {/* Input file */}
+            <div className="space-y-2">
+              <Label htmlFor="thumbnail-upload">
+                {customThumbnailPreview ? 'Changer la miniature' : 'Ajouter une miniature personnalisée'}
+              </Label>
+              <Input
+                id="thumbnail-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleThumbnailChange}
+                disabled={uploadingThumbnail}
+                className="cursor-pointer"
+              />
+              <p className="text-xs text-muted-foreground">
+                Formats acceptés : JPG, PNG, WebP. Taille max : 5MB. 
+                Dimensions recommandées : 1280x720px (16:9).
+              </p>
+            </div>
+
+            {/* Info */}
+            {!customThumbnailPreview && (
+              <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                <p className="text-sm text-blue-800 dark:text-blue-200">
+                  💡 Si vous n'uploadez pas de miniature personnalisée, 
+                  la miniature YouTube sera utilisée automatiquement.
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Informations du message */}
       <Card>
@@ -390,9 +587,9 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
             Annuler
           </Button>
         )}
-        <Button onClick={handleSave} disabled={isSaving || fetchingMetadata}>
-          {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {message ? 'Mettre à jour' : 'Créer le message'}
+        <Button onClick={handleSave} disabled={isSaving || fetchingMetadata || uploadingThumbnail}>
+          {(isSaving || uploadingThumbnail) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {uploadingThumbnail ? 'Upload miniature...' : (message ? 'Mettre à jour' : 'Créer le message')}
         </Button>
       </div>
     </div>

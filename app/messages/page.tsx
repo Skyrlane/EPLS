@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 };
 
 async function getMessages(): Promise<MessageItem[]> {
+  console.log('🎥 === CHARGEMENT DES MESSAGES ===');
+  
   try {
     const messagesQuery = query(
       collection(firestore, 'messages'),
@@ -25,10 +27,23 @@ async function getMessages(): Promise<MessageItem[]> {
     );
 
     const querySnapshot = await getDocs(messagesQuery);
+    
+    console.log(`✅ ${querySnapshot.size} message(s) trouvé(s) dans Firestore`);
+    
     const messages: MessageItem[] = [];
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
+      
+      console.log(`  📄 ${data.title}:`, {
+        id: doc.id,
+        isActive: data.isActive,
+        status: data.status,
+        date: data.date?.toDate ? data.date.toDate().toLocaleDateString('fr-FR') : 'Date invalide',
+        pastor: data.pastor,
+        tag: data.tag
+      });
+      
       messages.push({
         id: doc.id,
         title: data.title,
@@ -50,7 +65,9 @@ async function getMessages(): Promise<MessageItem[]> {
         updatedAt: data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date(),
       });
     });
-
+    
+    console.log(`✅ Total de ${messages.length} message(s) chargé(s) et filtré(s)`);
+    
     return messages;
   } catch (error) {
     console.error('Erreur chargement messages:', error);
