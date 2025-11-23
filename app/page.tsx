@@ -149,6 +149,156 @@ const latestNews = [
   },
 ]
 
+/**
+ * Section héro pour la page d'accueil
+ */
+function HeroSection() {
+  return (
+    <div className="relative h-[70vh] w-full overflow-hidden">
+      <ImageBlock
+        src="/images/hero/church-hero.png"
+        alt="Église Protestante Libre de Strasbourg"
+        type="hero"
+        priority={true}
+        width={1920}
+        height={780}
+        className="h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 md:bg-black/50" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center text-white">
+        <h1 className="max-w-3xl text-4xl font-bold leading-tight md:text-5xl lg:text-6xl drop-shadow-md">
+          Église Protestante Libre de Strasbourg
+        </h1>
+        <p className="mt-4 max-w-lg text-lg md:text-xl drop-shadow-md font-medium">
+          Une communauté chrétienne vivante, enracinée dans la Bible et tournée vers les autres
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Button asChild size="lg" className="rounded-full text-base bg-primary hover:bg-primary/90 text-primary-foreground shadow-md">
+            <Link href="/notre-eglise">Découvrir notre église</Link>
+          </Button>
+          <Button asChild variant="secondary" size="lg" className="rounded-full text-base bg-white text-primary hover:bg-gray-100 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 shadow-md">
+            <Link href="/culte/calendrier">
+              <span className="flex items-center">
+                <CalendarIcon className="mr-2 h-5 w-5" />
+                Nos activités
+              </span>
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function EventCard({ event }: { event: any }) {
+  return (
+    <Card className="overflow-hidden dark:bg-slate-900 dark:border-slate-800 card-hover">
+      <div className="relative h-40">
+        <ImageBlock
+          src={event.imageUrl || "/images/placeholder.jpg"}
+          alt={event.title}
+          className="h-full w-full object-cover"
+        />
+        {event.isRecurring && (
+          <Badge variant="secondary" className="absolute top-2 right-2 bg-primary/90 text-white">
+            Récurrent
+          </Badge>
+        )}
+      </div>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg">{event.title}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3 pb-2">
+        <div className="flex items-start gap-2">
+          <CalendarIcon className="mt-0.5 h-4 w-4 text-muted-foreground dark:text-gray-300" />
+          <div>
+            <p className="text-sm text-foreground dark:text-gray-200">{event.date}</p>
+            <p className="text-sm text-muted-foreground dark:text-gray-300">
+              <Clock10Icon className="mr-1 inline-block h-3 w-3" />
+              {event.time}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-start gap-2">
+          <MapPinIcon className="mt-0.5 h-4 w-4 text-muted-foreground dark:text-gray-300" />
+          <p className="text-sm text-muted-foreground dark:text-gray-300">{event.location}</p>
+        </div>
+      </CardContent>
+      <CardFooter>
+        <p className="text-sm text-muted-foreground dark:text-gray-300 mb-3">{event.description}</p>
+      </CardFooter>
+    </Card>
+  )
+}
+
+function EchoCard({ echo }: { echo: any }) {
+  return (
+    <Card className="overflow-hidden dark:bg-slate-900 dark:border-slate-800 card-hover">
+      <div className="relative aspect-[3/4] w-full">
+        <ImageBlock
+          src={echo.coverUrl}
+          alt={`${echo.title} - ${echo.edition}`}
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+          <h3 className="mb-1 text-lg font-bold">{echo.title}</h3>
+          <p className="text-sm font-medium text-white/90">Édition {echo.edition}</p>
+        </div>
+      </div>
+      <CardContent className="p-4">
+        <p className="mb-4 text-sm text-muted-foreground dark:text-gray-300">{echo.description}</p>
+        <div className="flex justify-between">
+          <Badge variant="outline" className="dark:border-gray-700 dark:text-gray-200">
+            {echo.year}
+          </Badge>
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="gap-1 dark:border-gray-700 dark:text-gray-200"
+          >
+            <Link href={echo.pdfUrl}>
+              <FileTextIcon className="h-4 w-4" />
+              PDF
+            </Link>
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+function CallToActionLocal({
+  title,
+  description,
+  buttonText,
+  buttonLink
+}: {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonLink: string;
+}) {
+  return (
+    <div className="bg-primary dark:bg-primary py-16 text-center">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-white mb-4">{title}</h2>
+        <p className="mx-auto max-w-2xl text-white/90 dark:text-gray-100 mb-8">
+          {description}
+        </p>
+        <Button 
+          asChild 
+          variant="outline"
+          className="bg-white text-primary hover:bg-white/90 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 dark:border-slate-700 px-6 py-3 text-base"
+        >
+          <Link href={buttonLink}>{buttonText}</Link>
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 export default async function Home() {
   // Charger les données Firebase (dernier message + dernier article)
   let latestMessageData = null;
