@@ -150,12 +150,15 @@ const latestNews = [
 ]
 
 export default async function Home() {
-  // Charger le dernier message depuis Firebase
+  // Charger les données Firebase (dernier message + dernier article)
   let latestMessageData = null;
+  let latestBlogArticle = null;
+  
   try {
     const { collection: firestoreCollection, getDocs, query: firestoreQuery, where, orderBy: firestoreOrderBy, limit } = await import('firebase/firestore');
     const { firestore } = await import('@/lib/firebase');
     
+    // Charger le dernier message
     console.log('🎥 === CHARGEMENT DERNIER MESSAGE (Page d\'accueil) ===');
     
     const messagesRef = firestoreCollection(firestore, 'messages');
@@ -199,18 +202,10 @@ export default async function Home() {
     } else {
       console.log('⚠️ Aucun message publié trouvé');
     }
-  } catch (error) {
-    console.error('❌ Erreur chargement dernier message:', error);
-  }
-  
-  // Charger le dernier article du blog
-  let latestBlogArticle = null;
-  try {
-    const { collection: firestoreCollection, getDocs, query: firestoreQuery, where, orderBy: firestoreOrderBy, limit } = await import('firebase/firestore');
-    const { firestore } = await import('@/lib/firebase');
     
+    // Charger le dernier article du blog
     const articlesRef = firestoreCollection(firestore, 'articles');
-    const q = firestoreQuery(
+    const articlesQ = firestoreQuery(
       articlesRef,
       where('status', '==', 'published'),
       where('isActive', '==', true),
@@ -218,9 +213,9 @@ export default async function Home() {
       limit(1)
     );
     
-    const snapshot = await getDocs(q);
-    if (!snapshot.empty) {
-      const doc = snapshot.docs[0];
+    const articlesSnapshot = await getDocs(articlesQ);
+    if (!articlesSnapshot.empty) {
+      const doc = articlesSnapshot.docs[0];
       const data = doc.data();
       latestBlogArticle = {
         id: doc.id,
@@ -231,7 +226,7 @@ export default async function Home() {
       };
     }
   } catch (error) {
-    console.error('Erreur chargement dernier article:', error);
+    console.error('❌ Erreur chargement données Firebase:', error);
   }
 
   return (
