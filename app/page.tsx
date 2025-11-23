@@ -346,7 +346,7 @@ export default async function Home() {
       
       // Si aucune miniature n'est définie mais qu'on a un youtubeId, générer l'URL
       if (!thumbnailUrl && data.youtubeId) {
-        thumbnailUrl = `https://img.youtube.com/vi/${data.youtubeId}/maxresdefault.jpg`;
+        thumbnailUrl = `https://img.youtube.com/vi/${data.youtubeId}/hqdefault.jpg`;
         console.log('🔧 Miniature YouTube générée depuis youtubeId:', thumbnailUrl);
       }
       
@@ -354,7 +354,7 @@ export default async function Home() {
       if (!thumbnailUrl && data.youtubeUrl) {
         const youtubeIdMatch = data.youtubeUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?\/]+)/);
         if (youtubeIdMatch && youtubeIdMatch[1]) {
-          thumbnailUrl = `https://img.youtube.com/vi/${youtubeIdMatch[1]}/maxresdefault.jpg`;
+          thumbnailUrl = `https://img.youtube.com/vi/${youtubeIdMatch[1]}/hqdefault.jpg`;
           console.log('🔧 Miniature YouTube générée depuis youtubeUrl:', thumbnailUrl);
         }
       }

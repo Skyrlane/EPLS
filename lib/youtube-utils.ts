@@ -109,7 +109,7 @@ export async function getYouTubeMetadata(videoId: string) {
  * Thumbnail par défaut YouTube (sans API)
  */
 export function getYouTubeThumbnail(videoId: string): string {
-  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 }
 
 /**

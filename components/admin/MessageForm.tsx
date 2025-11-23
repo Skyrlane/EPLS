@@ -255,7 +255,7 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
       }
       
       const embedUrl = getYouTubeEmbedUrl(youtubeId);
-      const thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+      const thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
       
       console.log('💾 === SAUVEGARDE MESSAGE ===');
       console.log('  - youtubeId:', youtubeId);
@@ -429,7 +429,7 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
                 <img
                   src={
                     customThumbnailPreview ||
-                    `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`
+                    `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
                   }
                   alt="Aperçu miniature"
                   className="w-full h-full object-cover"
