@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ImageBlock } from "@/components/ui/image-block";
+// Image standard pour miniatures YouTube (bypass Next.js optimization)
 import { PlayCircleIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -35,11 +35,11 @@ export function LatestMessageCard({ message, className }: LatestMessageCardProps
     )}>
       <Link href={`/messages/${message.id}`} className="relative block">
         <div className="aspect-video w-full overflow-hidden">
-          <ImageBlock
+          <img
             src={message.coverImage || "/images/messages/default-message.jpg"}
             alt={`Image du message: ${message.title}`}
             className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-            type="card"
+            loading="lazy"
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="rounded-full bg-white/20 backdrop-blur-sm p-3 md:p-4 hover:bg-white/30 transition-all transform hover:scale-110">

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+// Image standard pour miniatures YouTube (bypass Next.js optimization)
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -41,12 +41,11 @@ export function MessageYouTubeCard({ message, className }: MessageYouTubeCardPro
       <CardContent className="p-0">
         {/* Thumbnail avec overlay durée */}
         <Link href={`/messages/${message.id}`} className="relative block aspect-video overflow-hidden bg-muted">
-          <Image
+          <img
             src={thumbnailSrc}
             alt={message.title}
-            fill
-            className="object-cover transition-transform group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="w-full h-full object-cover transition-transform group-hover:scale-105"
+            loading="lazy"
           />
           
           {/* Overlay play icon */}
