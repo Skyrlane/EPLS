@@ -54,7 +54,7 @@ const nextConfig = {
       },
     ],
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; img-src 'self' data: https://img.youtube.com https://i.ytimg.com https://*.googleusercontent.com https://*.firebasestorage.app https://images.unsplash.com; sandbox;",
   },
   async rewrites() {
     return [

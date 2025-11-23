@@ -19,7 +19,7 @@ because it violates the following Content Security Policy directive:
 
 ## ✅ Solution appliquée
 
-### Modification de `next.config.mjs`
+### 1. Modification de `next.config.mjs` - remotePatterns
 
 Ajout de 2 domaines YouTube aux `remotePatterns` :
 
@@ -54,14 +54,35 @@ const nextConfig = {
    - Parfois utilisé par YouTube pour certaines miniatures
    - Garantit compatibilité maximale
 
+### 2. Modification de `next.config.mjs` - contentSecurityPolicy
+
+Ajout de la directive `img-src` à la CSP :
+
+```javascript
+// ❌ AVANT (trop restrictif)
+contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+
+// ✅ APRÈS (autorise images YouTube + Firebase + Unsplash)
+contentSecurityPolicy: "default-src 'self'; script-src 'none'; img-src 'self' data: https://img.youtube.com https://i.ytimg.com https://*.googleusercontent.com https://*.firebasestorage.app https://images.unsplash.com; sandbox;",
+```
+
+**Pourquoi ?** Les `remotePatterns` autorisent Next.js à optimiser les images, mais la CSP bloquait le chargement direct des images. Il fallait **autoriser explicitement** les sources d'images dans la directive `img-src`.
+
 ### Restrictions appliquées
 
+**remotePatterns** :
 ```javascript
 pathname: "/vi/**"
 ```
 - Autorise uniquement les chemins commençant par `/vi/`
 - Empêche le chargement d'autres ressources YouTube non désirées
 - Sécurité : limitation du scope aux miniatures vidéo uniquement
+
+**contentSecurityPolicy** :
+- `img-src 'self'` : images du même domaine
+- `data:` : images en base64
+- Domaines spécifiques autorisés (YouTube, Firebase, Unsplash)
+- `sandbox;` : maintien des restrictions sandbox
 
 ---
 
