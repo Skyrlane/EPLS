@@ -69,8 +69,15 @@ async function getMessages(): Promise<MessageItem[]> {
     console.log(`✅ Total de ${messages.length} message(s) chargé(s) et filtré(s)`);
     
     return messages;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Erreur chargement messages:', error);
+    
+    // Si c'est l'erreur d'index manquant, afficher un message clair
+    if (error?.code === 'failed-precondition' || error?.message?.includes('index')) {
+      console.error('⚠️ INDEX FIRESTORE MANQUANT - Voir FIREBASE_INDEX_INSTRUCTIONS.md');
+    }
+    
+    // Retourner un tableau vide pour que la page s'affiche quand même
     return [];
   }
 }
@@ -152,10 +159,19 @@ export default async function MessagesPage() {
       >
         {messages.length === 0 ? (
           <Card>
-            <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">
+            <CardContent className="py-12 text-center space-y-4">
+              <p className="text-muted-foreground text-lg">
                 Aucun message disponible pour le moment.
               </p>
+              <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 max-w-2xl mx-auto text-left">
+                <p className="text-sm text-blue-800 dark:text-blue-200 font-semibold mb-2">
+                  ℹ️ Configuration requise
+                </p>
+                <p className="text-sm text-blue-800 dark:text-blue-200">
+                  Si vous venez de déployer le site, vous devez créer un index Firestore.
+                  Consultez le fichier <code className="bg-blue-100 dark:bg-blue-900 px-1 rounded">FIREBASE_INDEX_INSTRUCTIONS.md</code> dans le code source.
+                </p>
+              </div>
             </CardContent>
           </Card>
         ) : (

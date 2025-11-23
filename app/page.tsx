@@ -154,6 +154,7 @@ export default async function Home() {
   let latestMessageData = null;
   let latestBlogArticle = null;
   
+  // Essayer de charger les données, mais ne pas bloquer le rendu si ça échoue
   try {
     const { collection: firestoreCollection, getDocs, query: firestoreQuery, where, orderBy: firestoreOrderBy, limit } = await import('firebase/firestore');
     const { firestore } = await import('@/lib/firebase');
@@ -225,8 +226,17 @@ export default async function Home() {
         publishedAt: data.publishedAt?.toDate(),
       };
     }
-  } catch (error) {
+  } catch (error: any) {
+    // En production, logger l'erreur mais continuer le rendu
     console.error('❌ Erreur chargement données Firebase:', error);
+    
+    // Si c'est l'erreur d'index manquant, afficher un message clair
+    if (error?.code === 'failed-precondition' || error?.message?.includes('index')) {
+      console.error('⚠️ INDEX FIRESTORE MANQUANT - Les messages ne s\'afficheront pas tant que l\'index n\'est pas créé.');
+      console.error('📝 Voir FIREBASE_INDEX_INSTRUCTIONS.md pour créer l\'index');
+    }
+    
+    // Continuer avec latestMessageData = null, le site s'affichera sans messages
   }
 
   return (
