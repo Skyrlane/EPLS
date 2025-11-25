@@ -168,7 +168,6 @@ export default function GaleriePhotos() {
       const photosQuery = query(
         photosRef,
         where('isActive', '==', true),
-        orderBy('order', 'asc'),
         orderBy('createdAt', 'desc')
       );
       const photosSnap = await getDocs(photosQuery);
