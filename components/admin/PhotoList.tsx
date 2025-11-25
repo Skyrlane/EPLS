@@ -58,24 +58,39 @@ export function PhotoList({ photos, tags, onUpdate, onDelete }: PhotoListProps) 
     if (!confirm(`Supprimer "${photo.title}" ?`)) return;
 
     try {
-      // Supprimer les fichiers Storage
-      const paths = [
-        `gallery/original/${photo.id}.webp`,
-        `gallery/medium/${photo.id}.webp`,
-        `gallery/thumbnail/${photo.id}.webp`
-      ];
+      // Extraire les chemins Storage depuis les URLs
+      const extractPath = (url: string) => {
+        try {
+          const urlObj = new URL(url);
+          const path = decodeURIComponent(urlObj.pathname.split('/o/')[1]?.split('?')[0] || '');
+          return path;
+        } catch {
+          return '';
+        }
+      };
 
+      const paths = [
+        extractPath(photo.originalUrl),
+        extractPath(photo.mediumUrl),
+        extractPath(photo.thumbnailUrl)
+      ].filter(p => p); // Filtrer les chemins vides
+
+      console.log('🗑️ Suppression fichiers Storage:', paths);
+
+      // Supprimer les fichiers Storage
       await Promise.all(
-        paths.map(path => deleteObject(ref(storage, path)).catch(() => {}))
+        paths.map(path => deleteObject(ref(storage, path)).catch(err => {
+          console.error(`⚠️ Échec suppression ${path}:`, err);
+        }))
       );
 
-      // Supprimer le document
+      // Supprimer le document Firestore
       await deleteDoc(doc(firestore, 'gallery_photos', photo.id));
-      
+
       toast({ title: 'Succès', description: 'Photo supprimée' });
       onDelete();
     } catch (error) {
-      console.error('Erreur suppression:', error);
+      console.error('❌ Erreur suppression:', error);
       toast({ title: 'Erreur', description: 'Impossible de supprimer', variant: 'destructive' });
     }
   };
