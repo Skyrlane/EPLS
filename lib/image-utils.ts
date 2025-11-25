@@ -25,13 +25,15 @@ export async function loadImage(file: File): Promise<HTMLImageElement> {
     const url = URL.createObjectURL(file);
 
     img.onload = () => {
+      console.log('  ✅ Image chargée:', `${img.width}x${img.height}`);
       URL.revokeObjectURL(url);
       resolve(img);
     };
 
-    img.onerror = () => {
+    img.onerror = (error) => {
+      console.error('  ❌ Échec chargement image:', error);
       URL.revokeObjectURL(url);
-      reject(new Error('Impossible de charger l\'image'));
+      reject(new Error(`Impossible de charger l'image (format corrompu ?)`));
     };
 
     img.src = url;
@@ -106,7 +108,8 @@ export async function resizeImage(
 
   const ctx = canvas.getContext('2d');
   if (!ctx) {
-    throw new Error('Impossible de créer le contexte canvas');
+    console.error('  ❌ Échec création contexte Canvas 2D');
+    throw new Error('Impossible de créer le contexte canvas (problème navigateur ?)');
   }
 
   // Dessiner l'image redimensionnée
@@ -117,9 +120,11 @@ export async function resizeImage(
     canvas.toBlob(
       (blob) => {
         if (blob) {
+          console.log(`  ✅ Blob WebP créé: ${(blob.size / 1024).toFixed(0)} KB`);
           resolve(blob);
         } else {
-          reject(new Error('Impossible de créer le blob'));
+          console.error('  ❌ Échec création blob WebP');
+          reject(new Error('Impossible de créer le blob WebP (navigateur non compatible ?)'));
         }
       },
       'image/webp',

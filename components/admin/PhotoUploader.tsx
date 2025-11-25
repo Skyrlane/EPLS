@@ -69,6 +69,15 @@ export function PhotoUploader({ tags, onUploadComplete, maxPhotos, currentCount 
       }
 
       const previewUrl = URL.createObjectURL(file);
+      
+      // 🔍 DEBUG: Log création preview
+      console.log('✅ Preview créée:', {
+        fileName: file.name,
+        fileSize: `${(file.size / 1024).toFixed(0)} KB`,
+        fileType: file.type,
+        previewUrl: previewUrl.substring(0, 50) + '...'
+      });
+      
       newPhotos.push({
         file,
         previewUrl,
@@ -133,25 +142,32 @@ export function PhotoUploader({ tags, onUploadComplete, maxPhotos, currentCount 
       const photo = photos[i];
       
       try {
-        console.log(`📤 Upload photo ${i + 1}/${photos.length}: ${photo.file.name}`);
+        console.log(`
+📤 ===== UPLOAD ${i + 1}/${photos.length} =====`);
+        console.log('📄 Fichier:', photo.file.name, `(${(photo.file.size / 1024).toFixed(0)} KB)`);
 
         // Générer les 3 versions
+        console.log('🔄 Génération des versions d\'image...');
         const { original, medium, thumbnail, originalDimensions } = await generateImageVersions(photo.file);
+        console.log('✅ Versions générées avec succès');
 
         // Générer un ID unique
         const photoId = `photo_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
         // Upload vers Storage (3 versions)
+        console.log('☁️ Upload vers Storage (3 fichiers)...');
         const [originalUrl, mediumUrl, thumbnailUrl] = await Promise.all([
           uploadToStorage(original.blob, `gallery/original/${photoId}.webp`),
           uploadToStorage(medium.blob, `gallery/medium/${photoId}.webp`),
           uploadToStorage(thumbnail.blob, `gallery/thumbnail/${photoId}.webp`)
         ]);
+        console.log('✅ Upload Storage réussi');
 
         // Libérer les URLs temporaires
         revokeObjectURLs(original.url, medium.url, thumbnail.url);
 
         // Créer le document Firestore
+        console.log('💾 Création document Firestore...');
         await addDoc(collection(firestore, 'gallery_photos'), {
           title: photo.title,
           description: photo.description,
@@ -180,8 +196,27 @@ export function PhotoUploader({ tags, onUploadComplete, maxPhotos, currentCount 
         setUploadProgress(Math.round((uploaded / photos.length) * 100));
 
       } catch (error) {
-        console.error(`❌ Erreur upload ${photo.file.name}:`, error);
-        errors.push(`${photo.file.name}: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
+        console.error(`❌ ERREUR UPLOAD ${photo.file.name}:`, error);
+        
+        // Créer un message d'erreur détaillé
+        let errorMessage = `${photo.file.name}: `;
+        
+        if (error instanceof Error) {
+          // Détecter le type d'erreur
+          if (error.message.includes('storage')) {
+            errorMessage += `Échec upload Storage (${error.message})`;
+          } else if (error.message.includes('firestore')) {
+            errorMessage += `Échec création Firestore (${error.message})`;
+          } else if (error.message.includes('canvas') || error.message.includes('blob')) {
+            errorMessage += `Échec traitement image (${error.message})`;
+          } else {
+            errorMessage += error.message;
+          }
+        } else {
+          errorMessage += 'Erreur inconnue';
+        }
+        
+        errors.push(errorMessage);
       }
     }
 
@@ -201,11 +236,17 @@ export function PhotoUploader({ tags, onUploadComplete, maxPhotos, currentCount 
     }
 
     if (errors.length > 0) {
-      console.error('Erreurs upload:', errors);
+      console.error('❌ Erreurs upload détaillées:', errors);
+      
+      // Afficher les erreurs détaillées (max 3 pour ne pas surcharger)
+      const errorSummary = errors.slice(0, 3).join('\n');
+      const remainingErrors = errors.length > 3 ? `\n... et ${errors.length - 3} autre(s) erreur(s)` : '';
+      
       toast({
-        title: 'Erreurs',
-        description: `${errors.length} erreur(s) lors de l'upload`,
-        variant: 'destructive'
+        title: `Erreurs (${errors.length} photo(s))`,
+        description: errorSummary + remainingErrors,
+        variant: 'destructive',
+        duration: 10000 // 10 secondes pour lire les erreurs
       });
     }
   };
@@ -362,8 +403,19 @@ export function PhotoUploader({ tags, onUploadComplete, maxPhotos, currentCount 
 
 // Helper pour upload vers Storage
 async function uploadToStorage(blob: Blob, path: string): Promise<string> {
-  const storageRef = ref(storage, path);
-  await uploadBytes(storageRef, blob);
-  const url = await getDownloadURL(storageRef);
-  return url;
+  try {
+    const storageRef = ref(storage, path);
+    
+    console.log(`  📤 Upload: ${path} (${(blob.size / 1024).toFixed(0)} KB)`);
+    await uploadBytes(storageRef, blob);
+    
+    console.log(`  🔗 Récupération URL...`);
+    const url = await getDownloadURL(storageRef);
+    
+    console.log(`  ✅ URL: ${url.substring(0, 60)}...`);
+    return url;
+  } catch (error) {
+    console.error(`  ❌ Échec upload ${path}:`, error);
+    throw new Error(`Upload Storage échoué: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
+  }
 }
