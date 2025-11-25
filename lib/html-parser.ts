@@ -141,8 +141,7 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
   
   const announcements: ParsedAnnouncement[] = [];
 
-  // NOUVELLE APPROCHE : Détecter toutes les annonces par leur pattern de date
-  // Pattern : <span class="text-info"><strong>Date...</strong></span>
+  // Détecter toutes les annonces par leur pattern de date
   const datePattern = /<span[^>]*class="text-info"[^>]*>\s*<strong>([^<]+)<\/strong>\s*<\/span>/gi;
   
   // Trouver toutes les positions de dates
@@ -173,7 +172,7 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
     const endIndex = nextMatch ? nextMatch.index : html.length;
     const block = html.substring(startIndex, endIndex);
 
-    console.log(`\n📝 Parsing annonce ${i + 1}/${dateMatches.length}`);
+    console.log(`\n📝 Parsing bloc de date ${i + 1}/${dateMatches.length}`);
     console.log('Date string:', currentMatch.dateString);
 
     try {
@@ -187,104 +186,128 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
       const time = extractTime(currentMatch.dateString);
       console.log('Date parsée:', date.toLocaleDateString('fr-FR'), time);
 
-      // Extraire le titre (première balise <strong> après le tiret)
-      const titleMatch = block.match(/-\s*<strong>([^<]+)<\/strong>/i);
-      if (!titleMatch) {
-        console.warn('⚠️ Titre non trouvé, ignoré');
+      // NOUVEAU : Détecter TOUS les titres dans ce bloc (pour gérer plusieurs événements le même jour)
+      const titleRegex = /-\s*<strong>([^<]+)<\/strong>/gi;
+      const titleMatches: Array<{ title: string; startIndex: number }> = [];
+      let titleMatch;
+      
+      while ((titleMatch = titleRegex.exec(block)) !== null) {
+        titleMatches.push({
+          title: titleMatch[1].trim(),
+          startIndex: titleMatch.index
+        });
+      }
+
+      if (titleMatches.length === 0) {
+        console.warn('⚠️ Aucun titre trouvé, ignoré');
         continue;
       }
 
-      const title = titleMatch[1].trim();
-      console.log('Titre:', title);
+      console.log(`📌 ${titleMatches.length} événement(s) détecté(s) dans ce bloc`);
 
-      // Extraire le texte après le titre
-      const afterTitle = block.substring(block.indexOf(titleMatch[0]) + titleMatch[0].length);
+      // Parser chaque titre comme une annonce séparée
+      for (let j = 0; j < titleMatches.length; j++) {
+        const titleData = titleMatches[j];
+        const title = titleData.title;
+        
+        console.log(`\n  📌 Événement ${j + 1}/${titleMatches.length}: "${title}"`);
 
-      // Parser le lieu
-      let locationName = '';
-      let locationAddress = '';
+        // Extraire le contexte de ce titre (du titre jusqu'au prochain titre ou fin du bloc)
+        const titleStartIndex = titleData.startIndex;
+        const nextTitleIndex = titleMatches[j + 1]?.startIndex || block.length;
+        const titleContext = block.substring(titleStartIndex, nextTitleIndex);
 
-      // Pattern 1: "au Lieu (Adresse)" ou "au Lieu, Adresse"
-      const locationMatch1 = afterTitle.match(/\s+(?:au|à l'|à la|chez)\s+([^(<,]+)(?:\s*\(([^)]+)\)|,\s*([^<.]+))?/i);
-      if (locationMatch1) {
-        locationName = locationMatch1[1].trim();
-        locationAddress = (locationMatch1[2] || locationMatch1[3] || '').trim();
-      } else {
-        // Pattern 2: "- Lieu, Adresse"
-        const locationMatch2 = afterTitle.match(/-\s*([^,<]+),\s*([^<]+)/i);
-        if (locationMatch2) {
-          locationName = locationMatch2[1].trim();
-          locationAddress = locationMatch2[2].trim();
+        // Essayer d'extraire une heure spécifique dans le contexte du titre (ex: "à 10h00")
+        const specificTimeMatch = titleContext.match(/à\s+(\d{1,2})h(\d{2})/i);
+        let eventTime = time;
+        let eventDate = new Date(date);
+        
+        if (specificTimeMatch) {
+          const hour = parseInt(specificTimeMatch[1]);
+          const minute = parseInt(specificTimeMatch[2]);
+          eventDate.setHours(hour, minute);
+          eventTime = `${specificTimeMatch[1]}h${specificTimeMatch[2]}`;
+          console.log(`    ⏰ Heure spécifique: ${eventTime}`);
         }
-      }
 
-      console.log('Lieu:', locationName, '|', locationAddress);
+        // Parser le lieu
+        let locationName = '';
+        let locationAddress = '';
 
-      // Extraire les items de la liste <ul>
-      const ulMatch = block.match(/<ul>[\s\S]*?<\/ul>/i);
-      const details: string[] = [];
+        const locationMatch1 = titleContext.match(/\s+(?:au|à l'|à la|chez)\s+([^(<,]+)(?:\s*\(([^)]+)\)|,\s*([^<.]+))?/i);
+        if (locationMatch1) {
+          locationName = locationMatch1[1].trim();
+          locationAddress = (locationMatch1[2] || locationMatch1[3] || '').trim();
+        }
 
-      if (ulMatch) {
-        const ulContent = ulMatch[0];
-        const liRegex = /<li[^>]*>([^<]+)<\/li>/gi;
-        let liMatch;
-        while ((liMatch = liRegex.exec(ulContent)) !== null) {
-          const text = liMatch[1].trim();
-          if (text && !text.toLowerCase().includes('billetterie') && text !== ':') {
-            details.push(text);
+        console.log('    📍 Lieu:', locationName || '(non spécifié)', '|', locationAddress || '(pas d\'adresse)');
+
+        // Extraire les items de la liste <ul> dans le contexte de ce titre
+        const ulMatch = titleContext.match(/<ul>[\s\S]*?<\/ul>/i);
+        const details: string[] = [];
+
+        if (ulMatch) {
+          const ulContent = ulMatch[0];
+          const liRegex = /<li[^>]*>([^<]+)<\/li>/gi;
+          let liMatch;
+          while ((liMatch = liRegex.exec(ulContent)) !== null) {
+            const text = liMatch[1].trim();
+            if (text && !text.toLowerCase().includes('billetterie') && text !== ':') {
+              details.push(text);
+            }
           }
         }
-      }
 
-      console.log('Détails:', details);
+        console.log('    📋 Détails:', details.length > 0 ? details : '(aucun)');
 
-      // Parser la tarification
-      const pricing: ParsedAnnouncement['pricing'] = {};
-      let hasPricing = false;
-      const filteredDetails: string[] = [];
+        // Parser la tarification
+        const pricing: ParsedAnnouncement['pricing'] = {};
+        let hasPricing = false;
+        const filteredDetails: string[] = [];
 
-      for (const detail of details) {
-        const detailLower = detail.toLowerCase();
+        for (const detail of details) {
+          const detailLower = detail.toLowerCase();
 
-        if (detailLower.includes('gratuit jusqu') || detailLower.includes('entrée libre')) {
-          pricing.free = detail;
-          hasPricing = true;
-        } else if (detailLower.match(/^\d+-\d+\s*ans/)) {
-          pricing.child = detail;
-          hasPricing = true;
-        } else if (detailLower.includes('étudiant')) {
-          pricing.student = detail;
-          hasPricing = true;
-        } else if (detailLower.includes('adulte')) {
-          pricing.adult = detail;
-          hasPricing = true;
-        } else {
-          filteredDetails.push(detail);
+          if (detailLower.includes('gratuit jusqu') || detailLower.includes('entrée libre')) {
+            pricing.free = detail;
+            hasPricing = true;
+          } else if (detailLower.match(/^\d+-\d+\s*ans/)) {
+            pricing.child = detail;
+            hasPricing = true;
+          } else if (detailLower.includes('étudiant')) {
+            pricing.student = detail;
+            hasPricing = true;
+          } else if (detailLower.includes('adulte')) {
+            pricing.adult = detail;
+            hasPricing = true;
+          } else {
+            filteredDetails.push(detail);
+          }
         }
+
+        // Détecter le type
+        const type = detectEventType(title);
+        const typeConfig = EVENT_TYPES[type];
+
+        console.log('    🏷️ Type:', type, '| Tag:', typeConfig.tag);
+
+        announcements.push({
+          title,
+          date: eventDate,
+          time: eventTime,
+          location: {
+            name: locationName || 'À définir',
+            address: locationAddress || ''
+          },
+          details: filteredDetails.length > 0 ? filteredDetails : undefined,
+          pricing: hasPricing ? pricing : undefined,
+          type,
+          tag: typeConfig.tag,
+          tagColor: typeConfig.color
+        });
+
+        console.log('    ✅ Annonce ajoutée');
       }
-
-      // Détecter le type
-      const type = detectEventType(title);
-      const typeConfig = EVENT_TYPES[type];
-
-      console.log('Type:', type, '| Tag:', typeConfig.tag);
-
-      announcements.push({
-        title,
-        date,
-        time,
-        location: {
-          name: locationName || 'À définir',
-          address: locationAddress || ''
-        },
-        details: filteredDetails.length > 0 ? filteredDetails : undefined,
-        pricing: hasPricing ? pricing : undefined,
-        type,
-        tag: typeConfig.tag,
-        tagColor: typeConfig.color
-      });
-
-      console.log('✅ Annonce ajoutée');
     } catch (error) {
       console.error('❌ Erreur lors du parsing du bloc:', error);
       continue;
