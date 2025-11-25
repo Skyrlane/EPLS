@@ -44,23 +44,56 @@ function parseDate(dateString: string): Date | null {
     'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11
   };
 
-  const regex = /(\d{1,2})\s+(\w+)\s+(\d{4})\s+à\s+(\d{1,2})h(\d{2})/i;
-  const match = dateString.match(regex);
+  // Pattern pour les mots (avec accents français)
+  const wordPattern = '[a-zA-Zà-ÿÀ-Ÿ]+';
 
-  if (!match) {
-    console.warn(`⚠️ Pattern de date non reconnu : "${dateString}"`);
-    return null;
+  // Pattern 1 : "25 novembre 2025 à 20h15" OU "Mardi 25 novembre 2025 à 20h15"
+  const pattern1 = new RegExp(`(?:${wordPattern}\\s+)?(\\d{1,2})\\s+(${wordPattern})\\s+(\\d{4})\\s+à\\s+(\\d{1,2})h(\\d{2})`, 'i');
+  const match1 = dateString.match(pattern1);
+  if (match1) {
+    const [, day, month, year, hour, minute] = match1;
+    const monthIndex = months[month.toLowerCase()];
+    if (monthIndex !== undefined) {
+      return new Date(parseInt(year), monthIndex, parseInt(day), parseInt(hour), parseInt(minute));
+    }
   }
 
-  const [, day, month, year, hour, minute] = match;
-  const monthIndex = months[month.toLowerCase()];
-
-  if (monthIndex === undefined) {
-    console.warn(`⚠️ Mois non reconnu : "${month}"`);
-    return null;
+  // Pattern 2 : "13 décembre 2025 de 11h00 à 18h00" OU "Samedi 13 décembre 2025 de 11h00 à 18h00"
+  const pattern2 = new RegExp(`(?:${wordPattern}\\s+)?(\\d{1,2})\\s+(${wordPattern})\\s+(\\d{4})\\s+de\\s+(\\d{1,2})h(\\d{2})`, 'i');
+  const match2 = dateString.match(pattern2);
+  if (match2) {
+    const [, day, month, year, hour, minute] = match2;
+    const monthIndex = months[month.toLowerCase()];
+    if (monthIndex !== undefined) {
+      return new Date(parseInt(year), monthIndex, parseInt(day), parseInt(hour), parseInt(minute));
+    }
   }
 
-  return new Date(parseInt(year), monthIndex, parseInt(day), parseInt(hour), parseInt(minute));
+  // Pattern 3 : "28 et Samedi 29 novembre 2025" (plage de dates, on prend la première date)
+  const pattern3 = new RegExp(`(\\d{1,2})\\s+et\\s+(?:${wordPattern}\\s+)?(\\d{1,2})\\s+(${wordPattern})\\s+(\\d{4})`, 'i');
+  const match3 = dateString.match(pattern3);
+  if (match3) {
+    const [, day1, day2, month, year] = match3;
+    const monthIndex = months[month.toLowerCase()];
+    if (monthIndex !== undefined) {
+      // Utiliser la première date
+      return new Date(parseInt(year), monthIndex, parseInt(day1), 0, 0);
+    }
+  }
+
+  // Pattern 4 : "30 novembre 2025" OU "Dimanche 30 novembre 2025" (sans heure, par défaut 00h00)
+  const pattern4 = new RegExp(`(?:${wordPattern}\\s+)?(\\d{1,2})\\s+(${wordPattern})\\s+(\\d{4})\\s*$`, 'i');
+  const match4 = dateString.match(pattern4);
+  if (match4) {
+    const [, day, month, year] = match4;
+    const monthIndex = months[month.toLowerCase()];
+    if (monthIndex !== undefined) {
+      return new Date(parseInt(year), monthIndex, parseInt(day), 0, 0);
+    }
+  }
+
+  console.warn(`⚠️ Pattern de date non reconnu : "${dateString}"`);
+  return null;
 }
 
 /**
