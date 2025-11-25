@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
 
   response.headers.set(
     "Content-Security-Policy",
-    `frame-ancestors 'none'; default-src 'self'; script-src ${scriptSrc}; connect-src 'self' https://*.firebase.app https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com; img-src 'self' data: https://*.googleusercontent.com https://*.firebasestorage.app;`
+    `frame-ancestors 'none'; default-src 'self'; script-src ${scriptSrc}; connect-src 'self' https://*.firebase.app https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com; frame-src 'self' https://*.firebaseapp.com https://accounts.google.com; img-src 'self' data: blob: https://*.googleusercontent.com https://*.firebasestorage.app; style-src 'self' 'unsafe-inline';`
   );
 
   // Empêcher la mise en cache des informations sensibles
