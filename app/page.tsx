@@ -41,6 +41,7 @@ import { ImportantAnnouncementsSection } from "@/components/announcements/import
 import { UpcomingEventsSection } from "@/components/announcements/upcoming-events-section"
 import NextDynamic from 'next/dynamic'
 import { LatestBlogArticle } from '@/components/home/latest-blog-article'
+import { GalleryCarousel } from '@/components/home/GalleryCarousel'
 
 export const metadata: Metadata = {
   title: "Accueil | Église Protestante Libre de Strasbourg",
@@ -549,6 +550,34 @@ export default async function Home() {
           <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md">
             <Link href="/blog">
               Voir tous les articles
+              <ArrowRightIcon className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </SectionContainer>
+
+      {/* Galerie photos - Carousel */}
+      <SectionContainer background="white" className="section-spacing">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold tracking-tight mb-2">Nos Moments en Images</h2>
+          <p className="text-muted-foreground max-w-3xl mx-auto">
+            Découvrez les temps forts de notre communauté à travers nos photos
+          </p>
+        </div>
+        
+        <div className="max-w-4xl mx-auto">
+          <GalleryCarousel
+            autoPlayInterval={4000}
+            maxPhotos={10}
+            showTitle={true}
+            showDescription={true}
+          />
+        </div>
+        
+        <div className="text-center mt-8">
+          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md">
+            <Link href="/galerie">
+              Voir toute la galerie
               <ArrowRightIcon className="ml-2 h-4 w-4" />
             </Link>
           </Button>

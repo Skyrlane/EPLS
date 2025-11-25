@@ -339,3 +339,70 @@ export interface MessageItem {
   createdAt: Date;
   updatedAt: Date;
 }
+
+/**
+ * Tag de galerie photo
+ */
+export interface GalleryTag {
+  id: string;
+  name: string;                // "Culte", "Événements", "Jeunesse"
+  slug: string;                // "culte", "evenements", "jeunesse"
+  color: string;               // Code couleur hexa pour le badge
+  count?: number;              // Nombre de photos avec ce tag (calculé)
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/**
+ * Photo de galerie
+ */
+export interface GalleryPhoto {
+  id: string;
+  title: string;               // "Culte de Noël 2024"
+  description: string;         // Description courte
+  
+  // URLs des différentes versions (générées à l'upload)
+  originalUrl: string;         // Version originale (max 1920px)
+  mediumUrl: string;           // Version moyenne (800px) pour galerie
+  thumbnailUrl: string;        // Miniature (300px) pour carousel
+  
+  // Métadonnées de l'image
+  width: number;               // Largeur originale
+  height: number;              // Hauteur originale
+  orientation: 'landscape' | 'portrait' | 'square';
+  fileSize: number;            // Taille en bytes
+  mimeType: string;            // "image/jpeg", "image/png", "image/webp"
+  
+  // Organisation
+  tags: string[];              // IDs des tags (ex: ["culte", "noel"])
+  uploadedBy: string;          // ID de l'admin qui a uploadé
+  uploadedByName: string;      // Nom de l'admin (pour affichage)
+  
+  // Affichage
+  isActive: boolean;           // Visible ou non
+  isFeatured: boolean;         // Mise en avant (apparaît dans carousel)
+  order: number;               // Ordre d'affichage (1 = en premier)
+  
+  // Stats
+  views: number;               // Nombre de vues
+  
+  // Dates
+  photoDate?: Date;            // Date de prise de vue (optionnel)
+  createdAt: Date;             // Date d'upload
+  updatedAt: Date;
+}
+
+/**
+ * Options de filtrage pour la galerie
+ */
+export interface GalleryFilterOptions {
+  tags?: string[];             // Filtrer par tags
+  isFeatured?: boolean;        // Seulement les featured
+  isActive?: boolean;          // Seulement les actives
+  orientation?: 'landscape' | 'portrait' | 'square';
+  dateStart?: Date;
+  dateEnd?: Date;
+  sortBy?: 'createdAt' | 'photoDate' | 'views' | 'title' | 'order';
+  sortOrder?: 'asc' | 'desc';
+  limit?: number;
+}

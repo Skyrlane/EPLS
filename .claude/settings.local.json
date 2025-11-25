@@ -57,7 +57,12 @@
       "Bash(if not exist scripts mkdir scripts)",
       "Bash(if not exist \"app\\actions\" mkdir \"app\\actions\")",
       "mcp__serena__find_referencing_symbols",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(vercel logs:*)",
+      "Bash(sed:*)",
+      "WebFetch(domain:img.youtube.com)",
+      "mcp__serena__think_about_task_adherence",
+      "mcp__serena__read_memory"
     ],
     "deny": [],
     "ask": []

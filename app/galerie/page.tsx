@@ -1,14 +1,18 @@
+'use client';
+
 import Link from "next/link"
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Metadata } from "next"
-import { ImageBlock } from "@/components/ui/image-block"
-import { Badge } from "@/components/ui/badge"
+import { collection, getDocs, query, orderBy, where } from 'firebase/firestore'
+import { firestore } from '@/lib/firebase'
+import type { GalleryPhoto, GalleryTag } from '@/types'
+import Lightbox from 'yet-another-react-lightbox'
+import Zoom from 'yet-another-react-lightbox/plugins/zoom'
+import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen'
+import 'yet-another-react-lightbox/styles.css'
 
-export const metadata: Metadata = {
-  title: "Galerie Photos - Église Protestante Libre de Strasbourg",
-  description: "Découvrez notre communauté à travers notre galerie de photos",
-}
+// Metadata supprimée (incompatible avec 'use client')
 
 // Images de démonstration 
 const galleryCategories = [
@@ -135,6 +139,78 @@ const galleryCategories = [
 ]
 
 export default function GaleriePhotos() {
+  const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
+  const [tags, setTags] = useState<GalleryTag[]>([]);
+  const [selectedTag, setSelectedTag] = useState<string>('all');
+  const [loading, setLoading] = useState(true);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  useEffect(() => {
+    loadGallery();
+  }, []);
+
+  const loadGallery = async () => {
+    try {
+      // Charger les tags
+      const tagsRef = collection(firestore, 'gallery_tags');
+      const tagsSnap = await getDocs(query(tagsRef, orderBy('name')));
+      const tagsData: GalleryTag[] = tagsSnap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate() || new Date(),
+        updatedAt: doc.data().updatedAt?.toDate() || new Date()
+      } as GalleryTag));
+      setTags(tagsData);
+
+      // Charger les photos actives
+      const photosRef = collection(firestore, 'gallery_photos');
+      const photosQuery = query(
+        photosRef,
+        where('isActive', '==', true),
+        orderBy('order', 'asc'),
+        orderBy('createdAt', 'desc')
+      );
+      const photosSnap = await getDocs(photosQuery);
+      const photosData: GalleryPhoto[] = photosSnap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate() || new Date(),
+        updatedAt: doc.data().updatedAt?.toDate() || new Date(),
+        photoDate: doc.data().photoDate?.toDate() || null
+      } as GalleryPhoto));
+      
+      setPhotos(photosData);
+    } catch (error) {
+      console.error('Erreur chargement galerie:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredPhotos = selectedTag === 'all'
+    ? photos
+    : photos.filter(p => p.tags.includes(selectedTag));
+
+  const lightboxSlides = filteredPhotos.map(p => ({
+    src: p.mediumUrl,
+    title: p.title,
+    description: p.description
+  }));
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  if (loading) {
+    return (
+      <div className="container mx-auto py-10">
+        <div className="text-center">Chargement de la galerie...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto py-10">
       <header className="mb-10">
@@ -148,53 +224,73 @@ export default function GaleriePhotos() {
         </div>
       </header>
 
-      <section>
-        <Tabs defaultValue="cultes" className="w-full">
+      {/* Filtres par tags */}
+      <div className="mb-8">
+        <Tabs value={selectedTag} onValueChange={setSelectedTag} className="w-full">
           <TabsList className="w-full justify-start mb-8 overflow-x-auto">
-            {galleryCategories.map((category) => (
-              <TabsTrigger key={category.id} value={category.id}>
-                {category.name}
-              </TabsTrigger>
-            ))}
+            <TabsTrigger value="all">Toutes ({photos.length})</TabsTrigger>
+            {tags.map(tag => {
+              const count = photos.filter(p => p.tags.includes(tag.id)).length;
+              return (
+                <TabsTrigger key={tag.id} value={tag.id}>
+                  {tag.name} ({count})
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
-
-          {galleryCategories.map((category) => (
-            <TabsContent key={category.id} value={category.id}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {category.images.map((image) => (
-                  <div key={image.id} className="overflow-hidden shadow-md hover:shadow-lg transition-shadow rounded-md dark:bg-slate-800">
-                    <div className="relative h-60 w-full group">
-                      <ImageBlock
-                        src={image.src}
-                        alt={image.alt}
-                        type="gallery"
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        containerClassName="h-full"
-                        rounded="none"
-                      />
-                      <div className="absolute top-2 left-2">
-                        <Badge variant="secondary" className="bg-black/50 text-white hover:bg-black/60 dark:bg-black/70 dark:text-white">
-                          {image.category || category.name}
-                        </Badge>
-                      </div>
-                      
-                      {/* Arrière-plan semi-transparent qui apparaît au survol */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      
-                      {/* Description qui monte depuis le bas au survol */}
-                      <div className="absolute bottom-0 left-0 right-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/85 dark:bg-slate-900/90 backdrop-blur-sm p-3">
-                        <p className="text-gray-800 dark:text-gray-100 font-medium">{image.alt}</p>
-                        <CardDescription className="text-gray-800 dark:text-gray-200">{image.description}</CardDescription>
-                      </div>
-                      
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-          ))}
         </Tabs>
-      </section>
+      </div>
+
+      {/* Grille de photos (masonry layout) */}
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+        {filteredPhotos.map((photo, index) => (
+          <div
+            key={photo.id}
+            className="break-inside-avoid mb-4 group cursor-pointer"
+            onClick={() => openLightbox(index)}
+          >
+            <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow">
+              <img
+                src={photo.mediumUrl}
+                alt={photo.title}
+                className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+              />
+              
+              {/* Overlay au survol */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <h3 className="font-semibold text-lg mb-1">{photo.title}</h3>
+                  {photo.description && (
+                    <p className="text-sm text-gray-200 line-clamp-2">{photo.description}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {filteredPhotos.length === 0 && (
+        <div className="text-center py-20 text-muted-foreground">
+          <p className="text-xl mb-2">Aucune photo dans cette catégorie</p>
+          <p className="text-sm">Revenez bientôt, nous ajoutons régulièrement de nouvelles photos !</p>
+        </div>
+      )}
+
+      {/* Lightbox */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        index={lightboxIndex}
+        slides={lightboxSlides}
+        plugins={[Zoom, Fullscreen]}
+        carousel={{ finite: false }}
+        zoom={{
+          maxZoomPixelRatio: 3,
+          scrollToZoom: true
+        }}
+      />
     </div>
-  )
+  );
 } 
