@@ -103,36 +103,66 @@ function detectEventType(title: string): keyof typeof EVENT_TYPES {
  * ```
  */
 export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
+  console.log('🔍 === DÉBUT PARSING HTML ===');
+  console.log('HTML length:', html.length);
+  
   const announcements: ParsedAnnouncement[] = [];
 
-  // Séparer par <hr /> ou par paragraphes
-  const blocks = html.split(/<hr\s*\/?>/i);
+  // NOUVELLE APPROCHE : Détecter toutes les annonces par leur pattern de date
+  // Pattern : <span class="text-info"><strong>Date...</strong></span>
+  const datePattern = /<span[^>]*class="text-info"[^>]*>\s*<strong>([^<]+)<\/strong>\s*<\/span>/gi;
+  
+  // Trouver toutes les positions de dates
+  const dateMatches: Array<{ index: number; dateString: string }> = [];
+  let match;
+  
+  while ((match = datePattern.exec(html)) !== null) {
+    dateMatches.push({
+      index: match.index,
+      dateString: match[1]
+    });
+  }
 
-  for (const block of blocks) {
-    if (!block.trim()) continue;
+  console.log(`📅 ${dateMatches.length} pattern(s) de date détecté(s)`);
+
+  if (dateMatches.length === 0) {
+    console.warn('⚠️ Aucun pattern de date trouvé dans le HTML');
+    return [];
+  }
+
+  // Découper le HTML en blocs basés sur les positions de dates
+  for (let i = 0; i < dateMatches.length; i++) {
+    const currentMatch = dateMatches[i];
+    const nextMatch = dateMatches[i + 1];
+    
+    // Extraire le bloc entre cette date et la prochaine (ou fin du HTML)
+    const startIndex = currentMatch.index;
+    const endIndex = nextMatch ? nextMatch.index : html.length;
+    const block = html.substring(startIndex, endIndex);
+
+    console.log(`\n📝 Parsing annonce ${i + 1}/${dateMatches.length}`);
+    console.log('Date string:', currentMatch.dateString);
 
     try {
-      // Extraire la date (entre <strong> dans <span class="text-info">)
-      const dateMatch = block.match(/<span[^>]*class="text-info"[^>]*><strong>([^<]+)<\/strong><\/span>/i);
-      if (!dateMatch) {
-        console.warn('⚠️ Bloc sans date détectée, ignoré');
+      // Parser la date
+      const date = parseDate(currentMatch.dateString);
+      if (!date) {
+        console.warn(`⚠️ Date non parsable : "${currentMatch.dateString}"`);
         continue;
       }
 
-      const dateString = dateMatch[1];
-      const date = parseDate(dateString);
-      if (!date) continue;
-
-      const time = extractTime(dateString);
+      const time = extractTime(currentMatch.dateString);
+      console.log('Date parsée:', date.toLocaleDateString('fr-FR'), time);
 
       // Extraire le titre (première balise <strong> après le tiret)
       const titleMatch = block.match(/-\s*<strong>([^<]+)<\/strong>/i);
       if (!titleMatch) {
-        console.warn('⚠️ Bloc sans titre détecté, ignoré');
+        console.warn('⚠️ Titre non trouvé, ignoré');
         continue;
       }
 
       const title = titleMatch[1].trim();
+      console.log('Titre:', title);
 
       // Extraire le texte après le titre
       const afterTitle = block.substring(block.indexOf(titleMatch[0]) + titleMatch[0].length);
@@ -141,11 +171,11 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
       let locationName = '';
       let locationAddress = '';
 
-      // Pattern 1: "au Lieu (Adresse)"
-      const locationMatch1 = afterTitle.match(/\s+au\s+([^(]+)\s*\(([^)]+)\)/i);
+      // Pattern 1: "au Lieu (Adresse)" ou "au Lieu, Adresse"
+      const locationMatch1 = afterTitle.match(/\s+(?:au|à l'|à la|chez)\s+([^(<,]+)(?:\s*\(([^)]+)\)|,\s*([^<.]+))?/i);
       if (locationMatch1) {
         locationName = locationMatch1[1].trim();
-        locationAddress = locationMatch1[2].trim();
+        locationAddress = (locationMatch1[2] || locationMatch1[3] || '').trim();
       } else {
         // Pattern 2: "- Lieu, Adresse"
         const locationMatch2 = afterTitle.match(/-\s*([^,<]+),\s*([^<]+)/i);
@@ -154,6 +184,8 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
           locationAddress = locationMatch2[2].trim();
         }
       }
+
+      console.log('Lieu:', locationName, '|', locationAddress);
 
       // Extraire les items de la liste <ul>
       const ulMatch = block.match(/<ul>[\s\S]*?<\/ul>/i);
@@ -170,6 +202,8 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
           }
         }
       }
+
+      console.log('Détails:', details);
 
       // Parser la tarification
       const pricing: ParsedAnnouncement['pricing'] = {};
@@ -200,6 +234,8 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
       const type = detectEventType(title);
       const typeConfig = EVENT_TYPES[type];
 
+      console.log('Type:', type, '| Tag:', typeConfig.tag);
+
       announcements.push({
         title,
         date,
@@ -214,11 +250,14 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
         tag: typeConfig.tag,
         tagColor: typeConfig.color
       });
+
+      console.log('✅ Annonce ajoutée');
     } catch (error) {
-      console.error('❌ Erreur lors du parsing d\'un bloc:', error);
+      console.error('❌ Erreur lors du parsing du bloc:', error);
       continue;
     }
   }
 
+  console.log(`\n🎉 === FIN PARSING : ${announcements.length} annonce(s) extraite(s) ===\n`);
   return announcements;
 }
