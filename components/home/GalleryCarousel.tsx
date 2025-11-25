@@ -111,21 +111,6 @@ export function GalleryCarousel({ autoPlayInterval = 4000, maxPhotos = 10 }: Gal
               className="w-full h-full object-cover"
               loading={index === 0 ? 'eager' : 'lazy'}
             />
-            
-            {/* Overlay avec titre */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <h3 className="text-2xl font-bold mb-2">{photo.title}</h3>
-                {photo.description && (
-                  <p className="text-sm text-gray-200 mb-4 line-clamp-2">{photo.description}</p>
-                )}
-                <Link href="/galerie">
-                  <Button variant="secondary" size="sm">
-                    Voir toute la galerie
-                  </Button>
-                </Link>
-              </div>
-            </div>
           </div>
         ))}
 

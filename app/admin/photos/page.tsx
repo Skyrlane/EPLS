@@ -23,6 +23,7 @@ export default function AdminPhotosPage() {
   const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
   const [tags, setTags] = useState<GalleryTag[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('upload');
   const [stats, setStats] = useState({
     total: 0,
     active: 0,
@@ -192,7 +193,7 @@ export default function AdminPhotosPage() {
       </div>
 
       {/* Tabs */}
-      <Tabs defaultValue="upload" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="upload">Upload</TabsTrigger>
           <TabsTrigger value="manage">Gérer les photos ({photos.length})</TabsTrigger>
