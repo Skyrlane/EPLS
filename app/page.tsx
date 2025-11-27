@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Forcer le rendu dynamique pour la section blog
 export const dynamic = 'force-dynamic';
 export const revalidate = 60;

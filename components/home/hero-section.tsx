@@ -11,8 +11,15 @@ import Link from 'next/link';
 
 export function HeroSection() {
   const [heroImageUrl, setHeroImageUrl] = useState<string>('/images/hero/church-hero.png');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || !firestore) return;
+
     // Écouter les changements en temps réel
     const unsubscribe = onSnapshot(
       doc(firestore, 'site_settings', 'hero_image'),
@@ -33,7 +40,7 @@ export function HeroSection() {
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [mounted]);
 
   return (
     <div className="relative h-[70vh] w-full overflow-hidden">
