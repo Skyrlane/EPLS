@@ -14,10 +14,6 @@ import type { HeroImageSettings } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 import { Upload, Trash2, Info } from 'lucide-react';
 import { ImageIcon } from 'lucide-react';
-import Image from 'next/image';
-
-// Configuration pour éviter les problèmes de chargement en production
-const imageLoader = ({ src }: { src: string }) => src;
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 const ACCEPTED_FORMATS = ['image/jpeg', 'image/png', 'image/webp'];
@@ -261,13 +257,10 @@ export default function AdminHeroImagePage() {
           <CardContent className="space-y-4">
             {/* Preview */}
             <div className="relative w-full aspect-[1920/780] overflow-hidden rounded-lg border">
-              <Image
+              <img
                 src={heroImage.imageUrl}
                 alt="Hero image actuelle"
-                fill
-                className="object-cover"
-                loader={imageLoader}
-                unoptimized
+                className="w-full h-full object-cover"
               />
             </div>
 
@@ -359,13 +352,10 @@ export default function AdminHeroImagePage() {
               {/* Preview du fichier sélectionné */}
               <div className="space-y-4">
                 <div className="relative w-full aspect-[1920/780] overflow-hidden rounded-lg border">
-                  <Image
+                  <img
                     src={previewUrl!}
                     alt="Preview"
-                    fill
-                    className="object-cover"
-                    loader={imageLoader}
-                    unoptimized
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="flex gap-2">
