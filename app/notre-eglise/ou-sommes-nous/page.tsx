@@ -2,8 +2,6 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { MapPin, Clock, Bus, Phone, Mail } from "lucide-react"
 import { Metadata } from "next"
-import { ImageBlock } from "@/components/ui/image-block"
-import Image from "next/image"
 import { Button } from '@/components/ui/button'
 import EgliseSidebar from "../../components/eglise/EgliseSidebar"
 

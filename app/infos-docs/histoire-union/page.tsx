@@ -4,6 +4,7 @@ import { Metadata } from "next"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Sidebar from "../components/Sidebar"
+import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
 
 export const metadata: Metadata = {
   title: "Histoire de l'Union des Églises Évangéliques Libres | Église Protestante Libre de Strasbourg",
@@ -60,11 +61,13 @@ export default function HistoireUnionPage() {
                 <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 mb-8">
                   <div className="w-full md:w-1/3">
                     <div className="relative w-full h-56 md:h-64">
-                      <Image
-                        src="/images/histoire/eglise-histoire.jpg"
+                      <DynamicImageBlock
+                        zone="histoire-union-hero"
+                        fallbackSrc="/images/histoire/eglise-histoire.jpg"
                         alt="L'Union des Églises Évangéliques Libres"
-                        fill
+                        type="section"
                         className="object-cover rounded-lg"
+                        containerClassName="w-full h-full"
                       />
                     </div>
                   </div>
@@ -117,11 +120,13 @@ export default function HistoireUnionPage() {
                           </p>
                           <div className="my-6">
                             <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-lg">
-                              <Image
-                                src="/images/histoire/eglise-histoire.jpg"
+                              <DynamicImageBlock
+                                zone="histoire-union-origines"
+                                fallbackSrc="/images/histoire/eglise-histoire.jpg"
                                 alt="Premier synode des Églises Libres en 1849"
-                                fill
+                                type="content"
                                 className="object-cover transition-transform duration-300 hover:scale-105"
+                                containerClassName="w-full h-full"
                               />
                             </div>
                           </div>
@@ -170,11 +175,13 @@ export default function HistoireUnionPage() {
                           </p>
                           <div className="my-6">
                             <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-lg">
-                              <Image
-                                src="/images/histoire/eglise-histoire.jpg"
+                              <DynamicImageBlock
+                                zone="histoire-union-principes"
+                                fallbackSrc="/images/histoire/eglise-histoire.jpg"
                                 alt="Église Libre historique"
-                                fill
+                                type="content"
                                 className="object-cover transition-transform duration-300 hover:scale-105"
+                                containerClassName="w-full h-full"
                               />
                             </div>
                           </div>
@@ -218,11 +225,13 @@ export default function HistoireUnionPage() {
                           </p>
                           <div className="my-6">
                             <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-lg">
-                              <Image
-                                src="/images/histoire/eglise-histoire.jpg"
+                              <DynamicImageBlock
+                                zone="histoire-union-evolution"
+                                fallbackSrc="/images/histoire/eglise-histoire.jpg"
                                 alt="Église Libre historique"
-                                fill
+                                type="content"
                                 className="object-cover transition-transform duration-300 hover:scale-105"
+                                containerClassName="w-full h-full"
                               />
                             </div>
                           </div>
@@ -282,11 +291,13 @@ export default function HistoireUnionPage() {
                           </ul>
                           <div className="my-6">
                             <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-lg">
-                              <Image
-                                src="/images/histoire/eglise-histoire.jpg"
+                              <DynamicImageBlock
+                                zone="histoire-union-aujourdhui"
+                                fallbackSrc="/images/histoire/eglise-histoire.jpg"
                                 alt="Synode récent de l'UEEL"
-                                fill
+                                type="content"
                                 className="object-cover transition-transform duration-300 hover:scale-105"
+                                containerClassName="w-full h-full"
                               />
                             </div>
                           </div>

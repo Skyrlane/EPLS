@@ -247,6 +247,12 @@ export default function MembresPage() {
                     >
                       → Gérer l'image d'accueil
                     </Link>
+                    <Link
+                      href="/admin/images-site"
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer les images du site
+                    </Link>
                   </div>
                 </div>
               </CardContent>

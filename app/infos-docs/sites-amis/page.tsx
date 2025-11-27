@@ -9,6 +9,7 @@ import { PageHeader } from "@/components/ui/page-header"
 import { SectionContainer } from "@/components/ui/section-container"
 import { ExternalLink } from "lucide-react"
 import Sidebar from "../components/Sidebar"
+import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
 
 export const metadata: Metadata = {
   title: "Sites amis | Église Protestante Libérale de Strasbourg",
@@ -138,9 +139,11 @@ export default function SitesAmisPage() {
                       <CardHeader className="text-center pb-2">
                         <div className="flex justify-center mb-4">
                           <div className="relative h-24 w-24 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center">
-                            <Image
-                              src={site.logo}
+                            <DynamicImageBlock
+                              zone={`sites-amis-${site.id}`}
+                              fallbackSrc={site.logo}
                               alt={`Logo ${site.name}`}
+                              type="avatar"
                               width={96}
                               height={96}
                               className="object-contain"

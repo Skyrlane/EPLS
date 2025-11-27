@@ -63,7 +63,9 @@
       "WebFetch(domain:img.youtube.com)",
       "mcp__serena__think_about_task_adherence",
       "mcp__serena__read_memory",
-      "Bash(vercel --version:*)"
+      "Bash(vercel --version:*)",
+      "Bash(cat:*)",
+      "Bash(\"C:\\Users\\Samuel\\Documents\\Perso\\EPLS Dev Website\\template-2\\types\\index.ts\" <<'EOF'\n\n/**\n * Settings pour les images statiques du site\n * Collection: site_images\n */\nexport interface SiteImage {\n  id: string;                    // ID unique (ex: 'cultes-hero', 'eve-logo')\n  zone: string;                  // Identifiant technique de la zone\n  page: string;                  // Page où l'image apparaît (ex: '/culte')\n  label: string;                 // Libellé descriptif (ex: 'Cultes - Hero Banner')\n  category: 'hero' | 'logo' | 'illustration' | 'portrait' | 'timeline' | 'section';\n  imageUrl?: string;             // URL Firebase Storage (undefined si pas encore uploadé)\n  storagePath?: string;          // Chemin Storage\n  fallbackUrl: string;           // URL du placeholder/fallback\n  dimensions: {\n    width: number;\n    height: number;\n    aspectRatio: string;         // '16:9', '4:3', '1:1', etc.\n  };\n  alt: string;                   // Texte alternatif pour l'accessibilité\n  isActive: boolean;             // true = utilise imageUrl, false = fallback\n  priority: 'high' | 'medium' | 'low';\n  updatedAt?: Date;\n  updatedBy?: string;            // UID de l'admin\n  updatedByName?: string;        // Nom de l'admin\n}\nEOF)"
     ],
     "deny": [],
     "ask": []

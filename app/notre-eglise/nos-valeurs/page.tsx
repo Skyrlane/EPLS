@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Metadata } from "next"
-import { ImageBlock } from "@/components/ui/image-block"
 import EgliseSidebar from "../../components/eglise/EgliseSidebar"
 
 export const metadata: Metadata = {
