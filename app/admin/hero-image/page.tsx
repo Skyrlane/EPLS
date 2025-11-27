@@ -15,6 +15,9 @@ import { useToast } from '@/hooks/use-toast';
 import { Upload, Trash2, Info, Image as ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 
+// Configuration pour éviter les problèmes de chargement en production
+const imageLoader = ({ src }: { src: string }) => src;
+
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 const ACCEPTED_FORMATS = ['image/jpeg', 'image/png', 'image/webp'];
 const STORAGE_PATH = 'site/hero/hero-current.webp';
@@ -262,6 +265,8 @@ export default function AdminHeroImagePage() {
                 alt="Hero image actuelle"
                 fill
                 className="object-cover"
+                loader={imageLoader}
+                unoptimized
               />
             </div>
 
@@ -357,6 +362,8 @@ export default function AdminHeroImagePage() {
                     alt="Preview"
                     fill
                     className="object-cover"
+                    loader={imageLoader}
+                    unoptimized
                   />
                 </div>
                 <div className="flex gap-2">
