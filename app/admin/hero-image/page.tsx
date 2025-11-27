@@ -121,7 +121,7 @@ export default function AdminHeroImagePage() {
     }
 
     setSelectedFile(file);
-    
+
     // Créer une preview
     const reader = new FileReader();
     reader.onloadend = () => {
