@@ -118,17 +118,14 @@ export function ImageBlock({
   // Fonction pour gérer les erreurs de chargement d'image
   const handleError = () => {
     if (!imgError) {
-      console.error(`[ImageBlock] Image failed to load: ${imgSrc}`);
-      console.log(`[ImageBlock] Falling back to: ${DEFAULT_FALLBACKS[type] || "/images/placeholder.svg"}`);
       // Utiliser l'image de fallback correspondant au type
       setImgSrc(DEFAULT_FALLBACKS[type] || "/images/placeholder.svg");
       setImgError(true);
     }
   };
 
-  // Log quand l'image change
+  // Mettre à jour l'image quand la source change
   useEffect(() => {
-    console.log(`[ImageBlock] Image source changed to: ${src}`);
     setImgSrc(src);
     setImgError(false);
   }, [src]);
