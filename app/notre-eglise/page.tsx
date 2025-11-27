@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Metadata } from "next"
-import { ImageBlock } from "@/components/ui/image-block"
+import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
 import EgliseSidebar from "../components/eglise/EgliseSidebar"
 
 export const metadata: Metadata = {
@@ -51,10 +51,11 @@ export default function NotreEglise() {
               <div className="mb-10">
                 <h2 className="text-3xl font-semibold mb-6 dark:text-white">Bienvenue à l&apos;Église Protestante Libre de Strasbourg</h2>
                 <div className="relative w-full h-[400px] rounded-lg overflow-hidden mb-6">
-                  <ImageBlock 
-                    src="/images/hero/church-hero.png" 
-                    alt="L'église protestante libre de Strasbourg"
-                    type="content"
+                  <DynamicImageBlock 
+                    zone="notre-eglise-hero"
+                    fallbackSrc="/images/hero/church-hero.png" 
+                    alt="Église Protestante Libre de Strasbourg"
+                    type="hero"
                     className="object-cover"
                     containerClassName="h-full"
                   />

@@ -24,6 +24,24 @@ const db = getFirestore();
 
 // Données des zones d'images
 const siteImagesData = [
+  // Page: /notre-eglise
+  {
+    id: 'notre-eglise-hero',
+    zone: 'notre-eglise-hero',
+    page: '/notre-eglise',
+    label: 'Notre Église - Image Hero',
+    category: 'hero',
+    fallbackUrl: '/images/hero/church-hero.png',
+    dimensions: {
+      width: 1920,
+      height: 800,
+      aspectRatio: '21:9',
+    },
+    alt: 'Église Protestante Libre de Strasbourg',
+    isActive: false,
+    priority: 'high',
+  },
+
   // Page: /culte
   {
     id: 'cultes-hero',
