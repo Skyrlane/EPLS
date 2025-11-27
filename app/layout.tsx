@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
 import { ClientLayoutWrapper } from "@/components/client-layout-wrapper"
+import { headers } from "next/headers"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -35,13 +36,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Vérifier si on est sur une route admin
+  const headersList = headers()
+  const pathname = headersList.get('x-pathname') || ''
+  const isAdminRoute = pathname.startsWith('/admin')
+
   return (
     <html lang="fr" suppressHydrationWarning>
       <head />
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
-        <ClientLayoutWrapper showFixedServiceInfo={SHOW_FIXED_SERVICE_INFO}>
-          {children}
-        </ClientLayoutWrapper>
+        {isAdminRoute ? (
+          // Routes admin : pas de ClientLayoutWrapper (le layout admin gère tout)
+          children
+        ) : (
+          // Routes normales : avec Navigation, Footer, etc.
+          <ClientLayoutWrapper showFixedServiceInfo={SHOW_FIXED_SERVICE_INFO}>
+            {children}
+          </ClientLayoutWrapper>
+        )}
       </body>
     </html>
   )

@@ -26,12 +26,15 @@ const isDevelopmentMode = process.env.NODE_ENV === 'development';
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  
+
   // Récupérer le token d'authentification des cookies
   const authToken = request.cookies.get("auth-token")?.value;
-  
+
   // Ajouter des en-têtes de sécurité à toutes les réponses
   const response = NextResponse.next();
+
+  // Ajouter le pathname dans les headers pour pouvoir le lire dans le layout
+  response.headers.set('x-pathname', path);
 
   // Empêcher le clickjacking
   response.headers.set("X-Frame-Options", "DENY");
@@ -69,13 +72,16 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
-// Configurer le middleware pour s'exécuter uniquement sur les chemins spécifiques
+// Configurer le middleware pour s'exécuter sur toutes les routes
+// (nécessaire pour détecter les routes admin dans le layout)
 export const config = {
   matcher: [
-    "/membres/:path*",
-    "/admin/:path*",
-    "/connexion",
-    "/inscription",
-    "/mot-de-passe-oublie",
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
 }; 
