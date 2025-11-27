@@ -3,13 +3,8 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
-import { ClientLayoutWrapper } from "@/components/client-layout-wrapper"
-import { headers } from "next/headers"
 
 const inter = Inter({ subsets: ["latin"] })
-
-// Vous pouvez activer ou désactiver l'affichage de l'info de culte fixe ici
-const SHOW_FIXED_SERVICE_INFO = false;
 
 export const metadata: Metadata = {
   title: {
@@ -31,29 +26,16 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Vérifier si on est sur une route admin - utiliser headers() de manière async
-  const headersList = await headers()
-  const pathname = headersList.get('x-pathname') || headersList.get('x-invoke-path') || ''
-  const isAdminRoute = pathname.startsWith('/admin')
-
   return (
     <html lang="fr" suppressHydrationWarning>
       <head />
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
-        {isAdminRoute ? (
-          // Routes admin : pas de ClientLayoutWrapper (le layout admin gère tout)
-          children
-        ) : (
-          // Routes normales : avec Navigation, Footer, etc.
-          <ClientLayoutWrapper showFixedServiceInfo={SHOW_FIXED_SERVICE_INFO}>
-            {children}
-          </ClientLayoutWrapper>
-        )}
+        {children}
       </body>
     </html>
   )
