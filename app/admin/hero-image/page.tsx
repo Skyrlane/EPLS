@@ -244,7 +244,7 @@ export default function AdminHeroImagePage() {
           </p>
         </div>
         <Button asChild variant="outline">
-          <Link href="/membres">← Retour</Link>
+          <Link href="/membres">← Retour à l'espace membres</Link>
         </Button>
       </div>
 
