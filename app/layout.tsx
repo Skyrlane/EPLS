@@ -31,20 +31,15 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Vérifier si on est sur une route admin
-  const headersList = headers()
-  const pathname = headersList.get('x-pathname') || ''
+  // Vérifier si on est sur une route admin - utiliser headers() de manière async
+  const headersList = await headers()
+  const pathname = headersList.get('x-pathname') || headersList.get('x-invoke-path') || ''
   const isAdminRoute = pathname.startsWith('/admin')
-
-  // Debug en développement
-  if (process.env.NODE_ENV === 'development') {
-    console.log('[ROOT LAYOUT] pathname:', pathname, 'isAdminRoute:', isAdminRoute)
-  }
 
   return (
     <html lang="fr" suppressHydrationWarning>
