@@ -83,19 +83,44 @@ export function TagManager({ tags, onUpdate }: TagManagerProps) {
           />
         </div>
 
-        <div>
-          <Label>Couleur</Label>
-          <div className="flex gap-2 mt-2">
-            {PRESET_COLORS.map(color => (
-              <button
-                key={color}
-                className={`w-10 h-10 rounded border-2 ${
-                  newTag.color === color ? 'border-black' : 'border-transparent'
-                }`}
-                style={{ backgroundColor: color }}
-                onClick={() => setNewTag({ ...newTag, color })}
-              />
-            ))}
+        <div className="space-y-3">
+          <Label htmlFor="tag-color">Couleur</Label>
+          
+          {/* Color picker avec preview */}
+          <div className="flex items-center gap-3">
+            <Input
+              type="color"
+              id="tag-color"
+              value={newTag.color}
+              onChange={(e) => setNewTag({ ...newTag, color: e.target.value })}
+              className="h-10 w-20 cursor-pointer"
+            />
+            <span className="text-sm text-muted-foreground font-mono">
+              {newTag.color.toUpperCase()}
+            </span>
+            <div 
+              className="h-8 w-8 rounded-full border-2 border-border"
+              style={{ backgroundColor: newTag.color }}
+            />
+          </div>
+
+          {/* Couleurs suggérées */}
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Suggestions :</span>
+            <div className="flex gap-2">
+              {PRESET_COLORS.map(color => (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => setNewTag({ ...newTag, color })}
+                  className={`h-8 w-8 rounded-full border-2 hover:scale-110 transition-transform ${
+                    newTag.color === color ? 'border-primary ring-2 ring-primary/20' : 'border-border'
+                  }`}
+                  style={{ backgroundColor: color }}
+                  aria-label={`Sélectionner la couleur ${color}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 

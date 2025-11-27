@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { collection, getDocs, query, orderBy, where } from 'firebase/firestore'
+import { collection, getDocs, query, orderBy, where, onSnapshot } from 'firebase/firestore'
 import { firestore } from '@/lib/firebase'
 import type { GalleryPhoto, GalleryTag } from '@/types'
 import Lightbox from 'yet-another-react-lightbox'
@@ -150,19 +150,28 @@ export default function GaleriePhotos() {
     loadGallery();
   }, []);
 
-  const loadGallery = async () => {
-    try {
-      // Charger les tags
-      const tagsRef = collection(firestore, 'gallery_tags');
-      const tagsSnap = await getDocs(query(tagsRef, orderBy('name')));
-      const tagsData: GalleryTag[] = tagsSnap.docs.map(doc => ({
+  // Écouter les tags en temps réel
+  useEffect(() => {
+    const tagsRef = collection(firestore, 'gallery_tags');
+    const tagsQuery = query(tagsRef, orderBy('name'));
+    
+    const unsubscribe = onSnapshot(tagsQuery, (snapshot) => {
+      const tagsData: GalleryTag[] = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
         createdAt: doc.data().createdAt?.toDate() || new Date(),
         updatedAt: doc.data().updatedAt?.toDate() || new Date()
       } as GalleryTag));
       setTags(tagsData);
+    }, (error) => {
+      console.error('Erreur listener tags:', error);
+    });
 
+    return () => unsubscribe();
+  }, []);
+
+  const loadGallery = async () => {
+    try {
       // Charger les photos actives
       const photosRef = collection(firestore, 'gallery_photos');
       const photosQuery = query(
