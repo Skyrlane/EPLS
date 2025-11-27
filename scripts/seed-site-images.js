@@ -1,0 +1,441 @@
+/**
+ * Script pour initialiser la collection site_images dans Firestore
+ * Exécuter avec: node scripts/seed-site-images.js
+ */
+
+require('dotenv').config({ path: '.env.local' });
+
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp } = require('firebase-admin/firestore');
+
+// Configuration Firebase Admin
+// NOTE: Assurez-vous d'avoir les variables d'environnement configurées
+const serviceAccount = {
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+};
+
+initializeApp({
+  credential: cert(serviceAccount),
+});
+
+const db = getFirestore();
+
+// Données des zones d'images
+const siteImagesData = [
+  // Page: /culte
+  {
+    id: 'cultes-hero',
+    zone: 'cultes-hero',
+    page: '/culte',
+    label: 'Cultes - Hero Banner',
+    category: 'hero',
+    fallbackUrl: '/placeholder.svg?height=384&width=896',
+    dimensions: {
+      width: 896,
+      height: 384,
+      aspectRatio: '7:3',
+    },
+    alt: 'Culte à l\'EPLS',
+    isActive: false,
+    priority: 'high',
+  },
+
+  // Page: /infos-docs/eve
+  {
+    id: 'eve-logo',
+    zone: 'eve-logo',
+    page: '/infos-docs/eve',
+    label: 'EVE - Logo',
+    category: 'logo',
+    fallbackUrl: '/placeholder.svg?height=400&width=400',
+    dimensions: {
+      width: 400,
+      height: 400,
+      aspectRatio: '1:1',
+    },
+    alt: 'Logo Eau Vive Espoir',
+    isActive: false,
+    priority: 'high',
+  },
+  {
+    id: 'eve-projet-burkina',
+    zone: 'eve-projet-burkina',
+    page: '/infos-docs/eve',
+    label: 'EVE - Projet Burkina Faso',
+    category: 'illustration',
+    fallbackUrl: '/placeholder.svg?height=400&width=600',
+    dimensions: {
+      width: 600,
+      height: 400,
+      aspectRatio: '3:2',
+    },
+    alt: 'Projet eau potable au Burkina Faso',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'eve-projet-togo',
+    zone: 'eve-projet-togo',
+    page: '/infos-docs/eve',
+    label: 'EVE - Projet Togo',
+    category: 'illustration',
+    fallbackUrl: '/placeholder.svg?height=400&width=600',
+    dimensions: {
+      width: 600,
+      height: 400,
+      aspectRatio: '3:2',
+    },
+    alt: 'Centre d\'alphabétisation au Togo',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'eve-projet-local',
+    zone: 'eve-projet-local',
+    page: '/infos-docs/eve',
+    label: 'EVE - Aide alimentaire locale',
+    category: 'illustration',
+    fallbackUrl: '/placeholder.svg?height=400&width=600',
+    dimensions: {
+      width: 600,
+      height: 400,
+      aspectRatio: '3:2',
+    },
+    alt: 'Aide alimentaire à Strasbourg',
+    isActive: false,
+    priority: 'medium',
+  },
+
+  // Page: /infos-docs/union-eglise
+  {
+    id: 'ueel-logo',
+    zone: 'ueel-logo',
+    page: '/infos-docs/union-eglise',
+    label: 'UEEL - Logo',
+    category: 'logo',
+    fallbackUrl: '/placeholder.svg?height=400&width=400',
+    dimensions: {
+      width: 400,
+      height: 400,
+      aspectRatio: '1:1',
+    },
+    alt: 'Logo de l\'Union des Églises Évangéliques Libres',
+    isActive: false,
+    priority: 'high',
+  },
+  {
+    id: 'ueel-synod',
+    zone: 'ueel-synod',
+    page: '/infos-docs/union-eglise',
+    label: 'UEEL - Image Synode',
+    category: 'illustration',
+    fallbackUrl: '/placeholder.svg?height=400&width=800',
+    dimensions: {
+      width: 800,
+      height: 400,
+      aspectRatio: '2:1',
+    },
+    alt: 'Synode de l\'Union des Églises Évangéliques Libres',
+    isActive: false,
+    priority: 'medium',
+  },
+
+  // Page: /notre-eglise/histoire
+  {
+    id: 'histoire-hero',
+    zone: 'histoire-hero',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - Photo principale',
+    category: 'section',
+    fallbackUrl: '/images/histoire/eglise-histoire.jpg',
+    dimensions: {
+      width: 600,
+      height: 400,
+      aspectRatio: '3:2',
+    },
+    alt: 'Photo historique de l\'église',
+    isActive: false,
+    priority: 'high',
+  },
+  {
+    id: 'histoire-1855',
+    zone: 'histoire-1855',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - 1855 Premières rencontres',
+    category: 'timeline',
+    fallbackUrl: '/placeholder.svg?height=200&width=300',
+    dimensions: {
+      width: 300,
+      height: 200,
+      aspectRatio: '3:2',
+    },
+    alt: 'Réunion de maison historique',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'histoire-1872',
+    zone: 'histoire-1872',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - 1872 Constitution',
+    category: 'timeline',
+    fallbackUrl: '/placeholder.svg?height=200&width=300',
+    dimensions: {
+      width: 300,
+      height: 200,
+      aspectRatio: '3:2',
+    },
+    alt: 'Document historique',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'histoire-1920',
+    zone: 'histoire-1920',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - 1920 Premier lieu de culte',
+    category: 'timeline',
+    fallbackUrl: '/placeholder.svg?height=200&width=300',
+    dimensions: {
+      width: 300,
+      height: 200,
+      aspectRatio: '3:2',
+    },
+    alt: 'Ancien bâtiment de l\'église',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'histoire-1968',
+    zone: 'histoire-1968',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - 1968 Renouveau',
+    category: 'timeline',
+    fallbackUrl: '/placeholder.svg?height=200&width=300',
+    dimensions: {
+      width: 300,
+      height: 200,
+      aspectRatio: '3:2',
+    },
+    alt: 'Culte des années 70',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'histoire-1995',
+    zone: 'histoire-1995',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - 1995 Déménagement',
+    category: 'timeline',
+    fallbackUrl: '/placeholder.svg?height=200&width=300',
+    dimensions: {
+      width: 300,
+      height: 200,
+      aspectRatio: '3:2',
+    },
+    alt: 'Nouvel emplacement de l\'église',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'histoire-2010',
+    zone: 'histoire-2010',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - 2010 Vision',
+    category: 'timeline',
+    fallbackUrl: '/placeholder.svg?height=200&width=300',
+    dimensions: {
+      width: 300,
+      height: 200,
+      aspectRatio: '3:2',
+    },
+    alt: 'Équipe pastorale en réunion',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'histoire-today',
+    zone: 'histoire-today',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - Aujourd\'hui',
+    category: 'timeline',
+    fallbackUrl: '/placeholder.svg?height=200&width=300',
+    dimensions: {
+      width: 300,
+      height: 200,
+      aspectRatio: '3:2',
+    },
+    alt: 'Notre communauté aujourd\'hui',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'histoire-archives',
+    zone: 'histoire-archives',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - Nos archives',
+    category: 'illustration',
+    fallbackUrl: '/placeholder.svg?height=200&width=400',
+    dimensions: {
+      width: 400,
+      height: 200,
+      aspectRatio: '2:1',
+    },
+    alt: 'Nos archives',
+    isActive: false,
+    priority: 'low',
+  },
+  {
+    id: 'histoire-union',
+    zone: 'histoire-union',
+    page: '/notre-eglise/histoire',
+    label: 'Histoire - L\'Union',
+    category: 'illustration',
+    fallbackUrl: '/placeholder.svg?height=200&width=400',
+    dimensions: {
+      width: 400,
+      height: 200,
+      aspectRatio: '2:1',
+    },
+    alt: 'L\'Union des Églises Évangéliques Libres',
+    isActive: false,
+    priority: 'low',
+  },
+
+  // Page: /infos-docs/membres
+  {
+    id: 'membres-pasteur-1',
+    zone: 'membres-pasteur-1',
+    page: '/infos-docs/membres',
+    label: 'Membres - Pasteur 1',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=128&width=128',
+    dimensions: {
+      width: 128,
+      height: 128,
+      aspectRatio: '1:1',
+    },
+    alt: 'Photo du pasteur',
+    isActive: false,
+    priority: 'high',
+  },
+  {
+    id: 'membres-pasteur-2',
+    zone: 'membres-pasteur-2',
+    page: '/infos-docs/membres',
+    label: 'Membres - Pasteur 2',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=128&width=128',
+    dimensions: {
+      width: 128,
+      height: 128,
+      aspectRatio: '1:1',
+    },
+    alt: 'Photo du pasteur',
+    isActive: false,
+    priority: 'high',
+  },
+  {
+    id: 'membres-pasteur-3',
+    zone: 'membres-pasteur-3',
+    page: '/infos-docs/membres',
+    label: 'Membres - Pasteur 3',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=128&width=128',
+    dimensions: {
+      width: 128,
+      height: 128,
+      aspectRatio: '1:1',
+    },
+    alt: 'Photo du pasteur',
+    isActive: false,
+    priority: 'high',
+  },
+  {
+    id: 'membres-conseil-1',
+    zone: 'membres-conseil-1',
+    page: '/infos-docs/membres',
+    label: 'Membres - Conseil 1',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=96&width=96',
+    dimensions: {
+      width: 96,
+      height: 96,
+      aspectRatio: '1:1',
+    },
+    alt: 'Membre du conseil',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'membres-conseil-2',
+    zone: 'membres-conseil-2',
+    page: '/infos-docs/membres',
+    label: 'Membres - Conseil 2',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=96&width=96',
+    dimensions: {
+      width: 96,
+      height: 96,
+      aspectRatio: '1:1',
+    },
+    alt: 'Membre du conseil',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'membres-conseil-3',
+    zone: 'membres-conseil-3',
+    page: '/infos-docs/membres',
+    label: 'Membres - Conseil 3',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=96&width=96',
+    dimensions: {
+      width: 96,
+      height: 96,
+      aspectRatio: '1:1',
+    },
+    alt: 'Membre du conseil',
+    isActive: false,
+    priority: 'medium',
+  },
+  {
+    id: 'membres-conseil-4',
+    zone: 'membres-conseil-4',
+    page: '/infos-docs/membres',
+    label: 'Membres - Conseil 4',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=96&width=96',
+    dimensions: {
+      width: 96,
+      height: 96,
+      aspectRatio: '1:1',
+    },
+    alt: 'Membre du conseil',
+    isActive: false,
+    priority: 'medium',
+  },
+];
+
+async function seedSiteImages() {
+  console.log('🌱 Début du seed de la collection site_images...');
+
+  try {
+    for (const imageData of siteImagesData) {
+      await db.collection('site_images').doc(imageData.id).set({
+        ...imageData,
+        updatedAt: Timestamp.now(),
+      });
+      console.log(`✅ Image créée: ${imageData.label}`);
+    }
+
+    console.log(`\n🎉 ${siteImagesData.length} images ont été créées avec succès!`);
+  } catch (error) {
+    console.error('❌ Erreur lors du seed:', error);
+    process.exit(1);
+  }
+}
+
+seedSiteImages();

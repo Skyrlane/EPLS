@@ -425,3 +425,29 @@ export interface HeroImageSettings {
   uploadedAt: Date;             // Date d'upload
   updatedAt: Date;              // Date de mise à jour
 }
+
+/**
+ * Settings pour les images statiques du site
+ * Collection: site_images
+ */
+export interface SiteImage {
+  id: string;                    // ID unique (ex: 'cultes-hero', 'eve-logo')
+  zone: string;                  // Identifiant technique de la zone
+  page: string;                  // Page où l'image apparaît (ex: '/culte')
+  label: string;                 // Libellé descriptif (ex: 'Cultes - Hero Banner')
+  category: 'hero' | 'logo' | 'illustration' | 'portrait' | 'timeline' | 'section';
+  imageUrl?: string;             // URL Firebase Storage (undefined si pas encore uploadé)
+  storagePath?: string;          // Chemin Storage
+  fallbackUrl: string;           // URL du placeholder/fallback
+  dimensions: {
+    width: number;
+    height: number;
+    aspectRatio: string;         // '16:9', '4:3', '1:1', etc.
+  };
+  alt: string;                   // Texte alternatif pour l'accessibilité
+  isActive: boolean;             // true = utilise imageUrl, false = fallback
+  priority: 'high' | 'medium' | 'low';
+  updatedAt?: Date;
+  updatedBy?: string;            // UID de l'admin
+  updatedByName?: string;        // Nom de l'admin
+}

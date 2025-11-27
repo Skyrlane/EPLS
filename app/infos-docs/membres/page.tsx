@@ -3,6 +3,7 @@ import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Sidebar from "../components/Sidebar"
+import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
 
 export const metadata = {
   title: "Liste des membres - Église Protestante Libre de Strasbourg",
@@ -88,10 +89,13 @@ export default function Membres() {
                     <CardContent className="pt-6">
                       <div className="flex flex-col items-center">
                         <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4">
-                          <Image
-                            src="/placeholder.svg?height=128&width=128"
+                          <DynamicImageBlock
+                            zone="membres-pasteur-1"
+                            fallbackSrc="/placeholder.svg?height=128&width=128"
                             alt="Pasteur Samuel Dupont"
-                            fill
+                            type="avatar"
+                            width={128}
+                            height={128}
                             className="object-cover"
                           />
                         </div>
@@ -113,10 +117,13 @@ export default function Membres() {
                     <CardContent className="pt-6">
                       <div className="flex flex-col items-center">
                         <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4">
-                          <Image
-                            src="/placeholder.svg?height=128&width=128"
+                          <DynamicImageBlock
+                            zone="membres-pasteur-2"
+                            fallbackSrc="/placeholder.svg?height=128&width=128"
                             alt="Pierre Martin"
-                            fill
+                            type="avatar"
+                            width={128}
+                            height={128}
                             className="object-cover"
                           />
                         </div>
@@ -138,10 +145,13 @@ export default function Membres() {
                     <CardContent className="pt-6">
                       <div className="flex flex-col items-center">
                         <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4">
-                          <Image
-                            src="/placeholder.svg?height=128&width=128"
+                          <DynamicImageBlock
+                            zone="membres-pasteur-3"
+                            fallbackSrc="/placeholder.svg?height=128&width=128"
                             alt="Jean Dubois"
-                            fill
+                            type="avatar"
+                            width={128}
+                            height={128}
                             className="object-cover"
                           />
                         </div>
@@ -173,10 +183,13 @@ export default function Membres() {
                     <CardContent className="pt-6">
                       <div className="flex flex-col items-center">
                         <div className="relative w-24 h-24 rounded-full overflow-hidden mb-3">
-                          <Image
-                            src="/placeholder.svg?height=96&width=96"
+                          <DynamicImageBlock
+                            zone="membres-conseil-1"
+                            fallbackSrc="/placeholder.svg?height=96&width=96"
                             alt="Marie Laurent"
-                            fill
+                            type="avatar"
+                            width={96}
+                            height={96}
                             className="object-cover"
                           />
                         </div>
@@ -191,10 +204,13 @@ export default function Membres() {
                     <CardContent className="pt-6">
                       <div className="flex flex-col items-center">
                         <div className="relative w-24 h-24 rounded-full overflow-hidden mb-3">
-                          <Image
-                            src="/placeholder.svg?height=96&width=96"
+                          <DynamicImageBlock
+                            zone="membres-conseil-2"
+                            fallbackSrc="/placeholder.svg?height=96&width=96"
                             alt="Thomas Leroux"
-                            fill
+                            type="avatar"
+                            width={96}
+                            height={96}
                             className="object-cover"
                           />
                         </div>
@@ -209,10 +225,13 @@ export default function Membres() {
                     <CardContent className="pt-6">
                       <div className="flex flex-col items-center">
                         <div className="relative w-24 h-24 rounded-full overflow-hidden mb-3">
-                          <Image
-                            src="/placeholder.svg?height=96&width=96"
+                          <DynamicImageBlock
+                            zone="membres-conseil-3"
+                            fallbackSrc="/placeholder.svg?height=96&width=96"
                             alt="Sophie Moreau"
-                            fill
+                            type="avatar"
+                            width={96}
+                            height={96}
                             className="object-cover"
                           />
                         </div>
@@ -227,7 +246,15 @@ export default function Membres() {
                     <CardContent className="pt-6">
                       <div className="flex flex-col items-center">
                         <div className="relative w-24 h-24 rounded-full overflow-hidden mb-3">
-                          <Image src="/placeholder.svg?height=96&width=96" alt="Marc Petit" fill className="object-cover" />
+                          <DynamicImageBlock
+                            zone="membres-conseil-4"
+                            fallbackSrc="/placeholder.svg?height=96&width=96"
+                            alt="Marc Petit"
+                            type="avatar"
+                            width={96}
+                            height={96}
+                            className="object-cover"
+                          />
                         </div>
                         <h3 className="text-lg font-medium mb-1">Marc Petit</h3>
                         <p className="text-gray-500 mb-2">Communication</p>

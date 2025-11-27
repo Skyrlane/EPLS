@@ -9,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { ImageBlock } from "@/components/ui/image-block"
+import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
 import { useRouter } from "next/navigation"
 
 export default function HistoirePage() {
@@ -85,10 +86,11 @@ export default function HistoirePage() {
               </p>
             </div>
             <div className="relative h-64 lg:h-full">
-              <ImageBlock
-                src="/images/histoire/eglise-histoire.jpg"
+              <DynamicImageBlock
+                zone="histoire-hero"
+                fallbackSrc="/images/histoire/eglise-histoire.jpg"
                 alt="Photo historique de l'église"
-                type="content"
+                type="section"
                 className="object-cover"
                 containerClassName="h-full"
                 rounded="lg"
@@ -111,10 +113,13 @@ export default function HistoirePage() {
                       </p>
                     </div>
                     <div className="relative h-48">
-                      <ImageBlock
-                        src="/placeholder.svg?height=200&width=300"
+                      <DynamicImageBlock
+                        zone="histoire-1855"
+                        fallbackSrc="/placeholder.svg?height=200&width=300"
                         alt="Réunion de maison historique"
                         type="content"
+                        width={300}
+                        height={200}
                         className="object-cover"
                         containerClassName="h-full"
                         rounded="lg"
@@ -129,16 +134,19 @@ export default function HistoirePage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="md:col-span-2">
                       <p>
-                        L'assemblée se constitue officiellement en tant qu'Église Protestante Libre, 
-                        adoptant une confession de foi et des statuts propres. Cette étape marque 
+                        L'assemblée se constitue officiellement en tant qu'Église Protestante Libre,
+                        adoptant une confession de foi et des statuts propres. Cette étape marque
                         l'indépendance de la communauté vis-à-vis des structures ecclésiastiques établies.
                       </p>
                     </div>
                     <div className="relative h-48">
-                      <ImageBlock
-                        src="/placeholder.svg?height=200&width=300"
+                      <DynamicImageBlock
+                        zone="histoire-1872"
+                        fallbackSrc="/placeholder.svg?height=200&width=300"
                         alt="Document historique"
                         type="content"
+                        width={300}
+                        height={200}
                         className="object-cover"
                         containerClassName="h-full"
                         rounded="lg"
@@ -153,16 +161,19 @@ export default function HistoirePage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="md:col-span-2">
                       <p>
-                        Acquisition du premier lieu de culte dédié, permettant à la communauté de se 
-                        développer et d'accueillir davantage de personnes. Ce bâtiment modeste 
+                        Acquisition du premier lieu de culte dédié, permettant à la communauté de se
+                        développer et d'accueillir davantage de personnes. Ce bâtiment modeste
                         devient un lieu de vie spirituelle intense et de témoignage dans le quartier.
                       </p>
                     </div>
                     <div className="relative h-48">
-                      <ImageBlock
-                        src="/placeholder.svg?height=200&width=300"
+                      <DynamicImageBlock
+                        zone="histoire-1920"
+                        fallbackSrc="/placeholder.svg?height=200&width=300"
                         alt="Ancien bâtiment de l'église"
                         type="content"
+                        width={300}
+                        height={200}
                         className="object-cover"
                         containerClassName="h-full"
                         rounded="lg"
@@ -177,16 +188,19 @@ export default function HistoirePage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="md:col-span-2">
                       <p>
-                        L'église est touchée par le mouvement de renouveau charismatique qui traverse 
-                        de nombreuses dénominations chrétiennes. Cette période apporte un nouveau 
+                        L'église est touchée par le mouvement de renouveau charismatique qui traverse
+                        de nombreuses dénominations chrétiennes. Cette période apporte un nouveau
                         dynamisme spirituel et une croissance significative de la communauté.
                       </p>
                     </div>
                     <div className="relative h-48">
-                      <ImageBlock
-                        src="/placeholder.svg?height=200&width=300"
+                      <DynamicImageBlock
+                        zone="histoire-1968"
+                        fallbackSrc="/placeholder.svg?height=200&width=300"
                         alt="Culte des années 70"
                         type="content"
+                        width={300}
+                        height={200}
                         className="object-cover"
                         containerClassName="h-full"
                         rounded="lg"
@@ -201,16 +215,19 @@ export default function HistoirePage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="md:col-span-2">
                       <p>
-                        Face à la croissance de l'assemblée, l'église déménage dans des locaux plus 
-                        spacieux dans le quartier actuel. Ce nouveau bâtiment permet de développer 
+                        Face à la croissance de l'assemblée, l'église déménage dans des locaux plus
+                        spacieux dans le quartier actuel. Ce nouveau bâtiment permet de développer
                         davantage d'activités et de ministères pour servir la communauté locale.
                       </p>
                     </div>
                     <div className="relative h-48">
-                      <ImageBlock
-                        src="/placeholder.svg?height=200&width=300"
+                      <DynamicImageBlock
+                        zone="histoire-1995"
+                        fallbackSrc="/placeholder.svg?height=200&width=300"
                         alt="Nouvel emplacement de l'église"
                         type="content"
+                        width={300}
+                        height={200}
                         className="object-cover"
                         containerClassName="h-full"
                         rounded="lg"
@@ -225,16 +242,19 @@ export default function HistoirePage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="md:col-span-2">
                       <p>
-                        L'église adopte une nouvelle vision pour les années à venir, axée sur 
-                        l'évangélisation, la formation de disciples et le service de la 
+                        L'église adopte une nouvelle vision pour les années à venir, axée sur
+                        l'évangélisation, la formation de disciples et le service de la
                         communauté locale. Cette période marque un tournant dans la vie de l'église.
                       </p>
                     </div>
                     <div className="relative h-48">
-                      <ImageBlock
-                        src="/placeholder.svg?height=200&width=300"
+                      <DynamicImageBlock
+                        zone="histoire-2010"
+                        fallbackSrc="/placeholder.svg?height=200&width=300"
                         alt="Équipe pastorale en réunion"
                         type="content"
+                        width={300}
+                        height={200}
                         className="object-cover"
                         containerClassName="h-full"
                         rounded="lg"
@@ -249,17 +269,20 @@ export default function HistoirePage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="md:col-span-2">
                       <p>
-                        Notre église continue de grandir et d'évoluer, tout en restant fidèle à ses 
-                        racines et à sa mission fondamentale. Nous sommes une communauté 
-                        intergénérationnelle et multiculturelle, ouverte à tous et désireuse de 
+                        Notre église continue de grandir et d'évoluer, tout en restant fidèle à ses
+                        racines et à sa mission fondamentale. Nous sommes une communauté
+                        intergénérationnelle et multiculturelle, ouverte à tous et désireuse de
                         partager l'amour du Christ dans notre ville.
                       </p>
                     </div>
                     <div className="relative h-48">
-                      <ImageBlock
-                        src="/placeholder.svg?height=200&width=300"
+                      <DynamicImageBlock
+                        zone="histoire-today"
+                        fallbackSrc="/placeholder.svg?height=200&width=300"
                         alt="Notre communauté aujourd'hui"
                         type="content"
+                        width={300}
+                        height={200}
                         className="object-cover"
                         containerClassName="h-full"
                         rounded="lg"
@@ -298,21 +321,24 @@ export default function HistoirePage() {
               <Card>
                 <CardContent className="p-6">
                   <div className="relative h-48 mb-4">
-                    <ImageBlock
-                      src="/placeholder.svg?height=200&width=400"
+                    <DynamicImageBlock
+                      zone="histoire-archives"
+                      fallbackSrc="/placeholder.svg?height=200&width=400"
                       alt="Nos archives"
                       type="content"
+                      width={400}
+                      height={200}
                       className="object-cover rounded-lg"
                       containerClassName="h-full"
                     />
                   </div>
                   <h3 className="text-xl font-bold mb-3">Nos archives</h3>
                   <p className="mb-4">
-                    Consultez nos archives historiques pour découvrir les documents, 
+                    Consultez nos archives historiques pour découvrir les documents,
                     photographies et témoignages qui racontent notre histoire en détail.
                   </p>
-                  <Link 
-                    href="/contact" 
+                  <Link
+                    href="/contact"
                     className="text-primary hover:underline"
                   >
                     Contacter notre équipe pour une visite des archives
@@ -322,21 +348,24 @@ export default function HistoirePage() {
               <Card>
                 <CardContent className="p-6">
                   <div className="relative h-48 mb-4">
-                    <ImageBlock
-                      src="/placeholder.svg?height=200&width=400"
+                    <DynamicImageBlock
+                      zone="histoire-union"
+                      fallbackSrc="/placeholder.svg?height=200&width=400"
                       alt="L'Union des Églises Évangéliques Libres"
                       type="content"
+                      width={400}
+                      height={200}
                       className="object-cover rounded-lg"
                       containerClassName="h-full"
                     />
                   </div>
                   <h3 className="text-xl font-bold mb-3">L'Union des ÉÉEL</h3>
                   <p className="mb-4">
-                    Découvrez l'histoire et les valeurs de l'Union des Églises 
+                    Découvrez l'histoire et les valeurs de l'Union des Églises
                     Évangéliques Libres, dont notre église fait partie depuis sa fondation.
                   </p>
-                  <Link 
-                    href="/infos-docs/union-eglise" 
+                  <Link
+                    href="/infos-docs/union-eglise"
                     className="text-primary hover:underline"
                   >
                     En savoir plus sur l'Union

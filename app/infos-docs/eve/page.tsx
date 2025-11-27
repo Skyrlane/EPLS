@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { HeartIcon, HandIcon, GlobeIcon, UsersIcon } from "lucide-react"
@@ -60,10 +61,13 @@ export default function EvePage() {
                 <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
                   <div className="md:w-1/3">
                     <div className="relative w-64 h-64 mx-auto">
-                      <Image
-                        src="/placeholder.svg?height=400&width=400"
+                      <DynamicImageBlock
+                        zone="eve-logo"
+                        fallbackSrc="/placeholder.svg?height=400&width=400"
                         alt="Logo Eau Vive Espoir"
-                        fill
+                        type="avatar"
+                        width={400}
+                        height={400}
                         className="object-contain"
                       />
                     </div>
@@ -133,11 +137,13 @@ export default function EvePage() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <Card>
                       <div className="relative h-48">
-                        <Image
-                          src="/placeholder.svg?height=400&width=600"
+                        <DynamicImageBlock
+                          zone="eve-projet-burkina"
+                          fallbackSrc="/placeholder.svg?height=400&width=600"
                           alt="Projet eau potable au Burkina Faso"
-                          fill
-                          className="object-cover"
+                          type="card"
+                          width={600}
+                          height={400}
                         />
                       </div>
                       <CardHeader>
@@ -155,11 +161,13 @@ export default function EvePage() {
 
                     <Card>
                       <div className="relative h-48">
-                        <Image
-                          src="/placeholder.svg?height=400&width=600"
+                        <DynamicImageBlock
+                          zone="eve-projet-togo"
+                          fallbackSrc="/placeholder.svg?height=400&width=600"
                           alt="Centre d'alphabétisation au Togo"
-                          fill
-                          className="object-cover"
+                          type="card"
+                          width={600}
+                          height={400}
                         />
                       </div>
                       <CardHeader>
@@ -177,11 +185,13 @@ export default function EvePage() {
 
                     <Card>
                       <div className="relative h-48">
-                        <Image
-                          src="/placeholder.svg?height=400&width=600"
+                        <DynamicImageBlock
+                          zone="eve-projet-local"
+                          fallbackSrc="/placeholder.svg?height=400&width=600"
                           alt="Aide alimentaire à Strasbourg"
-                          fill
-                          className="object-cover"
+                          type="card"
+                          width={600}
+                          height={400}
                         />
                       </div>
                       <CardHeader>

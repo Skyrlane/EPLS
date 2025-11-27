@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { DynamicImageBlock } from "@/components/ui/dynamic-image-block";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -168,7 +169,13 @@ export default function Culte() {
           <div className="max-w-5xl mx-auto">
             {/* Hero Section */}
             <div className="relative w-full h-96 mb-12 rounded-lg overflow-hidden">
-              <Image src="/placeholder.svg?height=384&width=896" alt="Culte à l'EPLS" fill className="object-cover" />
+              <DynamicImageBlock
+                zone="cultes-hero"
+                fallbackSrc="/placeholder.svg?height=384&width=896"
+                alt="Culte à l'EPLS"
+                type="hero"
+                className="object-cover"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                 <div className="p-8 text-white">
                   <h2 className="text-3xl font-bold mb-2">Nos cultes</h2>

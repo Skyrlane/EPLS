@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ExternalLink } from "lucide-react"
 import Sidebar from "../components/Sidebar"
+import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
 
 export const metadata: Metadata = {
   title: "Union des Églises Évangéliques Libres | Église Protestante Libre de Strasbourg",
@@ -63,9 +64,11 @@ export default function UnionEglisePage() {
                   <div className="flex flex-col md:flex-row items-center gap-8 mb-12">
                     <div className="md:w-1/3">
                       <div className="relative w-64 h-64 mx-auto">
-                        <Image
-                          src="/placeholder.svg?height=400&width=400"
+                        <DynamicImageBlock
+                          zone="ueel-logo"
+                          fallbackSrc="/placeholder.svg?height=400&width=400"
                           alt="Logo de l'Union des Églises Évangéliques Libres"
+                          type="avatar"
                           width={400}
                           height={400}
                           className="object-contain"
@@ -128,9 +131,11 @@ export default function UnionEglisePage() {
                       </ul>
 
                       <div className="my-8 relative h-64 rounded-lg overflow-hidden">
-                        <Image
-                          src="/placeholder.svg?height=400&width=800"
+                        <DynamicImageBlock
+                          zone="ueel-synod"
+                          fallbackSrc="/placeholder.svg?height=400&width=800"
                           alt="Synode de l'Union des Églises Évangéliques Libres"
+                          type="section"
                           width={800}
                           height={400}
                           className="object-cover w-full h-full"
