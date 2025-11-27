@@ -12,7 +12,8 @@ import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage
 import { firestore, storage } from '@/lib/firebase';
 import type { HeroImageSettings } from '@/types';
 import { useToast } from '@/hooks/use-toast';
-import { Upload, Trash2, Info, Image as ImageIcon } from 'lucide-react';
+import { Upload, Trash2, Info } from 'lucide-react';
+import { ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 
 // Configuration pour éviter les problèmes de chargement en production
@@ -345,12 +346,12 @@ export default function AdminHeroImagePage() {
                 accept="image/jpeg,image/png,image/webp"
                 onChange={handleFileInput}
               />
-              <Button asChild variant="outline">
-                <label htmlFor="hero-upload" className="cursor-pointer">
+              <label htmlFor="hero-upload" className="cursor-pointer">
+                <Button variant="outline" type="button">
                   <ImageIcon className="mr-2 h-4 w-4" />
                   Sélectionner une image
-                </label>
-              </Button>
+                </Button>
+              </label>
             </div>
           ) : (
             <>
