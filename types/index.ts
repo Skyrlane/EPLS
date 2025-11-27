@@ -406,3 +406,22 @@ export interface GalleryFilterOptions {
   sortOrder?: 'asc' | 'desc';
   limit?: number;
 }
+
+/**
+ * Settings pour l'image hero de la page d'accueil
+ */
+export interface HeroImageSettings {
+  id: 'hero_image';             // ID fixe pour ce document unique
+  imageUrl: string;             // URL Firebase Storage de l'image
+  storagePath: string;          // Chemin dans Storage (ex: site/hero/hero-current.webp)
+  dimensions: {
+    width: number;              // Largeur en pixels
+    height: number;             // Hauteur en pixels
+  };
+  format: string;               // 'jpg', 'png', 'webp'
+  fileSize: number;             // Taille en bytes
+  uploadedBy: string;           // UID de l'admin
+  uploadedByName: string;       // Nom de l'admin
+  uploadedAt: Date;             // Date d'upload
+  updatedAt: Date;              // Date de mise à jour
+}

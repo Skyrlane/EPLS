@@ -42,6 +42,7 @@ import { UpcomingEventsSection } from "@/components/announcements/upcoming-event
 import NextDynamic from 'next/dynamic'
 import { LatestBlogArticle } from '@/components/home/latest-blog-article'
 import { GalleryCarousel } from '@/components/home/GalleryCarousel'
+import { HeroSection } from '@/components/home/hero-section'
 
 export const metadata: Metadata = {
   title: "Accueil | Église Protestante Libre de Strasbourg",
@@ -152,44 +153,8 @@ const latestNews = [
 
 /**
  * Section héro pour la page d'accueil
+ * (Composant client - voir components/home/hero-section.tsx)
  */
-function HeroSection() {
-  return (
-    <div className="relative h-[70vh] w-full overflow-hidden">
-      <ImageBlock
-        src="/images/hero/church-hero.png"
-        alt="Église Protestante Libre de Strasbourg"
-        type="hero"
-        priority={true}
-        width={1920}
-        height={780}
-        className="h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 md:bg-black/50" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center text-white">
-        <h1 className="max-w-3xl text-4xl font-bold leading-tight md:text-5xl lg:text-6xl drop-shadow-md">
-          Église Protestante Libre de Strasbourg
-        </h1>
-        <p className="mt-4 max-w-lg text-lg md:text-xl drop-shadow-md font-medium">
-          Une communauté chrétienne vivante, enracinée dans la Bible et tournée vers les autres
-        </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Button asChild size="lg" className="rounded-full text-base bg-primary hover:bg-primary/90 text-primary-foreground shadow-md">
-            <Link href="/notre-eglise">Découvrir notre église</Link>
-          </Button>
-          <Button asChild variant="secondary" size="lg" className="rounded-full text-base bg-white text-primary hover:bg-gray-100 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 shadow-md">
-            <Link href="/culte/calendrier">
-              <span className="flex items-center">
-                <CalendarIcon className="mr-2 h-5 w-5" />
-                Nos activités
-              </span>
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 function EventCard({ event }: { event: any }) {
   return (
