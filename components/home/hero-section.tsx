@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import type { HeroImageSettings } from '@/types';
-import { ImageBlock } from '@/components/ui/image-block';
+
 import { Button } from '@/components/ui/button';
 import { CalendarIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -44,13 +44,9 @@ export function HeroSection() {
 
   return (
     <div className="relative h-[70vh] w-full overflow-hidden">
-      <ImageBlock
+      <img
         src={heroImageUrl}
         alt="Église Protestante Libre de Strasbourg"
-        type="hero"
-        priority={true}
-        width={1920}
-        height={780}
         className="h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 md:bg-black/50" />
