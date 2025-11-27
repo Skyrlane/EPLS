@@ -7,6 +7,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Home } from "lucide-react"
 
+// FORCER le rendu dynamique pour que le middleware s'exécute
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: "Admin | EPLS",
   description: "Interface d'administration EPLS",

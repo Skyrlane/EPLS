@@ -41,6 +41,11 @@ export default function RootLayout({
   const pathname = headersList.get('x-pathname') || ''
   const isAdminRoute = pathname.startsWith('/admin')
 
+  // Debug en développement
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[ROOT LAYOUT] pathname:', pathname, 'isAdminRoute:', isAdminRoute)
+  }
+
   return (
     <html lang="fr" suppressHydrationWarning>
       <head />
