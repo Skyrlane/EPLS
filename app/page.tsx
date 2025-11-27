@@ -19,7 +19,6 @@ import {
   NewspaperIcon,
   FileIcon
 } from "lucide-react"
-import { FirebaseStatus } from "@/components/firebase-status"
 import { Metadata } from "next"
 import { SectionContainer } from '@/components/ui/section-container'
 import { ImageBlock } from '@/components/ui/image-block'
@@ -394,9 +393,6 @@ export default async function Home() {
 
   return (
     <main className="vertical-rhythm">
-      {/* Bannière d'alerte pour la configuration Firebase */}
-      <FirebaseStatus />
-
       {/* Hero Section */}
       <HeroSection initialImageUrl={heroImageUrl} />
       
