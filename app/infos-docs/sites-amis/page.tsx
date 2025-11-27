@@ -33,7 +33,7 @@ export default function SitesAmisPage() {
       name: "Union des Églises Protestantes d'Alsace et de Lorraine",
       description: "Notre église est membre de l'UEPAL, qui regroupe des églises luthériennes et réformées en Alsace et en Moselle.",
       url: "https://www.uepal.fr/",
-      logo: "/images/partners/uepal-logo.png",
+      logo: "/images/partners/uepal-logo.svg",
       category: "dénomination"
     },
     {
@@ -41,7 +41,7 @@ export default function SitesAmisPage() {
       name: "Protestants.org",
       description: "Le portail de la Fédération Protestante de France, représentant la diversité du protestantisme français.",
       url: "https://www.protestants.org/",
-      logo: "/images/partners/protestants-logo.png",
+      logo: "/images/partners/protestants-logo.svg",
       category: "organisation"
     },
     {
@@ -49,7 +49,7 @@ export default function SitesAmisPage() {
       name: "Évangile et Liberté",
       description: "Mensuel protestant de réflexion et d'engagement qui promeut une foi ouverte au dialogue avec la modernité.",
       url: "https://www.evangile-et-liberte.net/",
-      logo: "/images/partners/evangile-liberte-logo.png",
+      logo: "/images/partners/evangile-liberte-logo.svg",
       category: "ressources"
     },
     {
@@ -57,7 +57,7 @@ export default function SitesAmisPage() {
       name: "Fondation du Diaconat",
       description: "Organisation caritative protestante engagée dans des actions sociales et médicales en Alsace.",
       url: "https://www.fondation-diaconat.fr/",
-      logo: "/images/partners/diaconat-logo.png",
+      logo: "/images/partners/diaconat-logo.svg",
       category: "organisation"
     },
     {
@@ -65,7 +65,7 @@ export default function SitesAmisPage() {
       name: "Faculté de Théologie Protestante de Strasbourg",
       description: "Établissement universitaire de formation théologique et de recherche scientifique.",
       url: "https://theopro.unistra.fr/",
-      logo: "/images/partners/flt-strasbourg-logo.png",
+      logo: "/images/partners/flt-strasbourg-logo.svg",
       category: "formation"
     },
     {
@@ -73,7 +73,7 @@ export default function SitesAmisPage() {
       name: "Défap - Service Protestant de Mission",
       description: "Organisation missionnaire des Églises protestantes françaises qui soutient des projets à l'international.",
       url: "https://www.defap.fr/",
-      logo: "/images/partners/defap-logo.png",
+      logo: "/images/partners/defap-logo.svg",
       category: "mission"
     },
     {
@@ -81,7 +81,7 @@ export default function SitesAmisPage() {
       name: "CEEEFE - Églises Protestantes Francophones à l'Étranger",
       description: "Réseau des communautés protestantes francophones dans le monde entier.",
       url: "https://www.eglisesfrancaises.org/",
-      logo: "/images/partners/ceeefe-logo.png",
+      logo: "/images/partners/ceeefe-logo.svg",
       category: "églises"
     },
     {
@@ -89,7 +89,7 @@ export default function SitesAmisPage() {
       name: "Musée Virtuel du Protestantisme",
       description: "Ressource en ligne sur l'histoire et le patrimoine protestant depuis le XVIe siècle.",
       url: "https://www.museeprotestant.org/",
-      logo: "/images/partners/musee-protestant-logo.png",
+      logo: "/images/partners/musee-protestant-logo.svg",
       category: "ressources"
     },
     {
@@ -97,7 +97,7 @@ export default function SitesAmisPage() {
       name: "ACAT - Action des Chrétiens pour l'Abolition de la Torture",
       description: "ONG chrétienne œcuménique qui lutte contre la torture et la peine de mort dans le monde.",
       url: "https://www.acatfrance.fr/",
-      logo: "/images/partners/acat-logo.png",
+      logo: "/images/partners/acat-logo.svg",
       category: "organisation"
     }
   ]

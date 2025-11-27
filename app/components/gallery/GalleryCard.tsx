@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
+  DialogDescription,
 } from "@/components/ui/dialog"
 
 interface GalleryCardProps extends GalleryImageProps {}
@@ -27,7 +28,8 @@ export function GalleryCard({ id, src, alt, description }: GalleryCardProps) {
           </div>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-4xl">
+      <DialogContent className="sm:max-w-4xl" aria-describedby={undefined}>
+        <DialogDescription className="sr-only">{description}</DialogDescription>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="relative h-80 sm:h-full">
             <Image
