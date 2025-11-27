@@ -241,6 +241,12 @@ export default function MembresPage() {
                     >
                       → Gérer la galerie photos
                     </Link>
+                    <Link
+                      href="/admin/hero-image"
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer l'image d'accueil
+                    </Link>
                   </div>
                 </div>
               </CardContent>
