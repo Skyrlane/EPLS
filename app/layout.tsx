@@ -2,16 +2,8 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Footer } from "@/components/footer"
-import { Toaster } from "@/components/ui/toaster"
-import { AuthProvider } from "@/lib/hooks/use-auth"
 import { cn } from "@/lib/utils"
-import { SkipToContent } from "@/components/skip-to-content"
-import Navigation from "@/components/navigation"
-import { ServiceInfoProvider } from "@/lib/providers/service-info-provider"
-import { FixedServiceInfo } from "@/components/home/fixed-service-info"
-import { CookieBanner } from "@/components/ui/cookie-banner"
+import { ClientLayoutWrapper } from "@/components/client-layout-wrapper"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -47,26 +39,9 @@ export default function RootLayout({
     <html lang="fr" suppressHydrationWarning>
       <head />
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AuthProvider>
-            <ServiceInfoProvider>
-              <SkipToContent />
-              <Navigation />
-              <main id="content" className="min-h-screen pt-16">
-                {children}
-              </main>
-              <Footer />
-              <Toaster />
-              {SHOW_FIXED_SERVICE_INFO && <FixedServiceInfo />}
-              <CookieBanner />
-            </ServiceInfoProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <ClientLayoutWrapper showFixedServiceInfo={SHOW_FIXED_SERVICE_INFO}>
+          {children}
+        </ClientLayoutWrapper>
       </body>
     </html>
   )
