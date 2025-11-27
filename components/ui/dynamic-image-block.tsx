@@ -45,23 +45,35 @@ export function DynamicImageBlock({
     const unsubscribe = onSnapshot(
       doc(firestore, 'site_images', zone),
       (docSnap) => {
+        console.log(`[DynamicImageBlock] Zone: ${zone}`);
+
         if (docSnap.exists()) {
           const data = docSnap.data() as SiteImage;
+          console.log(`[DynamicImageBlock] Document exists for zone ${zone}:`, {
+            isActive: data.isActive,
+            hasImageUrl: !!data.imageUrl,
+            imageUrl: data.imageUrl,
+            fallbackUrl: data.fallbackUrl
+          });
 
           // Utiliser l'image uploadée si elle existe et est active
           if (data.isActive && data.imageUrl) {
+            console.log(`[DynamicImageBlock] Using uploaded image: ${data.imageUrl}`);
             setImageSrc(data.imageUrl);
           } else {
             // Sinon utiliser le fallback défini dans Firestore
-            setImageSrc(data.fallbackUrl || fallbackSrc);
+            const fallback = data.fallbackUrl || fallbackSrc;
+            console.log(`[DynamicImageBlock] Using fallback: ${fallback} (isActive: ${data.isActive})`);
+            setImageSrc(fallback);
           }
         } else {
+          console.log(`[DynamicImageBlock] Document NOT found for zone ${zone}, using fallback: ${fallbackSrc}`);
           // Aucune config Firestore, utiliser le fallback
           setImageSrc(fallbackSrc);
         }
       },
       (error) => {
-        console.error(`Erreur listener image zone "${zone}":`, error);
+        console.error(`[DynamicImageBlock] Erreur listener image zone "${zone}":`, error);
         setImageSrc(fallbackSrc);
       }
     );
