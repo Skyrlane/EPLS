@@ -264,13 +264,14 @@ function CallToActionLocal({
 }
 
 export default async function Home() {
-  // Charger les données Firebase (dernier message + dernier article)
+  // Charger les données Firebase (dernier message + dernier article + hero image)
   let latestMessageData = null;
   let latestBlogArticle = null;
+  let heroImageUrl = '/images/hero/church-hero.png'; // Fallback par défaut
   
   // Essayer de charger les données, mais ne pas bloquer le rendu si ça échoue
   try {
-    const { collection: firestoreCollection, getDocs, query: firestoreQuery, where, orderBy: firestoreOrderBy, limit } = await import('firebase/firestore');
+    const { collection: firestoreCollection, getDocs, getDoc, doc: firestoreDoc, query: firestoreQuery, where, orderBy: firestoreOrderBy, limit } = await import('firebase/firestore');
     const { firestore } = await import('@/lib/firebase');
     
     // Charger le dernier message
@@ -367,6 +368,17 @@ export default async function Home() {
         publishedAt: data.publishedAt?.toDate(),
       };
     }
+    
+    // Charger l'image hero
+    const heroImageDocRef = firestoreDoc(firestore, 'site_settings', 'hero_image');
+    const heroImageDoc = await getDoc(heroImageDocRef);
+    if (heroImageDoc.exists()) {
+      const heroData = heroImageDoc.data();
+      heroImageUrl = heroData.imageUrl || heroImageUrl;
+      console.log('✅ Image hero chargée depuis Firestore:', heroImageUrl);
+    } else {
+      console.log('⚠️ Aucune image hero personnalisée, utilisation du fallback');
+    }
   } catch (error: any) {
     // En production, logger l'erreur mais continuer le rendu
     console.error('❌ Erreur chargement données Firebase:', error);
@@ -386,7 +398,7 @@ export default async function Home() {
       <FirebaseStatus />
 
       {/* Hero Section */}
-      <HeroSection />
+      <HeroSection initialImageUrl={heroImageUrl} />
       
       {/* Information sur le culte */}
       <div className="container mx-auto px-4 -mt-16 md:-mt-20 z-10 relative">

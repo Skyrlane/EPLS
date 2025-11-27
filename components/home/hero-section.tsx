@@ -9,8 +9,12 @@ import { Button } from '@/components/ui/button';
 import { CalendarIcon } from 'lucide-react';
 import Link from 'next/link';
 
-export function HeroSection() {
-  const [heroImageUrl, setHeroImageUrl] = useState<string>('/images/hero/church-hero.png');
+interface HeroSectionProps {
+  initialImageUrl?: string;
+}
+
+export function HeroSection({ initialImageUrl = '/images/hero/church-hero.png' }: HeroSectionProps) {
+  const [heroImageUrl, setHeroImageUrl] = useState<string>(initialImageUrl);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
