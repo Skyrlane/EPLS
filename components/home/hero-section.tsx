@@ -49,7 +49,7 @@ export function HeroSection() {
         alt="Église Protestante Libre de Strasbourg"
         className="h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 md:bg-black/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/25 to-transparent" />
       <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center text-white">
         <h1 className="max-w-3xl text-4xl font-bold leading-tight md:text-5xl lg:text-6xl drop-shadow-md">
           Église Protestante Libre de Strasbourg
