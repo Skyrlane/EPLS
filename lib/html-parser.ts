@@ -234,10 +234,19 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
         let locationName = '';
         let locationAddress = '';
 
-        const locationMatch1 = titleContext.match(/\s+(?:au|à l'|à la|chez)\s+([^(<,]+)(?:\s*\(([^)]+)\)|,\s*([^<.]+))?/i);
+        // AMÉLIORATION : Regex plus robuste pour capturer lieu et adresse
+        // Formats supportés :
+        // - "au Lieu, Adresse"
+        // - "à Lieu, Adresse"
+        // - "à l'Lieu, Adresse"
+        // - "à la Lieu, Adresse"
+        // - "chez Lieu, Adresse"
+        // Capture aussi les tirets dans les noms (ex: "Église St-Marc")
+        const locationMatch1 = titleContext.match(/\s+(?:au|à\s+l'|à\s+la|à|chez)\s+([^,<]+?)(?:,\s*([^<\n\r]+?))?(?=<|$)/i);
         if (locationMatch1) {
-          locationName = locationMatch1[1].trim();
-          locationAddress = (locationMatch1[2] || locationMatch1[3] || '').trim();
+          // Nettoyer les articles en début de nom (l', la , le )
+          locationName = locationMatch1[1].trim().replace(/^(l'|la\s+|le\s+)/i, '');
+          locationAddress = (locationMatch1[2] || '').trim();
         }
 
         console.log('    📍 Lieu:', locationName || '(non spécifié)', '|', locationAddress || '(pas d\'adresse)');
@@ -248,10 +257,17 @@ export function parseAnnouncementsHTML(html: string): ParsedAnnouncement[] {
 
         if (ulMatch) {
           const ulContent = ulMatch[0];
-          const liRegex = /<li[^>]*>([^<]+)<\/li>/gi;
+          // AMÉLIORATION : Capturer TOUT le contenu HTML interne du <li> (y compris les balises <strong>)
+          const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
           let liMatch;
           while ((liMatch = liRegex.exec(ulContent)) !== null) {
-            const text = liMatch[1].trim();
+            // Nettoyer les balises HTML mais garder le texte complet (y compris horaires dans <strong>)
+            let text = liMatch[1]
+              .replace(/<br\s*\/?>/gi, ' ')  // Remplacer <br> par espace
+              .replace(/<[^>]+>/g, '')       // Supprimer toutes les balises
+              .replace(/\s+/g, ' ')          // Normaliser les espaces multiples
+              .trim();
+
             if (text && !text.toLowerCase().includes('billetterie') && text !== ':') {
               details.push(text);
             }

@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { AnnouncementImporter } from '@/components/admin/AnnouncementImporter';
 import { AnnouncementList } from '@/components/admin/AnnouncementList';
+import { AnnouncementEditModal } from '@/components/admin/AnnouncementEditModal';
 import type { Announcement } from '@/lib/announcements-utils';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
@@ -19,6 +20,8 @@ export default function AdminAnnoncesPage() {
   const [expiredAnnouncements, setExpiredAnnouncements] = useState<Announcement[]>([]);
   const [showExpired, setShowExpired] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -86,15 +89,19 @@ export default function AdminAnnoncesPage() {
       
       setCurrentAnnouncements(current);
       
-      // 2. ANNONCES EXPIRÉES : date < aujourd'hui
-      const qExpired = query(
+      // 2. ANNONCES EXPIRÉES/ARCHIVÉES : 
+      //    - date < aujourd'hui (expirées par date)
+      //    - OU isActive = false (archivées manuellement)
+      
+      // 2a. Annonces expirées par date
+      const qExpiredByDate = query(
         collection(firestore, 'announcements'),
         where('date', '<', timestampStartOfToday),
         orderBy('date', 'desc')
       );
       
-      const expiredSnap = await getDocs(qExpired);
-      const expired: Announcement[] = expiredSnap.docs.map(doc => {
+      const expiredByDateSnap = await getDocs(qExpiredByDate);
+      const expiredByDate: Announcement[] = expiredByDateSnap.docs.map(doc => {
         const data = doc.data();
         return {
           id: doc.id,
@@ -116,9 +123,52 @@ export default function AdminAnnoncesPage() {
         };
       });
       
-      console.log('🕐 Annonces expirées:', expired.length);
+      // 2b. Annonces archivées (isActive = false) avec date future
+      const qArchivedFuture = query(
+        collection(firestore, 'announcements'),
+        where('isActive', '==', false),
+        where('date', '>=', timestampStartOfToday),
+        orderBy('date', 'desc')
+      );
+      
+      const archivedFutureSnap = await getDocs(qArchivedFuture);
+      const archivedFuture: Announcement[] = archivedFutureSnap.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          title: data.title,
+          date: data.date?.toDate ? data.date.toDate() : new Date(data.date),
+          time: data.time || '',
+          location: data.location || { name: data.location || '', address: '' },
+          type: data.type || 'culte',
+          tag: data.tag || 'Culte',
+          tagColor: data.tagColor || '#3B82F6',
+          details: data.details || [],
+          pricing: data.pricing,
+          isPinned: data.isPinned ?? false,
+          priority: data.priority || 100,
+          isActive: data.isActive ?? true,
+          status: data.status || 'published',
+          createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : new Date(),
+          updatedAt: data.updatedAt?.toDate ? data.updatedAt.toDate() : new Date()
+        };
+      });
+      
+      // Merger et dédupliquer (au cas où une annonce serait à la fois expirée et archivée)
+      const expiredMap = new Map<string, Announcement>();
+      [...expiredByDate, ...archivedFuture].forEach(ann => {
+        expiredMap.set(ann.id, ann);
+      });
+      const expired = Array.from(expiredMap.values()).sort((a, b) => 
+        b.date.getTime() - a.date.getTime()
+      );
+      
+      console.log('🕐 Annonces expirées/archivées:', expired.length);
+      console.log(`  - Expirées par date: ${expiredByDate.length}`);
+      console.log(`  - Archivées (futures): ${archivedFuture.length}`);
       expired.slice(0, 5).forEach(ann => {
-        console.log(`  - ${ann.title}: ${ann.date.toLocaleDateString('fr-FR')}`);
+        const status = ann.isActive ? 'active' : 'archivée';
+        console.log(`  - ${ann.title}: ${ann.date.toLocaleDateString('fr-FR')} (${status})`);
       });
       if (expired.length > 5) {
         console.log(`  ... et ${expired.length - 5} autres`);
@@ -202,6 +252,20 @@ export default function AdminAnnoncesPage() {
     }
   };
 
+  const handleEdit = (announcement: Announcement) => {
+    setEditingAnnouncement(announcement);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingAnnouncement(null);
+  };
+
+  const handleSaved = async () => {
+    await loadAnnouncements();
+  };
+
   // Si en cours de chargement auth
   if (authLoading) {
     return (
@@ -273,7 +337,7 @@ export default function AdminAnnoncesPage() {
                 variant={showExpired ? "default" : "outline"}
                 className={showExpired ? "bg-orange-600 hover:bg-orange-700" : ""}
               >
-                🕐 Annonces Expirées ({expiredAnnouncements.length})
+                🕐 Annonces Expirées/Archivées ({expiredAnnouncements.length})
               </Button>
             </div>
 
@@ -307,7 +371,7 @@ export default function AdminAnnoncesPage() {
                   ) : (
                     <AnnouncementList
                       announcements={currentAnnouncements}
-                      onEdit={() => {}}
+                      onEdit={handleEdit}
                       onRefresh={loadAnnouncements}
                     />
                   )}
@@ -322,10 +386,10 @@ export default function AdminAnnoncesPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <CardTitle className="text-orange-600">
-                        Annonces Expirées ({expiredAnnouncements.length})
+                        Annonces Expirées/Archivées ({expiredAnnouncements.length})
                       </CardTitle>
                       <CardDescription>
-                        Annonces passées (date &lt; aujourd'hui)
+                        Annonces passées (date &lt; aujourd'hui) ou archivées manuellement
                       </CardDescription>
                     </div>
                     <Button
@@ -349,7 +413,7 @@ export default function AdminAnnoncesPage() {
                   ) : (
                     <AnnouncementList
                       announcements={expiredAnnouncements}
-                      onEdit={() => {}}
+                      onEdit={handleEdit}
                       onRefresh={loadAnnouncements}
                     />
                   )}
@@ -359,6 +423,14 @@ export default function AdminAnnoncesPage() {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Modal d'édition */}
+      <AnnouncementEditModal
+        announcement={editingAnnouncement}
+        open={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        onSaved={handleSaved}
+      />
     </div>
   );
 }
