@@ -7,8 +7,8 @@ import { HeartIcon, HandIcon, GlobeIcon, UsersIcon } from "lucide-react"
 import Sidebar from "../components/Sidebar"
 
 export const metadata = {
-  title: "Association Eau Vive Espoir (EVE) - Église Protestante Libre de Strasbourg",
-  description: "Découvrez l'association humanitaire Eau Vive Espoir (EVE) créée par l'Église Protestante Libre de Strasbourg pour venir en aide aux populations défavorisées"
+  title: "Association EVE - Église Protestante Libre de Strasbourg",
+  description: "EVE est l'association culturelle adossée à l'Église Protestante Libre de Strasbourg. Association à but non lucratif couvrant la région de Strasbourg."
 }
 
 export default function EvePage() {
@@ -17,7 +17,7 @@ export default function EvePage() {
       {/* Page Header */}
       <div className="bg-slate-100 py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Eau Vive Espoir (EVE)</h1>
+          <h1 className="text-4xl font-bold mb-4">Association EVE</h1>
 
           {/* Breadcrumbs */}
           <nav className="flex" aria-label="Breadcrumb">
@@ -73,140 +73,54 @@ export default function EvePage() {
                     </div>
                   </div>
                   <div className="md:w-2/3">
-                    <h2 className="text-3xl font-bold mb-4">Notre association humanitaire</h2>
+                    <h2 className="text-3xl font-bold mb-4">Notre association</h2>
                     <p className="text-lg mb-4">
-                      Eau Vive Espoir (EVE) est une association humanitaire créée par l&apos;Église Protestante Libre de
-                      Strasbourg pour venir en aide aux populations défavorisées en France et à l&apos;étranger.
+                      EVE est l&apos;association culturelle adossée à l&apos;Église Protestante Libre de Strasbourg.
                     </p>
                     <p className="mb-4">
-                      Fondée sur des valeurs chrétiennes d&apos;amour et de solidarité, EVE s&apos;engage dans des projets
-                      concrets pour améliorer les conditions de vie des plus démunis, sans distinction d&apos;origine, de
-                      religion ou de culture.
+                      Notre association est à but non lucratif et compte une vingtaine de membres (tous bénévoles) 
+                      et n&apos;a aucun salarié. Elle couvre, à partir de Lingolsheim, la région de Strasbourg 
+                      (Eurométropole + Alsace).
                     </p>
                   </div>
                 </div>
 
-                {/* Nos missions */}
+                {/* Notre bureau */}
                 <div className="mb-16">
-                  <h3 className="text-2xl font-bold mb-8 text-center">Nos missions</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                          <GlobeIcon className="h-5 w-5 text-primary" />
-                          Projets internationaux
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="mb-4">
-                          EVE soutient des projets de développement dans plusieurs pays d&apos;Afrique et d&apos;Asie :
-                        </p>
-                        <ul className="list-disc pl-6 mb-4 space-y-2">
-                          <li>Construction et rénovation de puits et systèmes d&apos;accès à l&apos;eau potable</li>
-                          <li>Soutien à des écoles et centres de formation</li>
-                          <li>Aide médicale et sanitaire</li>
-                          <li>Parrainage d&apos;enfants pour leur scolarisation</li>
+                  <h3 className="text-2xl font-bold mb-8 text-center">Notre bureau</h3>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Composition du bureau</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div>
+                          <p className="font-semibold text-primary">Président</p>
+                          <p>Pierre Schlosser</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-primary">Vice-Président</p>
+                          <p>David Thobois</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-primary">Secrétaire</p>
+                          <p>Pierre Bauer</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-primary">Trésorier</p>
+                          <p>Christophe Thobois</p>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-primary mb-2">Autres membres du CA</p>
+                        <ul className="list-disc pl-6 space-y-1">
+                          <li>Xialy Ya</li>
+                          <li>Eric Gaentzler</li>
+                          <li>Jean-Pierre Siegrist</li>
                         </ul>
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                          <HandIcon className="h-5 w-5 text-primary" />
-                          Actions locales
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="mb-4">À Strasbourg et dans sa région, EVE mène plusieurs actions :</p>
-                        <ul className="list-disc pl-6 mb-4 space-y-2">
-                          <li>Distribution de repas aux sans-abri</li>
-                          <li>Collecte et distribution de vêtements</li>
-                          <li>Aide aux familles en difficulté</li>
-                          <li>Soutien scolaire pour les enfants défavorisés</li>
-                          <li>Visites aux personnes isolées</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-
-                {/* Projets en cours */}
-                <div className="mb-16">
-                  <h3 className="text-2xl font-bold mb-8 text-center">Nos projets en cours</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card>
-                      <div className="relative h-48">
-                        <DynamicImageBlock
-                          zone="eve-projet-burkina"
-                          fallbackSrc="/placeholder.svg?height=400&width=600"
-                          alt="Projet eau potable au Burkina Faso"
-                          type="card"
-                          width={600}
-                          height={400}
-                        />
                       </div>
-                      <CardHeader>
-                        <CardTitle>Eau potable au Burkina Faso</CardTitle>
-                        <CardDescription>Construction de puits dans 3 villages</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="mb-4">
-                          Ce projet vise à fournir un accès à l&apos;eau potable à plus de 2000 personnes dans trois villages
-                          isolés du Burkina Faso.
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">Objectif de financement : 15 000 €</p>
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <div className="relative h-48">
-                        <DynamicImageBlock
-                          zone="eve-projet-togo"
-                          fallbackSrc="/placeholder.svg?height=400&width=600"
-                          alt="Centre d'alphabétisation au Togo"
-                          type="card"
-                          width={600}
-                          height={400}
-                        />
-                      </div>
-                      <CardHeader>
-                        <CardTitle>Alphabétisation au Togo</CardTitle>
-                        <CardDescription>Soutien à un centre d&apos;apprentissage</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="mb-4">
-                          Financement d&apos;un centre d&apos;alphabétisation pour adultes et enfants non scolarisés dans un
-                          quartier défavorisé de Lomé.
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">Objectif de financement : 8 000 €</p>
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <div className="relative h-48">
-                        <DynamicImageBlock
-                          zone="eve-projet-local"
-                          fallbackSrc="/placeholder.svg?height=400&width=600"
-                          alt="Aide alimentaire à Strasbourg"
-                          type="card"
-                          width={600}
-                          height={400}
-                        />
-                      </div>
-                      <CardHeader>
-                        <CardTitle>Aide alimentaire locale</CardTitle>
-                        <CardDescription>Distribution de repas à Strasbourg</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="mb-4">
-                          Organisation de distributions hebdomadaires de repas chauds et de colis alimentaires pour les
-                          personnes sans domicile fixe à Strasbourg.
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">Besoin mensuel : 1 200 €</p>
-                      </CardContent>
-                    </Card>
-                  </div>
+                    </CardContent>
+                  </Card>
                 </div>
 
                 {/* Comment nous soutenir */}
@@ -222,18 +136,38 @@ export default function EvePage() {
                       </CardHeader>
                       <CardContent>
                         <p className="mb-4">
-                          Vos dons permettent de financer nos projets et actions humanitaires. Vous pouvez faire un don
+                          Vos dons permettent de financer nos actions. Vous pouvez faire un don
                           ponctuel ou régulier :
                         </p>
                         <div className="bg-slate-50 dark:bg-slate-800 dark:border dark:border-slate-700 p-4 rounded-md mb-4">
-                          <p className="font-medium dark:font-semibold dark:text-white">Association Eau Vive Espoir</p>
-                          <p className="dark:text-gray-100">IBAN : FR76 XXXX XXXX XXXX XXXX XXXX XXX</p>
-                          <p className="dark:text-gray-100">BIC : XXXXXXXX</p>
+                          <p className="font-semibold dark:text-white mb-3">Titulaire du compte :</p>
+                          <p className="dark:text-gray-100 mb-3">
+                            <strong>EAU VIVE ESPOIR</strong><br />
+                            18 Rue de Franche-Comté<br />
+                            67380 Lingolsheim
+                          </p>
+                          
+                          <p className="font-semibold dark:text-white mb-2">Coordonnées bancaires :</p>
+                          <p className="dark:text-gray-100 font-mono text-sm mb-1">
+                            <strong>IBAN :</strong> FR76 1027 8012 0000 0202 0230 165
+                          </p>
+                          <p className="dark:text-gray-100 font-mono text-sm mb-3">
+                            <strong>BIC :</strong> CMCIFR2A
+                          </p>
+                          
+                          <p className="font-semibold dark:text-white mb-2">Établissement bancaire :</p>
+                          <p className="dark:text-gray-100 text-sm">
+                            CCM PLAINE DE L&apos;ILL<br />
+                            50 RUE DU GAL DE GAULLE<br />
+                            CS 70023<br />
+                            67151 ERSTEIN CEDEX
+                          </p>
                         </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                          L&apos;association est reconnue d&apos;intérêt général. Vos dons sont déductibles des impôts à
-                          hauteur de 66% dans la limite de 20% de votre revenu imposable.
-                        </p>
+                        <Button asChild variant="outline" className="w-full mb-4">
+                          <a href="/documents/rib-eve.pdf" download target="_blank" rel="noopener noreferrer">
+                            Télécharger le RIB
+                          </a>
+                        </Button>
                         <Button asChild className="w-full bg-primary text-white shadow-md hover:bg-primary/90 hover:text-white">
                           <Link href="/infos-docs/offrandes">En savoir plus sur les dons</Link>
                         </Button>
@@ -248,13 +182,14 @@ export default function EvePage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="mb-4">Vous pouvez vous engager comme bénévole dans nos différentes actions :</p>
-                        <ul className="list-disc pl-6 mb-4 space-y-2">
-                          <li>Participation aux distributions alimentaires</li>
-                          <li>Collecte de fonds et organisation d&apos;événements</li>
-                          <li>Aide administrative</li>
-                          <li>Missions ponctuelles sur le terrain (selon compétences)</li>
-                        </ul>
+                        <p className="mb-4">
+                          Vous souhaitez vous engager comme bénévole dans nos activités ? 
+                          Nous serions ravis de vous accueillir dans notre équipe.
+                        </p>
+                        <p className="mb-4">
+                          Contactez-nous pour en savoir plus sur les possibilités d&apos;engagement 
+                          et les besoins actuels de l&apos;association.
+                        </p>
                         <Button asChild className="w-full bg-primary text-white shadow-md hover:bg-primary/90 hover:text-white">
                           <Link href="/contact">Nous contacter pour devenir bénévole</Link>
                         </Button>
