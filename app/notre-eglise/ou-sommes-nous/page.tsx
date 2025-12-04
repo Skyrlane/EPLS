@@ -63,15 +63,8 @@ export default function OuSommesNous() {
                     <p className="font-medium mb-1">Église Protestante Libre de Strasbourg</p>
                     <p className="mb-4">18 rue de Franche-Comté, 67380 Lingolsheim</p>
 
-                    <h3 className="font-medium mb-2">Horaires d&apos;ouverture du secrétariat :</h3>
-                    <ul className="space-y-1 mb-4">
-                      <li>Mardi : 9h00 - 12h00</li>
-                      <li>Jeudi : 14h00 - 17h00</li>
-                    </ul>
-
                     <h3 className="font-medium mb-2">Contact :</h3>
-                    <p className="mb-1">Tél : 03 88 84 45 26</p>
-                    <p>Email : contact@protestants-libres.fr</p>
+                    <p className="mb-4">Email : contact@protestants-libres.fr</p>
 
                     <div className="mt-6">
                       <Button asChild className="w-full">
@@ -102,17 +95,38 @@ export default function OuSommesNous() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                 <Card>
                   <CardHeader>
-                    <CardTitle>En transports en commun</CardTitle>
+                    <CardTitle>En bus</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <ul className="space-y-3">
-                      <li>
-                        <span className="font-medium">Tram :</span> Ligne A, arrêt "Lixenbuhl" (10 min à pied)
-                      </li>
-                      <li>
-                        <span className="font-medium">Bus :</span> Lignes 41, 57 et 58, arrêt "Lingolsheim Mairie" (5 min à pied)
-                      </li>
-                    </ul>
+                    <p>
+                      Prendre une ligne desservant Lingolsheim (idéalement la <strong>C1</strong>), descendre à un 
+                      arrêt proche comme <strong>&quot;Lac – Berne&quot;</strong> ou <strong>&quot;Touraine&quot;</strong>, 
+                      puis marcher environ 5-6 minutes jusqu&apos;à la rue de Franche-Comté.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>En tram</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>
+                      Prendre la ligne <strong>B</strong> jusqu&apos;à l&apos;arrêt <strong>&quot;Lingolsheim Alouettes&quot;</strong>, 
+                      puis marcher environ 10-12 minutes jusqu&apos;à l&apos;église.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>En train</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p>
+                      Arriver à la gare de <strong>Lingolsheim</strong>, puis suivre un court trajet local en bus, 
+                      à vélo ou à pied pour rejoindre l&apos;église.
+                    </p>
                   </CardContent>
                 </Card>
 
@@ -154,17 +168,11 @@ export default function OuSommesNous() {
 
               <h2 className="text-3xl font-semibold mb-6">Informations pratiques</h2>
               <div className="bg-slate-50 p-6 rounded-lg mb-12">
-                <h3 className="text-xl font-medium mb-4">Accessibilité</h3>
-                <p className="mb-6">
-                  Notre bâtiment est accessible aux personnes à mobilité réduite. Une rampe d&apos;accès est disponible à
-                  l&apos;entrée principale et nos installations sont adaptées pour accueillir tous les visiteurs.
-                </p>
-
                 <h3 className="text-xl font-medium mb-4">Équipements</h3>
                 <ul className="list-disc pl-6 space-y-2 mb-6">
-                  <li>Salle principale pouvant accueillir jusqu&apos;à 150 personnes</li>
-                  <li>Plusieurs salles de réunion pour les activités en petits groupes</li>
-                  <li>Espace café pour les moments de convivialité</li>
+                  <li>Salle principale pouvant accueillir environ 50 personnes</li>
+                  <li>Plusieurs salles pour les activités en petits groupes</li>
+                  <li>Cuisine avec salle à manger</li>
                   <li>Équipement audiovisuel moderne</li>
                   <li>Coin enfants aménagé</li>
                 </ul>
