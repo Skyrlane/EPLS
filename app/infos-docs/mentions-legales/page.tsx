@@ -57,7 +57,7 @@ export default function MentionsLegalesPage() {
                       <br />
                       <strong>Téléphone :</strong> 03 XX XX XX XX
                       <br />
-                      <strong>Email :</strong> contact@epls.fr
+                      <strong>Email :</strong> contact@protestants-libres.fr
                     </p>
 
                     <h2>Hébergement</h2>
@@ -88,7 +88,7 @@ export default function MentionsLegalesPage() {
                       données personnelles vous concernant.
                     </p>
                     <p>
-                      Pour exercer ces droits, vous pouvez nous contacter à l&apos;adresse email suivante : contact@epls.fr
+                      Pour exercer ces droits, vous pouvez nous contacter à l&apos;adresse email suivante : contact@protestants-libres.fr
                       ou par courrier à l&apos;adresse postale indiquée ci-dessus.
                     </p>
 

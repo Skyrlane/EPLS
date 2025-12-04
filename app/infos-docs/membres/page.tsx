@@ -106,7 +106,7 @@ export default function Membres() {
                           <br />
                           Formation : Institut Biblique de Nogent
                           <br />
-                          Contact : pasteur@epls.fr
+                          Contact : contact@protestants-libres.fr
                         </p>
                       </div>
                     </CardContent>
@@ -134,7 +134,7 @@ export default function Membres() {
                           <br />
                           Responsable du ministère de la louange
                           <br />
-                          Contact : pierre.martin@epls.fr
+                          Contact : contact@protestants-libres.fr
                         </p>
                       </div>
                     </CardContent>
@@ -162,7 +162,7 @@ export default function Membres() {
                           <br />
                           Responsable du ministère de la diaconie
                           <br />
-                          Contact : jean.dubois@epls.fr
+                          Contact : contact@protestants-libres.fr
                         </p>
                       </div>
                     </CardContent>

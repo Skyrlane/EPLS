@@ -72,7 +72,7 @@ export default function ProseExamplePage() {
           </p>
           
           <ul>
-            <li>Culte dominical à 10h30</li>
+            <li>Culte dominical à 10h00</li>
             <li>Étude biblique le mercredi soir</li>
             <li>Groupe de prière le vendredi</li>
             <li>Activités pour les enfants et les jeunes</li>

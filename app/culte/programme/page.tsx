@@ -78,7 +78,7 @@ export default function Programme() {
                           <Clock className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Horaire</h3>
-                            <p className="text-gray-600">10h30 - 12h00</p>
+                            <p className="text-gray-600">10h00 - 12h00</p>
                           </div>
                         </div>
 
@@ -139,7 +139,7 @@ export default function Programme() {
                           <Clock className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Horaire</h3>
-                            <p className="text-gray-600">10h30 - 12h00</p>
+                            <p className="text-gray-600">10h00 - 12h00</p>
                           </div>
                         </div>
 
@@ -205,7 +205,7 @@ export default function Programme() {
                           <Clock className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Horaire</h3>
-                            <p className="text-gray-600">10h30 - 12h00</p>
+                            <p className="text-gray-600">10h00 - 12h00</p>
                           </div>
                         </div>
 
@@ -268,7 +268,7 @@ export default function Programme() {
                           <Clock className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Horaire</h3>
-                            <p className="text-gray-600">10h30 - 12h00</p>
+                            <p className="text-gray-600">10h00 - 12h00</p>
                           </div>
                         </div>
 
@@ -339,7 +339,7 @@ export default function Programme() {
                           <Clock className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Horaire</h3>
-                            <p className="text-gray-600">10h30 - 12h00</p>
+                            <p className="text-gray-600">10h00 - 12h00</p>
                           </div>
                         </div>
 
@@ -396,7 +396,7 @@ export default function Programme() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-gray-600 mb-4">
-                        Pendant la période estivale, nos cultes continuent chaque dimanche à 10h30, avec un format
+                        Pendant la période estivale, nos cultes continuent chaque dimanche à 10h00, avec un format
                         légèrement adapté. Le programme détaillé sera communiqué ultérieurement.
                       </p>
                       <p className="text-gray-600">
@@ -416,7 +416,7 @@ export default function Programme() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 mb-4">
-                      Pendant le mois d&apos;août, nos cultes continuent chaque dimanche à 10h30, avec un format
+                      Pendant le mois d&apos;août, nos cultes continuent chaque dimanche à 10h00, avec un format
                       estival. Le programme détaillé sera communiqué ultérieurement.
                     </p>
                     <p className="text-gray-600 mb-4">

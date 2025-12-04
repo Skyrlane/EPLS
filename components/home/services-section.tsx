@@ -31,7 +31,7 @@ export function ServicesSection({
   const services: Service[] = [
     {
       title: "Culte dominical",
-      description: "Nos cultes ont lieu chaque dimanche à 10h30, avec louange, prière et enseignement biblique.",
+      description: "Nos cultes ont lieu chaque dimanche à 10h00, avec louange, prière et enseignement biblique.",
       icon: <BookOpen className="h-8 w-8 text-primary" />,
       link: "/culte"
     },

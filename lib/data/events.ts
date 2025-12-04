@@ -8,7 +8,7 @@ const events: Event[] = [
     id: "1",
     title: "Culte dominical",
     date: new Date(2024, 3, 21), // 21 avril 2024
-    time: "10h30",
+    time: "10h00",
     location: "Temple de Saint-Maur",
     description: "Culte hebdomadaire avec prédication sur le thème de la grâce.",
     type: "culte"

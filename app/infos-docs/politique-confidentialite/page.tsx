@@ -127,7 +127,7 @@ export default function PolitiqueConfidentialitePage() {
                       <li>Droit d&apos;opposition au traitement</li>
                     </ul>
                     <p>
-                      Pour exercer ces droits, veuillez nous contacter à l&apos;adresse email suivante : contact@epls.fr
+                      Pour exercer ces droits, veuillez nous contacter à l&apos;adresse email suivante : contact@protestants-libres.fr
                     </p>
 
                     <h2>Modifications de notre politique de confidentialité</h2>
@@ -147,7 +147,7 @@ export default function PolitiqueConfidentialitePage() {
                       <br />
                       67000 Strasbourg
                       <br />
-                      Email : contact@epls.fr
+                      Email : contact@protestants-libres.fr
                       <br />
                       Téléphone : 03 XX XX XX XX
                     </p>

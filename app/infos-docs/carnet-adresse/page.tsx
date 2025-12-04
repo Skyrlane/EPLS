@@ -128,7 +128,7 @@ export default function CarnetAdressePage() {
                           <Mail className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Email</h3>
-                            <p className="text-gray-600 dark:text-gray-300">contact@epls.fr</p>
+                            <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
                           </div>
                         </div>
                       </div>
@@ -165,7 +165,7 @@ export default function CarnetAdressePage() {
                           <Mail className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Email</h3>
-                            <p className="text-gray-600 dark:text-gray-300">pasteur@epls.fr</p>
+                            <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
                           </div>
                         </div>
                       </div>
@@ -193,7 +193,7 @@ export default function CarnetAdressePage() {
                       <div className="flex items-start space-x-3">
                         <Mail className="h-5 w-5 text-primary mt-0.5" />
                         <div>
-                          <p className="text-gray-600 dark:text-gray-300">conseil@epls.fr</p>
+                          <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
                         </div>
                       </div>
                     </CardContent>
@@ -214,7 +214,7 @@ export default function CarnetAdressePage() {
                       <div className="flex items-start space-x-3">
                         <Mail className="h-5 w-5 text-primary mt-0.5" />
                         <div>
-                          <p className="text-gray-600 dark:text-gray-300">jeunesse@epls.fr</p>
+                          <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
                         </div>
                       </div>
                     </CardContent>
@@ -235,7 +235,7 @@ export default function CarnetAdressePage() {
                       <div className="flex items-start space-x-3">
                         <Mail className="h-5 w-5 text-primary mt-0.5" />
                         <div>
-                          <p className="text-gray-600 dark:text-gray-300">diaconie@epls.fr</p>
+                          <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
                         </div>
                       </div>
                     </CardContent>

@@ -18,7 +18,7 @@ interface WorshipTimesProps {
 export function WorshipTimes({
   title = "Horaires des cultes",
   description = "Rejoignez-nous pour célébrer ensemble",
-  regularTime = "10h30",
+  regularTime = "10h00",
   location = "Temple de Saint-Maur",
   address = "123 Avenue de l'Église, 94100 Saint-Maur-des-Fossés",
   daysDescription = "Tous les dimanches",

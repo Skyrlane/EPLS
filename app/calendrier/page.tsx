@@ -136,7 +136,7 @@ export default function CalendarPage() {
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <span className="font-medium mr-2">Dimanche :</span>
-                  <span>Culte à 10h30</span>
+                  <span>Culte à 10h00</span>
                 </li>
                 <li className="flex items-start">
                   <span className="font-medium mr-2">Mercredi :</span>

@@ -133,7 +133,7 @@ export default function Culte() {
                   <AlertTitle>Prochain culte</AlertTitle>
                   <AlertDescription>
                     <div className="mt-2">
-                      <p className="font-bold text-lg">{prochainCulte.date} à 10h30</p>
+                      <p className="font-bold text-lg">{prochainCulte.date} à 10h00</p>
                       <p className="font-medium">"{prochainCulte.theme}" - {prochainCulte.predicateur}</p>
                       {prochainCulte.special && (
                         <p className="text-primary font-medium mt-1">{prochainCulte.special}</p>
@@ -188,7 +188,7 @@ export default function Culte() {
             <div className="prose prose-lg max-w-none mb-12">
               <h2 id="culte-dominical">Le culte dominical</h2>
               <p>
-                Chaque dimanche à 10h30, nous nous réunissons pour un temps de culte communautaire. Ce moment central
+                Chaque dimanche à 10h00, nous nous réunissons pour un temps de culte communautaire. Ce moment central
                 dans la vie de notre église est l&apos;occasion de :
               </p>
               <ul>
@@ -221,13 +221,7 @@ export default function Culte() {
 
               <h3 id="enfants-jeunes">Pour les enfants et les jeunes</h3>
               <p>
-                Pendant le culte, un programme adapté est proposé aux enfants de 3 à 12 ans. Après un temps de louange
-                en commun avec les adultes, ils sont pris en charge par une équipe d&apos;animateurs qualifiés pour un
-                temps d&apos;enseignement biblique ludique et interactif.
-              </p>
-              <p>
-                Les adolescents (13-18 ans) participent au culte avec les adultes et se retrouvent une fois par mois
-                pour un temps spécifique le vendredi soir.
+                Pendant le culte, nous proposons une garderie pour les petits ainsi qu&apos;une école du dimanche pour les ados.
               </p>
             </div>
 
@@ -240,7 +234,7 @@ export default function Culte() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="font-medium">Dimanche à 10h30</p>
+                  <p className="font-medium">Dimanche à 10h00</p>
                   <p className="text-gray-600 text-sm mt-1">Durée : environ 1h30</p>
                   <p className="text-gray-600 text-sm mt-1">Suivi d&apos;un temps convivial</p>
                 </CardContent>
@@ -341,9 +335,7 @@ export default function Culte() {
                       dans un cadre plus intime.
                     </p>
                     <p className="text-gray-600">
-                      Fréquence : hebdomadaire ou bimensuelle selon les groupes
-                      <br />
-                      Durée : environ 2h
+                      Fréquence : mardi soir à 20h00
                     </p>
                   </CardContent>
                 </Card>
@@ -361,9 +353,9 @@ export default function Culte() {
                       application dans notre vie quotidienne.
                     </p>
                     <p className="text-gray-600">
-                      Fréquence : tous les mardis
+                      Fréquence : 1er et 3ème mardi du mois
                       <br />
-                      Horaire : 20h-21h30
+                      Horaire : 20h15
                     </p>
                   </CardContent>
                 </Card>
@@ -383,7 +375,7 @@ export default function Culte() {
                     <p className="text-gray-600">
                       Répétitions : le vendredi soir à 19h30
                       <br />
-                      Contact : louange@epls.fr
+                      Contact : contact@protestants-libres.fr
                     </p>
                   </CardContent>
                 </Card>
@@ -402,7 +394,7 @@ export default function Culte() {
                     <p className="text-gray-600">
                       Pour participer ou en savoir plus, contactez l&apos;équipe diaconie :
                       <br />
-                      diaconie@epls.fr
+                      contact@protestants-libres.fr
                     </p>
                   </CardContent>
                 </Card>

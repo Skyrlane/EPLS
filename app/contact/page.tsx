@@ -165,7 +165,7 @@ export default function Contact() {
                       <Mail className="h-5 w-5 text-primary mt-0.5" />
                       <div>
                         <h3 className="font-medium">Email</h3>
-                        <p className="text-gray-600">info@epls.fr</p>
+                        <p className="text-gray-600">contact@protestants-libres.fr</p>
                       </div>
                     </div>
 
@@ -173,7 +173,7 @@ export default function Contact() {
                       <Clock className="h-5 w-5 text-primary mt-0.5" />
                       <div>
                         <h3 className="font-medium">Horaires des cultes</h3>
-                        <p className="text-gray-600">Dimanche à 10h30</p>
+                        <p className="text-gray-600">Dimanche à 10h00</p>
                       </div>
                     </div>
                   </CardContent>

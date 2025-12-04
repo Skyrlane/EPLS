@@ -52,7 +52,7 @@ const upcomingEvents = [
     id: "evt1",
     title: "Culte dominical",
     date: "Dimanche, 21 avril 2024",
-    time: "10h30",
+    time: "10h00",
     location: "Temple EPL",
     description: "Culte hebdomadaire avec prédication sur le thème de la grâce.",
     imageUrl: "/images/events/culte.jpg",
@@ -481,7 +481,7 @@ export default async function Home() {
             title="Où sommes-nous"
             description="Venez nous rencontrer"
             icon={MapPinIcon}
-            content="Notre église est située à Strasbourg, facilement accessible en transports en commun. Nous vous accueillons chaque dimanche à 10h30."
+            content="Notre église est située à Strasbourg, facilement accessible en transports en commun. Nous vous accueillons chaque dimanche à 10h00."
             linkText="Nous trouver"
             linkHref="/contact"
           />
