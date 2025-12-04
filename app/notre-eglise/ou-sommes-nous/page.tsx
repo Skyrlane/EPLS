@@ -92,7 +92,7 @@ export default function OuSommesNous() {
               </div>
 
               <h2 className="text-3xl font-semibold mb-6">Comment venir ?</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 <Card>
                   <CardHeader>
                     <CardTitle>En bus</CardTitle>
@@ -127,24 +127,6 @@ export default function OuSommesNous() {
                       Arriver à la gare de <strong>Lingolsheim</strong>, puis suivre un court trajet local en bus, 
                       à vélo ou à pied pour rejoindre l&apos;église.
                     </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>En voiture</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3">
-                      <li>
-                        <span className="font-medium">Depuis l&apos;A35 :</span> Sortie "Lingolsheim", puis suivre
-                        direction centre-ville
-                      </li>
-                      <li>
-                        <span className="font-medium">Parking :</span> Places gratuites disponibles dans les rues
-                        adjacentes et parking de l&apos;église Saint-Marc
-                      </li>
-                    </ul>
                   </CardContent>
                 </Card>
 
