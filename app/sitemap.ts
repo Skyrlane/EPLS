@@ -10,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/notre-eglise/qui-sommes-nous",
     "/notre-eglise/nos-valeurs",
     "/notre-eglise/ou-sommes-nous",
-    "/notre-eglise/histoire",
     "/culte",
     "/culte/programme",
     "/culte/calendrier",
@@ -20,14 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/echo",
     "/infos-docs",
     "/infos-docs/offrandes",
-    "/infos-docs/temoignages",
     "/infos-docs/eve",
     "/infos-docs/union-eglise",
     "/infos-docs/histoire-union",
     "/infos-docs/sites-amis",
     "/infos-docs/mentions-legales",
     "/infos-docs/politique-confidentialite",
-    "/infos-docs/confession-foi",
     "/contact",
   ];
 

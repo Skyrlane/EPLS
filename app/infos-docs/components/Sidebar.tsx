@@ -15,11 +15,6 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
-            <Link href="/infos-docs/temoignages" className="text-primary hover:underline">
-              Témoignages
-            </Link>
-          </li>
-          <li>
             <Link href="/infos-docs/membres" className="text-primary hover:underline">
               Liste des membres
             </Link>
@@ -42,11 +37,6 @@ export default function Sidebar() {
           <li>
             <Link href="/infos-docs/histoire-union" className="text-primary hover:underline">
               L&apos;histoire de l&apos;Union
-            </Link>
-          </li>
-          <li>
-            <Link href="/infos-docs/confession-foi" className="text-primary hover:underline">
-              Confession de Foi
             </Link>
           </li>
           <li>

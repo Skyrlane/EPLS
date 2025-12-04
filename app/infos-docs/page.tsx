@@ -5,8 +5,8 @@ import Sidebar from "./components/Sidebar"
 
 export const metadata: Metadata = {
   title: "Infos & Documents | Église Protestante Libre de Strasbourg",
-  description: "Informations pratiques et documents concernant notre église : offrandes, témoignages, membres, l'Union des Églises et plus encore",
-  keywords: ["informations", "documents", "offrandes", "témoignages", "membres", "UEEL", "Église Libre", "Strasbourg"]
+  description: "Informations pratiques et documents concernant notre église : offrandes, membres, l'Union des Églises et plus encore",
+  keywords: ["informations", "documents", "offrandes", "membres", "UEEL", "Église Libre", "Strasbourg"]
 }
 
 export default function InfosDocs() {
@@ -69,21 +69,6 @@ export default function InfosDocs() {
                           </p>
                           <Link href="/infos-docs/offrandes" className="text-primary hover:underline">
                             En savoir plus →
-                          </Link>
-                        </CardContent>
-                      </Card>
-
-                      {/* Témoignages card */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50">
-                        <CardHeader>
-                          <CardTitle className="text-xl">Témoignages</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">
-                            Découvrez les témoignages de membres de notre communauté.
-                          </p>
-                          <Link href="/infos-docs/temoignages" className="text-primary hover:underline">
-                            Lire les témoignages →
                           </Link>
                         </CardContent>
                       </Card>
