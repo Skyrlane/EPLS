@@ -183,44 +183,6 @@ export default function OuSommesNous() {
                   facilement accessible depuis le centre-ville et les quartiers ouest de l&apos;agglomération.
                 </p>
               </div>
-
-              <div className="mt-8">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Nous rendre visite</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 mb-6">
-                      Vous êtes les bienvenus pour nous rejoindre lors d&apos;un culte ou d&apos;une autre activité. Voici
-                      quelques informations pratiques pour votre première visite :
-                    </p>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div className="bg-slate-50 p-4 rounded-lg">
-                        <h3 className="font-medium mb-2">Accueil</h3>
-                        <p className="text-gray-600">
-                          Une équipe d&apos;accueil sera présente pour vous orienter et répondre à vos questions.
-                        </p>
-                      </div>
-
-                      <div className="bg-slate-50 p-4 rounded-lg">
-                        <h3 className="font-medium mb-2">Enfants</h3>
-                        <p className="text-gray-600">
-                          Un programme adapté est proposé aux enfants de 3 à 12 ans pendant le culte.
-                        </p>
-                      </div>
-
-                      <div className="bg-slate-50 p-4 rounded-lg">
-                        <h3 className="font-medium mb-2">Après le culte</h3>
-                        <p className="text-gray-600">
-                          Un temps convivial autour d&apos;un café vous permettra de faire connaissance avec la
-                          communauté.
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
             </div>
           </div>
         </div>
