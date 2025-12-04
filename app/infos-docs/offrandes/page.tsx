@@ -7,7 +7,7 @@ import Sidebar from "../components/Sidebar"
 
 export const metadata = {
   title: "Offrandes et soutien - Église Protestante Libre de Strasbourg",
-  description: "Découvrez comment soutenir financièrement l'œuvre de l'Église Protestante Libre de Strasbourg par vos dons et offrandes et bénéficier d'une déduction fiscale"
+  description: "Découvrez comment soutenir financièrement l'œuvre de l'Église Protestante Libre de Strasbourg par vos dons et offrandes"
 }
 
 export default function OffrandesPage() {
@@ -84,10 +84,20 @@ export default function OffrandesPage() {
                     <li>Développer nos actions sociales et caritatives</li>
                     <li>Soutenir des missions en France et à l&apos;étranger</li>
                   </ul>
-                  <p>
+                  <p className="mb-4">
                     La Bible nous enseigne que donner fait partie intégrante de notre vie de foi. C&apos;est un acte de
                     reconnaissance envers Dieu pour tout ce qu&apos;il nous donne.
                   </p>
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-primary p-4 mt-4">
+                    <p className="text-sm dark:text-gray-100">
+                      <strong>Note importante :</strong> Notre Église est membre de l&apos;Union des Églises évangéliques 
+                      libres de France, et à travers elle, de la Fédération protestante de France (FPF) et du Conseil 
+                      national des Évangéliques de France (CNEF). Notre pasteur est rémunéré par les dons des fidèles 
+                      et notre association cultuelle ne recherche ni ne bénéficie d&apos;aucune subvention. Si vous avez 
+                      à cœur de nous soutenir, ponctuellement ou régulièrement, vous pouvez utiliser les coordonnées 
+                      bancaires ci-dessous pour effectuer un virement.
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -110,9 +120,13 @@ export default function OffrandesPage() {
                     <CardContent>
                       <p className="mb-4">Vous pouvez effectuer un virement bancaire sur le compte de l&apos;église :</p>
                       <div className="bg-slate-50 dark:bg-slate-800 dark:border dark:border-slate-700 p-4 rounded-md mb-4">
-                        <p className="font-medium dark:font-semibold dark:text-white">Église Protestante Libre de Strasbourg</p>
-                        <p className="dark:text-gray-100">IBAN : FR76 XXXX XXXX XXXX XXXX XXXX XXX</p>
-                        <p className="dark:text-gray-100">BIC : XXXXXXXX</p>
+                        <p className="font-semibold dark:text-white mb-2">Église Protestante Libre de Strasbourg</p>
+                        <p className="dark:text-gray-100 font-mono text-sm mb-1">
+                          <strong>IBAN :</strong> FR76 1027 8012 2800 0200 2160 192
+                        </p>
+                        <p className="dark:text-gray-100 font-mono text-sm">
+                          <strong>BIC :</strong> CMCIFR2A
+                        </p>
                       </div>
                       <p className="text-sm text-gray-600 dark:text-gray-300">
                         Merci d&apos;indiquer &quot;Don&quot; ou &quot;Offrande&quot; en libellé de votre virement.
@@ -132,18 +146,20 @@ export default function OffrandesPage() {
                     </CardHeader>
                     <CardContent>
                       <p className="mb-4">
-                        Vous pouvez envoyer un chèque à l&apos;ordre de &quot;Église Protestante Libre de Strasbourg&quot;
-                        à l&apos;adresse suivante :
+                        Vous pouvez également faire un don par chèque.
                       </p>
-                      <div className="bg-slate-50 p-4 rounded-md mb-4">
-                        <p className="font-medium">Église Protestante Libre de Strasbourg</p>
-                        <p>7 rue des Écrivains</p>
-                        <p>67000 Strasbourg</p>
+                      <p className="mb-4">
+                        Libeller votre chèque à l&apos;ordre de : <strong>Église Protestante Libre de Strasbourg</strong>
+                      </p>
+                      <p className="mb-4">
+                        Et l&apos;envoyer à l&apos;adresse suivante :
+                      </p>
+                      <div className="bg-slate-50 dark:bg-slate-800 dark:border dark:border-slate-700 p-4 rounded-md mb-4">
+                        <p className="font-semibold dark:text-white">Église Protestante Libre de Strasbourg</p>
+                        <p className="dark:text-gray-100">18 Rue de Franche-Comté</p>
+                        <p className="dark:text-gray-100">67380 Lingolsheim</p>
                       </div>
-                      <p className="text-sm text-gray-600">
-                        Vous pouvez également déposer votre chèque dans la boîte aux lettres de l&apos;église ou lors du
-                        culte.
-                      </p>
+                      
                     </CardContent>
                   </Card>
                 </TabsContent>
@@ -159,40 +175,25 @@ export default function OffrandesPage() {
                     </CardHeader>
                     <CardContent>
                       <p className="mb-4">
-                        Vous pouvez faire un don en espèces lors des cultes dominicaux. Un moment est prévu pendant le
-                        culte pour les offrandes.
+                        Vous pouvez déposer votre offrande en espèces lors des cultes.
                       </p>
-                      <p className="text-sm text-gray-600">
-                        Des enveloppes sont disponibles à l&apos;entrée du temple si vous souhaitez que votre don reste
-                        confidentiel.
+                      <p className="mb-4">
+                        Lors de chaque culte dominical, une corbeille est mise à disposition pour recueillir vos offrandes.
+                      </p>
+                      <p className="mb-4">
+                        Vous pouvez également remettre votre don en mains propres à un membre du conseil ou au pasteur.
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                        Pour les dons importants, nous vous recommandons de privilégier le virement ou le chèque.
                       </p>
                     </CardContent>
                   </Card>
                 </TabsContent>
               </Tabs>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Déduction fiscale</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="mb-4">
-                    L&apos;Église Protestante Libre de Strasbourg est habilitée à délivrer des reçus fiscaux pour les dons
-                    qui lui sont adressés.
-                  </p>
-                  <p className="mb-4">
-                    En tant que particulier, vous pouvez déduire de votre impôt sur le revenu 66% du montant de votre don,
-                    dans la limite de 20% de votre revenu imposable.
-                  </p>
-                  <p className="mb-4">
-                    Par exemple, un don de 100€ ne vous coûte réellement que 34€ après déduction fiscale.
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Un reçu fiscal vous sera envoyé au début de l&apos;année suivant votre don pour votre déclaration
-                    d&apos;impôts.
-                  </p>
-                </CardContent>
-              </Card>
+              <p className="text-sm text-gray-600 dark:text-gray-300 text-center bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+                💡 Pour toute question concernant les aspects fiscaux de vos dons, n&apos;hésitez pas à nous contacter.
+              </p>
 
               <div className="text-center mt-8">
                 <h3 className="text-2xl font-bold mb-4">Vous avez des questions ?</h3>
