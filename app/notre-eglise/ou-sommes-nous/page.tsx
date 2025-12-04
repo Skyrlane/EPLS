@@ -61,7 +61,7 @@ export default function OuSommesNous() {
                   <h2 className="text-3xl font-semibold mb-6">Notre adresse</h2>
                   <div className="bg-slate-50 p-6 rounded-lg">
                     <p className="font-medium mb-1">Église Protestante Libre de Strasbourg</p>
-                    <p className="mb-4">7 rue du Général Offenstein, 67100 Strasbourg</p>
+                    <p className="mb-4">18 rue de Franche-Comté, 67380 Lingolsheim</p>
 
                     <h3 className="font-medium mb-2">Horaires d&apos;ouverture du secrétariat :</h3>
                     <ul className="space-y-1 mb-4">
@@ -71,7 +71,7 @@ export default function OuSommesNous() {
 
                     <h3 className="font-medium mb-2">Contact :</h3>
                     <p className="mb-1">Tél : 03 88 84 45 26</p>
-                    <p>Email : contact@eglise-protestante-libre-strasbourg.fr</p>
+                    <p>Email : contact@protestants-libres.fr</p>
 
                     <div className="mt-6">
                       <Button asChild className="w-full">
@@ -85,7 +85,7 @@ export default function OuSommesNous() {
                   <h2 className="text-3xl font-semibold mb-6">Carte</h2>
                   <div className="bg-slate-100 p-2 rounded-lg h-[300px] overflow-hidden">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2639.039069531816!2d7.731214376676782!3d48.58692262047605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4796c8538a57902b%3A0x82d67a7b1a975224!2s7%20Rue%20du%20G%C3%A9n%C3%A9ral%20Offenstein%2C%2067100%20Strasbourg!5e0!3m2!1sfr!2sfr!4v1659612345678!5m2!1sfr!2sfr"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2639.8!2d7.7088!3d48.5598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4796c84c4c4c4c4c%3A0x1234567890abcdef!2s18%20Rue%20de%20Franche-Comt%C3%A9%2C%2067380%20Lingolsheim!5e0!3m2!1sfr!2sfr!4v1659612345678!5m2!1sfr!2sfr"
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
@@ -107,10 +107,10 @@ export default function OuSommesNous() {
                   <CardContent>
                     <ul className="space-y-3">
                       <li>
-                        <span className="font-medium">Tram :</span> Ligne C, arrêt "Landsberg" (5 min à pied)
+                        <span className="font-medium">Tram :</span> Ligne A, arrêt "Lixenbuhl" (10 min à pied)
                       </li>
                       <li>
-                        <span className="font-medium">Bus :</span> Ligne 15, arrêt "Offenstein" (2 min à pied)
+                        <span className="font-medium">Bus :</span> Lignes 41, 57 et 58, arrêt "Lingolsheim Mairie" (5 min à pied)
                       </li>
                     </ul>
                   </CardContent>
@@ -123,12 +123,12 @@ export default function OuSommesNous() {
                   <CardContent>
                     <ul className="space-y-3">
                       <li>
-                        <span className="font-medium">Depuis l&apos;A35 :</span> Sortie "Montagne Verte", puis suivre
-                        direction "Koenigshoffen"
+                        <span className="font-medium">Depuis l&apos;A35 :</span> Sortie "Lingolsheim", puis suivre
+                        direction centre-ville
                       </li>
                       <li>
                         <span className="font-medium">Parking :</span> Places gratuites disponibles dans les rues
-                        adjacentes
+                        adjacentes et parking de l&apos;église Saint-Marc
                       </li>
                     </ul>
                   </CardContent>
@@ -141,12 +141,11 @@ export default function OuSommesNous() {
                   <CardContent>
                     <ul className="space-y-3">
                       <li>
-                        <span className="font-medium">Piste cyclable :</span> Accès facile par la piste cyclable longeant
-                        le canal
+                        <span className="font-medium">Piste cyclable :</span> Accès facile depuis Strasbourg par la piste cyclable
+                        rue de la Semm et route de Lyon
                       </li>
                       <li>
-                        <span className="font-medium">Stationnement :</span> Arceaux à vélos disponibles devant le
-                        bâtiment
+                        <span className="font-medium">Stationnement :</span> Arceaux à vélos disponibles à proximité de l&apos;église
                       </li>
                     </ul>
                   </CardContent>
@@ -172,8 +171,8 @@ export default function OuSommesNous() {
 
                 <h3 className="text-xl font-medium mb-4">Quartier</h3>
                 <p>
-                  Notre église est située dans le quartier de Koenigshoffen, un secteur résidentiel et calme, facilement
-                  accessible depuis le centre-ville et les quartiers périphériques de Strasbourg.
+                  Nous nous réunissons à l&apos;église Saint-Marc de Lingolsheim, une commune limitrophe de Strasbourg,
+                  facilement accessible depuis le centre-ville et les quartiers ouest de l&apos;agglomération.
                 </p>
               </div>
 

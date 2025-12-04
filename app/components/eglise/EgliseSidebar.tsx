@@ -43,14 +43,6 @@ export default function EgliseSidebar() {
           >
             Où sommes-nous
           </Link>
-          <Link 
-            href="/notre-eglise/histoire" 
-            className={`block p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 ${
-              isActive('/notre-eglise/histoire') ? 'text-primary font-medium bg-slate-50 dark:bg-slate-800/50' : ''
-            }`}
-          >
-            Histoire
-          </Link>
         </nav>
       </CardContent>
     </Card>

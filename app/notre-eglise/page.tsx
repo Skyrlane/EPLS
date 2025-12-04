@@ -7,7 +7,7 @@ import EgliseSidebar from "../components/eglise/EgliseSidebar"
 
 export const metadata: Metadata = {
   title: "Notre Église | Église Protestante Libre de Strasbourg",
-  description: "Découvrez notre église, ses valeurs, son histoire et ses activités. Nous sommes une communauté chrétienne protestante, évangélique et libre à Strasbourg.",
+  description: "Découvrez notre église, ses valeurs et ses activités. Nous sommes une communauté chrétienne protestante, évangélique et libre à Strasbourg.",
 }
 
 export default function NotreEglise() {
@@ -134,25 +134,7 @@ export default function NotreEglise() {
                   </CardFooter>
                 </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Notre histoire</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base dark:text-gray-300">
-                      Plongez dans l&apos;histoire de notre église et de l&apos;Union des Églises évangéliques libres.
-                    </CardDescription>
-                  </CardContent>
-                  <CardFooter>
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full border-2 border-primary text-primary hover:bg-primary/10 dark:text-white"
-                    >
-                      <Link href="/notre-eglise/histoire">En savoir plus</Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
+                
               </div>
             </div>
           </div>

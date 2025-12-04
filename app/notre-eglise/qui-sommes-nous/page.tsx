@@ -2,19 +2,20 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Metadata } from "next"
 import EgliseSidebar from "../../components/eglise/EgliseSidebar"
+import { Clock, MapPin } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Qui sommes-nous | Église Protestante Libre de Strasbourg",
-  description: "Découvrez notre identité protestante, évangélique et libre, notre vision et nos valeurs",
+  description: "Découvrez notre identité protestante, évangélique et libre, notre devise et notre déclaration de foi",
 }
 
 export default function QuiSommesNous() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-slate-100 dark:bg-slate-800 py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Qui sommes-nous ?</h1>
+          <h1 className="text-4xl font-bold mb-4 dark:text-white">Qui sommes-nous ?</h1>
 
           {/* Breadcrumbs */}
           <nav className="flex" aria-label="Breadcrumb">
@@ -26,7 +27,7 @@ export default function QuiSommesNous() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
                   <Link href="/notre-eglise" className="text-primary hover:text-primary/80">
                     Notre Église
                   </Link>
@@ -34,8 +35,8 @@ export default function QuiSommesNous() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700">Qui sommes-nous</span>
+                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
+                  <span className="text-gray-700 dark:text-gray-200">Qui sommes-nous</span>
                 </div>
               </li>
             </ol>
@@ -54,136 +55,224 @@ export default function QuiSommesNous() {
 
             {/* Main content */}
             <div className="lg:col-span-3">
-              <h2 className="text-3xl font-semibold mb-6">Notre identité</h2>
-              <p className="mb-6">
-                L&apos;Église Protestante Libre de Strasbourg est une communauté chrétienne évangélique ancrée dans la
-                tradition protestante. Nous sommes une église indépendante au sein de l&apos;Union des Églises
-                évangéliques libres.
-              </p>
+              {/* En-tête avec horaires */}
+              <Card className="mb-10 border-primary/30 bg-primary/5">
+                <CardContent className="p-6">
+                  <h2 className="text-2xl font-bold mb-4 text-primary dark:text-white">Culte le dimanche à 10h00</h2>
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-start gap-2">
+                      <MapPin className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="font-medium dark:text-gray-100">À l&apos;église Saint-Marc</p>
+                        <p className="text-gray-700 dark:text-gray-300">18 rue de Franche-Comté</p>
+                        <p className="text-gray-700 dark:text-gray-300">67380 Lingolsheim</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-              <p className="mb-6">
-                Notre communauté est composée de personnes de tous âges et de diverses origines, unies par la foi en
-                Jésus-Christ et le désir de vivre selon l&apos;enseignement de la Bible.
-              </p>
-
-              <div className="bg-slate-50 p-6 rounded-lg mb-8">
-                <h3 className="text-xl font-medium mb-4">Notre vision</h3>
-                <p className="italic">
-                  &laquo; Être une communauté chrétienne vivante, qui aime Dieu, s&apos;aime les uns les autres, et
-                  témoigne de l&apos;amour du Christ dans notre société. &raquo;
-                </p>
-              </div>
-
-              <h2 className="text-3xl font-semibold mb-6">Notre mission</h2>
-              <p className="mb-6">
-                Notre mission s&apos;articule autour de trois axes principaux, inspirés de la Grande Mission confiée par
-                Jésus à ses disciples :
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <h3 className="font-medium mb-2">Adorer</h3>
-                  <p>
-                    Célébrer Dieu par la louange, la prière et une vie qui l&apos;honore dans tous les aspects de notre
-                    quotidien.
+              {/* La devise de l'Union */}
+              <div className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 dark:text-white">La devise de l&apos;Union</h2>
+                <Card className="bg-slate-50 dark:bg-slate-800/50">
+                  <CardContent className="p-8 text-center">
+                    <p className="text-xl font-semibold mb-2 text-primary dark:text-white">
+                      Dans les choses essentielles, fidélité
+                    </p>
+                    <p className="text-xl font-semibold mb-2 text-primary dark:text-white">
+                      Dans les choses secondaires, liberté
+                    </p>
+                    <p className="text-xl font-semibold text-primary dark:text-white">
+                      En toutes choses charité
+                    </p>
+                  </CardContent>
+                </Card>
+                <div className="mt-4">
+                  <p className="text-gray-700 dark:text-gray-300 mb-2">
+                    <strong>Historique de l&apos;Union des Églises Évangéliques libres :</strong>
                   </p>
-                </div>
-
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <h3 className="font-medium mb-2">Former</h3>
-                  <p>
-                    Encourager chacun à grandir dans sa foi et à développer une relation personnelle avec Dieu par
-                    l&apos;étude de la Bible.
-                  </p>
-                </div>
-
-                <div className="bg-slate-50 p-4 rounded-lg">
-                  <h3 className="font-medium mb-2">Témoigner</h3>
-                  <p>
-                    Partager l&apos;amour de Dieu par nos paroles et nos actions, en servant notre prochain et en
-                    annonçant la Bonne Nouvelle.
-                  </p>
+                  <Link
+                    href="http://www.museeprotestant.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    Site du Musée du Protestantisme →
+                  </Link>
                 </div>
               </div>
 
-              <h2 className="text-3xl font-semibold mb-6">Nos croyances fondamentales</h2>
-              <p className="mb-6">
-                Nous adhérons aux grandes vérités de la foi chrétienne historique, notamment :
-              </p>
+              {/* Déclaration de foi de l'UEEL */}
+              <div className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 dark:text-white">Déclaration de foi de l&apos;UEEL</h2>
+                <Card>
+                  <CardContent className="p-6 space-y-4 dark:text-gray-100">
+                    <p>
+                      Dieu, après avoir parlé au peuple d&apos;Israël par ses prophètes, s&apos;est révélé parfaitement en
+                      son Fils Jésus-Christ. La Bible est l&apos;expression infaillible de cette révélation. Fondés sur
+                      cette Écriture sainte, en communion avec l&apos;Église universelle et en particulier avec les Églises
+                      de la Réforme, nous déclarons notre foi en ces termes :
+                    </p>
 
-              <ul className="list-disc pl-6 mb-8 space-y-2">
-                <li>La Bible comme Parole de Dieu, autorité suprême en matière de foi et de vie</li>
-                <li>Un seul Dieu en trois personnes : Père, Fils et Saint-Esprit</li>
-                <li>
-                  Jésus-Christ, pleinement Dieu et pleinement homme, sa vie sans péché, sa mort expiatoire et sa
-                  résurrection
-                </li>
-                <li>Le salut par la grâce, au moyen de la foi en Jésus-Christ</li>
-                <li>L&apos;œuvre du Saint-Esprit dans la conversion et la sanctification du croyant</li>
-                <li>L&apos;Église, corps du Christ, communauté des croyants</li>
-                <li>Le retour visible de Jésus-Christ et l&apos;établissement final du Royaume de Dieu</li>
-              </ul>
+                    <p>
+                      <strong>Nous croyons en Dieu</strong>, le Père, le Fils et le Saint-Esprit, un seul Dieu béni éternellement.
+                      Il a crée le ciel et la terre, les choses visibles et invisibles, il a fait l&apos;homme à son image.
+                      L&apos;homme s&apos;est révolté contre son Dieu, encourant ainsi sa colère. Dès lors, captive du mensonge,
+                      incapable de servir son créateur, l&apos;humanité est livrée à la perdition. Mais Dieu dans sa miséricorde,
+                      ne l&apos;a pas abandonnée à la mort, il a envoyé son Fils dans le monde.
+                    </p>
 
-              <h2 className="text-3xl font-semibold mb-6">Notre vie d&apos;église</h2>
-              <p className="mb-6">
-                Notre vie communautaire s&apos;articule autour de plusieurs objectifs qui permettent à chacun de :
-              </p>
+                    <p>
+                      <strong>Nous croyons en Jésus-Christ</strong>, né de la vierge Marie, vrai Dieu et vrai homme, médiateur
+                      d&apos;une alliance nouvelle par laquelle la vérité et la vie sont offertes aux hommes. Il a donné sa vie
+                      en sacrifice, une fois pour toutes, sur la croix. Livré pour nos fautes, il est ressuscité pour notre
+                      justification. Il est les prémices de notre propre résurrection. Élevé à la droite du Père, il est
+                      l&apos;unique voie du salut.
+                    </p>
 
-              <ul className="list-disc pl-6 mb-8 space-y-2">
-                <li>Découvrir et approfondir sa relation avec Dieu</li>
-                <li>Grandir dans la foi et la connaissance de la Bible</li>
-                <li>Développer des relations fraternelles authentiques</li>
-                <li>Servir selon ses dons et ses capacités</li>
-                <li>Témoigner de l&apos;amour de Dieu dans notre ville et au-delà</li>
-              </ul>
+                    <p>
+                      <strong>Nous croyons en l&apos;Esprit-Saint</strong> qui communique la vérité et la vie du Fils à ceux
+                      que le Père appelle dans sa miséricorde et sauve par grâce. Unis par l&apos;Esprit au Christ ressuscité,
+                      nous devenons enfants de Dieu par la nouvelle naissance. Justifiés gratuitement par le moyen de la foi
+                      en Jésus-Christ, nous sommes en paix avec Dieu.
+                    </p>
 
-              <h2 className="text-3xl font-semibold mb-6">Notre appartenance</h2>
-              <p className="mb-8">
-                Notre église fait partie de l&apos;Union des Églises évangéliques libres de France (UEEL), fondée en
-                1849. À travers cette union, nous sommes également membres de la Fédération Protestante de France (FPF)
-                et du Conseil National des Évangéliques de France (CNEF).
-              </p>
+                    <p>
+                      <strong>L&apos;Église</strong> est formée de tous ceux que le Christ a réconciliés avec Dieu. Habitée
+                      par l&apos;Esprit, elle est le temple de Dieu édifié par le Christ. Elle est visible localement dans des
+                      communautés qui, nous le croyons, doivent rassembler ceux qui professent leur foi en Jésus Christ. Après
+                      avoir répondu personnellement à l&apos;appel de Dieu, ils s&apos;appliquent à le servir ensemble, conduits
+                      par l&apos;Esprit du Christ, et soumis à sa Parole.
+                    </p>
 
+                    <p>
+                      L&apos;amour de Dieu étant la source et le fondement de notre salut, nous voulons aimer nos frères et
+                      soeurs en Christ et proclamer l&apos;Evangile sans lequel il n&apos;y a pas de salut. Nous voulons aussi,
+                      aimer notre prochain en travaillant pour la paix et la justice, jusqu&apos;à la venue de notre Seigneur
+                      Jésus-Christ. Car il reviendra pour juger toute créature et établir son règne. Nous attendons selon sa
+                      promesse, de nouveaux cieux et une nouvelle terre où la justice habitera. Telle est notre espérance.
+                    </p>
+
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-primary p-4 mt-6">
+                      <p className="text-sm font-medium dark:text-gray-100">
+                        Notre Union d&apos;Églises est membre :<br />
+                        • de la Fédération Protestante de France (FPF)<br />
+                        • du Conseil National des Évangéliques de France (CNEF)
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* PLV, le magazine */}
+              <div className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 dark:text-white">PLV, le magazine</h2>
+                <Card className="border-primary/30">
+                  <CardHeader>
+                    <CardTitle>PLV, le magazine en ligne des Églises évangéliques libres !</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4 dark:text-gray-100">
+                    <blockquote className="border-l-4 border-primary pl-4 italic">
+                      &quot;Nous n&apos;avons pas de puissance contre la vérité, nous n&apos;en avons que pour la vérité&quot;
+                      <br />
+                      <span className="text-sm">La Bible : 2 Corinthiens 13 v. 8</span>
+                    </blockquote>
+                    <p>
+                      Dieu a été révélé par la vérité donc de Dieu découle la vérité, il n&apos;y a pas eu de séparation entre
+                      vérité et Dieu. Dieu a été incarné et révélé par la foi du Christ qui est révélé pour que cette révélation
+                      qui est en Jésus-Christ, soit Révélée à l&apos;homme d&apos;aujourd&apos;hui.
+                    </p>
+                    <Link
+                      href="https://www.plv-eel.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block text-primary hover:underline font-medium"
+                    >
+                      Le site de PLV →
+                    </Link>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Relations */}
+              <div className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 dark:text-white">Relations</h2>
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Notre Église est membre :</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2 dark:text-gray-100">
+                      <p>• de l&apos;Union des Églises Évangéliques Libres de France (UEEL)</p>
+                      <p>• du Conseil National des Évangéliques de France (CNEF)</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Partenariats locaux</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p className="mb-4">
+                        La CPS réunit principalement des paroisses luthériennes et réformées (UEPAL) ainsi que quelques
+                        Églises évangéliques de la métropole strasbourgeoise.
+                      </p>
+                      <p className="font-medium mb-2">Par ailleurs, nous entretenons des relations avec :</p>
+                      <p>• l&apos;Église FEG de Karl-Sundheim dans l&apos;Ortenau voisin</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-50 dark:bg-slate-800/50">
+                    <CardContent className="p-6 dark:text-gray-100">
+                      <p className="font-medium mb-2">Notre Union d&apos;Églises est membre :</p>
+                      <p>• de la Fédération Protestante de France (FPF)</p>
+                      <p>• du Conseil National des Évangéliques de France (CNEF)</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* Liens utiles */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Notre conseil d&apos;église</CardTitle>
+                    <CardTitle>Nos valeurs</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-4">
-                      Notre église est dirigée par un conseil composé du pasteur et d&apos;anciens élus par
-                      l&apos;assemblée des membres.
+                    <p className="mb-4 dark:text-gray-300">
+                      Découvrez ce qui nous caractérise en tant qu&apos;église protestante, évangélique et libre.
                     </p>
-                    <Link href="/infos-docs/membres" className="text-primary hover:underline">
-                      Voir les membres du conseil →
+                    <Link href="/notre-eglise/nos-valeurs" className="text-primary hover:underline">
+                      En savoir plus →
                     </Link>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Nos activités</CardTitle>
+                    <CardTitle>Où sommes-nous ?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-4">
-                      Découvrez les différentes activités et groupes qui animent la vie de notre communauté.
-                    </p>
-                    <Link href="/culte" className="text-primary hover:underline">
-                      Voir nos activités →
-                    </Link>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Nous rejoindre</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="mb-4">
-                      Vous êtes les bienvenus pour nous rejoindre lors d&apos;un culte ou d&apos;une autre activité.
+                    <p className="mb-4 dark:text-gray-300">
+                      Trouvez notre lieu de culte et nos coordonnées pour nous rejoindre facilement.
                     </p>
                     <Link href="/notre-eglise/ou-sommes-nous" className="text-primary hover:underline">
-                      Comment nous trouver →
+                      Voir l&apos;adresse →
+                    </Link>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Nous contacter</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="mb-4 dark:text-gray-300">
+                      Une question ? Envie de nous rencontrer ? N&apos;hésitez pas à nous écrire.
+                    </p>
+                    <Link href="/contact" className="text-primary hover:underline">
+                      Contactez-nous →
                     </Link>
                   </CardContent>
                 </Card>
@@ -194,4 +283,4 @@ export default function QuiSommesNous() {
       </section>
     </>
   )
-} 
+}

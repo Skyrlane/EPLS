@@ -12,9 +12,9 @@ export default function NosValeurs() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-slate-100 dark:bg-slate-800 py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Nos valeurs</h1>
+          <h1 className="text-4xl font-bold mb-4 dark:text-white">Nos valeurs</h1>
 
           {/* Breadcrumbs */}
           <nav className="flex" aria-label="Breadcrumb">
@@ -26,7 +26,7 @@ export default function NosValeurs() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
                   <Link href="/notre-eglise" className="text-primary hover:text-primary/80">
                     Notre Église
                   </Link>
@@ -34,8 +34,8 @@ export default function NosValeurs() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700">Nos valeurs</span>
+                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
+                  <span className="text-gray-700 dark:text-gray-200">Nos valeurs</span>
                 </div>
               </li>
             </ol>
@@ -51,160 +51,220 @@ export default function NosValeurs() {
             <div className="lg:col-span-1">
               <EgliseSidebar />
             </div>
-            
+
             {/* Main content */}
             <div className="lg:col-span-3">
-              <h2 className="text-3xl font-semibold mb-6">Nos valeurs fondamentales</h2>
-              <p className="mb-6">
-                Les valeurs qui nous animent et guident notre vie d&apos;église sont enracinées dans notre compréhension
-                de l&apos;Évangile et de l&apos;enseignement biblique. Elles façonnent notre identité et notre mission.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Fidélité à la Parole de Dieu</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      Nous reconnaissons la Bible comme l&apos;autorité suprême en matière de foi et de vie. Notre
-                      engagement est d&apos;étudier, enseigner et appliquer fidèlement les Écritures dans tous les
-                      aspects de notre vie individuelle et communautaire.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Amour et relation</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      Suivant le double commandement de Jésus, nous valorisons l&apos;amour pour Dieu et pour notre
-                      prochain. Nous cultivons des relations authentiques, bienveillantes et réconciliatrices, tant au
-                      sein de notre communauté qu&apos;avec ceux qui ne partagent pas notre foi.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Grâce et vérité</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      À l&apos;image de Jésus, nous cherchons à manifester un équilibre entre la grâce et la vérité,
-                      accueillant chacun avec compassion tout en restant attachés aux vérités bibliques. Nous évitons
-                      tant le légalisme que le relativisme moral.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Excellence et intégrité</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      Nous nous efforçons d&apos;honorer Dieu par l&apos;excellence dans tout ce que nous entreprenons,
-                      tout en maintenant une intégrité irréprochable. Nous aspirons à une cohérence entre nos paroles et
-                      nos actes, aussi bien en public qu&apos;en privé.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Service et générosité</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      Suivant l&apos;exemple de Christ qui est venu pour servir, nous valorisons une attitude de service
-                      désintéressé et une générosité joyeuse. Nous encourageons chacun à mettre ses dons et ressources au
-                      service de Dieu et des autres.
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Témoignage et mission</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>
-                      Nous sommes engagés à partager la Bonne Nouvelle de Jésus-Christ par nos paroles et nos actions.
-                      Nous soutenons la mission locale et globale, cherchant à faire des disciples dans toutes les
-                      nations comme Jésus nous l&apos;a commandé.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <h2 className="text-3xl font-semibold mb-6">Notre approche</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div className="bg-slate-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-medium mb-3">Centrés sur Christ</h3>
-                  <p>
-                    Nous plaçons Jésus-Christ au centre de notre vie d&apos;église, cherchant à le connaître davantage et
-                    à le faire connaître. Nous voulons que son enseignement et son exemple guident toutes nos décisions.
-                  </p>
-                </div>
-
-                <div className="bg-slate-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-medium mb-3">Ancrés dans la Bible</h3>
-                  <p>
-                    La Bible est notre fondement, notre guide et notre source d&apos;autorité. Nous l&apos;étudions avec
-                    rigueur et avec humilité, cherchant à la comprendre et à la vivre fidèlement.
-                  </p>
-                </div>
-
-                <div className="bg-slate-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-medium mb-3">Conduits par l&apos;Esprit</h3>
-                  <p>
-                    Nous reconnaissons notre dépendance à l&apos;égard du Saint-Esprit et nous lui faisons confiance pour
-                    nous guider, nous équiper et nous transformer à l&apos;image de Christ.
-                  </p>
-                </div>
-              </div>
-
-              <h2 className="text-3xl font-semibold mb-6">Vivre nos valeurs</h2>
-              <p className="mb-6">
-                Nous nous efforçons de mettre en pratique ces valeurs dans tous les aspects de notre vie d&apos;église :
-              </p>
-
-              <div className="bg-slate-50 p-6 rounded-lg mb-10">
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>
-                    Dans nos <strong>cultes</strong>, par une louange sincère et une prédication fidèle de la Parole de
-                    Dieu
-                  </li>
-                  <li>
-                    Dans nos <strong>relations communautaires</strong>, par l&apos;amour fraternel, le respect mutuel et
-                    le soutien dans les épreuves
-                  </li>
-                  <li>
-                    Dans notre <strong>enseignement</strong>, par une formation biblique solide pour tous les âges
-                  </li>
-                  <li>
-                    Dans notre <strong>engagement</strong>, par le service bénévole selon les dons et les appels de
-                    chacun
-                  </li>
-                  <li>
-                    Dans notre <strong>témoignage</strong>, par une présence bienveillante et généreuse dans la société
-                  </li>
-                  <li>
-                    Dans notre <strong>gouvernance</strong>, par la transparence, l&apos;intégrité et la recherche de
-                    l&apos;unité
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-primary/10 p-6 rounded-lg border border-primary">
-                <h3 className="text-xl font-medium mb-3 text-primary">Notre prière</h3>
-                <p className="italic">
-                  &laquo; Que ces valeurs ne restent pas de simples mots sur une page, mais qu&apos;elles se traduisent en
-                  actions concrètes et en transformation réelle, pour la gloire de Dieu et le bien de tous. &raquo;
+              {/* 1. Nous sommes une Église protestante */}
+              <div className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 dark:text-white">1. Nous sommes une Église protestante</h2>
+                <p className="mb-6 dark:text-gray-300">
+                  Nous nous situons dans la lignée de la Réforme protestante du XVIème siècle qui se caractérise
+                  par cinq grandes affirmations (les cinq solas) :
                 </p>
+
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">À Dieu seul la gloire</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        Toute l&apos;histoire humaine doit tourner autour de Dieu et ce qui compte en définitive,
+                        c&apos;est sa gloire. Nous sommes créés pour le connaître, pour le servir, et pour le
+                        glorifier. Tout ce que nous faisons doit viser cette fin.
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">L&apos;essentiel, c&apos;est la foi</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        Le salut se reçoit par la foi seule, sans aucune considération de nos mérites. C&apos;est
+                        par la foi que nous embrassons l&apos;œuvre de Jésus, et cette foi, nous la devons à
+                        l&apos;action gratuite du Saint-Esprit dans notre cœur. Rien ne doit être ajouté à la foi.
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">La Bible seule</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        Nous ne reconnaissons pas d&apos;autre autorité finale et suprême que la Bible. La Bible est
+                        pour nous inspirée de Dieu, normative et suffisante. Aucune tradition d&apos;Église ni aucun
+                        magistère d&apos;institution religieuse ne peut se substituer à la Bible.
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">Se réformer sans cesse</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        La Réforme n&apos;est jamais terminée. L&apos;Église a besoin d&apos;être réformée sans cesse
+                        selon la Parole de Dieu. Le retour au texte de la Bible doit être une constante de nos
+                        communautés. Nous sommes appelés à nous laisser toujours réformer par Dieu et par sa Parole.
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">Le sacerdoce universel</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        Tout croyant a accès directement à Dieu par Jésus-Christ, et peut le prier sans passer
+                        par aucun intermédiaire humain. Par ailleurs, tout chrétien a le sacerdoce de
+                        l&apos;intercession : il peut prier pour les autres, et les autres peuvent prier pour lui.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* 2. Nous sommes une Église évangélique */}
+              <div className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 dark:text-white">2. Nous sommes une Église évangélique</h2>
+                <Card className="bg-slate-50 dark:bg-slate-800/50">
+                  <CardContent className="p-6 space-y-4 dark:text-gray-100">
+                    <p>
+                      Le mot évangélique vient du mot &quot;Évangile&quot;, qui signifie &quot;bonne nouvelle&quot;. Nous croyons que
+                      la Bible contient l&apos;Évangile, la bonne nouvelle de ce que Dieu a fait pour nous en Jésus-Christ.
+                    </p>
+                    <p>
+                      Nous insistons sur la nécessité de la conversion personnelle à Jésus-Christ. Nous croyons que
+                      chacun doit répondre personnellement à l&apos;appel de Dieu, en plaçant sa confiance en Jésus-Christ
+                      comme Sauveur et Seigneur.
+                    </p>
+                    <p>
+                      Nous sommes attachés à la proclamation de l&apos;Évangile. Le témoignage et l&apos;évangélisation font
+                      partie intégrante de notre identité.
+                    </p>
+                    <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-primary p-4 mt-4">
+                      <p className="font-medium">
+                        Notre Église est membre du <strong>Conseil National des Évangéliques de France (CNEF)</strong>,
+                        qui regroupe plus de 600 000 protestants évangéliques en France.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* 3. Nous sommes une Église libre */}
+              <div className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 dark:text-white">3. Nous sommes une Église libre</h2>
+                <p className="mb-6 dark:text-gray-300">
+                  Le mot &quot;libre&quot; dans notre nom signifie plusieurs choses importantes pour nous :
+                </p>
+
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">La communauté des croyants</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        Nous croyons que l&apos;Église locale est composée de ceux qui professent personnellement leur
+                        foi en Jésus-Christ. L&apos;appartenance à l&apos;Église n&apos;est pas automatique, mais résulte d&apos;une
+                        décision personnelle de suivre Christ et de s&apos;engager dans une communauté de disciples.
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">L&apos;autonomie de l&apos;Église locale</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        Chaque Église locale est autonome dans sa gestion et ses décisions, sous la seule autorité
+                        de Jésus-Christ et de sa Parole. Il n&apos;y a pas de hiérarchie ecclésiastique au-dessus de
+                        l&apos;Église locale. Notre Union d&apos;Églises existe pour favoriser la communion fraternelle et
+                        la coopération entre Églises sœurs.
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">L&apos;importance de l&apos;évangélisation</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        Nous sommes attachés à la liberté d&apos;annoncer l&apos;Évangile. Nous croyons que chaque
+                        chrétien est appelé à être témoin de sa foi et que l&apos;Église a pour mission de proclamer
+                        la bonne nouvelle de Jésus-Christ à tous.
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">La liberté religieuse</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        Nous défendons la liberté de conscience et de culte pour tous. Chacun doit être libre de
+                        croire et de pratiquer sa foi (ou de ne pas croire) sans contrainte de la part de l&apos;État
+                        ou de toute autre autorité.
+                      </p>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-primary dark:text-white">La séparation de l&apos;Église et de l&apos;État</CardTitle>
+                    </CardHeader>
+                    <CardContent className="dark:text-gray-100">
+                      <p>
+                        Nous sommes attachés à la séparation de l&apos;Église et de l&apos;État. Notre Église ne reçoit
+                        aucun financement public et ne dépend d&apos;aucune autorité civile pour son organisation et
+                        son fonctionnement. Nous vivons du soutien libre et volontaire de nos membres. En même temps,
+                        nous respectons les autorités civiles et nous nous efforçons d&apos;être de bons citoyens,
+                        tout en reconnaissant que notre première allégeance va à Dieu.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* Liens vers autres pages */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                <Card className="border-primary/30">
+                  <CardHeader>
+                    <CardTitle>Qui sommes-nous ?</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="mb-4 dark:text-gray-300">
+                      Découvrez notre identité, notre déclaration de foi et nos relations avec d&apos;autres Églises.
+                    </p>
+                    <Link href="/notre-eglise/qui-sommes-nous" className="text-primary hover:underline">
+                      En savoir plus →
+                    </Link>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-primary/30">
+                  <CardHeader>
+                    <CardTitle>Où sommes-nous ?</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="mb-4 dark:text-gray-300">
+                      Trouvez notre lieu de culte et nos coordonnées pour nous rejoindre facilement.
+                    </p>
+                    <Link href="/notre-eglise/ou-sommes-nous" className="text-primary hover:underline">
+                      Voir l&apos;adresse →
+                    </Link>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
