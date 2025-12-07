@@ -170,9 +170,6 @@ export default async function MissionPage() {
                           Votre navigateur ne supporte pas la lecture de vidéos.
                         </video>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-2">
-                        💡 <strong>Admin :</strong> Uploadez votre vidéo dans Firebase Storage : <code className="bg-slate-100 dark:bg-slate-800 px-1 rounded">/videos/mission-2021.mp4</code>
-                      </p>
                     </CardContent>
                   </Card>
 

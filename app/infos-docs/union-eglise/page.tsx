@@ -202,35 +202,7 @@ export default function UnionEglisePage() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
-
-                  {/* Section 6 : Cahiers de l'Union */}
-                  <Card className="mb-8">
-                    <CardHeader>
-                      <CardTitle>Les cahiers de l&apos;Union</CardTitle>
-                    </CardHeader>
-                    <CardContent className="prose max-w-none">
-                      <p className="mb-4">
-                        Ces cahiers constituent un lien entre les Églises de notre Union. Ils comportent des nouvelles informatives et/ou édifiantes concernées les Églises, des informations liées à l&apos;Union, ainsi que des enseignements et des réflexions théologiques ou éthiques sur des diverses choses encore. 
-                      </p>
-                      <p className="mb-4">
-                        Nous espérons que ceux-ci pourront vous être utiles dans votre enseignement, votre étude, et tout simplement un outil bulletin d&apos;information, mais sans un livret de prière renouvellent l&apos;information.
-                      </p>
-                      <Button asChild variant="outline">
-                        <a
-                          href="https://www.eglises-libres.fr/ressources/cahiers"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2"
-                        >
-                          Télécharger les Cahiers de l&apos;Union
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      </Button>
-                    </CardContent>
-                  </Card>
-
-                  {/* Boutons d'action */}
+                  </Card>{/* Boutons d'action */}
                   <div className="flex flex-col md:flex-row gap-6 items-center justify-center mt-12">
                     <Button asChild size="lg" className="shadow-md">
                       <Link href="/infos-docs/histoire-union">Découvrir l&apos;histoire de l&apos;Union</Link>
