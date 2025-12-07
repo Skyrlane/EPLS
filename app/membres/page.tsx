@@ -253,6 +253,18 @@ export default function MembresPage() {
                     >
                       → Gérer les images du site
                     </Link>
+                    <Link
+                      href="/admin/missionnaires"
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer les missionnaires
+                    </Link>
+                    <Link
+                      href="/admin/sites-amis"
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer les sites amis
+                    </Link>
                   </div>
                 </div>
               </CardContent>

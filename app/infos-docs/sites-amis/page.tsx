@@ -27,9 +27,7 @@ export default async function SitesAmisPage() {
     const sitesRef = collection(firestore, 'partner_sites');
     const q = query(
       sitesRef,
-      where('isActive', '==', true),
-      orderBy('category'),
-      orderBy('sortOrder')
+      where('isActive', '==', true)
     );
     const snapshot = await getDocs(q);
     sites = snapshot.docs.map(doc => ({
@@ -38,6 +36,14 @@ export default async function SitesAmisPage() {
       createdAt: doc.data().createdAt?.toDate() || new Date(),
       updatedAt: doc.data().updatedAt?.toDate() || new Date(),
     }));
+    
+    // Trier par catégorie puis par sortOrder côté client
+    sites.sort((a, b) => {
+      if (a.category !== b.category) {
+        return a.category.localeCompare(b.category);
+      }
+      return a.sortOrder - b.sortOrder;
+    });
   } catch (error) {
     console.error('Erreur chargement sites:', error);
   }
