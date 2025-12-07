@@ -134,8 +134,7 @@ export default function MissionPage() {
                         <video
                           className="w-full h-full object-contain"
                           controls
-                          preload="metadata"
-                          poster="/placeholder.svg?height=720&width=1280"
+                          preload="auto"
                         >
                           <source src={MISSION_VIDEO_URL} type="video/mp4" />
                           <source src={MISSION_VIDEO_URL.replace('.mp4', '.webm')} type="video/webm" />
