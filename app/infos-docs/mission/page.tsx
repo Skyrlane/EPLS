@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, FileText, Users, Globe, BookOpen, Video } from "lucide-react"
 import Sidebar from "../components/Sidebar"
 import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore'
+import { firestore } from '@/lib/firebase'
+import type { Missionary } from '@/types'
 
 export const metadata: Metadata = {
   title: "La Mission | Église Protestante Libre de Strasbourg",
@@ -16,7 +19,31 @@ export const metadata: Metadata = {
 // 🎥 URL de la vidéo Firebase Storage - Journée de la Mission 2021
 const MISSION_VIDEO_URL = "https://firebasestorage.googleapis.com/v0/b/epls-production.firebasestorage.app/o/videos%2FLa%20Mission%202021.mp4?alt=media&token=289b01ba-5c36-4f00-b087-2c3cd3c232ab"
 
-export default function MissionPage() {
+export default async function MissionPage() {
+  // Charger les missionnaires publiés
+  let missionaries: Missionary[] = [];
+  try {
+    const missionariesRef = collection(firestore, 'missionaries');
+    const q = query(
+      missionariesRef,
+      where('isActive', '==', true),
+      orderBy('name', 'asc')
+    );
+    const snapshot = await getDocs(q);
+    missionaries = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate() || new Date(),
+      updatedAt: doc.data().updatedAt?.toDate() || new Date(),
+      newsletters: doc.data().newsletters?.map((n: any) => ({
+        ...n,
+        uploadedAt: n.uploadedAt?.toDate() || new Date()
+      })) || []
+    })) as Missionary[];
+  } catch (error) {
+    console.error('Erreur chargement missionnaires:', error);
+  }
+
   return (
     <>
       {/* Page Header */}
@@ -223,14 +250,30 @@ export default function MissionPage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="mb-4">
-                        Pour en savoir plus, il est nécessaire de se connecter (ci-dessous).
-                      </p>
-                      <Button asChild>
-                        <Link href="/connexion">
-                          Se connecter pour accéder aux informations
-                        </Link>
-                      </Button>
+                      {missionaries.length === 0 ? (
+                        <p className="text-muted-foreground">
+                          Aucun missionnaire pour le moment.
+                        </p>
+                      ) : (
+                        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                          {missionaries.map(missionary => (
+                            <Card key={missionary.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                              <CardContent className="p-6">
+                                <h3 className="text-xl font-bold mb-2">{missionary.name}</h3>
+                                <p className="text-primary font-medium mb-3">{missionary.location}</p>
+                                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                                  {missionary.description}
+                                </p>
+                                <Button asChild className="w-full">
+                                  <Link href={`/infos-docs/mission/${missionary.slug}`}>
+                                    En savoir plus
+                                  </Link>
+                                </Button>
+                              </CardContent>
+                            </Card>
+                          ))}
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
 

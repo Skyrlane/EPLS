@@ -451,3 +451,34 @@ export interface SiteImage {
   updatedBy?: string;            // UID de l'admin
   updatedByName?: string;        // Nom de l'admin
 }
+
+/**
+ * Lettre de nouvelles d'un missionnaire (PDF)
+ */
+export interface Newsletter {
+  id: string;
+  title: string;                   // "Nouvelles juin 2021"
+  pdfUrl: string;                  // URL Firebase Storage
+  pdfPath: string;                 // Chemin Storage pour suppression
+  uploadedAt: Date;
+}
+
+/**
+ * Missionnaire avec activités, newsletters et image
+ */
+export interface Missionary {
+  id: string;
+  name: string;                    // "Famille Gallarello"
+  slug: string;                    // "famille-gallarello" (pour URL)
+  description: string;             // Texte principal
+  location: string;                // "Madagascar"
+  activities: string[];            // Liste des activités
+  imageZone?: string;              // Zone du système images-site (ex: "missionary-gallarello")
+  youtubeUrl?: string;             // URL YouTube (optionnel)
+  newsletters: Newsletter[];       // Liste des lettres de nouvelles
+  isActive: boolean;               // Publié ou brouillon
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy: string;               // UID admin
+  createdByName?: string;          // Nom admin (optionnel)
+}

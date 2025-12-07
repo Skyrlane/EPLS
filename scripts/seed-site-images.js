@@ -663,6 +663,60 @@ const siteImagesData = [
     isActive: false,
     priority: 'medium',
   },
+
+  // Page: /infos-docs/mission/famille-gallarello
+  {
+    id: 'missionary-gallarello',
+    zone: 'missionary-gallarello',
+    page: '/infos-docs/mission/famille-gallarello',
+    label: 'Mission - Famille Gallarello',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=600&width=800',
+    dimensions: {
+      width: 800,
+      height: 600,
+      aspectRatio: '4:3',
+    },
+    alt: 'Famille Gallarello - Missionnaires à Madagascar',
+    isActive: false,
+    priority: 'high',
+  },
+
+  // Page: /infos-docs/mission/famille-rolland
+  {
+    id: 'missionary-rolland',
+    zone: 'missionary-rolland',
+    page: '/infos-docs/mission/famille-rolland',
+    label: 'Mission - Famille Rolland',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=600&width=800',
+    dimensions: {
+      width: 800,
+      height: 600,
+      aspectRatio: '4:3',
+    },
+    alt: 'Famille Rolland - Missionnaires au Congo',
+    isActive: false,
+    priority: 'high',
+  },
+
+  // Page: /infos-docs/mission/famille-minard
+  {
+    id: 'missionary-minard',
+    zone: 'missionary-minard',
+    page: '/infos-docs/mission/famille-minard',
+    label: 'Mission - Famille Minard',
+    category: 'portrait',
+    fallbackUrl: '/placeholder.svg?height=600&width=800',
+    dimensions: {
+      width: 800,
+      height: 600,
+      aspectRatio: '4:3',
+    },
+    alt: 'Famille Minard - Missionnaires',
+    isActive: false,
+    priority: 'high',
+  },
 ];
 
 async function seedSiteImages() {
