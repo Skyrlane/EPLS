@@ -26,8 +26,7 @@ export default async function MissionPage() {
     const missionariesRef = collection(firestore, 'missionaries');
     const q = query(
       missionariesRef,
-      where('isActive', '==', true),
-      orderBy('name', 'asc')
+      where('isActive', '==', true)
     );
     const snapshot = await getDocs(q);
     missionaries = snapshot.docs.map(doc => ({
@@ -40,6 +39,9 @@ export default async function MissionPage() {
         uploadedAt: n.uploadedAt?.toDate() || new Date()
       })) || []
     })) as Missionary[];
+    
+    // Trier par nom côté client
+    missionaries.sort((a, b) => a.name.localeCompare(b.name));
   } catch (error) {
     console.error('Erreur chargement missionnaires:', error);
   }
