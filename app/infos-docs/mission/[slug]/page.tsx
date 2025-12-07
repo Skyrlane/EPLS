@@ -73,6 +73,29 @@ export default async function MissionaryDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  // Charger tous les missionnaires pour la navigation
+  let allMissionaries: Missionary[] = [];
+  try {
+    const missionariesRef = collection(firestore, 'missionaries');
+    const q = query(missionariesRef, where('isActive', '==', true));
+    const snapshot = await getDocs(q);
+    allMissionaries = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate() || new Date(),
+      updatedAt: doc.data().updatedAt?.toDate() || new Date(),
+      newsletters: []
+    })) as Missionary[];
+    
+    // Trier par nom
+    allMissionaries.sort((a, b) => a.name.localeCompare(b.name));
+    
+    // Exclure le missionnaire actuel
+    allMissionaries = allMissionaries.filter(m => m.slug !== missionary.slug);
+  } catch (error) {
+    console.error('Erreur chargement autres missionnaires:', error);
+  }
+
   return (
     <>
       {/* Page Header */}
@@ -232,9 +255,43 @@ export default async function MissionaryDetailPage({ params }: PageProps) {
                     </Card>
                   )}
 
+                  {/* Autres missionnaires */}
+                  {allMissionaries.length > 0 && (
+                    <Card className="mt-8">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <Activity className="h-5 w-5" />
+                          Découvrir d&apos;autres missionnaires
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid gap-4 md:grid-cols-2">
+                          {allMissionaries.map((m) => (
+                            <Link
+                              key={m.id}
+                              href={`/infos-docs/mission/${m.slug}`}
+                              className="block p-4 border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group"
+                            >
+                              <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">
+                                {m.name}
+                              </h3>
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                                <MapPin className="h-4 w-4" />
+                                <span>{m.location}</span>
+                              </div>
+                              <p className="text-sm text-muted-foreground line-clamp-2">
+                                {m.description}
+                              </p>
+                            </Link>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
+
                   {/* Bouton retour */}
                   <div className="flex justify-center mt-12">
-                    <Button asChild size="lg">
+                    <Button asChild size="lg" variant="outline">
                       <Link href="/infos-docs/mission" className="flex items-center gap-2">
                         <ArrowLeft className="h-4 w-4" />
                         Retour à la page Mission

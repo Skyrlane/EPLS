@@ -566,18 +566,20 @@ export default function MissionnairesAdminPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="imageZone">Image de la famille</Label>
+                  <Label htmlFor="imageZone">Image de la famille (zone)</Label>
                   <Input
                     id="imageZone"
-                    placeholder="missionary-gallarello"
+                    placeholder="Ex: missionary-gallarello"
                     value={imageZone}
                     onChange={(e) => setImageZone(e.target.value)}
                   />
                   <p className="text-xs text-muted-foreground">
-                    💡 Gérer les images dans{' '}
-                    <Link href="/admin/images-site" className="text-primary hover:underline">
+                    💡 <strong>Zones disponibles :</strong> missionary-gallarello, missionary-rolland, missionary-minard<br/>
+                    Gérer les images dans{' '}
+                    <Link href="/admin/images-site" className="text-primary hover:underline" target="_blank">
                       Images du site
                     </Link>
+                    {' '}(nouvel onglet)
                   </p>
                 </div>
 
