@@ -199,12 +199,12 @@ export default function HistoireUnionPage() {
                     site officiel :
                   </p>
                   <Link
-                    href="https://www.eglises-libres.fr/"
+                    href="https://www.ueel.org/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary hover:underline font-medium"
                   >
-                    www.eglises-libres.fr
+                    www.ueel.org
                   </Link>
                 </div>
               </div>

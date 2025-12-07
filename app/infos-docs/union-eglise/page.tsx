@@ -120,7 +120,7 @@ export default function UnionEglisePage() {
                       </p>
                       <Button asChild variant="outline" className="mt-4">
                         <a
-                          href="https://plvmagazine.fr"
+                          href="https://www.ueel.org/plvmagazine/"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2"
@@ -143,7 +143,7 @@ export default function UnionEglisePage() {
                       </p>
                       <Button asChild variant="outline">
                         <a
-                          href="https://www.eglises-libres.fr/annuaire"
+                          href="https://www.eglises.org/union/ueel-union-des-eglises-evangeliques-libres-de-france/"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2"
@@ -214,7 +214,7 @@ export default function UnionEglisePage() {
                       className="border-2 border-primary text-primary hover:bg-primary/10"
                     >
                       <a
-                        href="https://www.eglises-libres.fr/"
+                        href="https://www.ueel.org/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2"

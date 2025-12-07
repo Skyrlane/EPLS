@@ -133,7 +133,7 @@ export default async function MissionPage() {
                           </p>
                           <Button asChild variant="outline">
                             <a
-                              href="https://www.seppf.org"
+                              href="http://www.sepf.fr/"
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-2"
