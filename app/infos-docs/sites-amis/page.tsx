@@ -17,90 +17,39 @@ export const metadata: Metadata = {
   keywords: ["sites amis", "liens", "ressources", "églises", "partenaires", "EPLS", "Église Protestante Libérale", "Strasbourg"]
 }
 
-type FriendlySite = {
-  id: string
-  name: string
-  description: string
-  url: string
-  logo: string
-  category: "dénomination" | "églises" | "formation" | "mission" | "organisation" | "ressources"
-}
+export default async function SitesAmisPage() {
+  // Charger les sites actifs depuis Firestore
+  let sites: any[] = [];
+  try {
+    const { collection, getDocs, query, where, orderBy } = await import('firebase/firestore');
+    const { firestore } = await import('@/lib/firebase');
+    
+    const sitesRef = collection(firestore, 'partner_sites');
+    const q = query(
+      sitesRef,
+      where('isActive', '==', true),
+      orderBy('category'),
+      orderBy('sortOrder')
+    );
+    const snapshot = await getDocs(q);
+    sites = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate() || new Date(),
+      updatedAt: doc.data().updatedAt?.toDate() || new Date(),
+    }));
+  } catch (error) {
+    console.error('Erreur chargement sites:', error);
+  }
 
-export default function SitesAmisPage() {
-  const friendlySites: FriendlySite[] = [
-    {
-      id: "uepal",
-      name: "Union des Églises Protestantes d'Alsace et de Lorraine",
-      description: "Notre église est membre de l'UEPAL, qui regroupe des églises luthériennes et réformées en Alsace et en Moselle.",
-      url: "https://www.uepal.fr/",
-      logo: "/images/partners/uepal-logo.svg",
-      category: "dénomination"
-    },
-    {
-      id: "protestants",
-      name: "Protestants.org",
-      description: "Le portail de la Fédération Protestante de France, représentant la diversité du protestantisme français.",
-      url: "https://www.protestants.org/",
-      logo: "/images/partners/protestants-logo.svg",
-      category: "organisation"
-    },
-    {
-      id: "evangile-liberte",
-      name: "Évangile et Liberté",
-      description: "Mensuel protestant de réflexion et d'engagement qui promeut une foi ouverte au dialogue avec la modernité.",
-      url: "https://www.evangile-et-liberte.net/",
-      logo: "/images/partners/evangile-liberte-logo.svg",
-      category: "ressources"
-    },
-    {
-      id: "fondation-diaconat",
-      name: "Fondation du Diaconat",
-      description: "Organisation caritative protestante engagée dans des actions sociales et médicales en Alsace.",
-      url: "https://www.fondation-diaconat.fr/",
-      logo: "/images/partners/diaconat-logo.svg",
-      category: "organisation"
-    },
-    {
-      id: "flt-strasbourg",
-      name: "Faculté de Théologie Protestante de Strasbourg",
-      description: "Établissement universitaire de formation théologique et de recherche scientifique.",
-      url: "https://theopro.unistra.fr/",
-      logo: "/images/partners/flt-strasbourg-logo.svg",
-      category: "formation"
-    },
-    {
-      id: "defap",
-      name: "Défap - Service Protestant de Mission",
-      description: "Organisation missionnaire des Églises protestantes françaises qui soutient des projets à l'international.",
-      url: "https://www.defap.fr/",
-      logo: "/images/partners/defap-logo.svg",
-      category: "mission"
-    },
-    {
-      id: "ceeefe",
-      name: "CEEEFE - Églises Protestantes Francophones à l'Étranger",
-      description: "Réseau des communautés protestantes francophones dans le monde entier.",
-      url: "https://www.eglisesfrancaises.org/",
-      logo: "/images/partners/ceeefe-logo.svg",
-      category: "églises"
-    },
-    {
-      id: "musee-protestant",
-      name: "Musée Virtuel du Protestantisme",
-      description: "Ressource en ligne sur l'histoire et le patrimoine protestant depuis le XVIe siècle.",
-      url: "https://www.museeprotestant.org/",
-      logo: "/images/partners/musee-protestant-logo.svg",
-      category: "ressources"
-    },
-    {
-      id: "acat",
-      name: "ACAT - Action des Chrétiens pour l'Abolition de la Torture",
-      description: "ONG chrétienne œcuménique qui lutte contre la torture et la peine de mort dans le monde.",
-      url: "https://www.acatfrance.fr/",
-      logo: "/images/partners/acat-logo.svg",
-      category: "organisation"
+  // Grouper par catégorie
+  const sitesByCategory = sites.reduce((acc: any, site: any) => {
+    if (!acc[site.category]) {
+      acc[site.category] = [];
     }
-  ]
+    acc[site.category].push(site);
+    return acc;
+  }, {} as Record<string, any[]>);
 
   return (
     <>
@@ -133,42 +82,55 @@ export default function SitesAmisPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                  {friendlySites.map((site) => (
-                    <Card key={site.id} className="h-full flex flex-col">
-                      <CardHeader className="text-center pb-2">
-                        <div className="flex justify-center mb-4">
-                          <div className="relative h-24 w-24 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center">
-                            <DynamicImageBlock
-                              zone={`sites-amis-${site.id}`}
-                              fallbackSrc={site.logo}
-                              alt={`Logo ${site.name}`}
-                              type="avatar"
-                              width={96}
-                              height={96}
-                              className="object-contain"
-                            />
-                          </div>
+                {/* Affichage par catégorie */}
+                {sites.length === 0 ? (
+                  <div className="text-center text-muted-foreground py-12">
+                    Aucun site partenaire pour le moment.
+                  </div>
+                ) : (
+                  <div className="space-y-12">
+                    {Object.entries(sitesByCategory).map(([category, categorySites]: [string, any[]]) => (
+                      <div key={category}>
+                        <h3 className="text-2xl font-semibold mb-6 text-primary">{category}</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          {categorySites.map((site: any) => (
+                            <Card key={site.id} className="h-full flex flex-col hover:shadow-lg transition-shadow">
+                              <CardHeader className="text-center pb-2">
+                                {site.logoZone && (
+                                  <div className="flex justify-center mb-4">
+                                    <div className="relative h-24 w-24 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center">
+                                      <DynamicImageBlock
+                                        zone={site.logoZone}
+                                        fallbackSrc="/placeholder.svg?height=96&width=96"
+                                        alt={`Logo ${site.name}`}
+                                        type="avatar"
+                                        width={96}
+                                        height={96}
+                                        className="object-contain"
+                                      />
+                                    </div>
+                                  </div>
+                                )}
+                                <CardTitle className="text-xl">{site.name}</CardTitle>
+                              </CardHeader>
+                              <CardContent className="flex-grow">
+                                <p className="text-slate-700 text-sm">{site.description}</p>
+                              </CardContent>
+                              <CardFooter>
+                                <Button asChild className="w-full">
+                                  <a href={site.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                                    Visiter le site 
+                                    <ExternalLink className="ml-2 h-4 w-4" />
+                                  </a>
+                                </Button>
+                              </CardFooter>
+                            </Card>
+                          ))}
                         </div>
-                        <CardTitle className="text-xl">{site.name}</CardTitle>
-                        <CardDescription className="text-sm font-medium text-indigo-600 uppercase">
-                          {site.category}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="flex-grow">
-                        <p className="text-slate-700">{site.description}</p>
-                      </CardContent>
-                      <CardFooter>
-                        <Button asChild className="w-full">
-                          <a href={site.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
-                            Visiter le site 
-                            <ExternalLink className="ml-2 h-4 w-4" />
-                          </a>
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 <div className="mt-16 max-w-2xl mx-auto text-center">
                   <h3 className="text-2xl font-bold mb-4">Vous avez un site à nous recommander ?</h3>
@@ -187,4 +149,4 @@ export default function SitesAmisPage() {
       </section>
     </>
   )
-} 
+}

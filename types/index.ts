@@ -482,3 +482,37 @@ export interface Missionary {
   createdBy: string;               // UID admin
   createdByName?: string;          // Nom admin (optionnel)
 }
+
+
+/**
+ * Catégories disponibles pour les sites partenaires
+ */
+export const PARTNER_CATEGORIES = [
+  'Radios chrétiennes',
+  'Médias chrétiens',
+  'Magazines chrétiens',
+  'Librairies chrétiennes',
+  'Organisations',
+  'Ressources bibliques'
+] as const;
+
+export type PartnerCategory = typeof PARTNER_CATEGORIES[number];
+
+/**
+ * Site partenaire (Sites Amis)
+ */
+export interface PartnerSite {
+  id: string;
+  name: string;                    // "Radio Arc-en-Ciel"
+  slug: string;                    // "radio-arc-en-ciel" (pour tri/recherche)
+  category: PartnerCategory;       // "Radios chrétiennes", "Médias", etc.
+  description: string;             // Texte descriptif
+  url: string;                     // https://www.radioarcenciel.com/
+  logoZone?: string;               // Zone du système images-site (ex: "partner-radio-arcenciel")
+  sortOrder: number;               // Pour l'ordre d'affichage dans chaque catégorie
+  isActive: boolean;               // Publié ou brouillon
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy: string;               // UID admin
+  createdByName?: string;          // Nom admin (optionnel)
+}
