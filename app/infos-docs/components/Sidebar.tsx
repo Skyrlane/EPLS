@@ -40,6 +40,11 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
+            <Link href="/infos-docs/mission" className="text-primary hover:underline">
+              La Mission
+            </Link>
+          </li>
+          <li>
             <Link href="/infos-docs/sites-amis" className="text-primary hover:underline">
               Sites amis
             </Link>

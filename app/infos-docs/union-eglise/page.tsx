@@ -9,8 +9,8 @@ import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
 
 export const metadata: Metadata = {
   title: "Union des Églises Évangéliques Libres | Église Protestante Libre de Strasbourg",
-  description: "Découvrez l'Union des Églises Évangéliques Libres de France, notre famille d'églises, son identité, ses valeurs et son organisation",
-  keywords: ["UEEL", "Union des Églises", "Église Libre", "protestantisme", "évangélique", "Strasbourg"]
+  description: "Découvrez l'Union des Églises Évangéliques Libres de France (UEEL), membre de la FPF et du CNEF, son magazine PLV, ses églises et sa Commission Synodale",
+  keywords: ["UEEL", "Union des Églises", "Église Libre", "protestantisme", "évangélique", "FPF", "CNEF", "PLV Magazine", "Strasbourg"]
 }
 
 export default function UnionEglisePage() {
@@ -61,6 +61,7 @@ export default function UnionEglisePage() {
               {/* Main Content */}
               <div className="md:col-span-3">
                 <div className="max-w-4xl mx-auto">
+                  {/* Intro avec logo */}
                   <div className="flex flex-col md:flex-row items-center gap-8 mb-12">
                     <div className="md:w-1/3">
                       <div className="relative w-64 h-64 mx-auto">
@@ -76,137 +77,161 @@ export default function UnionEglisePage() {
                       </div>
                     </div>
                     <div className="md:w-2/3">
-                      <h2 className="text-3xl font-bold mb-4">Notre famille d&apos;églises</h2>
+                      <h2 className="text-3xl font-bold mb-4">L&apos;Union des Églises Évangéliques Libres</h2>
                       <p className="text-lg mb-4">
-                        L&apos;Église Protestante Libre de Strasbourg fait partie de l&apos;Union des Églises Évangéliques
-                        Libres de France (UEEL), une famille d&apos;églises fondée en 1849.
-                      </p>
-                      <p className="mb-4">
-                        Cette union rassemble aujourd&apos;hui une cinquantaine d&apos;églises en France, partageant une même
-                        vision de l&apos;Église et de la foi chrétienne.
+                        L&apos;UEEL est une union d&apos;Églises locales qui adhèrent à une confession de foi commune.
                       </p>
                     </div>
                   </div>
 
+                  {/* Section 1 : Présentation */}
                   <Card className="mb-8">
                     <CardHeader>
-                      <CardTitle>Identité et valeurs</CardTitle>
+                      <CardTitle>Présentation</CardTitle>
+                    </CardHeader>
+                    <CardContent className="prose max-w-none">
+                      <p className="mb-4">
+                        L&apos;UEEL est une union d&apos;Églises locales qui adhèrent à une confession de foi commune. Elle est :
+                      </p>
+                      <ul className="space-y-2">
+                        <li>Membre de la <strong>Fédération Protestante de France (FPF)</strong></li>
+                        <li>Membre du <strong>Conseil National des Évangéliques de France (CNEF)</strong></li>
+                        <li>Membre du Conseil National des Évangéliques de France de l&apos;Intermédiaire de la <strong>Fédération Internationale des Églises Évangéliques Libres (IFFEC)</strong></li>
+                        <li>Partenaire du <strong>Bund Freier evangelischer Gemeinden (BFeG)</strong></li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+
+                  {/* Section 2 : PLV Magazine */}
+                  <Card className="mb-8">
+                    <CardHeader>
+                      <CardTitle>PLV, le magazine...</CardTitle>
+                    </CardHeader>
+                    <CardContent className="prose max-w-none">
+                      <p className="text-xl font-semibold mb-4 text-primary">
+                        en ligne des Églises évangéliques libres !
+                      </p>
+                      <blockquote className="border-l-4 border-primary pl-4 italic mb-4">
+                        &quot;Nous n&apos;avons pas de puissance contre la vérité, nous n&apos;en avons que pour la vérité&quot;
+                        <footer className="text-sm mt-2">— La Bible : 2 Corinthiens 13 v. 8</footer>
+                      </blockquote>
+                      <p className="mb-4">
+                        Dans sa visibilité l&apos;évangile ne doit pas être mis sous le boisseau mais avec une seule inspiration : la foi en Christ qui la Bible.
+                      </p>
+                      <Button asChild variant="outline" className="mt-4">
+                        <a
+                          href="https://plvmagazine.fr"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2"
+                        >
+                          Le site de PLV
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Section 3 : Annuaire */}
+                  <Card className="mb-8">
+                    <CardHeader>
+                      <CardTitle>Annuaire des Églises de l&apos;Union</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="mb-4">
+                        Consultez la liste complète des Églises membres de l&apos;Union des Églises Évangéliques Libres de France.
+                      </p>
+                      <Button asChild variant="outline">
+                        <a
+                          href="https://www.eglises-libres.fr/annuaire"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2"
+                        >
+                          Liste des Églises
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Section 4 : Vitalité */}
+                  <Card className="mb-8">
+                    <CardHeader>
+                      <CardTitle>Vitalité</CardTitle>
                     </CardHeader>
                     <CardContent className="prose max-w-none">
                       <p>
-                        L&apos;Union des Églises Évangéliques Libres de France se caractérise par plusieurs traits distinctifs
-                        :
-                      </p>
-
-                      <h3 className="mt-6">Une identité protestante évangélique</h3>
-                      <p>
-                        Nos églises s&apos;inscrivent dans la tradition protestante issue de la Réforme du 16ème siècle. Nous
-                        affirmons les grands principes protestants : l&apos;autorité souveraine des Écritures, le salut par la
-                        grâce au moyen de la foi, le sacerdoce universel des croyants.
+                        Cette démarche touche à la vie de la communauté, à l&apos;espoir d&apos;une passion, et reste un projet et l&apos;Église en présence à la fois face et réquis : Qui ne peut y prendre des nourriciers. On ne devient pas par hasard une communauté bouleversante de vitalité. Il faut en passer par le discours, inspirée par l&apos;Esprit, d&apos;oter de l&apos;avant et de devenir une église qui s&apos;engage de manière réaliste dans une action de communion durable.
                       </p>
                       <p>
-                        Notre sensibilité évangélique se traduit par l&apos;importance que nous accordons à la conversion
-                        personnelle, à l&apos;étude de la Bible et au témoignage.
+                        Par &quot;témoignage&quot;, nous voulons dire qui accomplir dans le monde la mission que le Christ a confiée à son Église.
                       </p>
+                      <p>
+                        L&apos;Église n&apos;est pas pour autant réduite à une façade à laquelle il faudrait simplement donner de l&apos;éclat communautaire : il définit de l&apos;édifice d&apos;une Église solide et missionnaire, et quatre types de fonctionnement d&apos;Église, tous s&apos;abordent pas, la grâce peut accompagner chaque étape de son parcours, la niche ou lumière pas pour elle elle le sacre.
+                      </p>
+                    </CardContent>
+                  </Card>
 
-                      <h3 className="mt-6">Une ecclésiologie particulière</h3>
-                      <p>Le terme &quot;libre&quot; dans notre nom fait référence à plusieurs aspects de notre identité :</p>
-                      <ul>
-                        <li>
-                          <strong>Liberté vis-à-vis de l&apos;État</strong> : Nos églises ont été pionnières dans la défense
-                          du principe de séparation de l&apos;Église et de l&apos;État, bien avant la loi de 1905.
-                        </li>
-                        <li>
-                          <strong>Églises de professants</strong> : L&apos;adhésion à nos églises est basée sur une confession
-                          de foi personnelle et volontaire.
-                        </li>
-                        <li>
-                          <strong>Autonomie des églises locales</strong> : Chaque église locale est autonome dans sa
-                          gouvernance, tout en étant liée aux autres par des relations fraternelles.
-                        </li>
-                        <li>
-                          <strong>Liberté de conscience</strong> : Nous respectons la liberté de conscience de chaque croyant
-                          dans son interprétation des Écritures sur les questions non essentielles.
-                        </li>
-                      </ul>
-
-                      <div className="my-8 relative h-64 rounded-lg overflow-hidden">
-                        <DynamicImageBlock
-                          zone="ueel-synod"
-                          fallbackSrc="/placeholder.svg?height=400&width=800"
-                          alt="Synode de l'Union des Églises Évangéliques Libres"
-                          type="section"
-                          width={800}
-                          height={400}
-                          className="object-cover w-full h-full"
-                        />
+                  {/* Section 5 : Commission Synodale */}
+                  <Card className="mb-8">
+                    <CardHeader>
+                      <CardTitle>La Commission Synodale</CardTitle>
+                    </CardHeader>
+                    <CardContent className="prose max-w-none">
+                      <p className="mb-4">
+                        La Commission synodale est élue par le Synode (rassemblement de délégués de toutes les Églises ayant lieu tous les deux ans). Elle compte 11 membres, 8 pasteurs et 3 laïcs + 4 représentants du Pôle Développement.
+                      </p>
+                      <h4 className="font-bold mt-6 mb-3">Commission élues lors du Synode du 13 mai 2021 :</h4>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <p><strong>Président :</strong> Vincent Mecchi (pasteur à Toulouse)</p>
+                          <p><strong>Vice-président :</strong> Christian Fornas (EEL Avignon)</p>
+                          <p><strong>Secrétaire :</strong> Florence Weissenbach (EEL Saint-Louis)</p>
+                          <p><strong>Trésorier :</strong> Olivier Dugand (EEL Valence)</p>
+                          <p><strong>Secrétaire Général :</strong> Jérôme Chamard (Pasteur à Valence)</p>
+                        </div>
+                        <div>
+                          <h5 className="font-semibold mb-2">Membres :</h5>
+                          <ul className="list-disc list-inside space-y-1">
+                            <li>Sylvie Levenets (EEL Orléans)</li>
+                            <li>Luc Potanchek (EEL Moulin-en-Yvelines)</li>
+                            <li>Florence Venaille (pasteur à Toulouse)</li>
+                            <li>Etienne Weissenbach (secrétaire missions / Chef de l&apos;Aumônerie protestante aux Armées)</li>
+                          </ul>
+                        </div>
                       </div>
-
-                      <h3 className="mt-6">Organisation et fonctionnement</h3>
-                      <p>
-                        L&apos;UEEL fonctionne selon un système presbytérien-synodal, qui combine l&apos;autonomie des églises
-                        locales et leur interdépendance au sein de l&apos;Union :
-                      </p>
-                      <ul>
-                        <li>
-                          <strong>Églises locales</strong> : Chaque église est dirigée par un conseil presbytéral (ou conseil
-                          d&apos;église) composé du pasteur et d&apos;anciens élus par l&apos;assemblée des membres.
-                        </li>
-                        <li>
-                          <strong>Régions</strong> : Les églises sont regroupées en régions qui se réunissent régulièrement
-                          pour des temps de partage et de concertation.
-                        </li>
-                        <li>
-                          <strong>Synode</strong> : Le Synode, qui se réunit tous les deux ans, est l&apos;instance suprême de
-                          décision. Il est composé de délégués (pasteurs et laïcs) de toutes les églises.
-                        </li>
-                        <li>
-                          <strong>Commission Synodale</strong> : Entre les synodes, la Commission Synodale veille à
-                          l&apos;application des décisions synodales et à la coordination des activités de l&apos;Union.
-                        </li>
-                      </ul>
                     </CardContent>
                   </Card>
 
+                  {/* Section 6 : Cahiers de l'Union */}
                   <Card className="mb-8">
                     <CardHeader>
-                      <CardTitle>Engagements et partenariats</CardTitle>
+                      <CardTitle>Les cahiers de l&apos;Union</CardTitle>
                     </CardHeader>
                     <CardContent className="prose max-w-none">
-                      <h3>Nos engagements</h3>
-                      <p>L&apos;UEEL est engagée dans plusieurs domaines :</p>
-                      <ul>
-                        <li>L&apos;implantation de nouvelles églises en France</li>
-                        <li>La formation théologique des pasteurs et des responsables d&apos;église</li>
-                        <li>Le soutien aux œuvres sociales et missionnaires</li>
-                        <li>La réflexion sur les questions éthiques et sociétales</li>
-                        <li>Le dialogue œcuménique avec d&apos;autres églises chrétiennes</li>
-                      </ul>
-
-                      <h3 className="mt-6">Nos partenariats</h3>
-                      <p>
-                        L&apos;UEEL entretient des relations fraternelles avec d&apos;autres unions d&apos;églises et
-                        organisations chrétiennes :
+                      <p className="mb-4">
+                        Ces cahiers constituent un lien entre les Églises de notre Union. Ils comportent des nouvelles informatives et/ou édifiantes concernées les Églises, des informations liées à l&apos;Union, ainsi que des enseignements et des réflexions théologiques ou éthiques sur des diverses choses encore. 
                       </p>
-                      <ul>
-                        <li>
-                          Elle est membre du <strong>Conseil National des Évangéliques de France (CNEF)</strong>
-                        </li>
-                        <li>
-                          Elle est en communion avec la <strong>Communion Mondiale d&apos;Églises Réformées (CMER)</strong>
-                        </li>
-                        <li>
-                          Elle entretient des liens particuliers avec les <strong>Églises Libres</strong> de Suisse, de
-                          Belgique et d&apos;Italie
-                        </li>
-                        <li>
-                          Elle collabore avec diverses <strong>œuvres missionnaires</strong> en France et à l&apos;étranger
-                        </li>
-                      </ul>
+                      <p className="mb-4">
+                        Nous espérons que ceux-ci pourront vous être utiles dans votre enseignement, votre étude, et tout simplement un outil bulletin d&apos;information, mais sans un livret de prière renouvellent l&apos;information.
+                      </p>
+                      <Button asChild variant="outline">
+                        <a
+                          href="https://www.eglises-libres.fr/ressources/cahiers"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2"
+                        >
+                          Télécharger les Cahiers de l&apos;Union
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
                     </CardContent>
                   </Card>
 
-                  <div className="flex flex-col md:flex-row gap-6 items-center justify-center">
+                  {/* Boutons d'action */}
+                  <div className="flex flex-col md:flex-row gap-6 items-center justify-center mt-12">
                     <Button asChild size="lg" className="shadow-md">
                       <Link href="/infos-docs/histoire-union">Découvrir l&apos;histoire de l&apos;Union</Link>
                     </Button>
