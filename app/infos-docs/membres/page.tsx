@@ -1,20 +1,147 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Sidebar from "../components/Sidebar"
-import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
+'use client';
 
-export const metadata = {
-  title: "Liste des membres - Église Protestante Libre de Strasbourg",
-  description: "Découvrez le conseil d'église, les responsables de ministères et les informations pour devenir membre de l'Église Protestante Libre de Strasbourg"
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useAuth } from '@/hooks/use-auth';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
+import Sidebar from '../components/Sidebar';
+import { 
+  Users, 
+  User, 
+  ShieldCheck, 
+  UserCheck, 
+  Archive, 
+  Lock,
+  Search
+} from 'lucide-react';
+
+// Types
+interface ConseilMember {
+  nom: string;
+  prenom: string;
+  fonction: string;
 }
 
-export default function Membres() {
+interface ConseilOnlyMember {
+  nom: string;
+  prenom: string;
+  observations: string;
+  radiee: string;
+}
+
+interface AllMember {
+  num: number;
+  nom: string;
+  prenom: string;
+}
+
+// Données - Membres du Conseil de l'EPLS
+const conseilMembers: ConseilMember[] = [
+  { nom: 'SIEGRIST', prenom: 'Mireille', fonction: 'Présidente' },
+  { nom: 'THOBOIS', prenom: 'Christophe', fonction: 'Vice-Président' },
+  { nom: 'DUMAY', prenom: 'Walter', fonction: 'Trésorier' },
+  { nom: 'SCHROEDER', prenom: 'Clairette', fonction: 'Secrétaire' },
+  { nom: 'FRANTZ', prenom: 'Christiane', fonction: '' },
+];
+
+// Données - Visible par le conseil uniquement
+const conseilOnly: ConseilOnlyMember[] = [
+  { nom: 'THOMAS', prenom: 'Maison', observations: 'Décédée le 1 juin 2019', radiee: '' },
+  { nom: 'HERRENSCHMIDT', prenom: 'Patrice', observations: 'démission', radiee: 'radiée le 14 mars 2021' },
+  { nom: 'HERRENSCHMIDT', prenom: 'Yili', observations: 'démission', radiee: 'radiée le 14 mars 2021' },
+  { nom: 'MEGUMI', prenom: 'Olivia', observations: 'répartit en Afrique', radiee: 'radiée le 14 mars 2021' },
+  { nom: 'RAPHAËL', prenom: 'Mourabite', observations: 'veut rester membre', radiee: 'contactée après le 14 mars 2021' },
+  { nom: 'GUILLEMOT', prenom: 'Denise', observations: 'démission', radiee: 'datée du 26/06/2021' },
+];
+
+// Données - Tous les membres de l'EPLS (39 personnes)
+const allMembers: AllMember[] = [
+  { num: 1, nom: 'BAUER', prenom: 'Pierre' },
+  { num: 2, nom: 'BEZ', prenom: 'Claude' },
+  { num: 3, nom: 'BEZ', prenom: 'Margrit' },
+  { num: 4, nom: 'CARDOSO', prenom: 'Maria' },
+  { num: 5, nom: 'CHAPELLE', prenom: 'Christiane' },
+  { num: 6, nom: 'CLIVIER', prenom: 'Sylvain' },
+  { num: 7, nom: 'DUMAY', prenom: 'Anne' },
+  { num: 8, nom: 'DUMAY', prenom: 'Désirant' },
+  { num: 9, nom: 'DUMAY', prenom: 'Gisénte' },
+  { num: 10, nom: 'DUMAY', prenom: 'Jacqueline' },
+  { num: 11, nom: 'DUMAY', prenom: 'Rico' },
+  { num: 12, nom: 'DUMAY', prenom: 'Vincent' },
+  { num: 13, nom: 'DUMAY', prenom: 'Walter' },
+  { num: 14, nom: 'DUMAY', prenom: 'Yhérèse' },
+  { num: 15, nom: 'DUMAY-AUBIN', prenom: 'Anne' },
+  { num: 16, nom: 'FRANTZ', prenom: 'Christiane' },
+  { num: 17, nom: 'GAENTZLER', prenom: 'Eric' },
+  { num: 18, nom: 'HAESSIG', prenom: 'Daniel' },
+  { num: 19, nom: 'HUREY', prenom: 'Liliane' },
+  { num: 20, nom: 'KUHN', prenom: 'Bernadette' },
+  { num: 21, nom: 'KUHN-ASSITANT', prenom: 'Agathe' },
+  { num: 22, nom: 'LHERMENGAULT', prenom: 'Mariette' },
+  { num: 23, nom: 'LHERMENGAULT', prenom: 'Philippe' },
+  { num: 24, nom: 'OLHAGARAY', prenom: 'Catherine' },
+  { num: 25, nom: 'OLHAGARAY', prenom: 'Marie' },
+  { num: 26, nom: 'SCHLOSSER', prenom: 'Delphine' },
+  { num: 27, nom: 'SCHLOSSER', prenom: 'Esther' },
+  { num: 28, nom: 'SCHLOSSER', prenom: 'Fabrice' },
+  { num: 29, nom: 'SCHLOSSER', prenom: 'Pierre' },
+  { num: 30, nom: 'SCHROEDER', prenom: 'André' },
+  { num: 31, nom: 'SCHROEDER', prenom: 'Clairette' },
+  { num: 32, nom: 'SIEGRIST', prenom: 'Jean-Pierre' },
+  { num: 33, nom: 'SIEGRIST', prenom: 'Mireille' },
+  { num: 34, nom: 'THOBOIS', prenom: 'Christophe' },
+  { num: 35, nom: 'THOBOIS', prenom: 'David' },
+  { num: 36, nom: 'WENTZ', prenom: 'Isabelle' },
+  { num: 37, nom: 'YA', prenom: 'Xialy' },
+  { num: 38, nom: 'LOUX', prenom: 'Benoit' },
+  { num: 39, nom: 'WANNER', prenom: 'Christiane' },
+];
+
+export default function MembresPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Redirect si non authentifié
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/connexion?redirect=/infos-docs/membres');
+    }
+  }, [user, loading, router]);
+
+  // Filtrer les membres selon le terme de recherche
+  const filteredMembers = allMembers.filter(
+    (member) =>
+      member.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      member.prenom.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+          <p className="text-sm text-muted-foreground">Chargement...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Si non authentifié (ne devrait jamais arriver grâce au useEffect)
+  if (!user) {
+    return null;
+  }
+
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-slate-100 dark:bg-slate-900 py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Liste des membres</h1>
 
@@ -57,252 +184,198 @@ export default function Membres() {
 
               {/* Main Content */}
               <div className="md:col-span-3">
-                <Card className="mb-8">
-                  <CardHeader>
-                    <CardTitle>Accès réservé</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Cette page est réservée aux membres de l&apos;Église Protestante Libre de Strasbourg. Veuillez vous
-                      connecter pour accéder à la liste des membres et à l&apos;annuaire.
-                    </p>
-                    <div className="flex justify-center">
-                      <Button asChild className="shadow-md">
-                        <Link href="/connexion">Se connecter</Link>
-                      </Button>
+                {/* Statistiques */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-muted-foreground">Membres du Conseil</p>
+                          <p className="text-3xl font-bold">{conseilMembers.length}</p>
+                        </div>
+                        <Users className="h-8 w-8 text-primary opacity-50" />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-muted-foreground">Total Membres</p>
+                          <p className="text-3xl font-bold">{allMembers.length}</p>
+                        </div>
+                        <UserCheck className="h-8 w-8 text-primary opacity-50" />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-muted-foreground">Membres archivés</p>
+                          <p className="text-3xl font-bold">{conseilOnly.length}</p>
+                        </div>
+                        <Archive className="h-8 w-8 text-primary opacity-50" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Section 1 : Membres du Conseil */}
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <Users className="h-6 w-6" />
+                    Membres du Conseil de l&apos;EPLS
+                  </h2>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {conseilMembers.map((member, index) => (
+                      <Card key={index} className="hover:shadow-lg transition-shadow">
+                        <CardContent className="p-6">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                              <User className="h-6 w-6 text-primary" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-semibold text-lg truncate">
+                                {member.prenom} {member.nom}
+                              </h3>
+                              {member.fonction && (
+                                <Badge variant="secondary" className="mt-1">
+                                  {member.fonction}
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Section 2 : Visible par le conseil uniquement */}
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <ShieldCheck className="h-6 w-6" />
+                    Visible par le conseil uniquement
+                  </h2>
+
+                  <Card>
+                    <CardContent className="p-0">
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead className="bg-muted/50">
+                            <tr>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                Nom
+                              </th>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                Prénom
+                              </th>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                Observations
+                              </th>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                Radiée
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-border">
+                            {conseilOnly.map((member, index) => (
+                              <tr key={index} className="hover:bg-muted/50 transition-colors">
+                                <td className="px-6 py-4 whitespace-nowrap font-medium">
+                                  {member.nom}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                  {member.prenom}
+                                </td>
+                                <td className="px-6 py-4 text-muted-foreground">
+                                  {member.observations}
+                                </td>
+                                <td className="px-6 py-4 text-destructive">
+                                  {member.radiee}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Section 3 : Tous les membres */}
+                <div>
+                  <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                    <Users className="h-6 w-6" />
+                    Membres de l&apos;EPLS ({filteredMembers.length})
+                  </h2>
+
+                  {/* Barre de recherche */}
+                  <div className="mb-4">
+                    <div className="relative max-w-md">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Rechercher un membre..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-10"
+                      />
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
 
-                <div className="prose prose-lg max-w-none mb-8">
-                  <h2>Le conseil d&apos;église</h2>
-                  <p>
-                    L&apos;Église Protestante Libre de Strasbourg est dirigée par un conseil composé du pasteur et
-                    d&apos;anciens élus par l&apos;assemblée des membres. Le conseil est responsable de la direction
-                    spirituelle de l&apos;église, de l&apos;enseignement, de la pastorale et de l&apos;administration.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                  {/* Pasteur */}
                   <Card>
-                    <CardContent className="pt-6">
-                      <div className="flex flex-col items-center">
-                        <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4">
-                          <DynamicImageBlock
-                            zone="membres-pasteur-1"
-                            fallbackSrc="/placeholder.svg?height=128&width=128"
-                            alt="Pasteur Samuel Dupont"
-                            type="avatar"
-                            width={128}
-                            height={128}
-                            className="object-cover"
-                          />
-                        </div>
-                        <h3 className="text-xl font-medium mb-1">Samuel Dupont</h3>
-                        <p className="text-gray-500 mb-3">Pasteur</p>
-                        <p className="text-center text-gray-600 dark:text-gray-300 text-sm">
-                          Pasteur de l&apos;église depuis 2015
-                          <br />
-                          Formation : Institut Biblique de Nogent
-                          <br />
-                          Contact : contact@protestants-libres.fr
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Ancien 1 */}
-                  <Card>
-                    <CardContent className="pt-6">
-                      <div className="flex flex-col items-center">
-                        <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4">
-                          <DynamicImageBlock
-                            zone="membres-pasteur-2"
-                            fallbackSrc="/placeholder.svg?height=128&width=128"
-                            alt="Pierre Martin"
-                            type="avatar"
-                            width={128}
-                            height={128}
-                            className="object-cover"
-                          />
-                        </div>
-                        <h3 className="text-xl font-medium mb-1">Pierre Martin</h3>
-                        <p className="text-gray-500 mb-3">Ancien</p>
-                        <p className="text-center text-gray-600 dark:text-gray-300 text-sm">
-                          Ancien depuis 2010
-                          <br />
-                          Responsable du ministère de la louange
-                          <br />
-                          Contact : contact@protestants-libres.fr
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Ancien 2 */}
-                  <Card>
-                    <CardContent className="pt-6">
-                      <div className="flex flex-col items-center">
-                        <div className="relative w-32 h-32 rounded-full overflow-hidden mb-4">
-                          <DynamicImageBlock
-                            zone="membres-pasteur-3"
-                            fallbackSrc="/placeholder.svg?height=128&width=128"
-                            alt="Jean Dubois"
-                            type="avatar"
-                            width={128}
-                            height={128}
-                            className="object-cover"
-                          />
-                        </div>
-                        <h3 className="text-xl font-medium mb-1">Jean Dubois</h3>
-                        <p className="text-gray-500 mb-3">Ancien</p>
-                        <p className="text-center text-gray-600 dark:text-gray-300 text-sm">
-                          Ancien depuis 2018
-                          <br />
-                          Responsable du ministère de la diaconie
-                          <br />
-                          Contact : contact@protestants-libres.fr
-                        </p>
+                    <CardContent className="p-0">
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead className="bg-muted/50">
+                            <tr>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">
+                                #
+                              </th>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                Nom
+                              </th>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                Prénom
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-border">
+                            {filteredMembers.length > 0 ? (
+                              filteredMembers.map((member) => (
+                                <tr key={member.num} className="hover:bg-muted/50 transition-colors">
+                                  <td className="px-6 py-4 whitespace-nowrap text-muted-foreground text-sm">
+                                    {member.num}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap font-medium">
+                                    {member.nom}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    {member.prenom}
+                                  </td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td colSpan={3} className="px-6 py-8 text-center text-muted-foreground">
+                                  Aucun membre trouvé pour "{searchTerm}"
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
                       </div>
                     </CardContent>
                   </Card>
                 </div>
-
-                <div className="prose prose-lg max-w-none mb-8">
-                  <h2>Les responsables de ministères</h2>
-                  <p>
-                    Plusieurs membres de l&apos;église sont responsables de ministères spécifiques. Ils travaillent en
-                    collaboration avec le conseil d&apos;église pour coordonner les différentes activités.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                  {/* Responsable 1 */}
-                  <Card>
-                    <CardContent className="pt-6">
-                      <div className="flex flex-col items-center">
-                        <div className="relative w-24 h-24 rounded-full overflow-hidden mb-3">
-                          <DynamicImageBlock
-                            zone="membres-conseil-1"
-                            fallbackSrc="/placeholder.svg?height=96&width=96"
-                            alt="Marie Laurent"
-                            type="avatar"
-                            width={96}
-                            height={96}
-                            className="object-cover"
-                          />
-                        </div>
-                        <h3 className="text-lg font-medium mb-1">Marie Laurent</h3>
-                        <p className="text-gray-500 mb-2">Enfants & Jeunesse</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Responsable 2 */}
-                  <Card>
-                    <CardContent className="pt-6">
-                      <div className="flex flex-col items-center">
-                        <div className="relative w-24 h-24 rounded-full overflow-hidden mb-3">
-                          <DynamicImageBlock
-                            zone="membres-conseil-2"
-                            fallbackSrc="/placeholder.svg?height=96&width=96"
-                            alt="Thomas Leroux"
-                            type="avatar"
-                            width={96}
-                            height={96}
-                            className="object-cover"
-                          />
-                        </div>
-                        <h3 className="text-lg font-medium mb-1">Thomas Leroux</h3>
-                        <p className="text-gray-500 mb-2">Enseignement</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Responsable 3 */}
-                  <Card>
-                    <CardContent className="pt-6">
-                      <div className="flex flex-col items-center">
-                        <div className="relative w-24 h-24 rounded-full overflow-hidden mb-3">
-                          <DynamicImageBlock
-                            zone="membres-conseil-3"
-                            fallbackSrc="/placeholder.svg?height=96&width=96"
-                            alt="Sophie Moreau"
-                            type="avatar"
-                            width={96}
-                            height={96}
-                            className="object-cover"
-                          />
-                        </div>
-                        <h3 className="text-lg font-medium mb-1">Sophie Moreau</h3>
-                        <p className="text-gray-500 mb-2">Accueil & Intégration</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Responsable 4 */}
-                  <Card>
-                    <CardContent className="pt-6">
-                      <div className="flex flex-col items-center">
-                        <div className="relative w-24 h-24 rounded-full overflow-hidden mb-3">
-                          <DynamicImageBlock
-                            zone="membres-conseil-4"
-                            fallbackSrc="/placeholder.svg?height=96&width=96"
-                            alt="Marc Petit"
-                            type="avatar"
-                            width={96}
-                            height={96}
-                            className="object-cover"
-                          />
-                        </div>
-                        <h3 className="text-lg font-medium mb-1">Marc Petit</h3>
-                        <p className="text-gray-500 mb-2">Communication</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="prose prose-lg max-w-none mb-8">
-                  <h2>Devenir membre</h2>
-                  <p>
-                    L&apos;Église Protestante Libre de Strasbourg accueille toute personne désireuse de découvrir la foi
-                    chrétienne ou d&apos;approfondir sa relation avec Dieu. Pour devenir membre, il est nécessaire de :
-                  </p>
-                  <ul>
-                    <li>Confesser sa foi en Jésus-Christ comme Seigneur et Sauveur</li>
-                    <li>Avoir reçu le baptême chrétien (par immersion ou aspersion)</li>
-                    <li>Adhérer à la confession de foi de l&apos;église</li>
-                    <li>Participer régulièrement à la vie de l&apos;église</li>
-                    <li>S&apos;engager à soutenir l&apos;église par la prière, le service et les dons</li>
-                  </ul>
-                  <p>
-                    Si vous souhaitez en savoir plus sur la démarche pour devenir membre, n&apos;hésitez pas à contacter le
-                    pasteur ou un ancien.
-                  </p>
-                </div>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Vous souhaitez en savoir plus ?</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Si vous avez des questions sur l&apos;église, sa structure, son fonctionnement ou comment vous impliquer,
-                      n&apos;hésitez pas à nous contacter.
-                    </p>
-                    <div className="flex justify-center">
-                      <Button asChild>
-                        <Link href="/contact">Nous contacter</Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
             </div>
           </div>
         </div>
       </section>
     </>
-  )
+  );
 } 
