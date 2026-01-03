@@ -209,7 +209,7 @@ export default function AdminEchosPage() {
           </p>
         </div>
         <Button asChild variant="outline">
-          <Link href="/membres">← Retour à l&apos;espace membres</Link>
+          <Link href="/admin">← Retour à l'administration</Link>
         </Button>
       </div>
 
