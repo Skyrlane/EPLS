@@ -265,6 +265,12 @@ export default function MembresPage() {
                     >
                       → Gérer les sites amis
                     </Link>
+                    <Link
+                      href="/admin/anniversaires"
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer les anniversaires
+                    </Link>
                   </div>
                 </div>
               </CardContent>
