@@ -9,7 +9,7 @@ import { LoginForm } from "@/components/auth/login-form"
 export default function ConnexionPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams?.get("callbackUrl") || "/membres"
+  const callbackUrl = searchParams?.get("callbackUrl") || "/"
   
   const { user } = useAuth()
   

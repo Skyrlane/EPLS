@@ -1,0 +1,150 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Fonction helper pour vérifier si admin
+    function isAdmin() {
+      return request.auth != null && 
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+    
+    // ========================================
+    // IMAGES DU SITE
+    // ========================================
+    
+    // Collection site_images - lecture publique, écriture admin
+    match /site_images/{imageId} {
+      allow read: if true;  // Public (visiteurs non connectés doivent voir les images)
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Collection site_settings - lecture publique, écriture admin
+    match /site_settings/{settingId} {
+      allow read: if true;  // Public
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // ========================================
+    // GALERIE PHOTOS
+    // ========================================
+    
+    // Collection gallery_photos - lecture publique (photos actives), écriture admin
+    match /gallery_photos/{photoId} {
+      // Lecture publique des photos actives uniquement
+      allow read: if resource.data.isActive == true;
+      
+      // Écriture admin seulement
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Collection gallery_tags - lecture publique, écriture admin
+    match /gallery_tags/{tagId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // ========================================
+    // MISSIONNAIRES
+    // ========================================
+
+    // Collection missionaries - lecture publique, écriture admin
+    match /missionaries/{missionaryId} {
+      allow read: if true;  // Public (visiteurs voient les missionnaires)
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // ========================================
+    // ANNIVERSAIRES
+    // ========================================
+
+    // Collection birthdays - lecture publique des actifs, écriture admin
+    match /birthdays/{birthdayId} {
+      // Lecture publique des anniversaires actifs uniquement
+      allow read: if request.auth != null;
+      
+      // Écriture (create, update, delete) admin seulement
+      allow create, update, delete: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // CARNET D'ADRESSES
+    // ========================================
+
+    // Collection contacts - lecture authentifiée, écriture admin
+    match /contacts/{contactId} {
+      // Lecture : membres connectés uniquement
+      allow read: if request.auth != null;
+      
+      // Écriture (create, update, delete) : admin seulement
+      allow create, update, delete: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // SITES PARTENAIRES
+    // ========================================
+
+    // Collection partner_sites - lecture publique, écriture admin
+    match /partner_sites/{siteId} {
+      allow read: if true;  // Public (visiteurs voient les sites partenaires)
+      allow create, update, delete: if isAdmin();
+    }
+    
+    
+    // ========================================
+    // AUTRES COLLECTIONS
+    // ========================================
+    
+    // Collection echos - lecture publique, écriture admin
+    match /echos/{echoId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Collection announcements - lecture publique, écriture admin
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Collection plannings - lecture authentifiée, écriture admin
+    match /plannings/{planningId} {
+      allow read: if request.auth != null;
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Collection messages - lecture publique (si publiés), écriture admin
+    match /messages/{messageId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Collection articles - lecture publique, écriture admin
+    match /articles/{articleId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+      allow update: if isAdmin() 
+                || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views']));
+    }
+    
+    // Collection blogTags - TEMPORAIRE : écriture ouverte
+    match /blogTags/{tagId} {
+      allow read: if true;
+      allow update, delete: if isAdmin();
+    }
+    
+    // Collection users - lecture authentifiée, écriture restreinte
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null;
+    }
+    
+    // Autres collections - par défaut
+    match /{document=**} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+  }
+}

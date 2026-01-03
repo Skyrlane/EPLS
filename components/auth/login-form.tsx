@@ -52,7 +52,7 @@ interface LoginFormProps {
   callbackUrl?: string;
 }
 
-export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps) {
+export function LoginForm({ onLogin, callbackUrl = "/" }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -90,7 +90,7 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
         // Connexion Firebase directe
         const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
         const user = userCredential.user;
-        
+
         // Attendre que onAuthStateChanged confirme l'utilisateur
         await new Promise<void>((resolve) => {
           const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -99,7 +99,7 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
               resolve();
             }
           });
-          
+
           // Timeout de sécurité : si pas de confirmation après 5s, on redirige quand même
           setTimeout(() => {
             unsubscribe();
@@ -107,8 +107,23 @@ export function LoginForm({ onLogin, callbackUrl = "/membres" }: LoginFormProps)
           }, 5000);
         });
 
+        // Récupérer les infos utilisateur depuis Firestore pour vérifier si admin
+        let redirectUrl = callbackUrl;
+        try {
+          const userDoc = await getDoc(doc(firestore, "users", user.uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            // Si admin et pas de callbackUrl spécifique, rediriger vers /admin
+            if (userData?.isAdmin === true && callbackUrl === "/") {
+              redirectUrl = "/admin";
+            }
+          }
+        } catch (error) {
+          console.warn("Impossible de récupérer les données utilisateur:", error);
+        }
+
         // Redirection avec router (pas de rechargement complet)
-        router.push(callbackUrl);
+        router.push(redirectUrl);
       }
     } catch (error: any) {
       console.error("Erreur de connexion:", error);
