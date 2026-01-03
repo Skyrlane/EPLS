@@ -516,3 +516,18 @@ export interface PartnerSite {
   createdBy: string;               // UID admin
   createdByName?: string;          // Nom admin (optionnel)
 }
+
+/**
+ * Interface pour les anniversaires des membres
+ */
+export interface Birthday {
+  id: string;
+  firstName: string;           // Prénom
+  lastName: string;            // Nom de famille
+  day: number;                 // Jour (1-31)
+  month: number;               // Mois (1-12)
+  isActive: boolean;           // true = visible publiquement
+  createdAt: Date;             // Date de création
+  updatedAt: Date;             // Dernière modification
+  createdBy?: string;          // UID de l'admin créateur
+}

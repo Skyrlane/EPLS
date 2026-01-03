@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Metadata } from "next"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Sidebar from "./components/Sidebar"
+import { BirthdaysSection } from "@/components/infos-docs/BirthdaysSection"
 
 export const metadata: Metadata = {
   title: "Infos & Documents | Église Protestante Libre de Strasbourg",
@@ -98,6 +99,19 @@ export default function InfosDocs() {
                           </Link>
                         </CardContent>
                       </Card>
+
+                      {/* Anniversaires card */}
+                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                        <CardHeader>
+                          <CardTitle className="text-xl">Anniversaires</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-gray-700 dark:text-gray-300 mb-3">Découvrez les anniversaires des membres de notre église.</p>
+                          <a href="#anniversaires" className="text-primary hover:underline">
+                            Voir les anniversaires →
+                          </a>
+                        </CardContent>
+                      </Card>
                     </div>
 
                     <Card className="bg-primary/5 dark:bg-primary/10 mb-8">
@@ -146,6 +160,11 @@ export default function InfosDocs() {
                           </Link>
                         </CardContent>
                       </Card>
+                    </div>
+
+                    {/* Section Anniversaires */}
+                    <div className="mt-8">
+                      <BirthdaysSection />
                     </div>
                   </CardContent>
                 </Card>
