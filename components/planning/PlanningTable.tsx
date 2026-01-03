@@ -1,5 +1,6 @@
 "use client";
 
+import { memo, useMemo } from "react";
 import { useCurrentPlanning } from "@/hooks/use-current-planning";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -8,9 +9,13 @@ import { Calendar } from "lucide-react";
 
 /**
  * Composant pour afficher le planning des cultes du mois en cours
+ * Optimisé avec React.memo pour éviter les re-renders inutiles
  */
-export function PlanningTable() {
+export const PlanningTable = memo(function PlanningTable() {
   const { planning, loading, error } = useCurrentPlanning();
+
+  // Mémoriser les lignes du planning pour éviter recalculs
+  const planningRows = useMemo(() => planning?.rows ?? [], [planning?.id]);
 
   if (loading) {
     return (
@@ -89,7 +94,7 @@ export function PlanningTable() {
             </tr>
           </thead>
           <tbody>
-            {planning.rows.map((row, index) => (
+            {planningRows.map((row, index) => (
               <tr key={index} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                 <td className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm font-medium">
                   {row.date}
@@ -129,7 +134,7 @@ export function PlanningTable() {
 
       {/* Vue mobile */}
       <div className="md:hidden space-y-4">
-        {planning.rows.map((row, index) => (
+        {planningRows.map((row, index) => (
           <Card key={index}>
             <CardHeader>
               <CardTitle className="text-base">{row.date}</CardTitle>
@@ -197,4 +202,4 @@ export function PlanningTable() {
       </div>
     </div>
   );
-}
+});
