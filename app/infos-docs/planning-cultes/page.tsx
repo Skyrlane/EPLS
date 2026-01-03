@@ -1,42 +1,54 @@
-'use client';
-
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { PlanningTable } from "@/components/planning/PlanningTable"
-import { useAuth } from '@/hooks/use-auth';
-import Sidebar from '../components/Sidebar';
+import { PlanningTableStatic } from "@/components/planning/PlanningTableStatic"
+import { ProtectedPlanningWrapper } from "@/components/planning/ProtectedPlanningWrapper"
+import Sidebar from '../components/Sidebar'
+import { adminDb } from '@/lib/firebase-admin'
+import type { Planning } from '@/types'
 
-export default function PlanningCultesPage() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
+// ISR : Revalider toutes les 5 minutes (300 secondes)
+export const revalidate = 300
 
-  // Redirect si non authentifié
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/connexion?redirect=/infos-docs/planning-cultes');
+/**
+ * Fetch le planning côté serveur avec Firebase Admin
+ * Optimisé : données pré-chargées, pas d'attente client
+ */
+async function getCurrentPlanning(): Promise<Planning | null> {
+  try {
+    if (!adminDb) {
+      console.error('Firebase Admin DB not initialized')
+      return null
     }
-  }, [user, loading, router]);
 
-  // Loading state
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="flex flex-col items-center gap-4">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-          <p className="text-sm text-muted-foreground">Chargement...</p>
-        </div>
-      </div>
-    );
-  }
+    const currentMonth = new Date().getMonth() + 1
+    const currentYear = new Date().getFullYear()
 
-  // Si non authentifié (ne devrait jamais arriver grâce au useEffect)
-  if (!user) {
-    return null;
+    const snapshot = await adminDb
+      .collection('plannings')
+      .where('month', '==', currentMonth)
+      .where('year', '==', currentYear)
+      .where('isActive', '==', true)
+      .limit(1)
+      .get()
+
+    if (snapshot.empty) {
+      return null
+    }
+
+    const doc = snapshot.docs[0]
+    return { id: doc.id, ...doc.data() } as Planning
+  } catch (error) {
+    console.error('Erreur lors du fetch du planning:', error)
+    return null
   }
+}
+
+export default async function PlanningCultesPage() {
+  // Fetch côté serveur - données disponibles immédiatement
+  const planning = await getCurrentPlanning()
+
   return (
-    <>
+    <ProtectedPlanningWrapper planning={planning}>
       {/* Page Header */}
       <div className="bg-slate-100 dark:bg-slate-800 py-12">
         <div className="container mx-auto px-4">
@@ -92,13 +104,13 @@ export default function PlanningCultesPage() {
                   </CardContent>
                 </Card>
 
-                {/* Section du planning */}
-                <PlanningTable />
+                {/* Section du planning - données pré-fetchées */}
+                <PlanningTableStatic planning={planning} />
               </div>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </ProtectedPlanningWrapper>
   )
 }
