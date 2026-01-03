@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Loader2 } from 'lucide-react';
-import { doc, updateDoc, Timestamp } from 'firebase/firestore';
+import { doc, updateDoc, Timestamp, deleteField } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 
@@ -131,7 +131,7 @@ export function AnnouncementEditModal({
       // Préparer les données
       const typeConfig = EVENT_TYPES[type];
 
-      const updateData = {
+      const updateData: Record<string, any> = {
         title: title.trim(),
         date: Timestamp.fromDate(eventDate),
         time: time.trim(),
@@ -142,8 +142,8 @@ export function AnnouncementEditModal({
         type,
         tag: typeConfig.tag,
         tagColor: typeConfig.color,
-        details: detailsArray.length > 0 ? detailsArray : undefined,
-        pricing: hasPricing ? pricing : undefined,
+        details: detailsArray.length > 0 ? detailsArray : deleteField(),
+        pricing: hasPricing ? pricing : deleteField(),
         updatedAt: Timestamp.now()
       };
 
@@ -154,9 +154,10 @@ export function AnnouncementEditModal({
       toast({ title: "Succès", description: 'Annonce mise à jour avec succès' });
       onSaved();
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erreur sauvegarde:', error);
-      toast({ title: "Erreur", description: 'Erreur lors de la sauvegarde', variant: "destructive" });
+      const errorMessage = error?.message || error?.code || 'Erreur lors de la sauvegarde';
+      toast({ title: "Erreur", description: errorMessage, variant: "destructive" });
     } finally {
       setIsSaving(false);
     }
