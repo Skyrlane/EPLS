@@ -271,6 +271,12 @@ export default function MembresPage() {
                     >
                       → Gérer les anniversaires
                     </Link>
+                    <Link
+                      href="/admin/carnet-adresses"
+                      className="block text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      → Gérer le carnet d'adresses
+                    </Link>
                   </div>
                 </div>
               </CardContent>
