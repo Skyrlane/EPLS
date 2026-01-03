@@ -20,6 +20,11 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
+            <Link href="/infos-docs/anniversaires" className="text-primary hover:underline">
+              Anniversaires
+            </Link>
+          </li>
+          <li>
             <Link href="/infos-docs/carnet-adresse" className="text-primary hover:underline">
               Carnet d&apos;adresses
             </Link>

@@ -16,7 +16,7 @@ export function BirthdaysSection() {
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const { birthdays, loading, getBirthdaysByMonth } = useBirthdays({
     month: selectedMonth,
-    activeOnly: true,
+    activeOnly: false, // Afficher tous les anniversaires pour les membres connectés
     autoLoad: false,
   });
 
