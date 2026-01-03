@@ -230,9 +230,10 @@ export function useBirthdays(options: UseBirthdaysOptions = {}): UseBirthdaysRet
   // Chargement automatique au montage si demandé
   useEffect(() => {
     if (autoLoad) {
+      console.log('🔄 useBirthdays: Loading birthdays', { month, activeOnly });
       getAllBirthdays();
     }
-  }, [autoLoad, getAllBirthdays]);
+  }, [autoLoad, month, activeOnly, getAllBirthdays]); // ← Ajout de month et activeOnly
 
   return {
     birthdays,

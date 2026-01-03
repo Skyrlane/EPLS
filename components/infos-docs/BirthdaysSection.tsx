@@ -14,15 +14,23 @@ const MONTHS = [
 export function BirthdaysSection() {
   const currentMonth = new Date().getMonth() + 1; // 1-12
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-  const { birthdays, loading, getBirthdaysByMonth } = useBirthdays({
+  
+  // Le hook se recharge automatiquement quand selectedMonth change
+  const { birthdays, loading, error, getAllBirthdays } = useBirthdays({
     month: selectedMonth,
-    activeOnly: false, // Afficher tous les anniversaires pour les membres connectés
-    autoLoad: false,
+    activeOnly: false,
+    autoLoad: true, // ← Chargement automatique activé
   });
 
+  // Debug logs
   useEffect(() => {
-    getBirthdaysByMonth(selectedMonth);
-  }, [selectedMonth, getBirthdaysByMonth]);
+    console.log('🎂 BirthdaysSection mounted/updated', {
+      selectedMonth,
+      birthdaysCount: birthdays.length,
+      loading,
+      error
+    });
+  }, [selectedMonth, birthdays, loading, error]);
 
   return (
     <section id="anniversaires" className="scroll-mt-20">
