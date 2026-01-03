@@ -25,7 +25,7 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
-            <Link href="/infos-docs/carnet-adresse" className="text-primary hover:underline">
+            <Link href="/infos-docs/carnet-adresses" className="text-primary hover:underline">
               Carnet d&apos;adresses
             </Link>
           </li>

@@ -111,6 +111,21 @@ export default function InfosDocs() {
                           </Link>
                         </CardContent>
                       </Card>
+
+                      {/* Carnet d'adresses card */}
+                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                        <CardHeader>
+                          <CardTitle className="text-xl">Carnet d&apos;adresses</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-gray-700 dark:text-gray-300 mb-3">
+                            Coordonnées des membres de notre communauté (accès réservé).
+                          </p>
+                          <Link href="/infos-docs/carnet-adresses" className="text-primary hover:underline">
+                            Consulter le carnet →
+                          </Link>
+                        </CardContent>
+                      </Card>
                     </div>
 
                     <Card className="bg-primary/5 dark:bg-primary/10 mb-8">

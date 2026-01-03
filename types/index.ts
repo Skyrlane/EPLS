@@ -531,3 +531,25 @@ export interface Birthday {
   updatedAt: Date;             // Dernière modification
   createdBy?: string;          // UID de l'admin créateur
 }
+
+/**
+ * Interface pour le carnet d'adresses des membres
+ */
+export interface Contact {
+  id: string;                    // Auto-généré par Firestore
+  firstName: string;             // Prénom (ex: "Daniel")
+  lastName: string;              // NOM en majuscules (ex: "ANSEN")
+  phoneFixed?: string;           // Téléphone fixe (ex: "03 88 62 08 29")
+  phoneMobile?: string;          // Téléphone mobile (ex: "06 52 60 99 90")
+  email?: string;                // Email (ex: "daniel@ansen.fr")
+  address?: string;              // Adresse complète (ex: "2 place du Docteur Nessmann")
+  postalCode?: string;           // Code postal (ex: "67310")
+  city?: string;                 // Ville (ex: "Westhoffen")
+  birthDate?: string;            // Date de naissance DD/MM/YYYY (ex: "23/01/1948")
+  isMember: boolean;             // Membre actif de l'église (true/false)
+  isActive: boolean;             // Visible publiquement (true par défaut)
+  notes?: string;                // Notes privées admin (optionnel)
+  createdAt: Date;               // Date de création
+  updatedAt: Date;               // Date de dernière modification
+  createdBy?: string;            // UID de l'admin créateur
+}
