@@ -1,22 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { auth, firestore } from "@/lib/firebase";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -26,128 +19,67 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useFormValidation } from "@/hooks/use-form-validation";
-import { useAuth } from "@/hooks/use-auth";
-import { setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithEmailAndPassword } from "firebase/auth";
-import { auth, firestore } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { Auth } from "firebase/auth";
 
-// Schéma de validation Zod pour le formulaire de connexion
-const loginSchema = z.object({
-  email: z.string().email({
-    message: "Veuillez saisir une adresse email valide.",
-  }),
-  password: z.string().min(6, {
-    message: "Le mot de passe doit contenir au moins 6 caractères.",
-  }),
-  rememberMe: z.boolean().optional(),
-});
-
-// Type inféré à partir du schéma Zod
-type LoginFormValues = z.infer<typeof loginSchema>;
-
-interface LoginFormProps {
-  onLogin?: (values: LoginFormValues) => Promise<void>;
-  callbackUrl?: string;
-}
-
-export function LoginForm({ onLogin, callbackUrl = "/" }: LoginFormProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+export function LoginForm() {
+  const [identifier, setIdentifier] = useState(""); // "identifier" au lieu de "email"
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const { validate, getFieldError, clearErrors } = useFormValidation(loginSchema);
 
-  // Initialisation du formulaire avec React Hook Form et Zod
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-  });
-
-  // Gestion de la soumission du formulaire
-  const handleSubmit = async (values: LoginFormValues) => {
-    clearErrors();
-    setErrorMessage(null);
-    setIsLoading(true);
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
-      // Configurer la persistance selon l'option "Se souvenir de moi"
-      if (values.rememberMe) {
-        await setPersistence(auth, browserLocalPersistence);
+      // Logique hybride : détection automatique email vs identifiant
+      const email = identifier.includes("@")
+        ? identifier // C'est déjà un email
+        : `${identifier}@epls.local`; // C'est un identifiant → ajoute le domaine
+
+      // Connexion Firebase
+      const userCredential = await signInWithEmailAndPassword(
+        auth as Auth,
+        email,
+        password
+      );
+
+      // Récupérer les infos utilisateur depuis Firestore
+      const userDoc = await getDoc(doc(firestore, "users", userCredential.user.uid));
+      const userData = userDoc.data();
+
+      // Redirection intelligente selon le rôle
+      if (userData?.isAdmin) {
+        router.push("/admin");
       } else {
-        await setPersistence(auth, browserSessionPersistence);
+        router.push("/");
       }
+    } catch (err: any) {
+      console.error("Erreur de connexion:", err);
 
-      if (onLogin) {
-        console.log('🔵 Utilisation de la fonction onLogin personnalisée');
-        await onLogin(values);
+      // Messages d'erreur en français
+      if (err.code === "auth/user-not-found") {
+        setError("Identifiant ou email inconnu.");
+      } else if (err.code === "auth/wrong-password") {
+        setError("Mot de passe incorrect.");
+      } else if (err.code === "auth/invalid-email") {
+        setError("Format d'identifiant invalide.");
+      } else if (err.code === "auth/invalid-credential") {
+        setError("Identifiants incorrects. Vérifiez votre identifiant et mot de passe.");
+      } else if (err.code === "auth/too-many-requests") {
+        setError("Trop de tentatives. Compte temporairement bloqué.");
+      } else if (err.code === "auth/user-disabled") {
+        setError("Ce compte a été désactivé.");
+      } else if (err.code === "auth/network-request-failed") {
+        setError("Problème de connexion réseau.");
       } else {
-        // Connexion Firebase directe
-        const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
-        const user = userCredential.user;
-
-        // Attendre que onAuthStateChanged confirme l'utilisateur
-        await new Promise<void>((resolve) => {
-          const unsubscribe = auth.onAuthStateChanged((authUser) => {
-            if (authUser) {
-              unsubscribe();
-              resolve();
-            }
-          });
-
-          // Timeout de sécurité : si pas de confirmation après 5s, on redirige quand même
-          setTimeout(() => {
-            unsubscribe();
-            resolve();
-          }, 5000);
-        });
-
-        // Récupérer les infos utilisateur depuis Firestore pour vérifier si admin
-        let redirectUrl = callbackUrl;
-        try {
-          const userDoc = await getDoc(doc(firestore, "users", user.uid));
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            // Si admin et pas de callbackUrl spécifique, rediriger vers /admin
-            if (userData?.isAdmin === true && callbackUrl === "/") {
-              redirectUrl = "/admin";
-            }
-          }
-        } catch (error) {
-          console.warn("Impossible de récupérer les données utilisateur:", error);
-        }
-
-        // Redirection avec router (pas de rechargement complet)
-        router.push(redirectUrl);
-      }
-    } catch (error: any) {
-      console.error("Erreur de connexion:", error);
-      
-      // Messages d'erreur améliorés et plus spécifiques
-      if (error.code === "auth/invalid-credential" || error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
-        setErrorMessage("Identifiants incorrects. Veuillez vérifier votre email et votre mot de passe.");
-      } else if (error.code === "auth/too-many-requests") {
-        setErrorMessage("Trop de tentatives de connexion. Votre compte a été temporairement bloqué. Veuillez réessayer plus tard ou réinitialiser votre mot de passe.");
-      } else if (error.code === "auth/invalid-email") {
-        setErrorMessage("Format d'email invalide.");
-      } else if (error.code === "auth/user-disabled") {
-        setErrorMessage("Ce compte a été désactivé. Veuillez contacter un administrateur.");
-      } else if (error.code === "auth/network-request-failed") {
-        setErrorMessage("Problème de connexion réseau. Veuillez vérifier votre connexion internet.");
-      } else {
-        setErrorMessage(
-          error instanceof Error
-            ? error.message
-            : "Une erreur est survenue lors de la connexion. Veuillez réessayer."
-        );
+        setError("Erreur de connexion. Veuillez réessayer.");
       }
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -156,118 +88,78 @@ export function LoginForm({ onLogin, callbackUrl = "/" }: LoginFormProps) {
       <CardHeader>
         <CardTitle>Connexion à votre compte</CardTitle>
         <CardDescription>
-          Entrez vos identifiants pour accéder à votre espace membre.
+          Entrez vos identifiants pour accéder à votre espace.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4" aria-label="Formulaire de connexion">
-            {errorMessage && (
-              <Alert variant="destructive" role="alert">
-                <AlertDescription>{errorMessage}</AlertDescription>
-              </Alert>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <Alert variant="destructive">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          <div className="space-y-2">
+            <Label htmlFor="identifier">Identifiant ou Email</Label>
+            <Input
+              id="identifier"
+              type="text" // "text" au lieu de "email" pour accepter les identifiants
+              placeholder="membre01 ou votre@email.com"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              required
+              disabled={loading}
+              autoComplete="username"
+            />
+            <p className="text-xs text-muted-foreground">
+              Membres : tapez votre identifiant (ex: membre01)
+              <br />
+              Admins : tapez votre email complet
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Mot de passe</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={loading}
+                autoComplete="current-password"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute right-0 top-0 h-full px-3"
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex={-1}
+                aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+          </div>
+
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Connexion...
+              </>
+            ) : (
+              "Se connecter"
             )}
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="email">Adresse email</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="exemple@email.com"
-                      disabled={isLoading}
-                      aria-describedby="email-error"
-                      autoComplete="email"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage id="email-error" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="password">Mot de passe</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Votre mot de passe"
-                        disabled={isLoading}
-                        aria-describedby="password-error"
-                        autoComplete="current-password"
-                        {...field}
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute right-0 top-0 h-full px-3"
-                        onClick={() => setShowPassword(!showPassword)}
-                        tabIndex={-1}
-                        aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-4 w-4" />
-                        ) : (
-                          <Eye className="h-4 w-4" />
-                        )}
-                      </Button>
-                    </div>
-                  </FormControl>
-                  <FormMessage id="password-error" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="rememberMe"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                  <FormControl>
-                    <Checkbox
-                      id="rememberMe"
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      disabled={isLoading}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel htmlFor="rememberMe">
-                      Se souvenir de moi
-                    </FormLabel>
-                  </div>
-                </FormItem>
-              )}
-            />
-
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isLoading}
-              aria-live="polite"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                  <span>Connexion en cours...</span>
-                </>
-              ) : (
-                "Se connecter"
-              )}
-            </Button>
-          </form>
-        </Form>
+          </Button>
+        </form>
       </CardContent>
       <CardFooter className="flex flex-col space-y-2">
         <Button variant="link" asChild className="px-0">
@@ -287,4 +179,4 @@ export function LoginForm({ onLogin, callbackUrl = "/" }: LoginFormProps) {
       </CardFooter>
     </Card>
   );
-} 
+}
