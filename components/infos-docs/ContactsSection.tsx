@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Mail, Phone, Smartphone, MapPin, Search, BookUser } from 'lucide-react';
+import { Mail, Phone, Smartphone, MapPin, Search, BookUser, Cake } from 'lucide-react';
 import { useContacts } from '@/hooks/use-contacts';
 
 const LETTERS = [
@@ -239,6 +239,16 @@ function ContactCard({ contact }: { contact: any }) {
                     </div>
                   )}
                 </div>
+              </div>
+            )}
+
+            {/* Date de naissance */}
+            {contact.birthDate && (
+              <div className="flex items-center gap-2">
+                <Cake className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                <span className="text-muted-foreground">
+                  {contact.birthDate}
+                </span>
               </div>
             )}
           </div>
