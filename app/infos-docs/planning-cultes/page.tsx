@@ -1,51 +1,102 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlanningTableStatic } from "@/components/planning/PlanningTableStatic"
 import { ProtectedPlanningWrapper } from "@/components/planning/ProtectedPlanningWrapper"
 import Sidebar from '../components/Sidebar'
-import { adminDb } from '@/lib/firebase-admin'
+import { collection, query, where, limit, getDocs } from 'firebase/firestore'
+import { firestore } from '@/lib/firebase'
 import type { Planning } from '@/types'
 
-// ISR : Revalider toutes les 5 minutes (300 secondes)
-export const revalidate = 300
+const CACHE_KEY = 'epls_planning_data_cache'
+const CACHE_TIMESTAMP_KEY = 'epls_planning_data_timestamp'
+const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 
 /**
- * Fetch le planning côté serveur avec Firebase Admin
- * Optimisé : données pré-chargées, pas d'attente client
+ * Récupérer le planning depuis le cache localStorage
  */
-async function getCurrentPlanning(): Promise<Planning | null> {
+function getCachedPlanning(): Planning | null {
+  if (typeof window === 'undefined') return null
+
   try {
-    if (!adminDb) {
-      console.error('Firebase Admin DB not initialized')
-      return null
+    const cached = localStorage.getItem(CACHE_KEY)
+    const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY)
+
+    if (cached && timestamp) {
+      const age = Date.now() - parseInt(timestamp)
+      if (age < CACHE_DURATION) {
+        return JSON.parse(cached)
+      }
     }
-
-    const currentMonth = new Date().getMonth() + 1
-    const currentYear = new Date().getFullYear()
-
-    const snapshot = await adminDb
-      .collection('plannings')
-      .where('month', '==', currentMonth)
-      .where('year', '==', currentYear)
-      .where('isActive', '==', true)
-      .limit(1)
-      .get()
-
-    if (snapshot.empty) {
-      return null
-    }
-
-    const doc = snapshot.docs[0]
-    return { id: doc.id, ...doc.data() } as Planning
   } catch (error) {
-    console.error('Erreur lors du fetch du planning:', error)
-    return null
+    console.error('Erreur lecture cache:', error)
+  }
+
+  return null
+}
+
+/**
+ * Sauvegarder le planning dans le cache
+ */
+function setCachedPlanning(planning: Planning) {
+  if (typeof window === 'undefined') return
+
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(planning))
+    localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString())
+  } catch (error) {
+    console.error('Erreur sauvegarde cache:', error)
   }
 }
 
-export default async function PlanningCultesPage() {
-  // Fetch côté serveur - données disponibles immédiatement
-  const planning = await getCurrentPlanning()
+export default function PlanningCultesPage() {
+  const [planning, setPlanning] = useState<Planning | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchPlanning = async () => {
+      // D'abord, vérifier le cache
+      const cached = getCachedPlanning()
+      if (cached) {
+        setPlanning(cached)
+        setLoading(false)
+        return
+      }
+
+      // Sinon, fetch depuis Firebase
+      try {
+        const currentMonth = new Date().getMonth() + 1
+        const currentYear = new Date().getFullYear()
+
+        const q = query(
+          collection(firestore, 'plannings'),
+          where('month', '==', currentMonth),
+          where('year', '==', currentYear),
+          where('isActive', '==', true),
+          limit(1)
+        )
+
+        const snapshot = await getDocs(q)
+
+        if (!snapshot.empty) {
+          const doc = snapshot.docs[0]
+          const planningData = { id: doc.id, ...doc.data() } as Planning
+          setPlanning(planningData)
+          setCachedPlanning(planningData)
+        } else {
+          setPlanning(null)
+        }
+      } catch (error) {
+        console.error('Erreur lors du fetch du planning:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPlanning()
+  }, [])
 
   return (
     <ProtectedPlanningWrapper planning={planning}>
@@ -104,8 +155,15 @@ export default async function PlanningCultesPage() {
                   </CardContent>
                 </Card>
 
-                {/* Section du planning - données pré-fetchées */}
-                <PlanningTableStatic planning={planning} />
+                {/* Section du planning */}
+                {loading ? (
+                  <div className="space-y-4">
+                    <div className="h-8 w-48 bg-slate-200 dark:bg-slate-700 animate-pulse rounded" />
+                    <div className="h-64 w-full bg-slate-200 dark:bg-slate-700 animate-pulse rounded" />
+                  </div>
+                ) : (
+                  <PlanningTableStatic planning={planning} />
+                )}
               </div>
             </div>
           </div>
