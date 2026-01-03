@@ -30,6 +30,11 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
+            <Link href="/infos-docs/planning-cultes" className="text-primary hover:underline">
+              Planning des Cultes
+            </Link>
+          </li>
+          <li>
             <Link href="/infos-docs/eve" className="text-primary hover:underline">
               Eau Vive Espoir - EVE
             </Link>

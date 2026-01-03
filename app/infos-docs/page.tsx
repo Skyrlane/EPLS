@@ -126,6 +126,21 @@ export default function InfosDocs() {
                           </Link>
                         </CardContent>
                       </Card>
+
+                      {/* Planning des Cultes card */}
+                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                        <CardHeader>
+                          <CardTitle className="text-xl">📅 Planning des Cultes</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-gray-700 dark:text-gray-300 mb-3">
+                            Organisation des services et responsabilités pour les cultes.
+                          </p>
+                          <Link href="/infos-docs/planning-cultes" className="text-primary hover:underline">
+                            Voir le planning →
+                          </Link>
+                        </CardContent>
+                      </Card>
                     </div>
 
                     <Card className="bg-primary/5 dark:bg-primary/10 mb-8">
