@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div className="animate-pulse">
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <div className="h-10 w-64 bg-slate-200 rounded mb-4"></div>
           <div className="h-5 w-60 bg-slate-200 rounded"></div>
@@ -14,7 +14,7 @@ export default function Loading() {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             {/* Carte d'accès réservé */}
-            <div className="rounded-lg bg-white shadow-md p-6 mb-8">
+            <div className="rounded-lg bg-card shadow-md p-6 mb-8">
               <div className="h-7 w-40 bg-slate-200 rounded mb-4"></div>
               <div className="h-5 w-full bg-slate-200 rounded mb-4"></div>
               <div className="flex justify-center">
@@ -29,7 +29,7 @@ export default function Loading() {
             {/* Membres du conseil */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="rounded-lg bg-white shadow-md p-6">
+                <div key={i} className="rounded-lg bg-card shadow-md p-6">
                   <div className="flex flex-col items-center">
                     <div className="h-32 w-32 rounded-full bg-slate-200 mb-4"></div>
                     <div className="h-6 w-40 bg-slate-200 rounded mb-2"></div>
@@ -49,7 +49,7 @@ export default function Loading() {
             {/* Responsables ministères */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="rounded-lg bg-white shadow-md p-6">
+                <div key={i} className="rounded-lg bg-card shadow-md p-6">
                   <div className="flex flex-col items-center">
                     <div className="h-24 w-24 rounded-full bg-slate-200 mb-3"></div>
                     <div className="h-6 w-32 bg-slate-200 rounded mb-2"></div>
@@ -69,7 +69,7 @@ export default function Loading() {
             </div>
 
             {/* Carte contact */}
-            <div className="rounded-lg bg-white shadow-md p-6">
+            <div className="rounded-lg bg-card shadow-md p-6">
               <div className="h-7 w-32 bg-slate-200 rounded mb-4"></div>
               <div className="h-5 w-full bg-slate-200 rounded mb-4"></div>
               <div className="flex justify-center">

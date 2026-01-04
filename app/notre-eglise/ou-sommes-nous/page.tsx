@@ -14,7 +14,7 @@ export default function OuSommesNous() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Où sommes-nous ?</h1>
 
@@ -28,7 +28,7 @@ export default function OuSommesNous() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/notre-eglise" className="text-primary hover:text-primary/80">
                     Notre Église
                   </Link>
@@ -36,8 +36,8 @@ export default function OuSommesNous() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700">Où sommes-nous</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">Où sommes-nous</span>
                 </div>
               </li>
             </ol>
@@ -59,7 +59,7 @@ export default function OuSommesNous() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                 <div>
                   <h2 className="text-3xl font-semibold mb-6">Notre adresse</h2>
-                  <div className="bg-slate-50 p-6 rounded-lg">
+                  <div className="bg-muted/50 p-6 rounded-lg">
                     <p className="font-medium mb-1">Église Protestante Libre de Strasbourg</p>
                     <p className="mb-4">18 rue de Franche-Comté, 67380 Lingolsheim</p>
 
@@ -73,7 +73,7 @@ export default function OuSommesNous() {
 
                 <div>
                   <h2 className="text-3xl font-semibold mb-6">Carte</h2>
-                  <div className="bg-slate-100 p-2 rounded-lg h-[300px] overflow-hidden">
+                  <div className="bg-muted p-2 rounded-lg h-[300px] overflow-hidden">
                     <iframe
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2639.8!2d7.7088!3d48.5598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4796c84c4c4c4c4c%3A0x1234567890abcdef!2s18%20Rue%20de%20Franche-Comt%C3%A9%2C%2067380%20Lingolsheim!5e0!3m2!1sfr!2sfr!4v1659612345678!5m2!1sfr!2sfr"
                       width="100%"
@@ -146,7 +146,7 @@ export default function OuSommesNous() {
               </div>
 
               <h2 className="text-3xl font-semibold mb-6">Informations pratiques</h2>
-              <div className="bg-slate-50 p-6 rounded-lg mb-12">
+              <div className="bg-muted/50 p-6 rounded-lg mb-12">
                 <h3 className="text-xl font-medium mb-4">Équipements</h3>
                 <ul className="list-disc pl-6 space-y-2 mb-6">
                   <li>Salle principale pouvant accueillir environ 50 personnes</li>

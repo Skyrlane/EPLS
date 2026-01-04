@@ -97,10 +97,10 @@ export function MessageList({ messages, initialLimit = 6 }: MessageListProps) {
       
       {filteredMessages.length === 0 ? (
         <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-muted-foreground">
             Aucun message ne correspond à vos critères de recherche.
           </p>
-          <p className="text-gray-500 mt-2">
+          <p className="text-muted-foreground mt-2">
             Essayez de modifier vos filtres pour voir plus de résultats.
           </p>
         </div>
@@ -127,7 +127,7 @@ export function MessageList({ messages, initialLimit = 6 }: MessageListProps) {
             </div>
           )}
           
-          <div className="text-gray-500 text-sm text-center mt-2">
+          <div className="text-muted-foreground text-sm text-center mt-2">
             Affichage de {Math.min(visibleCount, filteredMessages.length)} sur {filteredMessages.length} messages
           </div>
         </>

@@ -24,7 +24,7 @@ export function EchoYearsBanner({ years, title = "Archives des Echos EPLS" }: Ec
           <Link
             key={year}
             href={`/echo/${year}`}
-            className="px-3 py-1 bg-white rounded-md border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-colors"
+            className="px-3 py-1 bg-card rounded-md border border-border hover:bg-muted hover:border-border transition-colors"
           >
             {year}
           </Link>

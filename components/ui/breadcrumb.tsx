@@ -50,14 +50,14 @@ export function Breadcrumb({
               {isLast ? (
                 <div className="flex items-center">
                   {index > 0 && (
-                    <span className="mx-2 text-gray-400">{separator}</span>
+                    <span className="mx-2 text-muted-foreground">{separator}</span>
                   )}
-                  <span className="text-gray-700">{currentPage}</span>
+                  <span className="text-foreground">{currentPage}</span>
                 </div>
               ) : (
                 <div className="flex items-center">
                   {index > 0 && (
-                    <span className="mx-2 text-gray-400">{separator}</span>
+                    <span className="mx-2 text-muted-foreground">{separator}</span>
                   )}
                   <BreadcrumbLink href={segment.href}>{segment.label}</BreadcrumbLink>
                 </div>

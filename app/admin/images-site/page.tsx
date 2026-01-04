@@ -336,7 +336,7 @@ export default function AdminImagesPage() {
 
             <CardContent className="space-y-4">
               {/* Image Preview */}
-              <div className="relative aspect-video bg-slate-100 rounded-lg overflow-hidden">
+              <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
                 <img
                   src={image.imageUrl || image.fallbackUrl}
                   alt={image.alt}

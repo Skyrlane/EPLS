@@ -45,8 +45,8 @@ export function ArticleCardClient({
           <Badge variant="outline">{category}</Badge>
         </div>
         <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600 mb-4 line-clamp-3">{excerpt}</p>
-        <div className="text-sm text-gray-500">
+        <p className="text-muted-foreground mb-4 line-clamp-3">{excerpt}</p>
+        <div className="text-sm text-muted-foreground">
           <span>Par {author}</span>
           <span className="mx-2">•</span>
           <span>{date}</span>

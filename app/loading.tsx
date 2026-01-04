@@ -5,7 +5,7 @@ function HomePageSkeleton() {
   return (
     <div className="animate-pulse">
       {/* Hero Section */}
-      <section className="relative h-[70vh] bg-slate-100/50">
+      <section className="relative h-[70vh] bg-muted/50">
         <div className="container mx-auto px-4 pt-32 text-center">
           <div className="h-16 bg-slate-200 max-w-3xl mx-auto rounded-md mb-8"></div>
           <div className="h-8 bg-slate-200 max-w-2xl mx-auto rounded-md mb-8"></div>
@@ -17,29 +17,29 @@ function HomePageSkeleton() {
       </section>
 
       {/* Message */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <div className="h-10 bg-slate-100 w-64 mx-auto rounded-md mb-4"></div>
-            <div className="h-6 bg-slate-100 w-96 mx-auto rounded-md"></div>
+            <div className="h-10 bg-muted w-64 mx-auto rounded-md mb-4"></div>
+            <div className="h-6 bg-muted w-96 mx-auto rounded-md"></div>
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div className="bg-card rounded-lg shadow-sm overflow-hidden">
               <div className="grid md:grid-cols-2">
-                <div className="h-64 bg-slate-100 rounded-l"></div>
+                <div className="h-64 bg-muted rounded-l"></div>
                 <div className="p-6">
-                  <div className="h-8 bg-slate-100 w-2/3 rounded-md mb-4"></div>
-                  <div className="h-4 bg-slate-100 w-1/2 rounded-md mb-4"></div>
-                  <div className="h-4 bg-slate-100 w-1/3 rounded-md mb-4"></div>
+                  <div className="h-8 bg-muted w-2/3 rounded-md mb-4"></div>
+                  <div className="h-4 bg-muted w-1/2 rounded-md mb-4"></div>
+                  <div className="h-4 bg-muted w-1/3 rounded-md mb-4"></div>
                   <div className="space-y-2">
-                    <div className="h-4 bg-slate-100 w-full rounded-md"></div>
-                    <div className="h-4 bg-slate-100 w-full rounded-md"></div>
-                    <div className="h-4 bg-slate-100 w-2/3 rounded-md"></div>
+                    <div className="h-4 bg-muted w-full rounded-md"></div>
+                    <div className="h-4 bg-muted w-full rounded-md"></div>
+                    <div className="h-4 bg-muted w-2/3 rounded-md"></div>
                   </div>
                   <div className="flex gap-3 mt-6">
-                    <div className="h-10 bg-slate-100 w-full rounded-md"></div>
-                    <div className="h-10 bg-slate-100 w-full rounded-md"></div>
+                    <div className="h-10 bg-muted w-full rounded-md"></div>
+                    <div className="h-10 bg-muted w-full rounded-md"></div>
                   </div>
                 </div>
               </div>
@@ -49,21 +49,21 @@ function HomePageSkeleton() {
       </section>
 
       {/* Prochains événements */}
-      <section className="py-16 bg-slate-50">
+      <section className="py-16 bg-muted/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <div className="h-10 bg-slate-100 w-64 mx-auto rounded-md mb-4"></div>
-            <div className="h-6 bg-slate-100 w-96 mx-auto rounded-md"></div>
+            <div className="h-10 bg-muted w-64 mx-auto rounded-md mb-4"></div>
+            <div className="h-6 bg-muted w-96 mx-auto rounded-md"></div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="bg-white rounded-lg shadow-sm p-6">
-                <div className="h-6 bg-slate-100 w-3/4 rounded-md mb-3"></div>
-                <div className="h-4 bg-slate-100 w-1/2 rounded-md mb-3"></div>
-                <div className="h-4 bg-slate-100 w-full rounded-md mb-3"></div>
-                <div className="h-4 bg-slate-100 w-5/6 rounded-md mb-6"></div>
-                <div className="h-10 bg-slate-100 w-full rounded-md"></div>
+              <div key={i} className="bg-card rounded-lg shadow-sm p-6">
+                <div className="h-6 bg-muted w-3/4 rounded-md mb-3"></div>
+                <div className="h-4 bg-muted w-1/2 rounded-md mb-3"></div>
+                <div className="h-4 bg-muted w-full rounded-md mb-3"></div>
+                <div className="h-4 bg-muted w-5/6 rounded-md mb-6"></div>
+                <div className="h-10 bg-muted w-full rounded-md"></div>
               </div>
             ))}
           </div>

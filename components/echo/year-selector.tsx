@@ -25,7 +25,7 @@ export function YearSelector({ years, currentYear }: YearSelectorProps) {
             asChild
             variant={year === currentYear ? "default" : "outline"}
             className={`${
-              year === currentYear ? "bg-primary text-white" : "bg-white"
+              year === currentYear ? "bg-primary text-white" : "bg-card"
             } ${
               year === sortedYears[0]
                 ? "rounded-l-md"

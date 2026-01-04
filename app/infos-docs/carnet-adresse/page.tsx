@@ -14,7 +14,7 @@ export default function CarnetAdressePage() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Carnet d&apos;adresses</h1>
 
@@ -28,7 +28,7 @@ export default function CarnetAdressePage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/infos-docs" className="text-primary hover:text-primary/80">
                     Infos & Docs
                   </Link>
@@ -36,7 +36,7 @@ export default function CarnetAdressePage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <span className="text-muted-foreground">Carnet d&apos;adresses</span>
                 </div>
               </li>
@@ -81,10 +81,10 @@ export default function CarnetAdressePage() {
                   </CardHeader>
                   <CardContent>
                     <div className="relative mb-6">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                       <Input type="search" placeholder="Nom, fonction, service..." className="pl-10" />
                     </div>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-muted-foreground">
                       Note: La recherche complète est disponible après connexion à l&apos;espace membre.
                     </p>
                   </CardContent>

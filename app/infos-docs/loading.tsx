@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div className="animate-pulse">
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <div className="h-10 w-48 bg-slate-200 rounded mb-4"></div>
           <div className="h-5 w-40 bg-slate-200 rounded"></div>
@@ -16,7 +16,7 @@ export default function Loading() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Sidebar */}
               <div className="md:col-span-1">
-                <div className="bg-white rounded-lg shadow-md">
+                <div className="bg-card rounded-lg shadow-md">
                   <div className="p-6 border-b">
                     <div className="h-6 w-28 bg-slate-200 rounded"></div>
                   </div>
@@ -32,7 +32,7 @@ export default function Loading() {
 
               {/* Main Content */}
               <div className="md:col-span-2">
-                <div className="bg-white rounded-lg shadow-md">
+                <div className="bg-card rounded-lg shadow-md">
                   <div className="p-6 border-b">
                     <div className="h-7 w-72 bg-slate-200 rounded"></div>
                   </div>
@@ -42,7 +42,7 @@ export default function Loading() {
                     {/* Cards grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                       {[...Array(4)].map((_, i) => (
-                        <div key={i} className="bg-slate-50 rounded-lg shadow-sm">
+                        <div key={i} className="bg-muted/50 rounded-lg shadow-sm">
                           <div className="p-4 border-b">
                             <div className="h-6 w-32 bg-slate-200 rounded"></div>
                           </div>
@@ -55,7 +55,7 @@ export default function Loading() {
                     </div>
 
                     {/* Union card */}
-                    <div className="bg-slate-50 rounded-lg shadow-sm">
+                    <div className="bg-muted/50 rounded-lg shadow-sm">
                       <div className="p-4 border-b">
                         <div className="h-6 w-64 bg-slate-200 rounded"></div>
                       </div>

@@ -261,7 +261,7 @@ export function PhotoUploader({ tags, onUploadComplete, maxPhotos, currentCount 
         }`}
       >
         <input {...getInputProps()} />
-        <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+        <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
         {isDragActive ? (
           <p className="text-lg">Déposez les images ici...</p>
         ) : (

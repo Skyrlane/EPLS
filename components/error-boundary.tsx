@@ -44,7 +44,7 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen flex items-center justify-center p-8 bg-red-50">
-          <div className="max-w-2xl w-full bg-white rounded-lg shadow-lg p-8">
+          <div className="max-w-2xl w-full bg-card rounded-lg shadow-lg p-8">
             <h1 className="text-2xl font-bold text-red-600 mb-4">
               🚨 Erreur capturée par ErrorBoundary
             </h1>
@@ -82,7 +82,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 </button>
               </div>
 
-              <div className="text-sm text-gray-600 mt-4">
+              <div className="text-sm text-muted-foreground mt-4">
                 <p>✅ Cette erreur a été loggée dans la console (F12)</p>
                 <p>📋 Copie les logs de la console et envoie-les moi</p>
               </div>

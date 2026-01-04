@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div className="animate-pulse">
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <div>
@@ -19,7 +19,7 @@ export default function Loading() {
         <div className="container mx-auto px-4">
           {/* Carte de bienvenue */}
           <div className="mb-8">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-card rounded-lg shadow-md overflow-hidden">
               <div className="p-6 border-b">
                 <div className="h-7 w-72 bg-slate-200 rounded mb-2"></div>
                 <div className="h-5 w-full bg-slate-200 rounded"></div>
@@ -45,7 +45,7 @@ export default function Loading() {
             </div>
 
             {/* Contenu des onglets */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-card rounded-lg shadow-md overflow-hidden">
               <div className="p-6 border-b">
                 <div className="h-7 w-64 bg-slate-200 rounded mb-2"></div>
                 <div className="h-5 w-full md:w-2/3 bg-slate-200 rounded"></div>
@@ -60,9 +60,9 @@ export default function Loading() {
                 {/* Table des membres */}
                 <div className="overflow-x-auto">
                   <div className="w-full">
-                    <div className="h-10 w-full bg-slate-100 rounded mb-2"></div>
+                    <div className="h-10 w-full bg-muted rounded mb-2"></div>
                     {[...Array(5)].map((_, i) => (
-                      <div key={i} className="h-14 w-full bg-slate-50 rounded mb-2 border-b border-slate-200"></div>
+                      <div key={i} className="h-14 w-full bg-muted/50 rounded mb-2 border-b border-slate-200"></div>
                     ))}
                   </div>
                 </div>

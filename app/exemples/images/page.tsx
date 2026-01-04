@@ -113,7 +113,7 @@ export default function ImagesExamplePage() {
                 alt="Exemple d'image hero"
               />
               
-              <div className="flex items-center justify-center mt-2 text-sm text-gray-500">
+              <div className="flex items-center justify-center mt-2 text-sm text-muted-foreground">
                 <span>Image de type hero avec ratio 5:2 (1920×768px recommandé) - Crédit: John Mark Arnold sur Unsplash</span>
               </div>
               
@@ -143,7 +143,7 @@ export default function ImagesExamplePage() {
                 alt="Exemple d'image content"
               />
               
-              <div className="flex items-center justify-center mt-2 text-sm text-gray-500">
+              <div className="flex items-center justify-center mt-2 text-sm text-muted-foreground">
                 <span>Image de type content avec ratio 16:9 (1200×675px recommandé) - Crédit: Olivia Snow sur Unsplash</span>
               </div>
               
@@ -173,7 +173,7 @@ export default function ImagesExamplePage() {
                 alt="Exemple d'image section"
               />
               
-              <div className="flex items-center justify-center mt-2 text-sm text-gray-500">
+              <div className="flex items-center justify-center mt-2 text-sm text-muted-foreground">
                 <span>Image de type section avec ratio 16:9 (1280×720px recommandé) - Crédit: Rémi Walle sur Unsplash</span>
               </div>
               

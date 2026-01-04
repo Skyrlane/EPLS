@@ -45,9 +45,9 @@ export function FeaturedArticleClient({
             <Badge variant="outline">{category}</Badge>
           </div>
           <h2 className="text-2xl font-bold mb-3">{title}</h2>
-          <p className="text-gray-600 mb-4">{excerpt}</p>
+          <p className="text-muted-foreground mb-4">{excerpt}</p>
           <div className="flex justify-between items-center">
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-muted-foreground">
               <span>Par {author}</span>
               <span className="mx-2">•</span>
               <span>{date}</span>

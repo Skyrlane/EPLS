@@ -17,7 +17,7 @@ export default function UnionEglisePage() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">L&apos;Union des Églises Évangéliques Libres</h1>
 
@@ -31,7 +31,7 @@ export default function UnionEglisePage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/infos-docs" className="text-primary hover:text-primary/80">
                     Infos & Docs
                   </Link>
@@ -39,7 +39,7 @@ export default function UnionEglisePage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <span className="text-muted-foreground">L&apos;Union des Églises</span>
                 </div>
               </li>

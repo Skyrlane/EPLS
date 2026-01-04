@@ -6,7 +6,7 @@ export default function NotFound() {
     <div className="container flex flex-col items-center justify-center min-h-[70vh] py-20">
       <h1 className="text-6xl font-bold text-primary mb-4">404</h1>
       <h2 className="text-2xl font-semibold mb-6">Page non trouvée</h2>
-      <p className="text-center text-gray-600 mb-8 max-w-md">
+      <p className="text-center text-muted-foreground mb-8 max-w-md">
         Désolé, la page que vous recherchez n&apos;existe pas ou a été déplacée.
       </p>
       <div className="space-y-4">
@@ -14,7 +14,7 @@ export default function NotFound() {
           <Link href="/">Retour à l&apos;accueil</Link>
         </Button>
         <div className="pt-4 text-center">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-foreground">
             Vous pouvez également consulter notre{" "}
             <Link href="/blog" className="text-primary hover:underline">
               blog

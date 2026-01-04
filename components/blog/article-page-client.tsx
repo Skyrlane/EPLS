@@ -22,7 +22,7 @@ export function ArticlePageClient({ article, relatedArticles }: ArticlePageClien
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           {/* Breadcrumbs */}
           <Breadcrumbs 
@@ -37,7 +37,7 @@ export function ArticlePageClient({ article, relatedArticles }: ArticlePageClien
             <Badge variant="outline" className="mb-4">
               {article.category}
             </Badge>
-            <div className="flex items-center justify-center gap-4 text-sm text-gray-600">
+            <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 {article.authorImage && (
                   <div className="relative w-8 h-8 rounded-full overflow-hidden">
@@ -52,9 +52,9 @@ export function ArticlePageClient({ article, relatedArticles }: ArticlePageClien
                 )}
                 <span>{article.author}</span>
               </div>
-              <span className="text-gray-400">•</span>
+              <span className="text-muted-foreground">•</span>
               <span>{article.date}</span>
-              <span className="text-gray-400">•</span>
+              <span className="text-muted-foreground">•</span>
               <span>{article.readTime || "5 min"} de lecture</span>
             </div>
           </div>
@@ -87,7 +87,7 @@ export function ArticlePageClient({ article, relatedArticles }: ArticlePageClien
             <div className="mt-12 pt-6 border-t border-gray-200">
               <div className="flex flex-wrap justify-between items-center gap-4">
                 <div>
-                  <span className="text-sm text-gray-500 mr-3">Partager :</span>
+                  <span className="text-sm text-muted-foreground mr-3">Partager :</span>
                   <ShareButtons 
                     title={article.title} 
                     url={`/blog/${article.slug}`} 
@@ -106,7 +106,7 @@ export function ArticlePageClient({ article, relatedArticles }: ArticlePageClien
 
       {/* Related Articles */}
       {relatedArticles.length > 0 && (
-        <section className="bg-slate-50 py-16">
+        <section className="bg-muted/50 py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-2xl font-bold mb-8">Articles similaires</h2>
@@ -128,7 +128,7 @@ export function ArticlePageClient({ article, relatedArticles }: ArticlePageClien
                         {relatedArticle.category}
                       </Badge>
                       <h3 className="text-xl font-semibold mb-2">{relatedArticle.title}</h3>
-                      <p className="text-gray-600 mb-4 flex-grow line-clamp-3">
+                      <p className="text-muted-foreground mb-4 flex-grow line-clamp-3">
                         {relatedArticle.excerpt}
                       </p>
                       <div className="mt-auto">

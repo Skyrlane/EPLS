@@ -291,7 +291,7 @@ export default function AdminSitesAmisPage() {
                             className="object-contain"
                           />
                         ) : (
-                          <div className="w-16 h-16 bg-slate-100 rounded flex items-center justify-center text-slate-400">
+                          <div className="w-16 h-16 bg-muted rounded flex items-center justify-center text-slate-400">
                             Logo
                           </div>
                         )}
@@ -300,7 +300,7 @@ export default function AdminSitesAmisPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <h3 className="font-semibold truncate">{site.name}</h3>
-                          <span className={`text-xs px-2 py-1 rounded ${site.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
+                          <span className={`text-xs px-2 py-1 rounded ${site.isActive ? 'bg-green-100 text-green-700' : 'bg-muted text-muted-foreground'}`}>
                             {site.isActive ? '✅ Publié' : '⚠️ Brouillon'}
                           </span>
                         </div>

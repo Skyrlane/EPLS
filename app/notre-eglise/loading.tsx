@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div className="animate-pulse">
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <div className="h-10 w-40 bg-slate-200 rounded mb-4"></div>
           <div className="h-5 w-64 bg-slate-200 rounded"></div>
@@ -15,7 +15,7 @@ export default function Loading() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Sidebar Placeholder */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="bg-card rounded-lg shadow-md overflow-hidden">
                 <div className="p-6 border-b">
                   <div className="h-6 w-36 bg-slate-200 rounded"></div>
                 </div>
@@ -29,7 +29,7 @@ export default function Loading() {
               </div>
 
               <div className="mt-6">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="bg-card rounded-lg shadow-md overflow-hidden">
                   <div className="p-6 border-b">
                     <div className="h-6 w-40 bg-slate-200 rounded"></div>
                   </div>
@@ -45,7 +45,7 @@ export default function Loading() {
 
             {/* Main Content Placeholder */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+              <div className="bg-card rounded-lg shadow-md overflow-hidden mb-8">
                 <div className="p-6 border-b">
                   <div className="h-6 w-3/4 bg-slate-200 rounded"></div>
                 </div>
@@ -63,7 +63,7 @@ export default function Loading() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden">
+                  <div key={i} className="bg-card rounded-lg shadow-md overflow-hidden">
                     <div className="p-6 border-b">
                       <div className="h-6 w-40 bg-slate-200 rounded"></div>
                     </div>

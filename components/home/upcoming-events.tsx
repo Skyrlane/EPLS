@@ -41,22 +41,22 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
                   </Link>
                 </h3>
                 
-                <div className="flex items-center gap-2 text-gray-600 mb-2">
+                <div className="flex items-center gap-2 text-muted-foreground mb-2">
                   <Calendar className="h-4 w-4" />
                   <span className="text-sm">{formatDate(event.date)}</span>
                 </div>
                 
-                <div className="flex items-center gap-2 text-gray-600 mb-2">
+                <div className="flex items-center gap-2 text-muted-foreground mb-2">
                   <Clock className="h-4 w-4" />
                   <span className="text-sm">{event.time}</span>
                 </div>
                 
-                <div className="flex items-center gap-2 text-gray-600 mb-4">
+                <div className="flex items-center gap-2 text-muted-foreground mb-4">
                   <MapPin className="h-4 w-4" />
                   <span className="text-sm">{event.location}</span>
                 </div>
                 
-                <p className="text-gray-600 mb-4 line-clamp-2">{event.description}</p>
+                <p className="text-muted-foreground mb-4 line-clamp-2">{event.description}</p>
                 
                 <Button asChild variant="outline" size="sm">
                   <Link href={`/culte/calendrier`}>
@@ -69,7 +69,7 @@ export function UpcomingEvents({ events }: UpcomingEventsProps) {
         </div>
       ) : (
         <div className="text-center p-8 bg-gray-50 rounded-lg mt-8">
-          <p className="text-gray-600">Aucun événement à venir pour le moment.</p>
+          <p className="text-muted-foreground">Aucun événement à venir pour le moment.</p>
           <p className="text-sm mt-2">Consultez notre page d'événements ou revenez plus tard.</p>
         </div>
       )}

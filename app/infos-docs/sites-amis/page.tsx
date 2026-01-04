@@ -104,7 +104,7 @@ export default async function SitesAmisPage() {
                               <CardHeader className="text-center pb-2">
                                 {site.logoZone && (
                                   <div className="flex justify-center mb-4">
-                                    <div className="relative h-24 w-24 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center">
+                                    <div className="relative h-24 w-24 rounded-full overflow-hidden bg-muted flex items-center justify-center">
                                       <DynamicImageBlock
                                         zone={site.logoZone}
                                         fallbackSrc="/placeholder.svg?height=96&width=96"

@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div className="animate-pulse">
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <div className="h-10 w-64 bg-slate-200 rounded mb-4"></div>
           <div className="h-5 w-60 bg-slate-200 rounded"></div>
@@ -13,7 +13,7 @@ export default function Loading() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="rounded-lg bg-white shadow-md overflow-hidden mb-8">
+            <div className="rounded-lg bg-card shadow-md overflow-hidden mb-8">
               <div className="p-6 border-b">
                 <div className="h-7 w-48 bg-slate-200 rounded"></div>
               </div>

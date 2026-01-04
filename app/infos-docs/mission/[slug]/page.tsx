@@ -126,7 +126,7 @@ export default async function MissionaryDetailPage({ params }: PageProps) {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/infos-docs" className="text-primary hover:text-primary/80">
                     Infos & Docs
                   </Link>
@@ -134,7 +134,7 @@ export default async function MissionaryDetailPage({ params }: PageProps) {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/infos-docs/mission" className="text-primary hover:text-primary/80">
                     La Mission
                   </Link>
@@ -142,7 +142,7 @@ export default async function MissionaryDetailPage({ params }: PageProps) {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <span className="text-muted-foreground">{missionary.name}</span>
                 </div>
               </li>

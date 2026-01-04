@@ -29,10 +29,10 @@ export function ArticleCard({ article }: ArticleCardProps) {
           <Badge variant="outline">{article.category}</Badge>
         </div>
         <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
-        <p className="text-gray-600 mb-4 line-clamp-3">
+        <p className="text-muted-foreground mb-4 line-clamp-3">
           {article.excerpt}
         </p>
-        <div className="text-sm text-gray-500 flex items-center gap-3">
+        <div className="text-sm text-muted-foreground flex items-center gap-3">
           <span className="flex items-center">
             <Calendar className="h-3 w-3 mr-1" />
             {article.date}

@@ -87,7 +87,7 @@ export function MessageCardExtended({
             <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
               {category}
             </Badge>
-            <span className="text-gray-500 text-sm">{date}</span>
+            <span className="text-muted-foreground text-sm">{date}</span>
           </div>
           
           <h3 className="text-xl font-bold mb-1">{title}</h3>
@@ -96,12 +96,12 @@ export function MessageCardExtended({
             <p className="text-primary text-sm font-medium mb-2">{passage}</p>
           )}
           
-          <p className="text-gray-600 mb-4 line-clamp-3">
+          <p className="text-muted-foreground mb-4 line-clamp-3">
             {description}
           </p>
           
           <div className="flex flex-wrap justify-between items-center">
-            <span className="text-gray-700 font-medium">{preacher}</span>
+            <span className="text-foreground font-medium">{preacher}</span>
             
             <div className="flex space-x-2 mt-2 md:mt-0">
               {audioUrl && (

@@ -32,7 +32,7 @@ export function ArticleContent({ article }: ArticleContentProps) {
             <Badge className="mb-3">{article.category}</Badge>
             <h1 className="text-3xl md:text-4xl font-bold mb-4">{article.title}</h1>
             
-            <div className="flex items-center gap-4 text-gray-600">
+            <div className="flex items-center gap-4 text-muted-foreground">
               <span className="flex items-center">
                 <Calendar className="h-4 w-4 mr-1" />
                 {article.date}
@@ -51,7 +51,7 @@ export function ArticleContent({ article }: ArticleContentProps) {
           />
 
           {/* Biographie de l'auteur */}
-          <div className="mt-12 p-6 bg-slate-50 rounded-lg">
+          <div className="mt-12 p-6 bg-muted/50 rounded-lg">
             <div className="flex items-start gap-4">
               <Avatar className="h-16 w-16">
                 <AvatarImage src={article.authorImage || "/placeholder.svg"} alt={article.author} />
@@ -59,7 +59,7 @@ export function ArticleContent({ article }: ArticleContentProps) {
               </Avatar>
               <div>
                 <h3 className="text-lg font-semibold mb-2">À propos de {article.author}</h3>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   {article.author} est membre de l'Église Protestante Libre de Saint-Maur et partage
                   régulièrement ses réflexions et témoignages sur notre blog.
                 </p>

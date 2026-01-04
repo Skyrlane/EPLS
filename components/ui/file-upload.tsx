@@ -138,9 +138,9 @@ export function FileUpload({
         }
       )}>
         {isLoading && (
-          <div className="absolute inset-0 bg-white/80 flex flex-col items-center justify-center z-10">
+          <div className="absolute inset-0 bg-background/80 flex flex-col items-center justify-center z-10">
             <Loader2 className="w-8 h-8 text-primary animate-spin mb-2" />
-            <p className="text-sm text-gray-600">Téléchargement en cours...</p>
+            <p className="text-sm text-muted-foreground">Téléchargement en cours...</p>
           </div>
         )}
 
@@ -162,7 +162,7 @@ export function FileUpload({
               // Affichage pour les autres types de fichiers
               <div className="flex flex-col items-center">
                 <FileIcon className="w-12 h-12 text-primary mb-2" />
-                <p className="text-sm text-gray-700 max-w-full truncate">
+                <p className="text-sm text-foreground max-w-full truncate">
                   {fileName || "Fichier téléchargé"}
                 </p>
               </div>
@@ -186,11 +186,11 @@ export function FileUpload({
             className="flex flex-col items-center justify-center w-full h-full"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <UploadCloud className="w-10 h-10 mb-3 text-gray-400" />
-              <p className="mb-2 text-sm text-gray-700">
+              <UploadCloud className="w-10 h-10 mb-3 text-muted-foreground" />
+              <p className="mb-2 text-sm text-foreground">
                 <span className="font-medium">{label}</span>
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 {isImage
                   ? "PNG, JPG ou GIF"
                   : accept === "*" 

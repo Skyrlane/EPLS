@@ -45,7 +45,7 @@ export default async function AboutPage() {
               <div className="bg-gray-200 rounded-lg flex items-center justify-center p-8">
                 <div className="text-center">
                   <p className="text-lg font-semibold mb-2">Image historique à venir</p>
-                  <p className="text-sm text-gray-600">Une photo de notre église sera bientôt disponible</p>
+                  <p className="text-sm text-muted-foreground">Une photo de notre église sera bientôt disponible</p>
                 </div>
               </div>
             </div>
@@ -59,7 +59,7 @@ export default async function AboutPage() {
               <div className="order-2 md:order-1 bg-gray-200 rounded-lg flex items-center justify-center p-8">
                 <div className="text-center">
                   <p className="text-lg font-semibold mb-2">Image de notre assemblée</p>
-                  <p className="text-sm text-gray-600">Une photo de notre église en action sera bientôt disponible</p>
+                  <p className="text-sm text-muted-foreground">Une photo de notre église en action sera bientôt disponible</p>
                 </div>
               </div>
               <div className="order-1 md:order-2">
@@ -114,7 +114,7 @@ export default async function AboutPage() {
             <h2 className="text-3xl font-bold mb-8">Notre équipe</h2>
             
             {teamMembers.length === 0 ? (
-              <p className="text-center text-gray-600">Information sur l'équipe à venir</p>
+              <p className="text-center text-muted-foreground">Information sur l'équipe à venir</p>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {teamMembers.map((member) => (
@@ -129,7 +129,7 @@ export default async function AboutPage() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <p className="text-gray-500">Photo non disponible</p>
+                          <p className="text-muted-foreground">Photo non disponible</p>
                         </div>
                       )}
                     </div>

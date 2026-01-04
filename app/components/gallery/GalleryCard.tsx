@@ -23,8 +23,8 @@ export function GalleryCard({ id, src, alt, description }: GalleryCardProps) {
               className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
           </div>
-          <div className="p-4 bg-white">
-            <p className="text-sm text-gray-600 line-clamp-2">{description}</p>
+          <div className="p-4 bg-card">
+            <p className="text-sm text-muted-foreground line-clamp-2">{description}</p>
           </div>
         </div>
       </DialogTrigger>
@@ -41,7 +41,7 @@ export function GalleryCard({ id, src, alt, description }: GalleryCardProps) {
             />
           </div>
           <div className="flex flex-col justify-center">
-            <p className="text-lg text-gray-700">{description}</p>
+            <p className="text-lg text-muted-foreground">{description}</p>
           </div>
         </div>
       </DialogContent>

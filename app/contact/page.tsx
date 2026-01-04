@@ -69,7 +69,7 @@ export default function Contact() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Contact</h1>
 
@@ -83,8 +83,8 @@ export default function Contact() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700">Contact</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">Contact</span>
                 </div>
               </li>
             </ol>
@@ -178,7 +178,7 @@ export default function Contact() {
                       <MapPin className="h-5 w-5 text-primary mt-0.5" />
                       <div>
                         <h3 className="font-medium">Adresse</h3>
-                        <p className="text-gray-600">
+                        <p className="text-muted-foreground">
                           18 rue de Franche-Comté
                           <br />
                           67380 Lingolsheim
@@ -190,7 +190,7 @@ export default function Contact() {
                       <Clock className="h-5 w-5 text-primary mt-0.5" />
                       <div>
                         <h3 className="font-medium">Horaires des cultes</h3>
-                        <p className="text-gray-600">Dimanche à 10h00</p>
+                        <p className="text-muted-foreground">Dimanche à 10h00</p>
                       </div>
                     </div>
                   </CardContent>
@@ -215,7 +215,7 @@ export default function Contact() {
                     </div>
                     <div className="mt-4">
                       <h3 className="font-medium mb-2">Transports en commun</h3>
-                      <p className="text-gray-600">
+                      <p className="text-muted-foreground">
                         Bus ligne 12, arrêt "Franche-Comté"
                         <br />
                         Tram ligne B, arrêt "Lingolsheim Alouettes" puis 5 minutes à pied

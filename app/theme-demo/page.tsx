@@ -12,7 +12,7 @@ export default function ThemeDemoPage() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Démonstration du Mode Jour/Nuit</h1>
 
@@ -26,8 +26,8 @@ export default function ThemeDemoPage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">Démo Thème</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-foreground">Démo Thème</span>
                 </div>
               </li>
             </ol>

@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div className="animate-pulse">
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <div className="h-10 w-64 bg-slate-200 rounded mb-4"></div>
           <div className="h-5 w-60 bg-slate-200 rounded"></div>
@@ -20,7 +20,7 @@ export default function Loading() {
 
           <div className="max-w-3xl mx-auto mb-16">
             {/* Pourquoi soutenir */}
-            <div className="rounded-lg bg-white shadow-md p-6 mb-8">
+            <div className="rounded-lg bg-card shadow-md p-6 mb-8">
               <div className="h-7 w-48 bg-slate-200 rounded mb-6"></div>
               <div className="h-5 w-full bg-slate-200 rounded mb-3"></div>
               <div className="h-5 w-full bg-slate-200 rounded mb-3"></div>
@@ -43,11 +43,11 @@ export default function Loading() {
                 ))}
               </div>
               
-              <div className="rounded-lg bg-white shadow-md p-6">
+              <div className="rounded-lg bg-card shadow-md p-6">
                 <div className="h-7 w-56 bg-slate-200 rounded mb-2"></div>
                 <div className="h-5 w-64 bg-slate-200 rounded mb-6"></div>
                 <div className="h-5 w-full bg-slate-200 rounded mb-4"></div>
-                <div className="bg-slate-100 p-4 rounded-md mb-4">
+                <div className="bg-muted p-4 rounded-md mb-4">
                   <div className="h-5 w-64 bg-slate-200 rounded mb-2"></div>
                   <div className="h-5 w-56 bg-slate-200 rounded mb-2"></div>
                   <div className="h-5 w-40 bg-slate-200 rounded"></div>
@@ -57,7 +57,7 @@ export default function Loading() {
             </div>
 
             {/* Déduction fiscale */}
-            <div className="rounded-lg bg-white shadow-md p-6 mb-8">
+            <div className="rounded-lg bg-card shadow-md p-6 mb-8">
               <div className="h-7 w-40 bg-slate-200 rounded mb-6"></div>
               <div className="h-5 w-full bg-slate-200 rounded mb-3"></div>
               <div className="h-5 w-full bg-slate-200 rounded mb-3"></div>

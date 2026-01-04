@@ -54,7 +54,7 @@ export function ArticleFilter({ categories }: ArticleFilterProps) {
     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-12">
       <div className="flex-1 w-full md:max-w-md">
         <form onSubmit={handleSearch} className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
           <Input 
             type="search" 
             placeholder="Rechercher un article..." 

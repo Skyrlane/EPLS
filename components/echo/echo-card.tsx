@@ -35,13 +35,13 @@ export function EchoCard({ echo }: EchoCardProps) {
       <CardContent className="flex-grow py-4">
         <h3 className="text-lg font-bold mb-2">{echo.title}</h3>
         
-        <div className="flex items-center gap-1 text-sm text-gray-500 mb-3">
+        <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
           <Calendar className="h-4 w-4" />
           <span>{echo.edition || `${echo.month || ''} ${echo.year}`}</span>
         </div>
         
         {echo.description && (
-          <p className="text-gray-600 text-sm line-clamp-3">
+          <p className="text-muted-foreground text-sm line-clamp-3">
             {echo.description}
           </p>
         )}

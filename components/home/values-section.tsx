@@ -60,7 +60,7 @@ export function ValuesSection({
             key={index}
             className={cn(
               "flex flex-col items-center text-center p-6 rounded-lg",
-              isLight ? "bg-white shadow-sm border border-gray-100" : "bg-white/10"
+              isLight ? "bg-white shadow-sm border border-border" : "bg-white/10"
             )}
           >
             <div className={cn(

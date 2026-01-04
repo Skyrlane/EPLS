@@ -17,9 +17,9 @@ export function PaginationClient({ totalPages, currentPage }: PaginationClientPr
     router.push(`/blog?${params.toString()}`);
   };
 
-  const buttonBaseClass = "px-4 py-2 text-sm font-medium border border-gray-300 bg-white";
+  const buttonBaseClass = "px-4 py-2 text-sm font-medium border border-border bg-card";
   const activeButtonClass = "px-4 py-2 text-sm font-medium border border-gray-300 bg-primary text-white";
-  const disabledButtonClass = "px-4 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-400 cursor-not-allowed";
+  const disabledButtonClass = "px-4 py-2 text-sm font-medium border border-border bg-card text-muted-foreground cursor-not-allowed";
 
   return (
     <div className="flex justify-center mt-12">

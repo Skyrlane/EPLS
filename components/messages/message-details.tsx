@@ -73,7 +73,7 @@ export function MessageDetails({
           
           <h1 className="text-3xl font-bold">{title}</h1>
           
-          <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+          <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
               <span>{date}</span>
@@ -99,7 +99,7 @@ export function MessageDetails({
             )}
           </div>
           
-          <p className="text-lg text-gray-700">{description}</p>
+          <p className="text-lg text-foreground">{description}</p>
           
           <div className="flex flex-wrap gap-2">
             {videoUrl && (
@@ -163,7 +163,7 @@ export function MessageDetails({
             </div>
           ) : (
             <div className="bg-gray-200 h-full w-full flex items-center justify-center">
-              <Book className="h-16 w-16 text-gray-400" />
+              <Book className="h-16 w-16 text-muted-foreground" />
             </div>
           )}
         </div>
@@ -196,7 +196,7 @@ export function MessageDetails({
                     className="p-4 border rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     <h3 className="font-medium">{message.title}</h3>
-                    <div className="flex justify-between mt-2 text-sm text-gray-500">
+                    <div className="flex justify-between mt-2 text-sm text-muted-foreground">
                       <span>{message.preacher}</span>
                       <span>{message.date}</span>
                     </div>

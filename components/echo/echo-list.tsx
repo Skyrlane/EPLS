@@ -18,7 +18,7 @@ export function EchoList({ year, echos }: EchoListProps) {
       </CardHeader>
       <CardContent>
         {echos.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-muted-foreground">
             Aucun écho disponible pour cette année
           </div>
         ) : (
@@ -38,7 +38,7 @@ export function EchoList({ year, echos }: EchoListProps) {
                   {echo.title}
                 </a>
                 {echo.edition && (
-                  <span className="text-sm text-gray-500 block mt-1">
+                  <span className="text-sm text-muted-foreground block mt-1">
                     {echo.edition}
                   </span>
                 )}

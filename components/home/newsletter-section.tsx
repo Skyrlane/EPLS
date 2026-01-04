@@ -40,14 +40,14 @@ export function NewsletterSection() {
     <SectionContainer background="light">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-3xl font-bold mb-4">Restez informés</h2>
-        <p className="text-lg text-gray-600 mb-8">
+        <p className="text-lg text-muted-foreground mb-8">
           Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités et annonces.
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-md mx-auto">
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-grow">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
               <input
                 type="email"
                 value={email}
@@ -78,7 +78,7 @@ export function NewsletterSection() {
           )}
         </form>
 
-        <p className="text-sm text-gray-500 mt-4">
+        <p className="text-sm text-muted-foreground mt-4">
           Nous respectons votre vie privée. Vous pouvez vous désinscrire à tout moment.
         </p>
       </div>

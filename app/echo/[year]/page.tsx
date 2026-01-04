@@ -29,7 +29,7 @@ export default function EchoArchive({ params }: { params: { year: string } }) {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Echos EPLS {params.year}</h1>
 
@@ -43,7 +43,7 @@ export default function EchoArchive({ params }: { params: { year: string } }) {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/echo" className="text-primary hover:text-primary/80">
                     Echos
                   </Link>
@@ -51,8 +51,8 @@ export default function EchoArchive({ params }: { params: { year: string } }) {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700">{params.year}</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">{params.year}</span>
                 </div>
               </li>
             </ol>
@@ -81,7 +81,7 @@ export default function EchoArchive({ params }: { params: { year: string } }) {
                       className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition"
                     >
                       <h3 className="text-lg font-semibold mb-2">{echo.title}</h3>
-                      <p className="text-gray-600 text-sm mb-4">Publié le {echo.date}</p>
+                      <p className="text-muted-foreground text-sm mb-4">Publié le {echo.date}</p>
                       <a
                         href={echo.pdfUrl}
                         className="text-primary hover:underline inline-flex items-center"

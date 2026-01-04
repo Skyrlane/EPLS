@@ -32,7 +32,7 @@ export function TestimonialsSection({
           <div 
             key={index}
             className={cn(
-              "bg-white p-6 rounded-lg shadow-md",
+              "bg-card p-6 rounded-lg shadow-md",
               "flex flex-col h-full relative"
             )}
           >

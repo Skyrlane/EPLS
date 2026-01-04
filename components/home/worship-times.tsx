@@ -98,7 +98,7 @@ export function WorshipTimes({
                 </div>
                 <div>
                   <p className="font-medium">{date.format}</p>
-                  <p className="text-sm text-gray-500">{regularTime} - Culte dominical</p>
+                  <p className="text-sm text-muted-foreground">{regularTime} - Culte dominical</p>
                 </div>
               </div>
             ))}

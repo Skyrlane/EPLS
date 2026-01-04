@@ -47,7 +47,7 @@ export default function Culte() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Culte & Vie communautaire</h1>
 
@@ -61,8 +61,8 @@ export default function Culte() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700">Culte & Vie</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">Culte & Vie</span>
                 </div>
               </li>
             </ol>
@@ -71,13 +71,13 @@ export default function Culte() {
       </div>
 
       {/* Sommaire et Prochain Culte */}
-      <div className="bg-white py-6 border-b">
+      <div className="bg-card py-6 border-b">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Sommaire */}
               <div className="lg:col-span-1">
-                <div className="bg-slate-50 p-6 rounded-lg shadow-sm">
+                <div className="bg-muted/50 p-6 rounded-lg shadow-sm">
                   <h2 className="text-xl font-bold mb-4">Sommaire</h2>
                   <ul className="space-y-3">
                     <li>
@@ -138,7 +138,7 @@ export default function Culte() {
                       {prochainCulte.special && (
                         <p className="text-primary font-medium mt-1">{prochainCulte.special}</p>
                       )}
-                      <p className="mt-2 text-gray-700">{prochainCulte.description}</p>
+                      <p className="mt-2 text-muted-foreground">{prochainCulte.description}</p>
                       
                       <div className="mt-4 flex flex-wrap gap-2">
                         <Button asChild size="sm">
@@ -235,8 +235,8 @@ export default function Culte() {
                 </CardHeader>
                 <CardContent>
                   <p className="font-medium">Dimanche à 10h00</p>
-                  <p className="text-gray-600 text-sm mt-1">Durée : environ 1h30</p>
-                  <p className="text-gray-600 text-sm mt-1">Suivi d&apos;un temps convivial</p>
+                  <p className="text-muted-foreground text-sm mt-1">Durée : environ 1h30</p>
+                  <p className="text-muted-foreground text-sm mt-1">Suivi d&apos;un temps convivial</p>
                 </CardContent>
               </Card>
 
@@ -248,7 +248,7 @@ export default function Culte() {
                 </CardHeader>
                 <CardContent>
                   <p className="font-medium">18 rue de Franche-Comté</p>
-                  <p className="text-gray-600 text-sm mt-1">67380 Lingolsheim</p>
+                  <p className="text-muted-foreground text-sm mt-1">67380 Lingolsheim</p>
                   <Link href="/notre-eglise/ou-sommes-nous" className="text-primary text-sm hover:underline block mt-2">
                     Comment nous trouver →
                   </Link>
@@ -272,7 +272,7 @@ export default function Culte() {
             </div>
 
             {/* Programmes et Calendrier */}
-            <div className="mb-12 bg-slate-50 rounded-xl p-6">
+            <div className="mb-12 bg-muted/50 rounded-xl p-6">
               <h2 className="text-2xl font-semibold mb-4">Planifiez votre visite</h2>
               
               <Tabs defaultValue="programme" className="w-full">
@@ -290,7 +290,7 @@ export default function Culte() {
                           <Calendar className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Dimanche {prochainCulte.date}</h3>
-                            <p className="text-gray-600">{prochainCulte.theme} - {prochainCulte.predicateur}</p>
+                            <p className="text-muted-foreground">{prochainCulte.theme} - {prochainCulte.predicateur}</p>
                           </div>
                         </div>
                       </CardContent>
@@ -316,7 +316,7 @@ export default function Culte() {
             {/* Vie communautaire */}
             <div id="vie-communautaire" className="mb-12">
               <h2 className="text-3xl font-semibold mb-6">Vie communautaire</h2>
-              <p className="text-lg text-gray-700 mb-8">
+              <p className="text-lg text-muted-foreground mb-8">
                 Au-delà du culte dominical, notre église propose diverses activités qui permettent de vivre la foi au
                 quotidien et de développer des relations fraternelles.
               </p>
@@ -329,12 +329,12 @@ export default function Culte() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-muted-foreground mb-4">
                       Les groupes de maison se réunissent en semaine dans différents quartiers de Strasbourg et des
                       environs. Ces petits groupes de 8 à 12 personnes permettent de partager, prier et étudier la Bible
                       dans un cadre plus intime.
                     </p>
-                    <p className="text-gray-600">
+                    <p className="text-muted-foreground">
                       Fréquence : mardi soir à 20h00
                     </p>
                   </CardContent>
@@ -347,12 +347,12 @@ export default function Culte() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-muted-foreground mb-4">
                       Des études bibliques thématiques ou suivant un livre de la Bible sont proposées régulièrement.
                       Elles permettent d&apos;approfondir la connaissance des Écritures et d&apos;échanger sur leur
                       application dans notre vie quotidienne.
                     </p>
-                    <p className="text-gray-600">
+                    <p className="text-muted-foreground">
                       Fréquence : 1er et 3ème mardi du mois
                       <br />
                       Horaire : 20h15
@@ -367,12 +367,12 @@ export default function Culte() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-muted-foreground mb-4">
                       Le groupe de louange se réunit pour répéter les chants qui seront interprétés lors du culte
                       dominical. Si vous jouez d&apos;un instrument ou aimez chanter, vous êtes les bienvenus pour
                       rejoindre cette équipe.
                     </p>
-                    <p className="text-gray-600">
+                    <p className="text-muted-foreground">
                       Répétitions : le vendredi soir à 19h30
                     </p>
                   </CardContent>
@@ -385,11 +385,11 @@ export default function Culte() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-muted-foreground mb-4">
                       Notre église s&apos;engage dans diverses actions solidaires : distribution de repas aux personnes
                       sans-abri, collecte de vêtements, soutien scolaire, visites aux personnes âgées ou isolées...
                     </p>
-                    <p className="text-gray-600">
+                    <p className="text-muted-foreground">
                       Pour participer ou en savoir plus, utilisez notre{" "}
                       <a href="/contact" className="text-primary hover:underline">formulaire de contact</a>.
                     </p>

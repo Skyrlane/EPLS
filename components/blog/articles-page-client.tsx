@@ -83,7 +83,7 @@ export function ArticlesPageClient() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Articles</h1>
 
@@ -97,8 +97,8 @@ export function ArticlesPageClient() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700">Articles</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-foreground">Articles</span>
                 </div>
               </li>
             </ol>
@@ -133,7 +133,7 @@ export function ArticlesPageClient() {
             {filteredArticles.length === 0 && (
               <div className="text-center py-12">
                 <h3 className="text-xl font-medium mb-2">Aucun article trouvé</h3>
-                <p className="text-gray-500 mb-4">Essayez d'autres critères de recherche</p>
+                <p className="text-muted-foreground mb-4">Essayez d'autres critères de recherche</p>
                 <Link href="/articles" className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
                   Afficher tous les articles
                 </Link>

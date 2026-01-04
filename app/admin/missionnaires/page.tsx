@@ -435,7 +435,7 @@ export default function MissionnairesAdminPage() {
               <CardContent>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
-                    <span className={`px-2 py-1 rounded text-xs ${missionary.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
+                    <span className={`px-2 py-1 rounded text-xs ${missionary.isActive ? 'bg-green-100 text-green-700' : 'bg-muted text-muted-foreground'}`}>
                       {missionary.isActive ? '✅ Publié' : '⚠️ Brouillon'}
                     </span>
                   </div>
