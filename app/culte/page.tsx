@@ -374,8 +374,6 @@ export default function Culte() {
                     </p>
                     <p className="text-gray-600">
                       Répétitions : le vendredi soir à 19h30
-                      <br />
-                      Contact : contact@protestants-libres.fr
                     </p>
                   </CardContent>
                 </Card>
@@ -392,9 +390,8 @@ export default function Culte() {
                       sans-abri, collecte de vêtements, soutien scolaire, visites aux personnes âgées ou isolées...
                     </p>
                     <p className="text-gray-600">
-                      Pour participer ou en savoir plus, contactez l&apos;équipe diaconie :
-                      <br />
-                      contact@protestants-libres.fr
+                      Pour participer ou en savoir plus, utilisez notre{" "}
+                      <a href="/contact" className="text-primary hover:underline">formulaire de contact</a>.
                     </p>
                   </CardContent>
                 </Card>

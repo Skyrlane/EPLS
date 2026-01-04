@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/hooks/use-toast"
-import { MapPin, Phone, Mail, Clock } from "lucide-react"
+import { MapPin, Clock } from "lucide-react"
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -22,15 +22,38 @@ export default function Contact() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
-    setTimeout(() => {
-      toast.success("Message envoyé. Nous vous répondrons dans les plus brefs délais.")
-      setIsSubmitting(false)
+    const form = e.target as HTMLFormElement
+    const formData = new FormData(form)
 
-      // Reset form
-      const form = e.target as HTMLFormElement
-      form.reset()
-    }, 1500)
+    const data = {
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      subject: formData.get('subject') as string,
+      message: formData.get('message') as string,
+    }
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+
+      if (response.ok) {
+        toast.success("Message envoyé. Nous vous répondrons dans les plus brefs délais.")
+        form.reset()
+      } else {
+        const errorData = await response.json()
+        toast.error(errorData.error || "Une erreur est survenue lors de l'envoi du message.")
+      }
+    } catch (error) {
+      console.error('Erreur envoi formulaire:', error)
+      toast.error("Une erreur est survenue. Veuillez réessayer.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -150,22 +173,6 @@ export default function Contact() {
                           <br />
                           67380 Lingolsheim
                         </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-3">
-                      <Phone className="h-5 w-5 text-primary mt-0.5" />
-                      <div>
-                        <h3 className="font-medium">Téléphone</h3>
-                        <p className="text-gray-600">03 88 XX XX XX</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-3">
-                      <Mail className="h-5 w-5 text-primary mt-0.5" />
-                      <div>
-                        <h3 className="font-medium">Email</h3>
-                        <p className="text-gray-600">contact@protestants-libres.fr</p>
                       </div>
                     </div>
 

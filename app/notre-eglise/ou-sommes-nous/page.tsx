@@ -63,9 +63,6 @@ export default function OuSommesNous() {
                     <p className="font-medium mb-1">Église Protestante Libre de Strasbourg</p>
                     <p className="mb-4">18 rue de Franche-Comté, 67380 Lingolsheim</p>
 
-                    <h3 className="font-medium mb-2">Contact :</h3>
-                    <p className="mb-4">Email : contact@protestants-libres.fr</p>
-
                     <div className="mt-6">
                       <Button asChild className="w-full">
                         <Link href="/contact">Nous contacter</Link>

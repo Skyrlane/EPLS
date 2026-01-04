@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Phone, Mail, MapPin, User, Building, Users } from "lucide-react"
+import { Search, MapPin, User, Building, Users, Mail } from "lucide-react"
 import Sidebar from "../components/Sidebar"
 
 export const metadata = {
@@ -116,20 +116,10 @@ export default function CarnetAdressePage() {
                           </div>
                         </div>
 
-                        <div className="flex items-start space-x-3">
-                          <Phone className="h-5 w-5 text-primary mt-0.5" />
-                          <div>
-                            <h3 className="font-medium">Téléphone</h3>
-                            <p className="text-gray-600 dark:text-gray-300">03 88 XX XX XX</p>
-                          </div>
-                        </div>
-
-                        <div className="flex items-start space-x-3">
-                          <Mail className="h-5 w-5 text-primary mt-0.5" />
-                          <div>
-                            <h3 className="font-medium">Email</h3>
-                            <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
-                          </div>
+                        <div className="mt-4">
+                          <Button variant="outline" size="sm" asChild>
+                            <Link href="/contact">Nous contacter</Link>
+                          </Button>
                         </div>
                       </div>
                     </CardContent>
@@ -153,20 +143,10 @@ export default function CarnetAdressePage() {
                           </div>
                         </div>
 
-                        <div className="flex items-start space-x-3">
-                          <Phone className="h-5 w-5 text-primary mt-0.5" />
-                          <div>
-                            <h3 className="font-medium">Téléphone</h3>
-                            <p className="text-gray-600 dark:text-gray-300">03 88 XX XX XX</p>
-                          </div>
-                        </div>
-
-                        <div className="flex items-start space-x-3">
-                          <Mail className="h-5 w-5 text-primary mt-0.5" />
-                          <div>
-                            <h3 className="font-medium">Email</h3>
-                            <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
-                          </div>
+                        <div className="mt-4">
+                          <Button variant="outline" size="sm" asChild>
+                            <Link href="/contact">Contacter le pasteur</Link>
+                          </Button>
                         </div>
                       </div>
                     </CardContent>
@@ -190,12 +170,9 @@ export default function CarnetAdressePage() {
                         Pour contacter le conseil d&apos;église (anciens et pasteur) pour des questions spirituelles ou
                         administratives.
                       </p>
-                      <div className="flex items-start space-x-3">
-                        <Mail className="h-5 w-5 text-primary mt-0.5" />
-                        <div>
-                          <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
-                        </div>
-                      </div>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href="/contact">Contacter</Link>
+                      </Button>
                     </CardContent>
                   </Card>
 
@@ -211,12 +188,9 @@ export default function CarnetAdressePage() {
                       <p className="text-gray-600 dark:text-gray-300 mb-4">
                         Pour toute question concernant les activités pour enfants et adolescents.
                       </p>
-                      <div className="flex items-start space-x-3">
-                        <Mail className="h-5 w-5 text-primary mt-0.5" />
-                        <div>
-                          <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
-                        </div>
-                      </div>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href="/contact">Contacter</Link>
+                      </Button>
                     </CardContent>
                   </Card>
 
@@ -232,12 +206,9 @@ export default function CarnetAdressePage() {
                       <p className="text-gray-600 dark:text-gray-300 mb-4">
                         Pour les besoins d&apos;aide sociale, matérielle ou d&apos;accompagnement.
                       </p>
-                      <div className="flex items-start space-x-3">
-                        <Mail className="h-5 w-5 text-primary mt-0.5" />
-                        <div>
-                          <p className="text-gray-600 dark:text-gray-300">contact@protestants-libres.fr</p>
-                        </div>
-                      </div>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href="/contact">Contacter</Link>
+                      </Button>
                     </CardContent>
                   </Card>
                 </div>

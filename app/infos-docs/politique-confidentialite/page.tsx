@@ -127,7 +127,8 @@ export default function PolitiqueConfidentialitePage() {
                       <li>Droit d&apos;opposition au traitement</li>
                     </ul>
                     <p>
-                      Pour exercer ces droits, veuillez nous contacter à l&apos;adresse email suivante : contact@protestants-libres.fr
+                      Pour exercer ces droits, veuillez nous contacter via notre{" "}
+                      <a href="/contact" className="text-primary hover:underline">formulaire de contact</a>.
                     </p>
 
                     <h2>Modifications de notre politique de confidentialité</h2>
@@ -143,13 +144,13 @@ export default function PolitiqueConfidentialitePage() {
                     </p>
                     <p>
                       <strong>Église Protestante Libre de Strasbourg</strong>
-                      <br />7 rue des Écrivains
+                      <br />18 rue de Franche-Comté
                       <br />
-                      67000 Strasbourg
-                      <br />
-                      Email : contact@protestants-libres.fr
-                      <br />
-                      Téléphone : 03 XX XX XX XX
+                      67380 Lingolsheim
+                    </p>
+                    <p>
+                      Contactez-nous via notre{" "}
+                      <a href="/contact" className="text-primary hover:underline">formulaire de contact</a>.
                     </p>
 
                     <p>
