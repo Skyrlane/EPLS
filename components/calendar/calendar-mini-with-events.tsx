@@ -118,7 +118,7 @@ export function CalendarMiniWithEvents({ currentMonth = new Date() }: CalendarMi
       {/* Grille du calendrier */}
       <div className="grid grid-cols-7 gap-1">
         {/* Jours vides avant le début du mois */}
-        {Array.from({ length: firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1 }, (_, i) => (
+        {Array.from({ length: firstDayOfMonth }, (_, i) => (
           <div key={`empty-${i}`} className="h-9 p-1"></div>
         ))}
 

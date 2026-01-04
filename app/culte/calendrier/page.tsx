@@ -215,7 +215,7 @@ export default function Calendrier() {
             
             <div className="grid grid-cols-7 gap-1">
               {/* Jours blancs avant le premier jour du mois */}
-              {Array.from({ length: (firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1) }).map((_, index) => (
+              {Array.from({ length: firstDayOfMonth }).map((_, index) => (
                 <div key={`empty-${index}`} className="h-12 sm:h-16 p-1"></div>
               ))}
               
