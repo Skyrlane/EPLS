@@ -11,12 +11,11 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "@/hooks/use-toast"
 import { MapPin, Clock } from "lucide-react"
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const toast = useToast()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -42,15 +41,26 @@ export default function Contact() {
       })
 
       if (response.ok) {
-        toast.success("Message envoyé. Nous vous répondrons dans les plus brefs délais.")
+        toast({
+          title: "Message envoyé !",
+          description: "Nous vous répondrons dans les plus brefs délais.",
+        })
         form.reset()
       } else {
         const errorData = await response.json()
-        toast.error(errorData.error || "Une erreur est survenue lors de l'envoi du message.")
+        toast({
+          title: "Erreur",
+          description: errorData.error || "Une erreur est survenue lors de l'envoi du message.",
+          variant: "destructive",
+        })
       }
     } catch (error) {
       console.error('Erreur envoi formulaire:', error)
-      toast.error("Une erreur est survenue. Veuillez réessayer.")
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue. Veuillez réessayer.",
+        variant: "destructive",
+      })
     } finally {
       setIsSubmitting(false)
     }
