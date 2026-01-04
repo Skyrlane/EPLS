@@ -37,7 +37,7 @@ export default function CarnetAdressePage() {
               <li>
                 <div className="flex items-center">
                   <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">Carnet d&apos;adresses</span>
+                  <span className="text-muted-foreground">Carnet d&apos;adresses</span>
                 </div>
               </li>
             </ol>
@@ -62,7 +62,7 @@ export default function CarnetAdressePage() {
                     <CardTitle>Accès réservé aux membres</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-muted-foreground mb-6">
                       Le carnet d&apos;adresses complet est réservé aux membres de l&apos;Église Protestante Libre de
                       Strasbourg. Veuillez vous connecter pour accéder à l&apos;ensemble des coordonnées.
                     </p>
@@ -108,7 +108,7 @@ export default function CarnetAdressePage() {
                           <MapPin className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Adresse</h3>
-                            <p className="text-gray-600 dark:text-gray-300">
+                            <p className="text-muted-foreground">
                               18 rue de Franche-Comté
                               <br />
                               67380 Lingolsheim
@@ -139,7 +139,7 @@ export default function CarnetAdressePage() {
                           <User className="h-5 w-5 text-primary mt-0.5" />
                           <div>
                             <h3 className="font-medium">Nom</h3>
-                            <p className="text-gray-600 dark:text-gray-300">Samuel Dupont</p>
+                            <p className="text-muted-foreground">Samuel Dupont</p>
                           </div>
                         </div>
 
@@ -166,7 +166,7 @@ export default function CarnetAdressePage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      <p className="text-muted-foreground mb-4">
                         Pour contacter le conseil d&apos;église (anciens et pasteur) pour des questions spirituelles ou
                         administratives.
                       </p>
@@ -185,7 +185,7 @@ export default function CarnetAdressePage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      <p className="text-muted-foreground mb-4">
                         Pour toute question concernant les activités pour enfants et adolescents.
                       </p>
                       <Button variant="outline" size="sm" asChild>
@@ -203,7 +203,7 @@ export default function CarnetAdressePage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      <p className="text-muted-foreground mb-4">
                         Pour les besoins d&apos;aide sociale, matérielle ou d&apos;accompagnement.
                       </p>
                       <Button variant="outline" size="sm" asChild>
@@ -226,13 +226,13 @@ export default function CarnetAdressePage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      <p className="text-muted-foreground mb-4">
                         Association humanitaire liée à l&apos;église, active en France et à l&apos;international.
                       </p>
                       <div className="flex items-start space-x-3">
                         <Mail className="h-5 w-5 text-primary mt-0.5" />
                         <div>
-                          <p className="text-gray-600 dark:text-gray-300">contact@eve-asso.fr</p>
+                          <p className="text-muted-foreground">contact@eve-asso.fr</p>
                         </div>
                       </div>
                       <div className="mt-3">
@@ -252,13 +252,13 @@ export default function CarnetAdressePage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      <p className="text-muted-foreground mb-4">
                         L&apos;union nationale à laquelle notre église est affiliée.
                       </p>
                       <div className="flex items-start space-x-3">
                         <Mail className="h-5 w-5 text-primary mt-0.5" />
                         <div>
-                          <p className="text-gray-600 dark:text-gray-300">contact@ueel.org</p>
+                          <p className="text-muted-foreground">contact@ueel.org</p>
                         </div>
                       </div>
                       <div className="mt-3">

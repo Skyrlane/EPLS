@@ -19,7 +19,7 @@ export default function Error({
     <div className="container mx-auto px-4 py-32 text-center">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold mb-4">Une erreur est survenue</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+        <p className="text-lg text-muted-foreground mb-8">
           Nous n'avons pas pu charger les informations sur les membres. Veuillez réessayer ultérieurement.
         </p>
         <Button

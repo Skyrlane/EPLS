@@ -13,7 +13,7 @@ export default function InfosDocs() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Infos/Docs</h1>
 
@@ -27,8 +27,8 @@ export default function InfosDocs() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">Infos/Docs</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">Infos/Docs</span>
                 </div>
               </li>
             </ol>
@@ -59,12 +59,12 @@ export default function InfosDocs() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                       {/* Offrande card */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                      <Card className="bg-muted/50">
                         <CardHeader>
                           <CardTitle className="text-xl">Offrandes</CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">
+                          <p className="text-muted-foreground mb-3">
                             Comment soutenir notre église et nos œuvres par vos dons et offrandes.
                           </p>
                           <Link href="/infos-docs/offrandes" className="text-primary hover:underline">
@@ -74,12 +74,12 @@ export default function InfosDocs() {
                       </Card>
 
                       {/* Membres card */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                      <Card className="bg-muted/50">
                         <CardHeader>
                           <CardTitle className="text-xl">Liste des membres</CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">Consultez la liste des membres de notre église.</p>
+                          <p className="text-muted-foreground mb-3">Consultez la liste des membres de notre église.</p>
                           <Link href="/infos-docs/membres" className="text-primary hover:underline">
                             Voir la liste →
                           </Link>
@@ -87,12 +87,12 @@ export default function InfosDocs() {
                       </Card>
 
                       {/* EVE card */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                      <Card className="bg-muted/50">
                         <CardHeader>
                           <CardTitle className="text-xl">Eau Vive Espoir (EVE)</CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">L&apos;association culturelle adossée à notre église.</p>
+                          <p className="text-muted-foreground mb-3">L&apos;association culturelle adossée à notre église.</p>
                           <Link href="/infos-docs/eve" className="text-primary hover:underline">
                             Découvrir EVE →
                           </Link>
@@ -100,12 +100,12 @@ export default function InfosDocs() {
                       </Card>
 
                       {/* Anniversaires card */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                      <Card className="bg-muted/50">
                         <CardHeader>
                           <CardTitle className="text-xl">Anniversaires</CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">Découvrez les anniversaires des membres de notre église.</p>
+                          <p className="text-muted-foreground mb-3">Découvrez les anniversaires des membres de notre église.</p>
                           <Link href="/infos-docs/anniversaires" className="text-primary hover:underline">
                             Voir les anniversaires →
                           </Link>
@@ -113,12 +113,12 @@ export default function InfosDocs() {
                       </Card>
 
                       {/* Carnet d'adresses card */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                      <Card className="bg-muted/50">
                         <CardHeader>
                           <CardTitle className="text-xl">Carnet d&apos;adresses</CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">
+                          <p className="text-muted-foreground mb-3">
                             Coordonnées des membres de notre communauté (accès réservé).
                           </p>
                           <Link href="/infos-docs/carnet-adresses" className="text-primary hover:underline">
@@ -128,12 +128,12 @@ export default function InfosDocs() {
                       </Card>
 
                       {/* Planning des Cultes card */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                      <Card className="bg-muted/50">
                         <CardHeader>
                           <CardTitle className="text-xl">📅 Planning des Cultes</CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">
+                          <p className="text-muted-foreground mb-3">
                             Organisation des services et responsabilités pour les cultes.
                           </p>
                           <Link href="/infos-docs/planning-cultes" className="text-primary hover:underline">
@@ -143,12 +143,12 @@ export default function InfosDocs() {
                       </Card>
                     </div>
 
-                    <Card className="bg-primary/5 dark:bg-primary/10 mb-8">
+                    <Card className="bg-primary/5 mb-8">
                       <CardHeader>
                         <CardTitle>L&apos;Union des Églises évangéliques libres</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-gray-700 dark:text-gray-300 mb-3">
+                        <p className="text-muted-foreground mb-3">
                           Notre église fait partie de l&apos;Union des Églises évangéliques libres de France (UEEL), née
                           en 1849. Découvrez l&apos;histoire et l&apos;héritage de cette union, ses valeurs et ses
                           relations avec d&apos;autres organisations chrétiennes.
@@ -161,12 +161,12 @@ export default function InfosDocs() {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Politique de confidentialité card */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                      <Card className="bg-muted/50">
                         <CardHeader>
                           <CardTitle className="text-xl">Politique de confidentialité</CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">
+                          <p className="text-muted-foreground mb-3">
                             Comment nous collectons, utilisons et protégeons vos données personnelles.
                           </p>
                           <Link href="/infos-docs/politique-confidentialite" className="text-primary hover:underline">
@@ -176,12 +176,12 @@ export default function InfosDocs() {
                       </Card>
 
                       {/* Mentions légales card */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50">
+                      <Card className="bg-muted/50">
                         <CardHeader>
                           <CardTitle className="text-xl">Mentions légales</CardTitle>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-gray-700 dark:text-gray-300 mb-3">
+                          <p className="text-muted-foreground mb-3">
                             Informations légales et conditions d'utilisation du site.
                           </p>
                           <Link href="/infos-docs/mentions-legales" className="text-primary hover:underline">

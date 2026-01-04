@@ -11,9 +11,9 @@ interface CalloutProps {
 export function Callout({ title, children, className, variant = "default" }: CalloutProps) {
   const variantClasses = {
     default: "bg-muted border-muted-foreground/20",
-    warning: "bg-yellow-100 border-yellow-400 dark:bg-yellow-900/20 dark:border-yellow-600/30",
-    info: "bg-blue-100 border-blue-400 dark:bg-blue-900/20 dark:border-blue-600/30",
-    success: "bg-green-100 border-green-400 dark:bg-green-900/20 dark:border-green-600/30",
+    warning: "bg-secondary/50 border-secondary",
+    info: "bg-accent border-accent-foreground/20",
+    success: "bg-primary/10 border-primary/30",
   }
 
   return (

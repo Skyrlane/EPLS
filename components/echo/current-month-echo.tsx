@@ -147,7 +147,7 @@ export function CurrentMonthEcho() {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg overflow-hidden">
+          <div className="bg-card rounded-lg shadow-lg overflow-hidden">
             <div className="flex flex-col md:flex-row">
               {/* Image à gauche */}
               <div className="md:w-1/3">
@@ -166,20 +166,20 @@ export function CurrentMonthEcho() {
 
               {/* Contenu à droite */}
               <div className="md:w-2/3 p-8">
-                <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
+                <h3 className="text-2xl font-bold text-foreground mb-2">
                   {currentEcho.title}
                 </h3>
-                <p className="text-slate-500 dark:text-gray-300 mb-4">
+                <p className="text-muted-foreground mb-4">
                   {new Date(0, currentEcho.month - 1).toLocaleDateString('fr-FR', { month: 'long' })} {currentEcho.year}
                 </p>
                 {currentEcho.description && (
-                  <p className="text-slate-700 dark:text-gray-200 mb-8">
+                  <p className="text-foreground mb-8">
                     {currentEcho.description}
                   </p>
                 )}
 
                 <div className="flex flex-wrap gap-4">
-                  <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Button asChild>
                     <a
                       href={currentEcho.pdfUrl}
                       target="_blank"
@@ -192,7 +192,7 @@ export function CurrentMonthEcho() {
                     </a>
                   </Button>
 
-                  <Button asChild variant="outline" className="border-slate-300 dark:border-slate-700 dark:text-white">
+                  <Button asChild variant="outline">
                     <Link href="/echo" className="flex items-center gap-2">
                       <ArrowRightIcon className="h-4 w-4" />
                       Archives

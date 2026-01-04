@@ -36,7 +36,7 @@ export function AdminLayoutClient({ children }: AdminLayoutClientProps) {
   return (
     <AdminGuard>
       {/* Header admin */}
-      <header className="border-b bg-white dark:bg-slate-900 sticky top-0 z-50">
+      <header className="border-b bg-card sticky top-0 z-50">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/admin" className="text-xl font-bold">
@@ -69,7 +69,7 @@ export function AdminLayoutClient({ children }: AdminLayoutClientProps) {
       </main>
 
       {/* Footer simple */}
-      <footer className="border-t bg-gray-50 dark:bg-slate-900 mt-12">
+      <footer className="border-t bg-muted mt-12">
         <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
           © {new Date().getFullYear()} EPLS - Interface d'administration
         </div>

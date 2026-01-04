@@ -14,9 +14,9 @@ export default function NotreEglise() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4 dark:text-white">Notre Église</h1>
+          <h1 className="text-4xl font-bold mb-4">Notre Église</h1>
 
           {/* Breadcrumbs */}
           <nav className="flex" aria-label="Breadcrumb">
@@ -28,8 +28,8 @@ export default function NotreEglise() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
-                  <span className="text-gray-700 dark:text-gray-200">Notre Église</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-foreground">Notre Église</span>
                 </div>
               </li>
             </ol>
@@ -49,23 +49,23 @@ export default function NotreEglise() {
             {/* Main Content */}
             <div className="lg:col-span-3">
               <div className="mb-10">
-                <h2 className="text-3xl font-semibold mb-6 dark:text-white">Bienvenue à l&apos;Église Protestante Libre de Strasbourg</h2>
+                <h2 className="text-3xl font-semibold mb-6">Bienvenue à l&apos;Église Protestante Libre de Strasbourg</h2>
                 <div className="relative w-full h-[400px] rounded-lg overflow-hidden mb-6">
-                  <DynamicImageBlock 
+                  <DynamicImageBlock
                     zone="notre-eglise-hero"
-                    fallbackSrc="/images/hero/church-hero.png" 
+                    fallbackSrc="/images/hero/church-hero.png"
                     alt="Église Protestante Libre de Strasbourg"
                     type="hero"
                     className="object-cover"
                     containerClassName="h-full"
                   />
                 </div>
-                <p className="text-lg mb-4 dark:text-gray-300">
+                <p className="text-lg mb-4 text-muted-foreground">
                   L&apos;Église Protestante Libre de Strasbourg est une communauté chrétienne vivante, enracinée dans la
                   foi biblique et ouverte à tous. Notre désir est d&apos;être un lieu où chacun peut découvrir et
                   approfondir sa relation avec Dieu dans une atmosphère chaleureuse et accueillante.
                 </p>
-                <p className="text-lg dark:text-gray-300">
+                <p className="text-lg text-muted-foreground">
                   Notre église fait partie de l&apos;Union des Églises Évangéliques Libres de France, un mouvement fondé
                   au 19ème siècle pour promouvoir une expression de la foi protestante à la fois fidèle à la Bible et
                   indépendante de l&apos;État.
@@ -78,17 +78,13 @@ export default function NotreEglise() {
                     <CardTitle>Qui sommes-nous ?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base dark:text-gray-300">
+                    <CardDescription className="text-base">
                       Découvrez notre identité, notre vision et notre mission en tant qu&apos;église chrétienne protestante et
                       évangélique.
                     </CardDescription>
                   </CardContent>
                   <CardFooter>
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full border-2 border-primary text-primary hover:bg-primary/10 dark:text-white"
-                    >
+                    <Button asChild variant="outline" className="w-full">
                       <Link href="/notre-eglise/qui-sommes-nous">En savoir plus</Link>
                     </Button>
                   </CardFooter>
@@ -99,16 +95,12 @@ export default function NotreEglise() {
                     <CardTitle>Nos valeurs</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base dark:text-gray-300">
+                    <CardDescription className="text-base">
                       Explorez les valeurs fondamentales qui guident notre vie d&apos;église et notre témoignage dans le monde.
                     </CardDescription>
                   </CardContent>
                   <CardFooter>
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full border-2 border-primary text-primary hover:bg-primary/10 dark:text-white"
-                    >
+                    <Button asChild variant="outline" className="w-full">
                       <Link href="/notre-eglise/nos-valeurs">En savoir plus</Link>
                     </Button>
                   </CardFooter>
@@ -119,22 +111,16 @@ export default function NotreEglise() {
                     <CardTitle>Où sommes-nous ?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-base dark:text-gray-300">
+                    <CardDescription className="text-base">
                       Trouvez notre lieu de culte et nos coordonnées pour nous rejoindre facilement.
                     </CardDescription>
                   </CardContent>
                   <CardFooter>
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full border-2 border-primary text-primary hover:bg-primary/10 dark:text-white"
-                    >
+                    <Button asChild variant="outline" className="w-full">
                       <Link href="/notre-eglise/ou-sommes-nous">En savoir plus</Link>
                     </Button>
                   </CardFooter>
                 </Card>
-
-                
               </div>
             </div>
           </div>

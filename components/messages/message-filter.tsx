@@ -44,7 +44,7 @@ export function MessageFilter({ themes, predicateurs, années }: MessageFilterPr
   return (
     <div className="flex flex-wrap items-center gap-4">
       <div className="w-full sm:w-auto">
-        <label htmlFor="filter-theme" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Thème</label>
+        <label htmlFor="filter-theme" className="block text-sm font-medium text-foreground">Thème</label>
         <Select value={theme || "all"} onValueChange={(value) => updateFilter("theme", value)}>
           <SelectTrigger id="filter-theme" className="w-full sm:w-[180px]">
             <SelectValue placeholder="Tous les thèmes" />
@@ -59,7 +59,7 @@ export function MessageFilter({ themes, predicateurs, années }: MessageFilterPr
       </div>
       
       <div className="w-full sm:w-auto">
-        <label htmlFor="filter-predicateur" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Prédicateur</label>
+        <label htmlFor="filter-predicateur" className="block text-sm font-medium text-foreground">Prédicateur</label>
         <Select value={predicateur || "all"} onValueChange={(value) => updateFilter("predicateur", value)}>
           <SelectTrigger id="filter-predicateur" className="w-full sm:w-[180px]">
             <SelectValue placeholder="Tous les prédicateurs" />
@@ -74,7 +74,7 @@ export function MessageFilter({ themes, predicateurs, années }: MessageFilterPr
       </div>
       
       <div className="w-full sm:w-auto">
-        <label htmlFor="filter-date" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Année</label>
+        <label htmlFor="filter-date" className="block text-sm font-medium text-foreground">Année</label>
         <Select value={année || "all"} onValueChange={(value) => updateFilter("année", value)}>
           <SelectTrigger id="filter-date" className="w-full sm:w-[180px]">
             <SelectValue placeholder="Toutes les années" />
@@ -89,7 +89,7 @@ export function MessageFilter({ themes, predicateurs, années }: MessageFilterPr
       </div>
       
       <div className="w-full sm:w-auto ml-auto">
-        <label htmlFor="filter-sort" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Trier par</label>
+        <label htmlFor="filter-sort" className="block text-sm font-medium text-foreground">Trier par</label>
         <Select value={tri} onValueChange={(value) => updateFilter("tri", value)}>
           <SelectTrigger id="filter-sort" className="w-full sm:w-[180px]">
             <SelectValue />

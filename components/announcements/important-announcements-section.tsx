@@ -100,9 +100,9 @@ export function ImportantAnnouncementsSection({
   // Loading
   if (loading) {
     return (
-      <div className={cn('w-full rounded-lg bg-muted/30 dark:bg-muted/10 backdrop-blur-sm p-6', className)}>
+      <div className={cn('w-full rounded-lg bg-muted/30 backdrop-blur-sm p-6', className)}>
         <div className="flex items-center gap-2 mb-6">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
             <BellIcon className="h-5 w-5 text-primary" />
           </div>
           <div>
@@ -121,9 +121,9 @@ export function ImportantAnnouncementsSection({
   }
 
   return (
-    <div className={cn('w-full rounded-lg bg-muted/30 dark:bg-muted/10 backdrop-blur-sm p-6', className)}>
+    <div className={cn('w-full rounded-lg bg-muted/30 backdrop-blur-sm p-6', className)}>
       <div className="flex items-center gap-2 mb-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
           <BellIcon className="h-5 w-5 text-primary" />
         </div>
         <div>

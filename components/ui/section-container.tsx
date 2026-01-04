@@ -36,13 +36,13 @@ export function SectionContainer({
       case 'white':
         return 'bg-background';
       case 'light':
-        return 'bg-muted/50 dark:bg-slate-900/50';
+        return 'bg-muted/50';
       case 'primary':
         return 'bg-primary text-primary-foreground';
       case 'secondary':
         return 'bg-secondary text-secondary-foreground';
       default:
-        return background; // Pour permettre une classe Tailwind personnalisée
+        return background; // Pour permettre une classe Tailwind personnalisee
     }
   };
 

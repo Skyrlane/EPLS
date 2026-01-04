@@ -9,31 +9,31 @@ export function Footer() {
   const { user, loading } = useAuth();
 
   return (
-    <footer className="bg-secondary/10 dark:bg-slate-900 border-t dark:border-slate-800" role="contentinfo" aria-label="Pied de page">
+    <footer className="bg-muted/50 border-t" role="contentinfo" aria-label="Pied de page">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">EPLS</h3>
-            <p className="text-muted-foreground dark:text-gray-300">
-              Église Protestante Libre de Strasbourg, une communauté chrétienne
+            <h3 className="text-lg font-semibold mb-4">EPLS</h3>
+            <p className="text-muted-foreground">
+              Eglise Protestante Libre de Strasbourg, une communaute chretienne
               accueillante et vivante.
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">Liens rapides</h3>
+            <h3 className="text-lg font-semibold mb-4">Liens rapides</h3>
             <ul className="space-y-2" role="list">
               <li>
                 <Link
                   href="/notre-eglise"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
-                  Notre église
+                  Notre eglise
                 </Link>
               </li>
               <li>
                 <Link
                   href="/culte/programme"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
                   Programme des cultes
                 </Link>
@@ -41,7 +41,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/messages"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
                   Messages
                 </Link>
@@ -49,7 +49,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
                   Contact
                 </Link>
@@ -57,28 +57,28 @@ export function Footer() {
               <li>
                 <Link
                   href="/infos-docs/mentions-legales"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
-                  Mentions légales
+                  Mentions legales
                 </Link>
               </li>
               <li>
                 <Link
                   href="/infos-docs/politique-confidentialite"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
-                  Politique de confidentialité
+                  Politique de confidentialite
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">Services</h3>
+            <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2" role="list">
               <li>
                 <Link
                   href="/culte/calendrier"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
                   Calendrier
                 </Link>
@@ -86,7 +86,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/echo"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
                   Echo - Bulletin mensuel
                 </Link>
@@ -94,7 +94,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/membres"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
                   Espace membres
                 </Link>
@@ -102,7 +102,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/galerie"
-                  className="text-muted-foreground hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                  className="text-muted-foreground hover:text-primary"
                 >
                   Galerie photos
                 </Link>
@@ -110,7 +110,7 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">
+            <h3 className="text-lg font-semibold mb-4">
               {user ? "Mon compte" : "Connexion"}
             </h3>
             {loading ? (
@@ -133,11 +133,11 @@ export function Footer() {
               </Link>
             )}
             <div className="mt-6">
-              <h3 className="text-lg font-semibold mb-4 dark:text-white">Nous suivre</h3>
+              <h3 className="text-lg font-semibold mb-4">Nous suivre</h3>
               <div className="flex space-x-4">
                 <a
                   href="#"
-                  className="text-foreground hover:text-primary dark:text-gray-200"
+                  className="text-foreground hover:text-primary"
                   aria-label="Facebook"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -160,7 +160,7 @@ export function Footer() {
                 </a>
                 <a
                   href="#"
-                  className="text-foreground hover:text-primary dark:text-gray-200"
+                  className="text-foreground hover:text-primary"
                   aria-label="YouTube"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -186,28 +186,28 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t dark:border-slate-800 pt-8 mt-8">
+        <div className="border-t pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between">
-            <p className="text-sm text-muted-foreground dark:text-gray-400">
-              &copy; {currentYear} Église Protestante Libre de Strasbourg - Tous
-              droits réservés.
+            <p className="text-sm text-muted-foreground">
+              &copy; {currentYear} Eglise Protestante Libre de Strasbourg - Tous
+              droits reserves.
             </p>
             <div className="mt-4 md:mt-0">
-              <ul className="flex flex-wrap gap-4 text-sm text-muted-foreground dark:text-gray-400" role="list">
+              <ul className="flex flex-wrap gap-4 text-sm text-muted-foreground" role="list">
                 <li>
                   <Link
                     href="/infos-docs/mentions-legales"
-                    className="hover:text-primary dark:hover:text-primary"
+                    className="hover:text-primary"
                   >
-                    Mentions légales
+                    Mentions legales
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/infos-docs/politique-confidentialite"
-                    className="hover:text-primary dark:hover:text-primary"
+                    className="hover:text-primary"
                   >
-                    Politique de confidentialité
+                    Politique de confidentialite
                   </Link>
                 </li>
               </ul>
@@ -217,4 +217,4 @@ export function Footer() {
       </div>
     </footer>
   );
-} 
+}

@@ -60,7 +60,7 @@ export function BlogArticleHeader({ article }: BlogArticleHeaderProps) {
   return (
     <header className="relative">
       {/* Image de couverture - Hero responsive */}
-      <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] bg-gray-100 dark:bg-gray-800">
+      <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] bg-muted">
         {article.coverImageUrl && (
           <Image
             src={article.coverImageUrl}
@@ -92,13 +92,13 @@ export function BlogArticleHeader({ article }: BlogArticleHeaderProps) {
           </div>
           
           {/* Titre - Centré sur fond blanc/noir semi-transparent */}
-          <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-gray-900 dark:text-white mb-6 leading-tight">
+          <div className="bg-background/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-foreground mb-6 leading-tight">
               {article.title}
             </h1>
             
             {/* Métadonnées - Centrées */}
-            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm text-gray-600 dark:text-gray-400 mb-6">
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm text-muted-foreground mb-6">
               <div className="flex items-center gap-2">
                 <span className="font-medium">{article.author}</span>
               </div>
@@ -117,7 +117,7 @@ export function BlogArticleHeader({ article }: BlogArticleHeaderProps) {
             {/* Passage biblique si présent */}
             {article.biblicalReference && (
               <div className="text-center mb-6">
-                <span className="inline-block px-4 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm font-medium">
+                <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-medium">
                   📖 {article.biblicalReference}
                 </span>
               </div>
@@ -125,16 +125,16 @@ export function BlogArticleHeader({ article }: BlogArticleHeaderProps) {
             
             {/* Résumé/Extrait si présent */}
             {article.excerpt && (
-              <p className="text-lg text-center text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto mb-6">
+              <p className="text-lg text-center text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6">
                 {article.excerpt}
               </p>
             )}
             
             {/* Boutons de partage */}
-            <div className="flex justify-center gap-3 pt-6 border-t border-gray-200 dark:border-gray-700 relative">
+            <div className="flex justify-center gap-3 pt-6 border-t border-border relative">
               <button
                 onClick={() => setShowShareMenu(!showShareMenu)}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-muted hover:bg-muted/80 rounded-lg transition-colors"
               >
                 <Share2 className="w-4 h-4" />
                 <span className="text-sm font-medium">Partager</span>
@@ -142,34 +142,34 @@ export function BlogArticleHeader({ article }: BlogArticleHeaderProps) {
               
               {/* Menu de partage */}
               {showShareMenu && (
-                <div className="absolute top-full mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-2 flex gap-2 z-20">
+                <div className="absolute top-full mt-2 bg-card rounded-lg shadow-xl border border-border p-2 flex gap-2 z-20">
                   <button
                     onClick={() => handleShare('facebook')}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    className="p-2 hover:bg-muted rounded-lg transition-colors"
                     title="Partager sur Facebook"
                   >
                     <Facebook className="w-5 h-5 text-blue-600" />
                   </button>
                   <button
                     onClick={() => handleShare('twitter')}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    className="p-2 hover:bg-muted rounded-lg transition-colors"
                     title="Partager sur Twitter"
                   >
                     <Twitter className="w-5 h-5 text-sky-500" />
                   </button>
                   <button
                     onClick={() => handleShare('email')}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    className="p-2 hover:bg-muted rounded-lg transition-colors"
                     title="Partager par email"
                   >
-                    <Mail className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                    <Mail className="w-5 h-5 text-muted-foreground" />
                   </button>
                   <button
                     onClick={() => handleShare('copy')}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    className="p-2 hover:bg-muted rounded-lg transition-colors"
                     title="Copier le lien"
                   >
-                    <Link2 className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                    <Link2 className="w-5 h-5 text-muted-foreground" />
                   </button>
                 </div>
               )}

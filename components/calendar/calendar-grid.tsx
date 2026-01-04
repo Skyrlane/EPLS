@@ -160,8 +160,8 @@ export function CalendarGrid({
               !isCurrentMonth && "text-muted-foreground opacity-50",
               isSelectedDay && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
               isCurrentDay && !isSelectedDay && "border border-primary text-primary",
-              (hasEvent || isMarkedDay) && !isSelectedDay && "ring-1 ring-blue-400 dark:ring-blue-600",
-              (hasEvent || isMarkedDay) && "hover:bg-blue-50 dark:hover:bg-blue-900/50"
+              (hasEvent || isMarkedDay) && !isSelectedDay && "ring-1 ring-primary/50",
+              (hasEvent || isMarkedDay) && "hover:bg-primary/10"
             )}
             onClick={() => {
               onSelectDate(day);

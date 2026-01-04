@@ -156,7 +156,7 @@ export function EchoArchivesPage() {
                   .map(echo => (
                     <div
                       key={echo.id}
-                      className="border-l-4 border-primary pl-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors rounded-r"
+                      className="border-l-4 border-primary pl-4 py-3 hover:bg-muted transition-colors rounded-r"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1">
@@ -165,7 +165,7 @@ export function EchoArchivesPage() {
                             {new Date(0, echo.month - 1).toLocaleDateString('fr-FR', { month: 'long' })} {echo.year}
                           </p>
                           {echo.description && (
-                            <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 line-clamp-2">
+                            <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
                               {echo.description}
                             </p>
                           )}

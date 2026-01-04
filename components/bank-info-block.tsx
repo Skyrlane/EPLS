@@ -15,15 +15,15 @@ interface BankInfoBlockProps {
  */
 export function BankInfoBlock({ title, iban, bic, className }: BankInfoBlockProps) {
   return (
-    <div 
+    <div
       className={cn(
-        "bg-slate-50 dark:bg-slate-800 dark:border dark:border-slate-700 p-4 rounded-md mb-4",
+        "bg-muted border border-border p-4 rounded-md mb-4",
         className
       )}
     >
-      <p className="font-medium dark:font-semibold dark:text-white">{title}</p>
-      <p className="dark:text-gray-100">IBAN : {iban}</p>
-      <p className="dark:text-gray-100">BIC : {bic}</p>
+      <p className="font-semibold text-foreground">{title}</p>
+      <p className="text-foreground">IBAN : {iban}</p>
+      <p className="text-foreground">BIC : {bic}</p>
     </div>
   )
 } 

@@ -49,17 +49,14 @@ export function AuthButton({ variant = "desktop", onAction }: AuthButtonProps) {
 
   // État de chargement
   if (loading) {
-    return <div className="h-10 w-24 animate-pulse bg-gray-200 dark:bg-gray-700 rounded" />;
+    return <div className="h-10 w-24 animate-pulse bg-muted rounded" />;
   }
 
   // Visiteur non connecté
   if (!user) {
     if (variant === "mobile") {
       return (
-        <Button
-          asChild
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground dark:text-white"
-        >
+        <Button asChild className="w-full">
           <Link href="/connexion" onClick={onAction}>
             Connexion
           </Link>
@@ -68,7 +65,7 @@ export function AuthButton({ variant = "desktop", onAction }: AuthButtonProps) {
     }
 
     return (
-      <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground dark:text-white">
+      <Button asChild>
         <Link href="/connexion">Connexion</Link>
       </Button>
     );
@@ -92,7 +89,7 @@ export function AuthButton({ variant = "desktop", onAction }: AuthButtonProps) {
           <Button
             asChild
             variant="outline"
-            className="w-full justify-start gap-2 dark:text-gray-100 dark:border-gray-600 dark:hover:bg-slate-800"
+            className="w-full justify-start gap-2"
           >
             <Link href="/admin" onClick={onAction}>
               <Shield className="h-4 w-4" />
@@ -105,7 +102,7 @@ export function AuthButton({ variant = "desktop", onAction }: AuthButtonProps) {
         <Button
           asChild
           variant="ghost"
-          className="w-full justify-start gap-2 dark:text-gray-100 dark:hover:bg-slate-800"
+          className="w-full justify-start gap-2"
         >
           <Link href="/profil" onClick={onAction}>
             <User className="h-4 w-4" />
@@ -120,7 +117,7 @@ export function AuthButton({ variant = "desktop", onAction }: AuthButtonProps) {
             onAction?.();
           }}
           variant="outline"
-          className="w-full justify-start gap-2 text-red-600 dark:text-red-400 dark:border-gray-600 dark:hover:bg-slate-800"
+          className="w-full justify-start gap-2 text-destructive"
         >
           <LogOut className="h-4 w-4" />
           Déconnexion
@@ -134,7 +131,7 @@ export function AuthButton({ variant = "desktop", onAction }: AuthButtonProps) {
     <div className="flex items-center gap-3">
       {/* Bouton "Espace Administrateur" pour les admins */}
       {isAdmin && (
-        <Button asChild variant="outline" className="gap-2 dark:text-gray-100 dark:border-gray-600">
+        <Button asChild variant="outline" className="gap-2">
           <Link href="/admin">
             <Shield className="h-4 w-4" />
             Espace Administrateur
@@ -167,7 +164,7 @@ export function AuthButton({ variant = "desktop", onAction }: AuthButtonProps) {
               <p className="font-medium text-sm">{displayName}</p>
               <p className="text-xs text-muted-foreground">{user.email}</p>
               {isAdmin && (
-                <span className="inline-flex items-center gap-1 text-xs text-green-600 dark:text-green-400">
+                <span className="inline-flex items-center gap-1 text-xs text-primary">
                   <Shield className="h-3 w-3" />
                   Administrateur
                 </span>
@@ -200,7 +197,7 @@ export function AuthButton({ variant = "desktop", onAction }: AuthButtonProps) {
           {/* Déconnexion */}
           <DropdownMenuItem
             onClick={handleLogout}
-            className="cursor-pointer text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
+            className="cursor-pointer text-destructive focus:text-destructive"
           >
             <LogOut className="mr-2 h-4 w-4" />
             Déconnexion

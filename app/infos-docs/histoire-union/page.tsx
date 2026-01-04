@@ -38,7 +38,7 @@ export default function HistoireUnionPage() {
               <li>
                 <div className="flex items-center">
                   <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">Histoire de l&apos;Union</span>
+                  <span className="text-muted-foreground">Histoire de l&apos;Union</span>
                 </div>
               </li>
             </ol>
@@ -194,7 +194,7 @@ export default function HistoireUnionPage() {
                 </Tabs>
 
                 <div className="mt-8 text-center">
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  <p className="text-muted-foreground mb-4">
                     Pour en savoir plus sur l&apos;Union des Églises Évangéliques Libres de France, vous pouvez visiter le
                     site officiel :
                   </p>

@@ -39,72 +39,72 @@ export const PlanningTableStatic = memo(function PlanningTableStatic({
 
       {/* Vue desktop */}
       <div className="hidden md:block overflow-x-auto">
-        <table className="w-full border-collapse border border-gray-200 dark:border-gray-700">
+        <table className="w-full border-collapse border border-border">
           <thead>
-            <tr className="bg-slate-100 dark:bg-slate-800">
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+            <tr className="bg-muted">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Date
               </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Présidence
               </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Musique
               </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Prédicateur
               </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Groupe EDD
               </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Accueil
               </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Projection
               </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Zoom
               </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Ménage
               </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-left text-sm font-semibold">
+              <th className="border border-border px-3 py-2 text-left text-sm font-semibold">
                 Observations
               </th>
             </tr>
           </thead>
           <tbody>
             {planningRows.map((row, index) => (
-              <tr key={index} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                <td className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm font-medium">
+              <tr key={index} className="hover:bg-muted/50">
+                <td className="border border-border px-3 py-2 text-sm font-medium">
                   {row.date}
                 </td>
-                <td className={`border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm ${!row.presidence ? 'bg-amber-50 dark:bg-amber-900/20' : ''}`}>
+                <td className={`border border-border px-3 py-2 text-sm ${!row.presidence ? 'bg-secondary/30' : ''}`}>
                   {row.presidence || '-'}
                 </td>
-                <td className={`border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm ${!row.musique ? 'bg-amber-50 dark:bg-amber-900/20' : ''}`}>
+                <td className={`border border-border px-3 py-2 text-sm ${!row.musique ? 'bg-secondary/30' : ''}`}>
                   {row.musique || '-'}
                 </td>
-                <td className={`border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm ${!row.predicateur ? 'bg-amber-50 dark:bg-amber-900/20' : ''}`}>
+                <td className={`border border-border px-3 py-2 text-sm ${!row.predicateur ? 'bg-secondary/30' : ''}`}>
                   {row.predicateur || '-'}
                 </td>
-                <td className={`border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm ${!row.groupeEDD ? 'bg-amber-50 dark:bg-amber-900/20' : ''}`}>
+                <td className={`border border-border px-3 py-2 text-sm ${!row.groupeEDD ? 'bg-secondary/30' : ''}`}>
                   {row.groupeEDD || '-'}
                 </td>
-                <td className={`border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm ${!row.accueil ? 'bg-amber-50 dark:bg-amber-900/20' : ''}`}>
+                <td className={`border border-border px-3 py-2 text-sm ${!row.accueil ? 'bg-secondary/30' : ''}`}>
                   {row.accueil || '-'}
                 </td>
-                <td className={`border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm ${!row.projection ? 'bg-amber-50 dark:bg-amber-900/20' : ''}`}>
+                <td className={`border border-border px-3 py-2 text-sm ${!row.projection ? 'bg-secondary/30' : ''}`}>
                   {row.projection || '-'}
                 </td>
-                <td className={`border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm ${!row.zoom ? 'bg-amber-50 dark:bg-amber-900/20' : ''}`}>
+                <td className={`border border-border px-3 py-2 text-sm ${!row.zoom ? 'bg-secondary/30' : ''}`}>
                   {row.zoom || '-'}
                 </td>
-                <td className={`border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm ${!row.menage ? 'bg-amber-50 dark:bg-amber-900/20' : ''}`}>
+                <td className={`border border-border px-3 py-2 text-sm ${!row.menage ? 'bg-secondary/30' : ''}`}>
                   {row.menage || '-'}
                 </td>
-                <td className="border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm">
+                <td className="border border-border px-3 py-2 text-sm">
                   {row.observations || '-'}
                 </td>
               </tr>

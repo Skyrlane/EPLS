@@ -13,9 +13,9 @@ export default function QuiSommesNous() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4 dark:text-white">Qui sommes-nous ?</h1>
+          <h1 className="text-4xl font-bold mb-4">Qui sommes-nous ?</h1>
 
           {/* Breadcrumbs */}
           <nav className="flex" aria-label="Breadcrumb">
@@ -27,7 +27,7 @@ export default function QuiSommesNous() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/notre-eglise" className="text-primary hover:text-primary/80">
                     Notre Église
                   </Link>
@@ -35,8 +35,8 @@ export default function QuiSommesNous() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
-                  <span className="text-gray-700 dark:text-gray-200">Qui sommes-nous</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">Qui sommes-nous</span>
                 </div>
               </li>
             </ol>
@@ -58,14 +58,14 @@ export default function QuiSommesNous() {
               {/* En-tête avec horaires */}
               <Card className="mb-10 border-primary/30 bg-primary/5">
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-bold mb-4 text-primary dark:text-white">Culte le dimanche à 10h00</h2>
+                  <h2 className="text-2xl font-bold mb-4 text-primary">Culte le dimanche à 10h00</h2>
                   <div className="flex flex-col gap-3">
                     <div className="flex items-start gap-2">
                       <MapPin className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="font-medium dark:text-gray-100">À l&apos;église Saint-Marc</p>
-                        <p className="text-gray-700 dark:text-gray-300">18 rue de Franche-Comté</p>
-                        <p className="text-gray-700 dark:text-gray-300">67380 Lingolsheim</p>
+                        <p className="font-medium">À l&apos;église Saint-Marc</p>
+                        <p className="text-muted-foreground">18 rue de Franche-Comté</p>
+                        <p className="text-muted-foreground">67380 Lingolsheim</p>
                       </div>
                     </div>
                   </div>
@@ -74,22 +74,22 @@ export default function QuiSommesNous() {
 
               {/* La devise de l'Union */}
               <div className="mb-12">
-                <h2 className="text-3xl font-semibold mb-6 dark:text-white">La devise de l&apos;Union</h2>
-                <Card className="bg-slate-50 dark:bg-slate-800/50">
+                <h2 className="text-3xl font-semibold mb-6">La devise de l&apos;Union</h2>
+                <Card className="bg-muted/50">
                   <CardContent className="p-8 text-center">
-                    <p className="text-xl font-semibold mb-2 text-primary dark:text-white">
+                    <p className="text-xl font-semibold mb-2 text-primary">
                       Dans les choses essentielles, fidélité
                     </p>
-                    <p className="text-xl font-semibold mb-2 text-primary dark:text-white">
+                    <p className="text-xl font-semibold mb-2 text-primary">
                       Dans les choses secondaires, liberté
                     </p>
-                    <p className="text-xl font-semibold text-primary dark:text-white">
+                    <p className="text-xl font-semibold text-primary">
                       En toutes choses charité
                     </p>
                   </CardContent>
                 </Card>
                 <div className="mt-4">
-                  <p className="text-gray-700 dark:text-gray-300 mb-2">
+                  <p className="text-muted-foreground mb-2">
                     <strong>Historique de l&apos;Union des Églises Évangéliques libres :</strong>
                   </p>
                   <Link
@@ -105,9 +105,9 @@ export default function QuiSommesNous() {
 
               {/* Déclaration de foi de l'UEEL */}
               <div className="mb-12">
-                <h2 className="text-3xl font-semibold mb-6 dark:text-white">Déclaration de foi de l&apos;UEEL</h2>
+                <h2 className="text-3xl font-semibold mb-6">Déclaration de foi de l&apos;UEEL</h2>
                 <Card>
-                  <CardContent className="p-6 space-y-4 dark:text-gray-100">
+                  <CardContent className="p-6 space-y-4">
                     <p>
                       Dieu, après avoir parlé au peuple d&apos;Israël par ses prophètes, s&apos;est révélé parfaitement en
                       son Fils Jésus-Christ. La Bible est l&apos;expression infaillible de cette révélation. Fondés sur
@@ -154,8 +154,8 @@ export default function QuiSommesNous() {
                       promesse, de nouveaux cieux et une nouvelle terre où la justice habitera. Telle est notre espérance.
                     </p>
 
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-primary p-4 mt-6">
-                      <p className="text-sm font-medium dark:text-gray-100">
+                    <div className="bg-primary/10 border-l-4 border-primary p-4 mt-6">
+                      <p className="text-sm font-medium">
                         Notre Union d&apos;Églises est membre :<br />
                         • de la Fédération Protestante de France (FPF)<br />
                         • du Conseil National des Évangéliques de France (CNEF)
@@ -167,12 +167,12 @@ export default function QuiSommesNous() {
 
               {/* PLV, le magazine */}
               <div className="mb-12">
-                <h2 className="text-3xl font-semibold mb-6 dark:text-white">PLV, le magazine</h2>
+                <h2 className="text-3xl font-semibold mb-6">PLV, le magazine</h2>
                 <Card className="border-primary/30">
                   <CardHeader>
                     <CardTitle>PLV, le magazine en ligne des Églises évangéliques libres !</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4 dark:text-gray-100">
+                  <CardContent className="space-y-4">
                     <blockquote className="border-l-4 border-primary pl-4 italic">
                       &quot;Nous n&apos;avons pas de puissance contre la vérité, nous n&apos;en avons que pour la vérité&quot;
                       <br />
@@ -197,13 +197,13 @@ export default function QuiSommesNous() {
 
               {/* Relations */}
               <div className="mb-12">
-                <h2 className="text-3xl font-semibold mb-6 dark:text-white">Relations</h2>
+                <h2 className="text-3xl font-semibold mb-6">Relations</h2>
                 <div className="space-y-6">
                   <Card>
                     <CardHeader>
                       <CardTitle>Notre Église est membre :</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-2 dark:text-gray-100">
+                    <CardContent className="space-y-2">
                       <p>• de l&apos;Union des Églises Évangéliques Libres de France (UEEL)</p>
                       <p>• du Conseil National des Évangéliques de France (CNEF)</p>
                     </CardContent>
@@ -213,7 +213,7 @@ export default function QuiSommesNous() {
                     <CardHeader>
                       <CardTitle>Partenariats locaux</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p className="mb-4">
                         La CPS réunit principalement des paroisses luthériennes et réformées (UEPAL) ainsi que quelques
                         Églises évangéliques de la métropole strasbourgeoise.
@@ -223,8 +223,8 @@ export default function QuiSommesNous() {
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-slate-50 dark:bg-slate-800/50">
-                    <CardContent className="p-6 dark:text-gray-100">
+                  <Card className="bg-muted/50">
+                    <CardContent className="p-6">
                       <p className="font-medium mb-2">Notre Union d&apos;Églises est membre :</p>
                       <p>• de la Fédération Protestante de France (FPF)</p>
                       <p>• du Conseil National des Évangéliques de France (CNEF)</p>
@@ -240,7 +240,7 @@ export default function QuiSommesNous() {
                     <CardTitle>Nos valeurs</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-4 dark:text-gray-300">
+                    <p className="mb-4">
                       Découvrez ce qui nous caractérise en tant qu&apos;église protestante, évangélique et libre.
                     </p>
                     <Link href="/notre-eglise/nos-valeurs" className="text-primary hover:underline">
@@ -254,7 +254,7 @@ export default function QuiSommesNous() {
                     <CardTitle>Où sommes-nous ?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-4 dark:text-gray-300">
+                    <p className="mb-4">
                       Trouvez notre lieu de culte et nos coordonnées pour nous rejoindre facilement.
                     </p>
                     <Link href="/notre-eglise/ou-sommes-nous" className="text-primary hover:underline">
@@ -268,7 +268,7 @@ export default function QuiSommesNous() {
                     <CardTitle>Nous contacter</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-4 dark:text-gray-300">
+                    <p className="mb-4">
                       Une question ? Envie de nous rencontrer ? N&apos;hésitez pas à nous écrire.
                     </p>
                     <Link href="/contact" className="text-primary hover:underline">

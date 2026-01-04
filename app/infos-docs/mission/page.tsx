@@ -72,7 +72,7 @@ export default async function MissionPage() {
               <li>
                 <div className="flex items-center">
                   <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">La Mission</span>
+                  <span className="text-muted-foreground">La Mission</span>
                 </div>
               </li>
             </ol>
@@ -159,7 +159,7 @@ export default async function MissionPage() {
                       <p className="mb-4 text-sm text-muted-foreground">
                         Journée de la Mission 2021
                       </p>
-                      <div className="aspect-video rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800">
+                      <div className="aspect-video rounded-lg overflow-hidden bg-muted">
                         <video
                           className="w-full h-full object-contain"
                           controls

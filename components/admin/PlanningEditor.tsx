@@ -119,7 +119,7 @@ export function PlanningEditor({ planning, onUpdate }: PlanningEditorProps) {
       {/* Tableau */}
       <div className="overflow-x-auto border rounded-lg">
         <table className="w-full text-sm">
-          <thead className="bg-slate-100 dark:bg-slate-800">
+          <thead className="bg-muted">
             <tr>
               <th className="px-3 py-2 text-left">Date</th>
               <th className="px-3 py-2 text-left">Présidence</th>
@@ -136,7 +136,7 @@ export function PlanningEditor({ planning, onUpdate }: PlanningEditorProps) {
           </thead>
           <tbody>
             {planning.rows.map((row, index) => (
-              <tr key={index} className="border-t hover:bg-slate-50 dark:hover:bg-slate-800/50">
+              <tr key={index} className="border-t hover:bg-muted/50">
                 <td className="px-3 py-2 font-medium">{row.date}</td>
                 <td className="px-3 py-2">{row.presidence || "-"}</td>
                 <td className="px-3 py-2">{row.musique || "-"}</td>

@@ -349,14 +349,14 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
 
           {/* Status de validation */}
           {youtubeId && !fetchingMetadata && (
-            <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+            <div className="flex items-center gap-2 text-sm text-green-600">
               <CheckCircle className="h-4 w-4" />
               <span>URL YouTube valide</span>
             </div>
           )}
 
           {youtubeUrl && !youtubeId && (
-            <div className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
+            <div className="flex items-center gap-2 text-sm text-destructive">
               <AlertCircle className="h-4 w-4" />
               <span>URL YouTube invalide</span>
             </div>
@@ -370,7 +370,7 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
           )}
 
           {fetchError && (
-            <div className="text-sm text-amber-600 dark:text-amber-400">
+            <div className="text-sm text-secondary-foreground">
               {fetchError}
             </div>
           )}
@@ -450,7 +450,7 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
                 )}
               </div>
               {customThumbnailPreview && (
-                <p className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
+                <p className="text-xs text-green-600 flex items-center gap-1">
                   <CheckCircle className="h-3 w-3" />
                   Miniature personnalisée sélectionnée
                 </p>
@@ -478,9 +478,9 @@ export function MessageForm({ message, onSaved, onCancel }: MessageFormProps) {
 
             {/* Info */}
             {!customThumbnailPreview && (
-              <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-                <p className="text-sm text-blue-800 dark:text-blue-200">
-                  💡 Si vous n'uploadez pas de miniature personnalisée, 
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-3">
+                <p className="text-sm text-foreground">
+                  💡 Si vous n'uploadez pas de miniature personnalisée,
                   la miniature YouTube sera utilisée automatiquement.
                 </p>
               </div>

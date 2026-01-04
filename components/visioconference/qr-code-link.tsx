@@ -31,7 +31,7 @@ export function VisioconferenceLink({
       <CardContent className="flex flex-col items-center">
         <p className="mb-4 text-sm text-muted-foreground">{description}</p>
         
-        <div className="p-4 bg-white dark:bg-white rounded-lg mb-4 shadow-sm">
+        <div className="p-4 bg-white rounded-lg mb-4 shadow-sm">
           <QRCode 
             value={meetingUrl}
             size={180}

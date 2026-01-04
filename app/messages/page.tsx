@@ -163,13 +163,13 @@ export default async function MessagesPage() {
               <p className="text-muted-foreground text-lg">
                 Aucun message disponible pour le moment.
               </p>
-              <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 max-w-2xl mx-auto text-left">
-                <p className="text-sm text-blue-800 dark:text-blue-200 font-semibold mb-2">
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 max-w-2xl mx-auto text-left">
+                <p className="text-sm text-foreground font-semibold mb-2">
                   ℹ️ Configuration requise
                 </p>
-                <p className="text-sm text-blue-800 dark:text-blue-200">
+                <p className="text-sm text-foreground">
                   Si vous venez de déployer le site, vous devez créer un index Firestore.
-                  Consultez le fichier <code className="bg-blue-100 dark:bg-blue-900 px-1 rounded">FIREBASE_INDEX_INSTRUCTIONS.md</code> dans le code source.
+                  Consultez le fichier <code className="bg-primary/20 px-1 rounded">FIREBASE_INDEX_INSTRUCTIONS.md</code> dans le code source.
                 </p>
               </div>
             </CardContent>

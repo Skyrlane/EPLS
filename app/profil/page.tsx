@@ -49,7 +49,7 @@ export default function ProfilPage() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-4">
             <Button variant="ghost" size="sm" asChild>
@@ -70,8 +70,8 @@ export default function ProfilPage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-400">/</span>
-                  <span className="text-gray-700 dark:text-gray-200">Mon Profil</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">Mon Profil</span>
                 </div>
               </li>
             </ol>

@@ -135,8 +135,8 @@ export function CalendarMiniWithEvents({ currentMonth = new Date() }: CalendarMi
                 isCurrentDay
                   ? "border-primary/70 ring-1 ring-primary bg-primary/5"
                   : hasEvents
-                  ? "border-blue-300 text-blue-600 font-medium cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950/20"
-                  : "border-gray-200"
+                  ? "border-primary/50 text-primary font-medium cursor-pointer hover:bg-primary/10"
+                  : "border-border"
               }`}
             >
               <span className={`text-sm ${isCurrentDay ? "font-bold" : ""}`}>

@@ -38,7 +38,7 @@ export default function EvePage() {
               <li>
                 <div className="flex items-center">
                   <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">EVE</span>
+                  <span className="text-muted-foreground">EVE</span>
                 </div>
               </li>
             </ol>
@@ -139,24 +139,24 @@ export default function EvePage() {
                           Vos dons permettent de financer nos actions. Vous pouvez faire un don
                           ponctuel ou régulier :
                         </p>
-                        <div className="bg-slate-50 dark:bg-slate-800 dark:border dark:border-slate-700 p-4 rounded-md mb-4">
-                          <p className="font-semibold dark:text-white mb-3">Titulaire du compte :</p>
-                          <p className="dark:text-gray-100 mb-3">
+                        <div className="bg-muted border border-border p-4 rounded-md mb-4">
+                          <p className="font-semibold mb-3">Titulaire du compte :</p>
+                          <p className=" mb-3">
                             <strong>EAU VIVE ESPOIR</strong><br />
                             18 Rue de Franche-Comté<br />
                             67380 Lingolsheim
                           </p>
                           
-                          <p className="font-semibold dark:text-white mb-2">Coordonnées bancaires :</p>
-                          <p className="dark:text-gray-100 font-mono text-sm mb-1">
+                          <p className="font-semibold mb-2">Coordonnées bancaires :</p>
+                          <p className=" font-mono text-sm mb-1">
                             <strong>IBAN :</strong> FR76 1027 8012 0000 0202 0230 165
                           </p>
-                          <p className="dark:text-gray-100 font-mono text-sm mb-3">
+                          <p className=" font-mono text-sm mb-3">
                             <strong>BIC :</strong> CMCIFR2A
                           </p>
                           
-                          <p className="font-semibold dark:text-white mb-2">Établissement bancaire :</p>
-                          <p className="dark:text-gray-100 text-sm">
+                          <p className="font-semibold mb-2">Établissement bancaire :</p>
+                          <p className=" text-sm">
                             CCM PLAINE DE L&apos;ILL<br />
                             50 RUE DU GAL DE GAULLE<br />
                             CS 70023<br />

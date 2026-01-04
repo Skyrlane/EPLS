@@ -158,7 +158,7 @@ export default async function ArticlePage({ params }: PageProps) {
     });
 
     return (
-      <article className="min-h-screen bg-white dark:bg-gray-950">
+      <article className="min-h-screen bg-background">
         {/* Header */}
         <BlogArticleHeader article={article} />
         
@@ -180,7 +180,7 @@ export default async function ArticlePage({ params }: PageProps) {
             />
             
             {/* Séparateur */}
-            <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+            <div className="mt-16 pt-8 border-t border-border">
               
               {/* Info auteur */}
               <div className="flex items-center gap-4 mb-8">
@@ -188,8 +188,8 @@ export default async function ArticlePage({ params }: PageProps) {
                   {article.author.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-900 dark:text-white">{article.author}</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="font-semibold text-foreground">{article.author}</p>
+                  <p className="text-sm text-muted-foreground">
                     Publié le {article.publishedAt?.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </p>
                 </div>
@@ -215,10 +215,10 @@ export default async function ArticlePage({ params }: PageProps) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-4xl font-bold text-foreground mb-4">
             Erreur de chargement
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-8">
+          <p className="text-muted-foreground mb-8">
             Impossible de charger cet article. Il est peut-être en cours de modification.
           </p>
           <Link

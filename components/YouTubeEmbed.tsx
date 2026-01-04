@@ -23,17 +23,17 @@ function extractYouTubeId(url: string): string | null {
  */
 export function YouTubeEmbed({ url, title = "Vidéo YouTube", className = "" }: YouTubeEmbedProps) {
   const videoId = extractYouTubeId(url);
-  
+
   if (!videoId) {
     return (
-      <div className={`bg-slate-100 dark:bg-slate-800 rounded-lg p-8 text-center ${className}`}>
+      <div className={`bg-muted rounded-lg p-8 text-center ${className}`}>
         <p className="text-muted-foreground">URL YouTube invalide</p>
       </div>
     );
   }
 
   return (
-    <div className={`aspect-video rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 ${className}`}>
+    <div className={`aspect-video rounded-lg overflow-hidden bg-muted ${className}`}>
       <iframe
         className="w-full h-full"
         src={`https://www.youtube.com/embed/${videoId}`}

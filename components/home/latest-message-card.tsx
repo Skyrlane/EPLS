@@ -1,5 +1,4 @@
 import Link from "next/link";
-// Image standard pour miniatures YouTube (bypass Next.js optimization)
 import { PlayCircleIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,8 +28,7 @@ interface LatestMessageCardProps {
 export function LatestMessageCard({ message, className }: LatestMessageCardProps) {
   return (
     <div className={cn(
-      "overflow-hidden rounded-lg border border-border shadow-sm transition-all duration-300 card-hover",
-      "dark:bg-slate-900 dark:border-slate-800",
+      "overflow-hidden rounded-lg border bg-card shadow-sm transition-all duration-300 card-hover",
       className
     )}>
       <Link href={`/messages/${message.id}`} className="relative block">
@@ -48,26 +46,26 @@ export function LatestMessageCard({ message, className }: LatestMessageCardProps
           </div>
         </div>
       </Link>
-      <div className="p-4 bg-white dark:bg-slate-900">
+      <div className="p-4 bg-card">
         <div className="mb-2 flex flex-wrap items-center gap-2">
           {message.series && (
-            <Badge variant="secondary" className="dark:bg-primary/20 dark:text-primary-foreground">
+            <Badge variant="secondary">
               {message.series}
             </Badge>
           )}
-          <time className="text-sm text-muted-foreground dark:text-gray-300">
+          <time className="text-sm text-muted-foreground">
             {message.date}
           </time>
         </div>
-        <Link 
-          href={`/messages/${message.id}`} 
+        <Link
+          href={`/messages/${message.id}`}
           className="hover:text-primary no-underline group"
         >
-          <h3 className="mb-2 line-clamp-1 text-xl font-semibold dark:text-white group-hover:text-primary">
+          <h3 className="mb-2 line-clamp-1 text-xl font-semibold group-hover:text-primary">
             {message.title}
           </h3>
         </Link>
-        <p className="mb-4 line-clamp-2 text-muted-foreground dark:text-gray-300">
+        <p className="mb-4 line-clamp-2 text-muted-foreground">
           {message.description}
         </p>
         <div className="flex items-center justify-between">
@@ -79,14 +77,14 @@ export function LatestMessageCard({ message, className }: LatestMessageCardProps
                 <AvatarFallback>{message.speaker.name.charAt(0)}</AvatarFallback>
               )}
             </Avatar>
-            <span className="text-sm font-medium dark:text-gray-200">
+            <span className="text-sm font-medium">
               {message.speaker.name}
             </span>
           </div>
           <Button variant="outline" size="sm" asChild>
-            <Link 
-              href={`/messages/${message.id}`} 
-              className="flex items-center gap-1 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+            <Link
+              href={`/messages/${message.id}`}
+              className="flex items-center gap-1"
             >
               <PlayCircleIcon className="h-4 w-4" />
               Voir
@@ -96,4 +94,4 @@ export function LatestMessageCard({ message, className }: LatestMessageCardProps
       </div>
     </div>
   );
-} 
+}

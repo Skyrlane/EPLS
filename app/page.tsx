@@ -155,7 +155,7 @@ const latestNews = [
 
 function EventCard({ event }: { event: any }) {
   return (
-    <Card className="overflow-hidden dark:bg-slate-900 dark:border-slate-800 card-hover">
+    <Card className="overflow-hidden card-hover">
       <div className="relative h-40">
         <ImageBlock
           src={event.imageUrl || "/images/placeholder.jpg"}
@@ -163,8 +163,8 @@ function EventCard({ event }: { event: any }) {
           className="h-full w-full object-cover"
         />
         {event.isRecurring && (
-          <Badge variant="secondary" className="absolute top-2 right-2 bg-primary/90 text-white">
-            Récurrent
+          <Badge variant="secondary" className="absolute top-2 right-2 bg-primary/90 text-primary-foreground">
+            Recurrent
           </Badge>
         )}
       </div>
@@ -173,22 +173,22 @@ function EventCard({ event }: { event: any }) {
       </CardHeader>
       <CardContent className="space-y-3 pb-2">
         <div className="flex items-start gap-2">
-          <CalendarIcon className="mt-0.5 h-4 w-4 text-muted-foreground dark:text-gray-300" />
+          <CalendarIcon className="mt-0.5 h-4 w-4 text-muted-foreground" />
           <div>
-            <p className="text-sm text-foreground dark:text-gray-200">{event.date}</p>
-            <p className="text-sm text-muted-foreground dark:text-gray-300">
+            <p className="text-sm text-foreground">{event.date}</p>
+            <p className="text-sm text-muted-foreground">
               <Clock10Icon className="mr-1 inline-block h-3 w-3" />
               {event.time}
             </p>
           </div>
         </div>
         <div className="flex items-start gap-2">
-          <MapPinIcon className="mt-0.5 h-4 w-4 text-muted-foreground dark:text-gray-300" />
-          <p className="text-sm text-muted-foreground dark:text-gray-300">{event.location}</p>
+          <MapPinIcon className="mt-0.5 h-4 w-4 text-muted-foreground" />
+          <p className="text-sm text-muted-foreground">{event.location}</p>
         </div>
       </CardContent>
       <CardFooter>
-        <p className="text-sm text-muted-foreground dark:text-gray-300 mb-3">{event.description}</p>
+        <p className="text-sm text-muted-foreground mb-3">{event.description}</p>
       </CardFooter>
     </Card>
   )
@@ -196,7 +196,7 @@ function EventCard({ event }: { event: any }) {
 
 function EchoCard({ echo }: { echo: any }) {
   return (
-    <Card className="overflow-hidden dark:bg-slate-900 dark:border-slate-800 card-hover">
+    <Card className="overflow-hidden card-hover">
       <div className="relative aspect-[3/4] w-full">
         <ImageBlock
           src={echo.coverUrl}
@@ -206,20 +206,20 @@ function EchoCard({ echo }: { echo: any }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
           <h3 className="mb-1 text-lg font-bold">{echo.title}</h3>
-          <p className="text-sm font-medium text-white/90">Édition {echo.edition}</p>
+          <p className="text-sm font-medium text-white/90">Edition {echo.edition}</p>
         </div>
       </div>
       <CardContent className="p-4">
-        <p className="mb-4 text-sm text-muted-foreground dark:text-gray-300">{echo.description}</p>
+        <p className="mb-4 text-sm text-muted-foreground">{echo.description}</p>
         <div className="flex justify-between">
-          <Badge variant="outline" className="dark:border-gray-700 dark:text-gray-200">
+          <Badge variant="outline">
             {echo.year}
           </Badge>
           <Button
             asChild
             variant="outline"
             size="sm"
-            className="gap-1 dark:border-gray-700 dark:text-gray-200"
+            className="gap-1"
           >
             <Link href={echo.pdfUrl}>
               <FileTextIcon className="h-4 w-4" />
@@ -244,16 +244,15 @@ function CallToActionLocal({
   buttonLink: string;
 }) {
   return (
-    <div className="bg-primary dark:bg-primary py-16 text-center">
+    <div className="bg-primary py-16 text-center">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-white mb-4">{title}</h2>
-        <p className="mx-auto max-w-2xl text-white/90 dark:text-gray-100 mb-8">
+        <h2 className="text-3xl font-bold text-primary-foreground mb-4">{title}</h2>
+        <p className="mx-auto max-w-2xl text-primary-foreground/90 mb-8">
           {description}
         </p>
-        <Button 
-          asChild 
-          variant="outline"
-          className="bg-white text-primary hover:bg-white/90 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 dark:border-slate-700 px-6 py-3 text-base"
+        <Button
+          asChild
+          className="bg-background text-foreground hover:bg-background/90 px-6 py-3 text-base"
         >
           <Link href={buttonLink}>{buttonText}</Link>
         </Button>
@@ -416,9 +415,9 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* QR Code Visioconférence */}
             <div className="lg:col-span-1">
-              <VisioconferenceLink 
-                meetingUrl="https://meet.google.com/cbf-yxbw-rgo" 
-                className="dark:bg-slate-900 dark:border-slate-800 h-full"
+              <VisioconferenceLink
+                meetingUrl="https://meet.google.com/cbf-yxbw-rgo"
+                className="h-full"
               />
             </div>
             

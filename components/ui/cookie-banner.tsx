@@ -31,7 +31,6 @@ export function CookieBanner({
         className={cn(
           "fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6",
           "bg-background/95 backdrop-blur-sm border-t shadow-lg",
-          "dark:bg-background/95",
           className
         )}
       >

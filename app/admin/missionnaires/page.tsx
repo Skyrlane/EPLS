@@ -606,8 +606,8 @@ export default function MissionnairesAdminPage() {
               {/* Onglet 2 : PDFs */}
               <TabsContent value="newsletters" className="space-y-6 mt-6">
                 {!editingId && (
-                  <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg">
-                    <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                  <div className="bg-secondary/20 p-4 rounded-lg">
+                    <p className="text-sm text-secondary-foreground">
                       ⚠️ Enregistrez d'abord le missionnaire pour pouvoir ajouter des lettres de nouvelles
                     </p>
                   </div>
@@ -651,7 +651,7 @@ export default function MissionnairesAdminPage() {
                     </div>
 
                     {/* Upload nouveau PDF */}
-                    <Card className="bg-slate-50 dark:bg-slate-900">
+                    <Card className="bg-muted">
                       <CardHeader>
                         <CardTitle className="text-lg">➕ Ajouter une lettre de nouvelles</CardTitle>
                       </CardHeader>

@@ -88,8 +88,8 @@ export default function OffrandesPage() {
                     La Bible nous enseigne que donner fait partie intégrante de notre vie de foi. C&apos;est un acte de
                     reconnaissance envers Dieu pour tout ce qu&apos;il nous donne.
                   </p>
-                  <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-primary p-4 mt-4">
-                    <p className="text-sm dark:text-gray-100">
+                  <div className="bg-primary/10 border-l-4 border-primary p-4 mt-4">
+                    <p className="text-sm">
                       <strong>Note importante :</strong> Notre Église est membre de l&apos;Union des Églises évangéliques 
                       libres de France, et à travers elle, de la Fédération protestante de France (FPF) et du Conseil 
                       national des Évangéliques de France (CNEF). Notre pasteur est rémunéré par les dons des fidèles 
@@ -119,16 +119,16 @@ export default function OffrandesPage() {
                     </CardHeader>
                     <CardContent>
                       <p className="mb-4">Vous pouvez effectuer un virement bancaire sur le compte de l&apos;église :</p>
-                      <div className="bg-slate-50 dark:bg-slate-800 dark:border dark:border-slate-700 p-4 rounded-md mb-4">
-                        <p className="font-semibold dark:text-white mb-2">Église Protestante Libre de Strasbourg</p>
-                        <p className="dark:text-gray-100 font-mono text-sm mb-1">
+                      <div className="bg-muted border border-border p-4 rounded-md mb-4">
+                        <p className="font-semibold mb-2">Église Protestante Libre de Strasbourg</p>
+                        <p className=" font-mono text-sm mb-1">
                           <strong>IBAN :</strong> FR76 1027 8012 2800 0200 2160 192
                         </p>
-                        <p className="dark:text-gray-100 font-mono text-sm">
+                        <p className=" font-mono text-sm">
                           <strong>BIC :</strong> CMCIFR2A
                         </p>
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <p className="text-sm text-muted-foreground">
                         Merci d&apos;indiquer &quot;Don&quot; ou &quot;Offrande&quot; en libellé de votre virement.
                       </p>
                     </CardContent>
@@ -154,10 +154,10 @@ export default function OffrandesPage() {
                       <p className="mb-4">
                         Et l&apos;envoyer à l&apos;adresse suivante :
                       </p>
-                      <div className="bg-slate-50 dark:bg-slate-800 dark:border dark:border-slate-700 p-4 rounded-md mb-4">
-                        <p className="font-semibold dark:text-white">Église Protestante Libre de Strasbourg</p>
-                        <p className="dark:text-gray-100">18 Rue de Franche-Comté</p>
-                        <p className="dark:text-gray-100">67380 Lingolsheim</p>
+                      <div className="bg-muted border border-border p-4 rounded-md mb-4">
+                        <p className="font-semibold">Église Protestante Libre de Strasbourg</p>
+                        <p className="">18 Rue de Franche-Comté</p>
+                        <p className="">67380 Lingolsheim</p>
                       </div>
                       
                     </CardContent>
@@ -183,7 +183,7 @@ export default function OffrandesPage() {
                       <p className="mb-4">
                         Vous pouvez également remettre votre don en mains propres à un membre du conseil ou au pasteur.
                       </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <p className="text-sm text-muted-foreground">
                         Pour les dons importants, nous vous recommandons de privilégier le virement ou le chèque.
                       </p>
                     </CardContent>
@@ -191,7 +191,7 @@ export default function OffrandesPage() {
                 </TabsContent>
               </Tabs>
 
-              <p className="text-sm text-gray-600 dark:text-gray-300 text-center bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
+              <p className="text-sm text-muted-foreground text-center bg-muted p-4 rounded-lg">
                 💡 Pour toute question concernant les aspects fiscaux de vos dons, n&apos;hésitez pas à nous contacter.
               </p>
 

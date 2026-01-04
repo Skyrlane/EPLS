@@ -36,44 +36,44 @@ export function MessageCard({
     : description;
   
   return (
-    <div 
+    <div
       className={cn(
-        "flex flex-col h-full overflow-hidden bg-white border rounded-lg shadow-sm hover:shadow-md transition-shadow dark:bg-slate-900 dark:border-slate-700",
+        "flex flex-col h-full overflow-hidden bg-card border rounded-lg shadow-sm hover:shadow-md transition-shadow",
         className
       )}
     >
       {/* En-tête avec catégorie */}
-      <div className="px-5 py-3 border-b dark:border-slate-700">
+      <div className="px-5 py-3 border-b">
         <Badge variant="outline" className="text-xs font-medium">
           {category}
         </Badge>
       </div>
-      
+
       {/* Contenu */}
       <div className="flex-1 p-5 space-y-4">
         <h3 className="text-xl font-semibold line-clamp-2 group-hover:text-primary">
           {title}
         </h3>
-        
-        <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+
+        <div className="space-y-2 text-sm text-muted-foreground">
           <div className="flex items-center">
-            <Calendar className="w-4 h-4 mr-2 text-gray-400 dark:text-gray-300" />
+            <Calendar className="w-4 h-4 mr-2" />
             <span>{formattedDate}</span>
           </div>
-          
+
           <div className="flex items-center">
-            <User className="w-4 h-4 mr-2 text-gray-400 dark:text-gray-300" />
+            <User className="w-4 h-4 mr-2" />
             <span>{preacher}</span>
           </div>
         </div>
-        
-        <p className="text-gray-600 line-clamp-3 dark:text-gray-300">
+
+        <p className="text-muted-foreground line-clamp-3">
           {truncatedDescription}
         </p>
       </div>
-      
+
       {/* Pied avec bouton */}
-      <div className="px-5 py-4 mt-auto border-t dark:border-slate-700">
+      <div className="px-5 py-4 mt-auto border-t">
         {id ? (
           <Link href={`/messages/${id}`} className="w-full">
             <Button variant="outline" className="w-full" size="sm">

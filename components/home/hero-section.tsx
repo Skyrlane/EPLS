@@ -24,7 +24,7 @@ export function HeroSection({ initialImageUrl = '/images/hero/church-hero.png' }
   useEffect(() => {
     if (!mounted || !firestore) return;
 
-    // Écouter les changements en temps réel
+    // Ecouter les changements en temps reel
     const unsubscribe = onSnapshot(
       doc(firestore, 'site_settings', 'hero_image'),
       (doc) => {
@@ -50,26 +50,26 @@ export function HeroSection({ initialImageUrl = '/images/hero/church-hero.png' }
     <div className="relative h-[70vh] w-full overflow-hidden">
       <img
         src={heroImageUrl}
-        alt="Église Protestante Libre de Strasbourg"
+        alt="Eglise Protestante Libre de Strasbourg"
         className="h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/25 to-transparent" />
       <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center text-white">
         <h1 className="max-w-3xl text-4xl font-bold leading-tight md:text-5xl lg:text-6xl drop-shadow-md">
-          Église Protestante Libre de Strasbourg
+          Eglise Protestante Libre de Strasbourg
         </h1>
         <p className="mt-4 max-w-lg text-lg md:text-xl drop-shadow-md font-medium">
-          Une communauté chrétienne vivante, enracinée dans la Bible et tournée vers les autres
+          Une communaute chretienne vivante, enracinee dans la Bible et tournee vers les autres
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Button asChild size="lg" className="rounded-full text-base bg-primary hover:bg-primary/90 text-primary-foreground shadow-md">
-            <Link href="/notre-eglise">Découvrir notre église</Link>
+          <Button asChild size="lg" className="rounded-full text-base shadow-md">
+            <Link href="/notre-eglise">Decouvrir notre eglise</Link>
           </Button>
-          <Button asChild variant="secondary" size="lg" className="rounded-full text-base bg-white text-primary hover:bg-gray-100 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 shadow-md">
+          <Button asChild variant="outline" size="lg" className="rounded-full text-base shadow-md bg-white/10 border-white text-white hover:bg-white/20">
             <Link href="/culte/calendrier">
               <span className="flex items-center">
                 <CalendarIcon className="mr-2 h-5 w-5" />
-                Nos activités
+                Nos activites
               </span>
             </Link>
           </Button>

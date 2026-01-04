@@ -40,7 +40,7 @@ export default function UnionEglisePage() {
               <li>
                 <div className="flex items-center">
                   <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">L&apos;Union des Églises</span>
+                  <span className="text-muted-foreground">L&apos;Union des Églises</span>
                 </div>
               </li>
             </ol>

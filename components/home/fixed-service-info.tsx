@@ -55,7 +55,7 @@ export function FixedServiceInfo({
 
   return (
     <div className="fixed bottom-4 right-4 z-50 max-w-sm">
-      <div className="rounded-lg shadow-lg overflow-hidden bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800">
+      <div className="rounded-lg shadow-lg overflow-hidden bg-card border border-border">
         <div className="p-4 relative">
           <Button
             variant="ghost"
@@ -67,25 +67,25 @@ export function FixedServiceInfo({
           </Button>
 
           <h3 className="text-lg font-semibold mb-2">Culte {serviceDay} à {serviceTime}</h3>
-          
+
           <div className="space-y-2">
             <div className="flex items-start gap-2">
               <CalendarIcon className="h-4 w-4 mt-1 text-primary" />
               <div className="text-sm">
-                <p className="text-foreground dark:text-gray-200">{serviceDay}</p>
-                <div className="flex items-center text-muted-foreground dark:text-gray-300">
+                <p className="text-foreground">{serviceDay}</p>
+                <div className="flex items-center text-muted-foreground">
                   <Clock10Icon className="mr-1 h-3 w-3" />
                   {serviceTime}
                 </div>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-2">
               <MapPinIcon className="h-4 w-4 mt-1 text-primary" />
               <div className="text-sm">
-                <p className="text-foreground dark:text-gray-200">{serviceLocation}</p>
-                <p className="text-muted-foreground dark:text-gray-300">{serviceAddress}</p>
-                <p className="text-muted-foreground dark:text-gray-300">{servicePostalCode} {serviceCity}</p>
+                <p className="text-foreground">{serviceLocation}</p>
+                <p className="text-muted-foreground">{serviceAddress}</p>
+                <p className="text-muted-foreground">{servicePostalCode} {serviceCity}</p>
               </div>
             </div>
           </div>

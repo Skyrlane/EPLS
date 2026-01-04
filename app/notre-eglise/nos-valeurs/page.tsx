@@ -12,9 +12,9 @@ export default function NosValeurs() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4 dark:text-white">Nos valeurs</h1>
+          <h1 className="text-4xl font-bold mb-4">Nos valeurs</h1>
 
           {/* Breadcrumbs */}
           <nav className="flex" aria-label="Breadcrumb">
@@ -26,7 +26,7 @@ export default function NosValeurs() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/notre-eglise" className="text-primary hover:text-primary/80">
                     Notre Église
                   </Link>
@@ -34,8 +34,8 @@ export default function NosValeurs() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
-                  <span className="text-gray-700 dark:text-gray-200">Nos valeurs</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">Nos valeurs</span>
                 </div>
               </li>
             </ol>
@@ -56,8 +56,8 @@ export default function NosValeurs() {
             <div className="lg:col-span-3">
               {/* 1. Nous sommes une Église protestante */}
               <div className="mb-12">
-                <h2 className="text-3xl font-semibold mb-6 dark:text-white">1. Nous sommes une Église protestante</h2>
-                <p className="mb-6 dark:text-gray-300">
+                <h2 className="text-3xl font-semibold mb-6">1. Nous sommes une Église protestante</h2>
+                <p className="mb-6">
                   Nous nous situons dans la lignée de la Réforme protestante du XVIème siècle qui se caractérise
                   par cinq grandes affirmations (les cinq solas) :
                 </p>
@@ -65,9 +65,9 @@ export default function NosValeurs() {
                 <div className="space-y-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">À Dieu seul la gloire</CardTitle>
+                      <CardTitle className="text-primary">À Dieu seul la gloire</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         Toute l&apos;histoire humaine doit tourner autour de Dieu et ce qui compte en définitive,
                         c&apos;est sa gloire. Nous sommes créés pour le connaître, pour le servir, et pour le
@@ -78,9 +78,9 @@ export default function NosValeurs() {
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">L&apos;essentiel, c&apos;est la foi</CardTitle>
+                      <CardTitle className="text-primary">L&apos;essentiel, c&apos;est la foi</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         Le salut se reçoit par la foi seule, sans aucune considération de nos mérites. C&apos;est
                         par la foi que nous embrassons l&apos;œuvre de Jésus, et cette foi, nous la devons à
@@ -91,9 +91,9 @@ export default function NosValeurs() {
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">La Bible seule</CardTitle>
+                      <CardTitle className="text-primary">La Bible seule</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         Nous ne reconnaissons pas d&apos;autre autorité finale et suprême que la Bible. La Bible est
                         pour nous inspirée de Dieu, normative et suffisante. Aucune tradition d&apos;Église ni aucun
@@ -104,9 +104,9 @@ export default function NosValeurs() {
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">Se réformer sans cesse</CardTitle>
+                      <CardTitle className="text-primary">Se réformer sans cesse</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         La Réforme n&apos;est jamais terminée. L&apos;Église a besoin d&apos;être réformée sans cesse
                         selon la Parole de Dieu. Le retour au texte de la Bible doit être une constante de nos
@@ -117,9 +117,9 @@ export default function NosValeurs() {
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">Le sacerdoce universel</CardTitle>
+                      <CardTitle className="text-primary">Le sacerdoce universel</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         Tout croyant a accès directement à Dieu par Jésus-Christ, et peut le prier sans passer
                         par aucun intermédiaire humain. Par ailleurs, tout chrétien a le sacerdoce de
@@ -132,9 +132,9 @@ export default function NosValeurs() {
 
               {/* 2. Nous sommes une Église évangélique */}
               <div className="mb-12">
-                <h2 className="text-3xl font-semibold mb-6 dark:text-white">2. Nous sommes une Église évangélique</h2>
-                <Card className="bg-slate-50 dark:bg-slate-800/50">
-                  <CardContent className="p-6 space-y-4 dark:text-gray-100">
+                <h2 className="text-3xl font-semibold mb-6">2. Nous sommes une Église évangélique</h2>
+                <Card className="bg-muted/50">
+                  <CardContent className="p-6 space-y-4">
                     <p>
                       Le mot évangélique vient du mot &quot;Évangile&quot;, qui signifie &quot;bonne nouvelle&quot;. Nous croyons que
                       la Bible contient l&apos;Évangile, la bonne nouvelle de ce que Dieu a fait pour nous en Jésus-Christ.
@@ -148,7 +148,7 @@ export default function NosValeurs() {
                       Nous sommes attachés à la proclamation de l&apos;Évangile. Le témoignage et l&apos;évangélisation font
                       partie intégrante de notre identité.
                     </p>
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-primary p-4 mt-4">
+                    <div className="bg-primary/10 border-l-4 border-primary p-4 mt-4">
                       <p className="font-medium">
                         Notre Église est membre du <strong>Conseil National des Évangéliques de France (CNEF)</strong>,
                         qui regroupe plus de 600 000 protestants évangéliques en France.
@@ -160,17 +160,17 @@ export default function NosValeurs() {
 
               {/* 3. Nous sommes une Église libre */}
               <div className="mb-12">
-                <h2 className="text-3xl font-semibold mb-6 dark:text-white">3. Nous sommes une Église libre</h2>
-                <p className="mb-6 dark:text-gray-300">
+                <h2 className="text-3xl font-semibold mb-6">3. Nous sommes une Église libre</h2>
+                <p className="mb-6">
                   Le mot &quot;libre&quot; dans notre nom signifie plusieurs choses importantes pour nous :
                 </p>
 
                 <div className="space-y-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">La communauté des croyants</CardTitle>
+                      <CardTitle className="text-primary">La communauté des croyants</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         Nous croyons que l&apos;Église locale est composée de ceux qui professent personnellement leur
                         foi en Jésus-Christ. L&apos;appartenance à l&apos;Église n&apos;est pas automatique, mais résulte d&apos;une
@@ -181,9 +181,9 @@ export default function NosValeurs() {
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">L&apos;autonomie de l&apos;Église locale</CardTitle>
+                      <CardTitle className="text-primary">L&apos;autonomie de l&apos;Église locale</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         Chaque Église locale est autonome dans sa gestion et ses décisions, sous la seule autorité
                         de Jésus-Christ et de sa Parole. Il n&apos;y a pas de hiérarchie ecclésiastique au-dessus de
@@ -195,9 +195,9 @@ export default function NosValeurs() {
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">L&apos;importance de l&apos;évangélisation</CardTitle>
+                      <CardTitle className="text-primary">L&apos;importance de l&apos;évangélisation</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         Nous sommes attachés à la liberté d&apos;annoncer l&apos;Évangile. Nous croyons que chaque
                         chrétien est appelé à être témoin de sa foi et que l&apos;Église a pour mission de proclamer
@@ -208,9 +208,9 @@ export default function NosValeurs() {
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">La liberté religieuse</CardTitle>
+                      <CardTitle className="text-primary">La liberté religieuse</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         Nous défendons la liberté de conscience et de culte pour tous. Chacun doit être libre de
                         croire et de pratiquer sa foi (ou de ne pas croire) sans contrainte de la part de l&apos;État
@@ -221,9 +221,9 @@ export default function NosValeurs() {
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-primary dark:text-white">La séparation de l&apos;Église et de l&apos;État</CardTitle>
+                      <CardTitle className="text-primary">La séparation de l&apos;Église et de l&apos;État</CardTitle>
                     </CardHeader>
-                    <CardContent className="dark:text-gray-100">
+                    <CardContent className="">
                       <p>
                         Nous sommes attachés à la séparation de l&apos;Église et de l&apos;État. Notre Église ne reçoit
                         aucun financement public et ne dépend d&apos;aucune autorité civile pour son organisation et
@@ -243,7 +243,7 @@ export default function NosValeurs() {
                     <CardTitle>Qui sommes-nous ?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-4 dark:text-gray-300">
+                    <p className="mb-4">
                       Découvrez notre identité, notre déclaration de foi et nos relations avec d&apos;autres Églises.
                     </p>
                     <Link href="/notre-eglise/qui-sommes-nous" className="text-primary hover:underline">
@@ -257,7 +257,7 @@ export default function NosValeurs() {
                     <CardTitle>Où sommes-nous ?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="mb-4 dark:text-gray-300">
+                    <p className="mb-4">
                       Trouvez notre lieu de culte et nos coordonnées pour nous rejoindre facilement.
                     </p>
                     <Link href="/notre-eglise/ou-sommes-nous" className="text-primary hover:underline">

@@ -99,7 +99,7 @@ export default async function MissionaryDetailPage({ params }: PageProps) {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-3 mb-4">
             <Button asChild variant="ghost" size="sm">
@@ -143,7 +143,7 @@ export default async function MissionaryDetailPage({ params }: PageProps) {
               <li>
                 <div className="flex items-center">
                   <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">{missionary.name}</span>
+                  <span className="text-muted-foreground">{missionary.name}</span>
                 </div>
               </li>
             </ol>
@@ -241,7 +241,7 @@ export default async function MissionaryDetailPage({ params }: PageProps) {
                               target="_blank"
                               rel="noopener noreferrer"
                               download
-                              className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                              className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
                             >
                               <div className="flex items-center gap-3">
                                 <FileText className="h-5 w-5 text-primary" />
@@ -270,7 +270,7 @@ export default async function MissionaryDetailPage({ params }: PageProps) {
                             <Link
                               key={m.id}
                               href={`/infos-docs/mission/${m.slug}`}
-                              className="block p-4 border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group"
+                              className="block p-4 border rounded-lg hover:bg-muted/50 transition-colors group"
                             >
                               <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">
                                 {m.name}

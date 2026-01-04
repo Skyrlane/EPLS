@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { AuthButton } from "@/components/auth/auth-button";
 
 const navigationLinks = [
-  { href: "/notre-eglise", label: "Notre église" },
+  { href: "/notre-eglise", label: "Notre eglise" },
   { href: "/culte", label: "Cultes" },
   { href: "/culte/calendrier", label: "Calendrier" },
   { href: "/messages", label: "Messages" },
@@ -27,7 +27,7 @@ export default function Navigation() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
-  // Fermer le menu lorsque la taille de l'écran change
+  // Fermer le menu lorsque la taille de l'ecran change
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -50,11 +50,11 @@ export default function Navigation() {
   };
 
   return (
-    <header className="bg-background border-b sticky top-0 z-50 dark:bg-slate-900 dark:border-slate-800">
+    <header className="bg-background border-b sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold dark:text-white">
+            <Link href="/" className="text-xl font-bold text-foreground">
               EPLS
             </Link>
             <nav className="hidden md:ml-10 md:flex md:items-center md:space-x-4" aria-label="Navigation principale">
@@ -65,7 +65,7 @@ export default function Navigation() {
                   className={`transition-colors duration-200 ${
                     isActive(link.href)
                       ? "text-primary font-medium"
-                      : "text-foreground hover:text-primary dark:text-gray-100"
+                      : "text-foreground hover:text-primary"
                   }`}
                   aria-current={isActive(link.href) ? "page" : undefined}
                 >
@@ -84,7 +84,7 @@ export default function Navigation() {
               onClick={toggleMenu}
               variant="ghost"
               size="icon"
-              className="text-foreground focus:outline-none dark:text-gray-100"
+              className="text-foreground focus:outline-none"
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             >
@@ -100,7 +100,7 @@ export default function Navigation() {
 
       {/* Menu mobile avec transition fluide */}
       <div
-        className={`md:hidden bg-background border-t dark:bg-slate-900 dark:border-slate-800 overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`md:hidden bg-background border-t overflow-hidden transition-all duration-300 ease-in-out ${
           isMenuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0 border-t-0'
         }`}
       >
@@ -113,14 +113,14 @@ export default function Navigation() {
                 className={`transition-colors duration-200 ${
                   isActive(link.href)
                     ? "text-primary font-medium"
-                    : "text-foreground hover:text-primary dark:text-gray-100"
+                    : "text-foreground hover:text-primary"
                 }`}
                 aria-current={isActive(link.href) ? "page" : undefined}
               >
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4 border-t dark:border-slate-800">
+            <div className="pt-4 border-t">
               <AuthButton variant="mobile" onAction={closeMenu} />
             </div>
           </nav>
@@ -128,4 +128,4 @@ export default function Navigation() {
       </div>
     </header>
   );
-} 
+}

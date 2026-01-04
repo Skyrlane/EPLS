@@ -101,7 +101,7 @@ export default function PlanningCultesPage() {
   return (
     <ProtectedPlanningWrapper planning={planning}>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Planning des Cultes</h1>
 
@@ -115,7 +115,7 @@ export default function PlanningCultesPage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/infos-docs" className="text-primary hover:text-primary/80">
                     Infos/Docs
                   </Link>
@@ -123,8 +123,8 @@ export default function PlanningCultesPage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">Planning des Cultes</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">Planning des Cultes</span>
                 </div>
               </li>
             </ol>
@@ -149,7 +149,7 @@ export default function PlanningCultesPage() {
                     <CardTitle>📅 Planning des Cultes</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                    <p className="text-lg text-muted-foreground mb-6">
                       Organisation des services et responsabilités pour les cultes du mois en cours.
                     </p>
                   </CardContent>
@@ -158,8 +158,8 @@ export default function PlanningCultesPage() {
                 {/* Section du planning */}
                 {loading ? (
                   <div className="space-y-4">
-                    <div className="h-8 w-48 bg-slate-200 dark:bg-slate-700 animate-pulse rounded" />
-                    <div className="h-64 w-full bg-slate-200 dark:bg-slate-700 animate-pulse rounded" />
+                    <div className="h-8 w-48 bg-muted animate-pulse rounded" />
+                    <div className="h-64 w-full bg-muted animate-pulse rounded" />
                   </div>
                 ) : (
                   <PlanningTableStatic planning={planning} />

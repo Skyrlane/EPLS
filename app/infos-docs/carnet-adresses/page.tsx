@@ -39,7 +39,7 @@ export default function CarnetAdressesPage() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Carnet d&apos;Adresses</h1>
 
@@ -53,7 +53,7 @@ export default function CarnetAdressesPage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
                   <Link href="/infos-docs" className="text-primary hover:text-primary/80">
                     Infos/Docs
                   </Link>
@@ -61,8 +61,8 @@ export default function CarnetAdressesPage() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
-                  <span className="text-gray-700 dark:text-gray-300">Carnet d&apos;adresses</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">Carnet d&apos;adresses</span>
                 </div>
               </li>
             </ol>
@@ -87,12 +87,12 @@ export default function CarnetAdressesPage() {
                     <CardTitle>Coordonnées des Membres</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+                    <p className="text-lg text-muted-foreground mb-4">
                       Accédez aux coordonnées des membres de notre communauté.
                       Utilisez la navigation alphabétique ou la recherche pour trouver rapidement un contact.
                     </p>
-                    <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-                      <p className="text-sm text-amber-800 dark:text-amber-200">
+                    <div className="bg-secondary/20 border border-secondary/50 rounded-lg p-4">
+                      <p className="text-sm text-secondary-foreground">
                         <strong>Note :</strong> Ces informations sont confidentielles et réservées aux membres connectés.
                         Merci de ne pas les partager en dehors de notre communauté.
                       </p>

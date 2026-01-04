@@ -25,7 +25,7 @@ export function FeatureCard({
 }: FeatureCardProps) {
   return (
     <Card className={cn(
-      "hover:shadow-lg transition-all duration-300 card-hover dark:bg-slate-900 dark:border-slate-800",
+      "hover:shadow-lg transition-all duration-300 card-hover",
       "hover:-translate-y-1 sm:h-full flex flex-col justify-between",
       className
     )}>
@@ -35,23 +35,21 @@ export function FeatureCard({
             <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
             <span>{title}</span>
           </CardTitle>
-          <CardDescription className="text-sm mt-1 dark:text-gray-300">{description}</CardDescription>
+          <CardDescription className="text-sm mt-1">{description}</CardDescription>
         </CardHeader>
         <CardContent className="pb-2">
-          <p className="text-foreground dark:text-gray-200">{content}</p>
+          <p className="text-foreground">{content}</p>
         </CardContent>
       </div>
       <CardFooter className="pt-4">
         <Button
           asChild
           variant="outline"
-          className="w-full border-2 border-primary text-primary hover:bg-primary/10 
-                    dark:border-primary dark:text-primary dark:hover:bg-primary/20
-                    transition-all duration-300 hover:scale-[1.02]"
+          className="w-full border-2 border-primary text-primary hover:bg-primary/10 transition-all duration-300 hover:scale-[1.02]"
         >
           <Link href={linkHref}>{linkText}</Link>
         </Button>
       </CardFooter>
     </Card>
   );
-} 
+}

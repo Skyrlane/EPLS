@@ -232,11 +232,11 @@ export default function Calendrier() {
                     variant={hasEvents ? "default" : "ghost"}
                     className={`h-12 sm:h-16 w-full rounded-md font-normal relative ${
                       hasEvents
-                        ? "bg-blue-100 hover:bg-blue-200 text-blue-800 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 dark:text-blue-200"
+                        ? "bg-primary/20 hover:bg-primary/30 text-primary"
                         : ""
                     } ${
                       isCurrentDay
-                        ? "ring-2 ring-primary dark:ring-primary/70"
+                        ? "ring-2 ring-primary"
                         : ""
                     }`}
                     onClick={() => {
@@ -369,7 +369,7 @@ export default function Calendrier() {
                         {event.title}
                       </h3>
 
-                      <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="flex flex-wrap gap-4 mt-2 text-sm text-muted-foreground">
                         <div className="flex items-center">
                           <Clock className="h-4 w-4 mr-1" />
                           {new Date(event.date).toLocaleDateString("fr-FR", {
@@ -390,7 +390,7 @@ export default function Calendrier() {
                         <div className="mt-2 flex justify-between items-center">
                           <p className="text-sm">{event.content}</p>
 
-                          <div className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+                          <div className="px-2 py-1 rounded-full text-xs bg-primary/20 text-primary">
                             {event.type}
                           </div>
                         </div>
@@ -401,7 +401,7 @@ export default function Calendrier() {
               )}
               
               {eventsThisMonth.length === 0 && (
-                <p className="text-gray-600 dark:text-gray-400 py-4 mt-6">
+                <p className="text-muted-foreground py-4 mt-6">
                   Aucun événement prévu pour ce mois.
                 </p>
               )}

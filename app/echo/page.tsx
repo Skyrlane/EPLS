@@ -11,7 +11,7 @@ export default function Echo() {
   return (
     <>
       {/* Page Header */}
-      <div className="bg-slate-100 dark:bg-slate-800 py-12">
+      <div className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Echos EPLS</h1>
 
@@ -25,8 +25,8 @@ export default function Echo() {
               </li>
               <li>
                 <div className="flex items-center">
-                  <span className="mx-2 text-gray-400 dark:text-gray-300">/</span>
-                  <span className="text-gray-700 dark:text-gray-200">Echos</span>
+                  <span className="mx-2 text-muted-foreground">/</span>
+                  <span className="text-foreground">Echos</span>
                 </div>
               </li>
             </ol>
@@ -51,12 +51,12 @@ export default function Echo() {
                   <CardTitle>À propos des Echos</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  <p className="text-muted-foreground mb-4">
                     Les "Echos EPLS" sont notre bulletin mensuel qui partage la vie de l&apos;Église Protestante Libre
                     de Strasbourg. Ils contiennent des méditations, des nouvelles de la communauté, des annonces
                     d&apos;événements à venir et des réflexions spirituelles.
                   </p>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-muted-foreground">
                     Ils sont publiés au début de chaque mois et disponibles en version PDF pour faciliter leur lecture
                     et partage.
                   </p>

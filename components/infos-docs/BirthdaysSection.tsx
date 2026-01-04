@@ -87,7 +87,7 @@ export function BirthdaysSection() {
               {birthdays.map((birthday) => (
                 <Card
                   key={birthday.id}
-                  className="bg-slate-50 dark:bg-slate-800/50 border-l-4 border-l-primary"
+                  className="bg-muted/50 border-l-4 border-l-primary"
                 >
                   <CardContent className="p-4">
                     <div className="flex justify-between items-center">

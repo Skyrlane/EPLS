@@ -21,13 +21,13 @@ export function CallToAction({
   secondaryButtonLink,
   background = "primary"
 }: CallToActionProps) {
-  
+
   const bgStyles = {
-    light: "bg-slate-50 text-slate-900",
-    dark: "bg-slate-900 text-white",
-    primary: "bg-primary text-white"
+    light: "bg-muted text-foreground",
+    dark: "bg-card text-card-foreground",
+    primary: "bg-primary text-primary-foreground"
   };
-  
+
   return (
     <section className={cn(
       "py-16",
@@ -37,27 +37,28 @@ export function CallToAction({
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
           <p className="text-lg md:text-xl mb-8 opacity-90">{description}</p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              asChild 
+            <Button
+              asChild
               size="lg"
               className={cn(
-                background === "primary" ? "bg-white text-primary hover:bg-white/90 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700 dark:border-slate-700" : 
-                "bg-primary text-white hover:bg-primary/90",
+                background === "primary"
+                  ? "bg-background text-foreground hover:bg-background/90"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90",
                 "shadow-md"
               )}
             >
               <Link href={primaryButtonLink}>{primaryButtonText}</Link>
             </Button>
-            
+
             {secondaryButtonText && secondaryButtonLink && (
-              <Button 
-                asChild 
-                size="lg" 
-                variant={background === "primary" ? "outline" : "secondary"}
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
                 className={cn(
-                  background === "primary" && "border-2 border-white text-white bg-transparent hover:bg-white/10 dark:border-white dark:text-white"
+                  background === "primary" && "border-2 border-primary-foreground/50 text-primary-foreground bg-transparent hover:bg-primary-foreground/10"
                 )}
               >
                 <Link href={secondaryButtonLink}>{secondaryButtonText}</Link>
@@ -68,4 +69,4 @@ export function CallToAction({
       </div>
     </section>
   );
-} 
+}

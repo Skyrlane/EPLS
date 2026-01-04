@@ -79,7 +79,7 @@ export function GalleryCarousel({ autoPlayInterval = 4000, maxPhotos = 10 }: Gal
 
   if (loading) {
     return (
-      <div className="relative w-full aspect-video bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse" />
+      <div className="relative w-full aspect-video bg-muted rounded-lg animate-pulse" />
     );
   }
 

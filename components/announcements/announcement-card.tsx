@@ -23,7 +23,7 @@ export function AnnouncementCard({ announcement, className }: AnnouncementCardPr
   return (
     <Card className={cn(
       'overflow-hidden transition-all hover:shadow-md',
-      announcement.isPinned && 'border-l-4 border-l-primary bg-primary/5 dark:bg-primary/10',
+      announcement.isPinned && 'border-l-4 border-l-primary bg-primary/5',
       className
     )}>
       <CardContent className="p-5 relative">
@@ -94,7 +94,7 @@ export function AnnouncementCard({ announcement, className }: AnnouncementCardPr
 
           {/* Tarification */}
           {announcement.pricing && (
-            <div className="bg-muted/50 dark:bg-muted/20 rounded-lg p-3 space-y-1.5">
+            <div className="bg-muted/50 rounded-lg p-3 space-y-1.5">
               <div className="flex items-center gap-2 mb-2">
                 <EuroIcon className="h-4 w-4 text-primary" />
                 <p className="text-sm font-medium">Tarifs :</p>

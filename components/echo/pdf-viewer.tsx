@@ -37,10 +37,10 @@ export function PdfViewer({ pdfUrl, title = 'Document PDF', fileSize, className 
     <div className={cn('space-y-4', className)}>
       {/* Warning pour les gros fichiers */}
       {isLargeFile && (
-        <Alert variant="default" className="border-yellow-500 bg-yellow-50 dark:bg-yellow-950/20">
-          <FileWarning className="h-4 w-4 text-yellow-600" />
-          <AlertTitle className="text-yellow-800 dark:text-yellow-500">Fichier volumineux</AlertTitle>
-          <AlertDescription className="text-yellow-700 dark:text-yellow-400">
+        <Alert variant="default" className="border-secondary bg-secondary/20">
+          <FileWarning className="h-4 w-4 text-secondary-foreground" />
+          <AlertTitle className="text-secondary-foreground">Fichier volumineux</AlertTitle>
+          <AlertDescription className="text-secondary-foreground/80">
             Ce PDF fait {fileSizeMB} MB. Le téléchargement peut prendre quelques instants.
           </AlertDescription>
         </Alert>
@@ -77,7 +77,7 @@ export function PdfViewer({ pdfUrl, title = 'Document PDF', fileSize, className 
 
       {/* Viewer PDF (desktop uniquement) */}
       {!isMobile && !viewerError && (
-        <div className="border rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900">
+        <div className="border rounded-lg overflow-hidden bg-muted">
           <iframe
             src={pdfUrl}
             className="w-full h-[800px]"

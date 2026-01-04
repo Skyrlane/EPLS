@@ -202,7 +202,7 @@ export function PlanningImporter({ onImportComplete }: PlanningImporterProps) {
           {/* Preview du tableau */}
           <div className="overflow-x-auto max-h-96 border rounded-lg">
             <table className="w-full text-sm">
-              <thead className="bg-slate-100 dark:bg-slate-800 sticky top-0">
+              <thead className="bg-muted sticky top-0">
                 <tr>
                   <th className="px-3 py-2 text-left">Date</th>
                   <th className="px-3 py-2 text-left">Présidence</th>

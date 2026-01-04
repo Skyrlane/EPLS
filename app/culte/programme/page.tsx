@@ -436,7 +436,7 @@ export default function Programme() {
                   <CardHeader className="pb-3">
                     <div className="flex justify-between items-start">
                       <CardTitle className="text-xl">Dimanche 3 septembre 2023</CardTitle>
-                      <div className="px-3 py-1 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 rounded-full text-sm font-medium">
+                      <div className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
                         Culte de rentrée
                       </div>
                     </div>

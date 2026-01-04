@@ -21,24 +21,24 @@ export default function EgliseSidebar() {
         <nav className="space-y-2">
           <Link
             href="/notre-eglise/qui-sommes-nous"
-            className={`block p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 ${
-              isActive('/notre-eglise/qui-sommes-nous') ? 'text-primary font-medium bg-slate-50 dark:bg-slate-800/50' : ''
+            className={`block p-2 rounded-md hover:bg-muted ${
+              isActive('/notre-eglise/qui-sommes-nous') ? 'text-primary font-medium bg-muted/50' : ''
             }`}
           >
             Qui sommes-nous
           </Link>
           <Link 
             href="/notre-eglise/nos-valeurs" 
-            className={`block p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 ${
-              isActive('/notre-eglise/nos-valeurs') ? 'text-primary font-medium bg-slate-50 dark:bg-slate-800/50' : ''
+            className={`block p-2 rounded-md hover:bg-muted ${
+              isActive('/notre-eglise/nos-valeurs') ? 'text-primary font-medium bg-muted/50' : ''
             }`}
           >
             Nos valeurs
           </Link>
           <Link 
             href="/notre-eglise/ou-sommes-nous" 
-            className={`block p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 ${
-              isActive('/notre-eglise/ou-sommes-nous') ? 'text-primary font-medium bg-slate-50 dark:bg-slate-800/50' : ''
+            className={`block p-2 rounded-md hover:bg-muted ${
+              isActive('/notre-eglise/ou-sommes-nous') ? 'text-primary font-medium bg-muted/50' : ''
             }`}
           >
             Où sommes-nous
