@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { useAuth } from "@/hooks/use-auth";
+import { LogIn, User } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { user, loading } = useAuth();
 
   return (
     <footer className="bg-secondary/10 dark:bg-slate-900 border-t dark:border-slate-800" role="contentinfo" aria-label="Pied de page">
@@ -105,13 +110,28 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4 dark:text-white">Connexion</h3>
-            <Link
-              href="/connexion"
-              className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
-            >
-              Connexion
-            </Link>
+            <h3 className="text-lg font-semibold mb-4 dark:text-white">
+              {user ? "Mon compte" : "Connexion"}
+            </h3>
+            {loading ? (
+              <div className="h-10 w-28 bg-muted animate-pulse rounded-md" />
+            ) : user ? (
+              <Link
+                href="/membres"
+                className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
+              >
+                <User className="h-4 w-4" />
+                Espace membres
+              </Link>
+            ) : (
+              <Link
+                href="/connexion"
+                className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
+              >
+                <LogIn className="h-4 w-4" />
+                Connexion
+              </Link>
+            )}
             <div className="mt-6">
               <h3 className="text-lg font-semibold mb-4 dark:text-white">Nous suivre</h3>
               <div className="flex space-x-4">
