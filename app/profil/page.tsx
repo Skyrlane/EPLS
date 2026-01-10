@@ -2,13 +2,15 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useUserData } from "@/hooks/use-user-data";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Loader2, Shield, Mail, Calendar } from "lucide-react";
+import { PageHeader } from "@/components/ui/page-header";
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs";
 import { Button } from "@/components/ui/button";
-import { Loader2, Shield, Mail, Calendar, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function ProfilPage() {
   const { user, userData, loading, isAdmin } = useUserData();
@@ -46,38 +48,16 @@ export default function ProfilPage() {
     .toUpperCase()
     .slice(0, 2);
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Mon Profil", href: "/profil", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center gap-4 mb-4">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Retour
-              </Link>
-            </Button>
-          </div>
-          <h1 className="text-4xl font-bold mb-4">Mon Profil</h1>
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">Mon Profil</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Mon Profil"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

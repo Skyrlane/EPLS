@@ -8,13 +8,14 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import { useAuth } from "@/hooks/use-auth"
 import { AlertCircle, CheckCircle, Loader2 } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useFormValidation } from "@/hooks/use-form-validation"
+import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
 
 // Schéma de validation pour le formulaire de réinitialisation
 const resetPasswordSchema = z.object({
@@ -76,39 +77,17 @@ export default function MotDePasseOubliePage() {
     }
   }
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Connexion", href: "/connexion" },
+    { label: "Mot de passe oublié", href: "/mot-de-passe-oublie", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Mot de passe oublié</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <Link href="/connexion" className="text-primary hover:text-primary/80">
-                    Connexion
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">Mot de passe oublié</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Mot de passe oublié"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

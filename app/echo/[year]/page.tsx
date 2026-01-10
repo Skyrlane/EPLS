@@ -1,7 +1,9 @@
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { echosByYear } from "@/lib/echo-data"
+import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
+import Link from "next/link"
 
 export function generateMetadata({ params }: { params: { year: string } }) {
   // Vérifier si l'année existe
@@ -26,39 +28,17 @@ export default function EchoArchive({ params }: { params: { year: string } }) {
   // Obtenir les échos de l'année
   const echoes = echosByYear[params.year]
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Echos", href: "/echo" },
+    { label: params.year, href: `/echo/${params.year}`, isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Echos EPLS {params.year}</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <Link href="/echo" className="text-primary hover:text-primary/80">
-                    Echos
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">{params.year}</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title={`Echos EPLS ${params.year}`}
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Archives Section */}
       <section className="py-16">
