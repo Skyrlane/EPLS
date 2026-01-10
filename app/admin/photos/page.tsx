@@ -243,6 +243,7 @@ export default function AdminPhotosPage() {
             <CardContent>
               <TagManager
                 tags={tags}
+                photos={photos}
                 onUpdate={loadData}
               />
             </CardContent>

@@ -6,13 +6,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Trash2 } from 'lucide-react';
-import type { GalleryTag } from '@/types';
+import type { GalleryTag, GalleryPhoto } from '@/types';
 import { collection, addDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 
 interface TagManagerProps {
   tags: GalleryTag[];
+  photos: GalleryPhoto[];
   onUpdate: () => void;
 }
 
@@ -21,7 +22,7 @@ const PRESET_COLORS = [
   '#EC4899', '#6B7280', '#14B8A6', '#EF4444'
 ];
 
-export function TagManager({ tags, onUpdate }: TagManagerProps) {
+export function TagManager({ tags, photos, onUpdate }: TagManagerProps) {
   const { toast } = useToast();
   const [newTag, setNewTag] = useState({ name: '', color: PRESET_COLORS[0] });
 
@@ -139,7 +140,7 @@ export function TagManager({ tags, onUpdate }: TagManagerProps) {
               <div className="flex items-center gap-3">
                 <Badge style={{ backgroundColor: tag.color }}>{tag.name}</Badge>
                 <span className="text-sm text-muted-foreground">
-                  {tag.count || 0} photo(s)
+                  {photos.filter(p => p.tags?.includes(tag.id)).length} photo(s)
                 </span>
               </div>
               <Button variant="ghost" size="sm" onClick={() => deleteTag(tag.id)}>

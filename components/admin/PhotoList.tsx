@@ -4,7 +4,13 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Trash2, Eye, EyeOff, Star, StarOff } from 'lucide-react';
+import { Trash2, Eye, EyeOff, Star, StarOff, Tag } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import type { GalleryPhoto, GalleryTag } from '@/types';
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { ref, deleteObject } from 'firebase/storage';
@@ -51,6 +57,23 @@ export function PhotoList({ photos, tags, onUpdate, onDelete }: PhotoListProps) 
     } catch (error) {
       console.error('Erreur toggle featured:', error);
       toast({ title: 'Erreur', description: 'Impossible de modifier', variant: 'destructive' });
+    }
+  };
+
+  const updatePhotoTags = async (photo: GalleryPhoto, tagId: string) => {
+    try {
+      const currentTags = photo.tags || [];
+      const newTags = currentTags.includes(tagId)
+        ? currentTags.filter(t => t !== tagId)
+        : [...currentTags, tagId];
+
+      const docRef = doc(firestore, 'gallery_photos', photo.id);
+      await updateDoc(docRef, { tags: newTags });
+      toast({ title: 'Succès', description: 'Tags mis à jour' });
+      onUpdate();
+    } catch (error) {
+      console.error('Erreur update tags:', error);
+      toast({ title: 'Erreur', description: 'Impossible de modifier les tags', variant: 'destructive' });
     }
   };
 
@@ -156,11 +179,12 @@ export function PhotoList({ photos, tags, onUpdate, onDelete }: PhotoListProps) 
                   </div>
                 )}
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => toggleActive(photo)}
+                    title={photo.isActive ? 'Masquer' : 'Afficher'}
                   >
                     {photo.isActive ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                   </Button>
@@ -169,14 +193,45 @@ export function PhotoList({ photos, tags, onUpdate, onDelete }: PhotoListProps) 
                     variant="outline"
                     size="sm"
                     onClick={() => toggleFeatured(photo)}
+                    title={photo.isFeatured ? 'Retirer de la une' : 'Mettre en avant'}
                   >
                     {photo.isFeatured ? <Star className="h-4 w-4 fill-yellow-400" /> : <StarOff className="h-4 w-4" />}
                   </Button>
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm" title="Modifier les tags">
+                        <Tag className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start">
+                      {tags.length === 0 ? (
+                        <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                          Aucun tag disponible
+                        </div>
+                      ) : (
+                        tags.map(tag => (
+                          <DropdownMenuCheckboxItem
+                            key={tag.id}
+                            checked={photo.tags?.includes(tag.id)}
+                            onCheckedChange={() => updatePhotoTags(photo, tag.id)}
+                          >
+                            <span
+                              className="inline-block w-3 h-3 rounded-full mr-2"
+                              style={{ backgroundColor: tag.color }}
+                            />
+                            {tag.name}
+                          </DropdownMenuCheckboxItem>
+                        ))
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                   
                   <Button
                     variant="destructive"
                     size="sm"
                     onClick={() => deletePhoto(photo)}
+                    title="Supprimer"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
