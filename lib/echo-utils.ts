@@ -50,6 +50,13 @@ export function generateEchoTitle(month: number, year: number): string {
 }
 
 /**
+ * Génère la description par défaut d'un écho à partir du mois
+ */
+export function generateEchoDescription(month: number): string {
+  return `Édition de ${getMonthName(month)} avec les dernières nouvelles de l'église.`;
+}
+
+/**
  * Génère le nom de fichier pour un PDF d'écho
  */
 export function generateEchoPdfFileName(month: number, year: number): string {

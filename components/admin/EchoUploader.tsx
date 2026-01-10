@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 import { collection, addDoc, query, where, getDocs, deleteDoc, Timestamp } from "firebase/firestore";
 import { firestore, storage } from "@/lib/firebase";
@@ -21,6 +21,7 @@ import { Upload, FileText, Image as ImageIcon, X, CheckCircle2 } from "lucide-re
 import {
   getMonthName,
   generateEchoTitle,
+  generateEchoDescription,
   isPdfFile,
   isImageFile,
   validateFileSize,
@@ -40,10 +41,18 @@ export function EchoUploader() {
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
   const [year, setYear] = useState<number>(new Date().getFullYear());
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(() => generateEchoDescription(new Date().getMonth() + 1));
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [descriptionModified, setDescriptionModified] = useState(false);
   const { toast } = useToast();
+
+  // Mettre à jour la description quand le mois change (si non modifiée manuellement)
+  useEffect(() => {
+    if (!descriptionModified) {
+      setDescription(generateEchoDescription(month));
+    }
+  }, [month, descriptionModified]);
 
   const handlePdfSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -229,7 +238,8 @@ export function EchoUploader() {
       // Reset du formulaire
       setPdfFile(null);
       setCoverImage(null);
-      setDescription("");
+      setDescriptionModified(false);
+      setDescription(generateEchoDescription(new Date().getMonth() + 1));
       setMonth(new Date().getMonth() + 1);
       setYear(new Date().getFullYear());
       setProgress(0);
@@ -290,10 +300,16 @@ export function EchoUploader() {
         </div>
       </div>
 
-      {/* Titre généré automatiquement */}
-      <div className="p-4 bg-muted rounded-lg">
-        <p className="text-sm text-muted-foreground mb-1">Titre généré :</p>
-        <p className="font-semibold">{generateEchoTitle(month, year)}</p>
+      {/* Titre et description générés automatiquement */}
+      <div className="p-4 bg-muted rounded-lg space-y-3">
+        <div>
+          <p className="text-sm text-muted-foreground mb-1">Titre généré :</p>
+          <p className="font-semibold">{generateEchoTitle(month, year)}</p>
+        </div>
+        <div>
+          <p className="text-sm text-muted-foreground mb-1">Description par défaut :</p>
+          <p className="text-sm">{generateEchoDescription(month)}</p>
+        </div>
       </div>
 
       {/* Upload PDF */}
@@ -369,7 +385,10 @@ export function EchoUploader() {
           id="description"
           placeholder="Ajoutez un court résumé de ce numéro..."
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => {
+            setDescription(e.target.value);
+            setDescriptionModified(true);
+          }}
           disabled={uploading}
           rows={3}
         />
