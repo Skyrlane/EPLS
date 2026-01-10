@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Metadata } from "next"
 import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
 import EgliseSidebar from "../components/eglise/EgliseSidebar"
+import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
 
 export const metadata: Metadata = {
   title: "Notre Église | Église Protestante Libre de Strasbourg",
@@ -11,31 +13,16 @@ export const metadata: Metadata = {
 }
 
 export default function NotreEglise() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Notre Église", href: "/notre-eglise", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Notre Église</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-foreground">Notre Église</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Notre Église"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

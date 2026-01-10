@@ -1,7 +1,9 @@
-import Link from "next/link"
 import { Metadata } from "next"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Sidebar from "./components/Sidebar"
+import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
+import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "Infos & Documents | Église Protestante Libre de Strasbourg",
@@ -10,31 +12,16 @@ export const metadata: Metadata = {
 }
 
 export default function InfosDocs() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Infos & Docs", href: "/infos-docs", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Infos/Docs</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">Infos/Docs</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Infos & Docs"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

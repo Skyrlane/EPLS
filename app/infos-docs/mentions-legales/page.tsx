@@ -1,9 +1,8 @@
-import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Sidebar from "../components/Sidebar"
 import { Metadata } from "next"
-import { Breadcrumb, BreadcrumbLink } from "@/components/ui/breadcrumb"
 import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
 
 export const metadata: Metadata = {
   title: "Mentions légales | Église Protestante Libre de Strasbourg",
@@ -11,19 +10,18 @@ export const metadata: Metadata = {
 }
 
 export default function MentionsLegalesPage() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Infos & Docs", href: "/infos-docs" },
+    { label: "Mentions légales", href: "/infos-docs/mentions-legales", isCurrent: true },
+  ];
+
   return (
     <>
       <PageHeader
         title="Mentions légales"
         description="Informations légales, protection des données personnelles et conditions d'utilisation du site"
-      >
-        <Breadcrumb
-          segments={[
-            { href: "/infos-docs", label: "Infos & Documents" }
-          ]}
-          currentPage="Mentions légales"
-        />
-      </PageHeader>
+        breadcrumbs={breadcrumbItems}
+      />
 
       <section className="py-16">
         <div className="container mx-auto px-4">

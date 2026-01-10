@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { DynamicImageBlock } from "@/components/ui/dynamic-image-block";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,8 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarMiniWithEvents } from "@/components/calendar/calendar-mini-with-events";
+import { PageHeader } from "@/components/ui/page-header";
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs";
 
 export const metadata = {
   title: "Culte & Vie communautaire - Église Protestante Libre de Strasbourg",
@@ -44,31 +45,16 @@ const prochainCulte = {
 // via le composant CalendarMiniWithEvents
 
 export default function Culte() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Culte & Vie", href: "/culte", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Culte & Vie communautaire</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">Culte & Vie</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Culte & Vie communautaire"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Sommaire et Prochain Culte */}
       <div className="bg-card py-6 border-b">

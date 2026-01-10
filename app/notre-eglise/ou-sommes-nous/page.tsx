@@ -4,6 +4,8 @@ import { MapPin, Clock, Bus, Phone, Mail } from "lucide-react"
 import { Metadata } from "next"
 import { Button } from '@/components/ui/button'
 import EgliseSidebar from "../../components/eglise/EgliseSidebar"
+import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
 
 export const metadata: Metadata = {
   title: "Où sommes-nous | Église Protestante Libre de Strasbourg",
@@ -11,39 +13,17 @@ export const metadata: Metadata = {
 }
 
 export default function OuSommesNous() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Notre Église", href: "/notre-eglise" },
+    { label: "Où sommes-nous", href: "/notre-eglise/ou-sommes-nous", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Où sommes-nous ?</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <Link href="/notre-eglise" className="text-primary hover:text-primary/80">
-                    Notre Église
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">Où sommes-nous</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Où sommes-nous ?"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

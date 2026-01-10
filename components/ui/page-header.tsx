@@ -32,15 +32,15 @@ export function PageHeader({
   return (
     <div className={cn(bgColor, "py-12 transition-colors duration-300", className)}>
       <div className="container mx-auto px-4">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} className="mb-4" />}
+
         <h1 className="text-4xl font-bold mb-4 text-foreground">{title}</h1>
 
         {description && (
-          <p className="text-lg text-muted-foreground max-w-3xl mb-6">
+          <p className="text-lg text-muted-foreground max-w-3xl">
             {description}
           </p>
         )}
-
-        {breadcrumbs && <Breadcrumbs items={breadcrumbs} className="mb-4" />}
 
         {children}
       </div>

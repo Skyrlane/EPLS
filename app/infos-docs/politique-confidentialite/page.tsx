@@ -1,9 +1,8 @@
-import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Sidebar from "../components/Sidebar"
 import { Metadata } from "next"
-import { Breadcrumb, BreadcrumbLink } from "@/components/ui/breadcrumb"
 import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
 
 export const metadata: Metadata = {
   title: "Politique de confidentialité | Église Protestante Libre de Strasbourg",
@@ -11,19 +10,18 @@ export const metadata: Metadata = {
 }
 
 export default function PolitiqueConfidentialitePage() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Infos & Docs", href: "/infos-docs" },
+    { label: "Politique de confidentialité", href: "/infos-docs/politique-confidentialite", isCurrent: true },
+  ];
+
   return (
     <>
       <PageHeader
         title="Politique de confidentialité"
         description="Comment nous collectons, utilisons et protégeons vos données personnelles"
-      >
-        <Breadcrumb
-          segments={[
-            { href: "/infos-docs", label: "Infos & Documents" }
-          ]}
-          currentPage="Politique de confidentialité"
-        />
-      </PageHeader>
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

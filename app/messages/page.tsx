@@ -4,10 +4,11 @@ import { collection, getDocs, query, where, orderBy, limit } from 'firebase/fire
 import { firestore } from '@/lib/firebase';
 import type { MessageItem } from '@/types';
 import { MessageYouTubeCard } from '@/components/messages/MessageYouTubeCard';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Loader2 } from 'lucide-react';
+import { PageHeader } from '@/components/ui/page-header';
+import { BreadcrumbItem } from '@/components/ui/breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'Messages et Prédications | EPLS',
@@ -137,17 +138,19 @@ function MessageListClient({ messages }: { messages: MessageItem[] }) {
 export default async function MessagesPage() {
   const messages = await getMessages();
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Messages", href: "/messages", isCurrent: true },
+  ];
+
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
-      {/* Header */}
-      <div className="max-w-3xl mx-auto text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Messages et Prédications
-        </h1>
-        <p className="text-lg text-muted-foreground">
-          Retrouvez tous les messages et enseignements de l&apos;église EPLS
-        </p>
-      </div>
+    <>
+      <PageHeader
+        title="Messages et Prédications"
+        description="Retrouvez tous les messages et enseignements de l'église EPLS"
+        breadcrumbs={breadcrumbItems}
+      />
+
+      <div className="container mx-auto px-4 py-8 md:py-12">
 
       {/* Contenu */}
       <Suspense
@@ -178,6 +181,7 @@ export default async function MessagesPage() {
           <MessageListClient messages={messages} />
         )}
       </Suspense>
-    </div>
+      </div>
+    </>
   );
 }

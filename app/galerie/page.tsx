@@ -1,9 +1,7 @@
 'use client';
 
-import Link from "next/link"
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardDescription } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { collection, getDocs, query, orderBy, where, onSnapshot } from 'firebase/firestore'
 import { firestore } from '@/lib/firebase'
 import type { GalleryPhoto, GalleryTag } from '@/types'
@@ -11,8 +9,8 @@ import Lightbox from 'yet-another-react-lightbox'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen'
 import 'yet-another-react-lightbox/styles.css'
-
-// Metadata supprimée (incompatible avec 'use client')
+import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
 
 // Images de démonstration 
 const galleryCategories = [
@@ -219,18 +217,18 @@ export default function GaleriePhotos() {
     );
   }
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Galerie Photos", href: "/galerie", isCurrent: true },
+  ];
+
   return (
-    <div className="container mx-auto py-10">
-      <header className="mb-10">
-        <h1 className="text-4xl font-bold mb-4">Galerie Photos</h1>
-        <div className="flex items-center text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-primary transition-colors">
-            Accueil
-          </Link>
-          <span className="mx-2">/</span>
-          <span>Galerie Photos</span>
-        </div>
-      </header>
+    <>
+      <PageHeader
+        title="Galerie Photos"
+        breadcrumbs={breadcrumbItems}
+      />
+
+      <div className="container mx-auto py-10">
 
       {/* Filtres par tags */}
       <div className="mb-8">
@@ -299,6 +297,7 @@ export default function GaleriePhotos() {
           scrollToZoom: true
         }}
       />
-    </div>
+      </div>
+    </>
   );
 } 

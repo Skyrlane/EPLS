@@ -19,9 +19,8 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
   const teamMembers: TeamMember[] = await getTeamMembers();
   
-  // Définir les items de Breadcrumb
+  // Définir les items de Breadcrumb (Accueil est ajouté automatiquement par le composant)
   const breadcrumbItems: BreadcrumbItem[] = [
-    { label: "Accueil", href: "/" },
     { label: "À propos", href: "/a-propos", isCurrent: true },
   ];
   

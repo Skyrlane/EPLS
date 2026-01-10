@@ -1,11 +1,12 @@
 import Link from "next/link"
-import Image from "next/image"
 import { Metadata } from "next"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ExternalLink } from "lucide-react"
 import Sidebar from "../components/Sidebar"
 import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
+import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
 
 export const metadata: Metadata = {
   title: "Union des Églises Évangéliques Libres | Église Protestante Libre de Strasbourg",
@@ -14,39 +15,17 @@ export const metadata: Metadata = {
 }
 
 export default function UnionEglisePage() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Infos & Docs", href: "/infos-docs" },
+    { label: "L'Union des Églises", href: "/infos-docs/union-eglise", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">L&apos;Union des Églises Évangéliques Libres</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <Link href="/infos-docs" className="text-primary hover:text-primary/80">
-                    Infos & Docs
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">L&apos;Union des Églises</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="L'Union des Églises Évangéliques Libres"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

@@ -2,21 +2,19 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
 import Sidebar from '../components/Sidebar';
-import { 
-  Users, 
-  User, 
-  ShieldCheck, 
-  UserCheck, 
-  Archive, 
-  Lock,
+import { PageHeader } from '@/components/ui/page-header';
+import { BreadcrumbItem } from '@/components/ui/breadcrumbs';
+import {
+  Users,
+  User,
+  ShieldCheck,
+  UserCheck,
+  Archive,
   Search
 } from 'lucide-react';
 
@@ -138,39 +136,17 @@ export default function MembresPage() {
     return null;
   }
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Infos & Docs", href: "/infos-docs" },
+    { label: "Membres", href: "/infos-docs/membres", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Liste des membres</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <Link href="/infos-docs" className="text-primary hover:text-primary/80">
-                    Infos/Docs
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">Liste des membres</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Liste des membres"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

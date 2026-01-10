@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlanningTableStatic } from "@/components/planning/PlanningTableStatic"
 import { ProtectedPlanningWrapper } from "@/components/planning/ProtectedPlanningWrapper"
@@ -9,6 +8,8 @@ import Sidebar from '../components/Sidebar'
 import { collection, query, where, limit, getDocs } from 'firebase/firestore'
 import { firestore } from '@/lib/firebase'
 import type { Planning } from '@/types'
+import { PageHeader } from "@/components/ui/page-header";
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs";
 
 const CACHE_KEY = 'epls_planning_data_cache'
 const CACHE_TIMESTAMP_KEY = 'epls_planning_data_timestamp'
@@ -98,39 +99,17 @@ export default function PlanningCultesPage() {
     fetchPlanning()
   }, [])
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Infos & Docs", href: "/infos-docs" },
+    { label: "Planning des Cultes", href: "/infos-docs/planning-cultes", isCurrent: true },
+  ];
+
   return (
     <ProtectedPlanningWrapper planning={planning}>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Planning des Cultes</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <Link href="/infos-docs" className="text-primary hover:text-primary/80">
-                    Infos/Docs
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">Planning des Cultes</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Planning des Cultes"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

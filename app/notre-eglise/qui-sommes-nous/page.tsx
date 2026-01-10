@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Metadata } from "next"
 import EgliseSidebar from "../../components/eglise/EgliseSidebar"
 import { Clock, MapPin } from "lucide-react"
+import { PageHeader } from "@/components/ui/page-header"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
 
 export const metadata: Metadata = {
   title: "Qui sommes-nous | Église Protestante Libre de Strasbourg",
@@ -10,39 +12,17 @@ export const metadata: Metadata = {
 }
 
 export default function QuiSommesNous() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Notre Église", href: "/notre-eglise" },
+    { label: "Qui sommes-nous", href: "/notre-eglise/qui-sommes-nous", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Qui sommes-nous ?</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <Link href="/notre-eglise" className="text-primary hover:text-primary/80">
-                    Notre Église
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-muted-foreground">Qui sommes-nous</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Qui sommes-nous ?"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Main Content */}
       <section className="py-16">

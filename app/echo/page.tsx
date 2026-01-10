@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EchoArchivesPageSafe } from "@/components/echo/echo-archives-page-safe";
+import { PageHeader } from "@/components/ui/page-header";
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs";
 
 export const metadata = {
   title: "Echos EPLS - Église Protestante Libre de Strasbourg",
@@ -8,31 +9,16 @@ export const metadata = {
 }
 
 export default function Echo() {
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Echos", href: "/echo", isCurrent: true },
+  ];
+
   return (
     <>
-      {/* Page Header */}
-      <div className="bg-muted py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Echos EPLS</h1>
-
-          {/* Breadcrumbs */}
-          <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3">
-              <li className="inline-flex items-center">
-                <Link href="/" className="text-primary hover:text-primary/80">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-muted-foreground">/</span>
-                  <span className="text-foreground">Echos</span>
-                </div>
-              </li>
-            </ol>
-          </nav>
-        </div>
-      </div>
+      <PageHeader
+        title="Echos EPLS"
+        breadcrumbs={breadcrumbItems}
+      />
 
       {/* Echos Section */}
       <section className="py-16">

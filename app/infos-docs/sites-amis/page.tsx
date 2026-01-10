@@ -1,12 +1,10 @@
 import Link from "next/link"
-import Image from "next/image"
 import { Metadata } from "next"
-import { Breadcrumb, BreadcrumbLink } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChurchJsonLd } from "@/components/json-ld"
 import { PageHeader } from "@/components/ui/page-header"
-import { SectionContainer } from "@/components/ui/section-container"
+import { BreadcrumbItem } from "@/components/ui/breadcrumbs"
 import { ExternalLink } from "lucide-react"
 import Sidebar from "../components/Sidebar"
 import { DynamicImageBlock } from "@/components/ui/dynamic-image-block"
@@ -57,20 +55,19 @@ export default async function SitesAmisPage() {
     return acc;
   }, {} as Record<string, any[]>);
 
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: "Infos & Docs", href: "/infos-docs" },
+    { label: "Sites amis", href: "/infos-docs/sites-amis", isCurrent: true },
+  ];
+
   return (
     <>
       <ChurchJsonLd />
       <PageHeader
         title="Sites amis"
         description="Découvrez les sites de nos partenaires et d'organisations avec lesquelles nous partageons des valeurs communes."
-      >
-        <Breadcrumb
-          segments={[
-            { href: "/infos-docs", label: "Infos & Documents" }
-          ]}
-          currentPage="Sites amis"
-        />
-      </PageHeader>
+        breadcrumbs={breadcrumbItems}
+      />
 
       <section className="py-16">
         <div className="container mx-auto px-4">
