@@ -263,13 +263,22 @@ export function useChurchMembers(options: UseChurchMembersOptions = {}): UseChur
         ordre = await getNextOrdre(data.status);
       }
 
-      const docRef = await addDoc(collection(firestore, 'church_members'), {
-        ...data,
+      // Préparer les données en convertissant undefined en null
+      const memberData: Record<string, unknown> = {
+        firstName: data.firstName,
         lastName: data.lastName.toUpperCase(),
+        status: data.status,
+        conseilFunction: data.conseilFunction || null,
+        observations: data.observations || null,
+        dateRadiation: data.dateRadiation || null,
         ordre,
+        isActive: data.isActive ?? true,
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now(),
-      });
+        createdBy: data.createdBy || null,
+      };
+
+      const docRef = await addDoc(collection(firestore, 'church_members'), memberData);
 
       await getAllMembers();
       return docRef.id;
@@ -293,10 +302,17 @@ export function useChurchMembers(options: UseChurchMembersOptions = {}): UseChur
       setLoading(true);
       setError(null);
 
+      // Filtrer les valeurs undefined (Firestore ne les accepte pas)
       const updateData: Record<string, unknown> = {
-        ...data,
         updatedAt: Timestamp.now(),
       };
+
+      // Copier seulement les valeurs définies (convertir undefined en null)
+      Object.entries(data).forEach(([key, value]) => {
+        if (key !== 'id' && key !== 'createdAt' && key !== 'updatedAt') {
+          updateData[key] = value === undefined ? null : value;
+        }
+      });
 
       // Force majuscules sur lastName si présent
       if (data.lastName) {
