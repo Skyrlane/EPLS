@@ -553,3 +553,55 @@ export interface Contact {
   updatedAt: Date;               // Date de dernière modification
   createdBy?: string;            // UID de l'admin créateur
 }
+
+
+/**
+ * Statuts possibles pour un membre de l'église
+ */
+export const CHURCH_MEMBER_STATUSES = [
+  'actif',      // Membre actif
+  'conseil',    // Membre du conseil
+  'archive'     // Membre archivé (décédé, démission, etc.)
+] as const;
+
+export type ChurchMemberStatus = typeof CHURCH_MEMBER_STATUSES[number];
+
+/**
+ * Fonctions possibles au sein du conseil
+ */
+export const CONSEIL_FUNCTIONS = [
+  'Président',
+  'Vice-Président',
+  'Secrétaire',
+  'Trésorier',
+  'Membre du conseil'
+] as const;
+
+export type ConseilFunction = typeof CONSEIL_FUNCTIONS[number];
+
+/**
+ * Interface pour un membre de l'église EPLS
+ * Collection Firestore: church_members
+ */
+export interface ChurchMember {
+  id: string;                        // Auto-généré par Firestore
+  lastName: string;                  // NOM en majuscules (ex: "SCHNEIDER")
+  firstName: string;                 // Prénom (ex: "Clairette")
+  
+  // Statut et rôle
+  status: ChurchMemberStatus;        // 'actif', 'conseil', 'archive'
+  conseilFunction?: ConseilFunction; // Fonction si membre du conseil
+  
+  // Pour les membres archivés
+  observations?: string;             // "Décédée le 8 juin 2019", "démission", etc.
+  dateRadiation?: string;            // "radiée le 14 mars 2021"
+  
+  // Métadonnées
+  ordre: number;                     // Pour le tri/classement
+  isActive: boolean;                 // Visible sur le site (true par défaut)
+  
+  // Dates
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy?: string;                // UID de l'admin créateur
+}

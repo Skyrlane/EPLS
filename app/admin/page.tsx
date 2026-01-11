@@ -17,6 +17,7 @@ import {
   Cake,
   BookUser,
 } from "lucide-react";
+import { UsersRound } from "lucide-react";
 
 const adminLinks = [
   {
@@ -90,6 +91,12 @@ const adminLinks = [
     label: "Carnet d'adresses",
     description: "Gérer les contacts",
     icon: BookUser,
+  },
+  {
+    href: "/admin/membres",
+    label: "Liste des membres",
+    description: "Gérer les membres de l'église",
+    icon: UsersRound,
   },
 ];
 

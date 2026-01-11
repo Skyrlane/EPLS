@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
+import { useChurchMembers } from '@/hooks/use-church-members';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -17,110 +18,55 @@ import {
   Archive,
   Search
 } from 'lucide-react';
-
-// Types
-interface ConseilMember {
-  nom: string;
-  prenom: string;
-  fonction: string;
-}
-
-interface ConseilOnlyMember {
-  nom: string;
-  prenom: string;
-  observations: string;
-  radiee: string;
-}
-
-interface AllMember {
-  num: number;
-  nom: string;
-  prenom: string;
-}
-
-// Données - Membres du Conseil de l'EPLS
-const conseilMembers: ConseilMember[] = [
-  { nom: 'SCHNEIDER', prenom: 'Clairette', fonction: 'Secrétaire' },
-  { nom: 'SIEGRIST', prenom: 'Miriam', fonction: 'Présidente' },
-  { nom: 'DUMAY', prenom: 'Wisler', fonction: 'Trésorier' },
-  { nom: 'THOBOIS', prenom: 'Christophe', fonction: 'Vice-Président' },
-];
-
-// Données - Visible par le conseil uniquement
-const conseilOnly: ConseilOnlyMember[] = [
-  { nom: 'THOMAS', prenom: 'Marion', observations: 'Décédée le 8 juin 2019', radiee: 'radiée' },
-  { nom: 'FRANTZ', prenom: 'Christine', observations: 'Décédée le 18 janvier 2021', radiee: '' },
-  { nom: 'HERRENSCHMIDT', prenom: 'Patrice', observations: 'démission', radiee: 'radiée le 14 mars 2021' },
-  { nom: 'HERRENSCHMIDT', prenom: 'Y-Lê', observations: 'démission', radiee: 'radiée le 14 mars 2021' },
-  { nom: 'MBUAKI', prenom: 'Dédé', observations: 'reparti en Afrique', radiee: 'radiée le 14 mars 2021' },
-  { nom: 'RAPHAËL', prenom: 'Monalise', observations: 'veut rester membre', radiee: 'contactée après le 14 mars 2021' },
-  { nom: 'GUILLEMOT', prenom: 'Denise', observations: 'démission', radiee: 'datée du 28/08/2021' },
-];
-
-// Données - Tous les membres de l'EPLS (39 personnes)
-const allMembers: AllMember[] = [
-  { num: 1, nom: 'BAUER', prenom: 'Pierre' },
-  { num: 2, nom: 'BEZ', prenom: 'Claude' },
-  { num: 3, nom: 'BEZ', prenom: 'Margrit' },
-  { num: 4, nom: 'CARDOSO', prenom: 'Maria' },
-  { num: 5, nom: 'CHAPELLE', prenom: 'Christiane' },
-  { num: 6, nom: 'CLAVER', prenom: 'Sylvain' },
-  { num: 7, nom: 'DUMAY', prenom: 'Anne' },
-  { num: 8, nom: 'DUMAY', prenom: 'Derissaint' },
-  { num: 9, nom: 'DUMAY', prenom: 'Gladinia' },
-  { num: 10, nom: 'DUMAY', prenom: 'Jacqueline' },
-  { num: 11, nom: 'DUMAY', prenom: 'Rico' },
-  { num: 12, nom: 'DUMAY', prenom: 'Wilsaint' },
-  { num: 13, nom: 'DUMAY', prenom: 'Wisler' },
-  { num: 14, nom: 'DUMAY', prenom: 'Zillamise' },
-  { num: 15, nom: 'DUMAY-KUHN', prenom: 'Aline' },
-  { num: 16, nom: 'FRANTZ', prenom: 'Christine' },
-  { num: 17, nom: 'GAENTZLER', prenom: 'Eric' },
-  { num: 18, nom: 'HAESSIG', prenom: 'Daniel' },
-  { num: 19, nom: 'HUREY', prenom: 'Liliane' },
-  { num: 20, nom: 'KUHN', prenom: 'Bernadette' },
-  { num: 21, nom: 'KUHN-PASTANT', prenom: 'Agathe' },
-  { num: 22, nom: 'LHERMENAULT', prenom: 'Mireille' },
-  { num: 23, nom: 'LHERMENAULT', prenom: 'Philippe' },
-  { num: 24, nom: 'OLHAGARAY', prenom: 'Catherine' },
-  { num: 25, nom: 'OLHAGARAY', prenom: 'Marie' },
-  { num: 26, nom: 'SCHLOSSER', prenom: 'Daphnée' },
-  { num: 27, nom: 'SCHLOSSER', prenom: 'Esther' },
-  { num: 28, nom: 'SCHLOSSER', prenom: 'Fabrice' },
-  { num: 29, nom: 'SCHLOSSER', prenom: 'Pierre' },
-  { num: 30, nom: 'SCHNEIDER', prenom: 'André' },
-  { num: 31, nom: 'SCHNEIDER', prenom: 'Clairette' },
-  { num: 32, nom: 'SIEGRIST', prenom: 'Jean-Pierre' },
-  { num: 33, nom: 'SIEGRIST', prenom: 'Miriam' },
-  { num: 34, nom: 'THOBOIS', prenom: 'Christophe' },
-  { num: 35, nom: 'THOBOIS', prenom: 'David' },
-  { num: 36, nom: 'WENTZ', prenom: 'Isabelle' },
-  { num: 37, nom: 'YA', prenom: 'Xialy' },
-  { num: 38, nom: 'LOUX', prenom: 'Benoit' },
-  { num: 39, nom: 'WANNER', prenom: 'Christiane' },
-];
+import type { ChurchMember } from '@/types';
 
 export default function MembresPage() {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
+  const { members, loading: membersLoading } = useChurchMembers({ autoLoad: true });
   const [searchTerm, setSearchTerm] = useState('');
 
   // Redirect si non authentifié
   useEffect(() => {
-    if (!loading && !user) {
+    if (!authLoading && !user) {
       router.push('/connexion?redirect=/infos-docs/membres');
     }
-  }, [user, loading, router]);
+  }, [user, authLoading, router]);
+
+  // Séparer les membres par catégorie
+  const { conseilMembers, archivedMembers, allActiveMembers } = useMemo(() => {
+    const conseil = members
+      .filter((m) => m.status === 'conseil' && m.isActive)
+      .sort((a, b) => a.ordre - b.ordre);
+
+    const archived = members
+      .filter((m) => m.status === 'archive')
+      .sort((a, b) => a.ordre - b.ordre);
+
+    const active = members
+      .filter((m) => (m.status === 'actif' || m.status === 'conseil') && m.isActive)
+      .sort((a, b) => a.ordre - b.ordre || a.lastName.localeCompare(b.lastName));
+
+    return {
+      conseilMembers: conseil,
+      archivedMembers: archived,
+      allActiveMembers: active,
+    };
+  }, [members]);
 
   // Filtrer les membres selon le terme de recherche
-  const filteredMembers = allMembers.filter(
-    (member) =>
-      member.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      member.prenom.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredMembers = useMemo(() => {
+    if (!searchTerm) return allActiveMembers;
+    const lowerSearch = searchTerm.toLowerCase();
+    return allActiveMembers.filter(
+      (member) =>
+        member.lastName.toLowerCase().includes(lowerSearch) ||
+        member.firstName.toLowerCase().includes(lowerSearch)
+    );
+  }, [allActiveMembers, searchTerm]);
 
   // Loading state
-  if (loading) {
+  if (authLoading || membersLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center gap-4">
@@ -179,7 +125,7 @@ export default function MembresPage() {
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-sm text-muted-foreground">Total Membres</p>
-                          <p className="text-3xl font-bold">{allMembers.length}</p>
+                          <p className="text-3xl font-bold">{allActiveMembers.length}</p>
                         </div>
                         <UserCheck className="h-8 w-8 text-primary opacity-50" />
                       </div>
@@ -191,7 +137,7 @@ export default function MembresPage() {
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-sm text-muted-foreground">Membres archivés</p>
-                          <p className="text-3xl font-bold">{conseilOnly.length}</p>
+                          <p className="text-3xl font-bold">{archivedMembers.length}</p>
                         </div>
                         <Archive className="h-8 w-8 text-primary opacity-50" />
                       </div>
@@ -206,29 +152,37 @@ export default function MembresPage() {
                     Membres du Conseil de l&apos;EPLS
                   </h2>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {conseilMembers.map((member, index) => (
-                      <Card key={index} className="hover:shadow-lg transition-shadow">
-                        <CardContent className="p-6">
-                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                              <User className="h-6 w-6 text-primary" />
+                  {conseilMembers.length === 0 ? (
+                    <Card>
+                      <CardContent className="p-6 text-center text-muted-foreground">
+                        Aucun membre du conseil enregistré
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {conseilMembers.map((member) => (
+                        <Card key={member.id} className="hover:shadow-lg transition-shadow">
+                          <CardContent className="p-6">
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <User className="h-6 w-6 text-primary" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-semibold text-lg truncate">
+                                  {member.firstName} {member.lastName}
+                                </h3>
+                                {member.conseilFunction && (
+                                  <Badge variant="secondary" className="mt-1">
+                                    {member.conseilFunction}
+                                  </Badge>
+                                )}
+                              </div>
                             </div>
-                            <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-lg truncate">
-                                {member.prenom} {member.nom}
-                              </h3>
-                              {member.fonction && (
-                                <Badge variant="secondary" className="mt-1">
-                                  {member.fonction}
-                                </Badge>
-                              )}
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Section 2 : Visible par le conseil uniquement */}
@@ -240,44 +194,50 @@ export default function MembresPage() {
 
                   <Card>
                     <CardContent className="p-0">
-                      <div className="overflow-x-auto">
-                        <table className="w-full">
-                          <thead className="bg-muted/50">
-                            <tr>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                                Nom
-                              </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                                Prénom
-                              </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                                Observations
-                              </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                                Radiée
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-border">
-                            {conseilOnly.map((member, index) => (
-                              <tr key={index} className="hover:bg-muted/50 transition-colors">
-                                <td className="px-6 py-4 whitespace-nowrap font-medium">
-                                  {member.nom}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                  {member.prenom}
-                                </td>
-                                <td className="px-6 py-4 text-muted-foreground">
-                                  {member.observations}
-                                </td>
-                                <td className="px-6 py-4 text-destructive">
-                                  {member.radiee}
-                                </td>
+                      {archivedMembers.length === 0 ? (
+                        <div className="p-6 text-center text-muted-foreground">
+                          Aucun membre archivé
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full">
+                            <thead className="bg-muted/50">
+                              <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                  Nom
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                  Prénom
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                  Observations
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                  Radiée
+                                </th>
                               </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
+                            </thead>
+                            <tbody className="divide-y divide-border">
+                              {archivedMembers.map((member) => (
+                                <tr key={member.id} className="hover:bg-muted/50 transition-colors">
+                                  <td className="px-6 py-4 whitespace-nowrap font-medium">
+                                    {member.lastName}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap">
+                                    {member.firstName}
+                                  </td>
+                                  <td className="px-6 py-4 text-muted-foreground">
+                                    {member.observations || '-'}
+                                  </td>
+                                  <td className="px-6 py-4 text-destructive">
+                                    {member.dateRadiation || '-'}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
@@ -304,46 +264,46 @@ export default function MembresPage() {
 
                   <Card>
                     <CardContent className="p-0">
-                      <div className="overflow-x-auto">
-                        <table className="w-full">
-                          <thead className="bg-muted/50">
-                            <tr>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">
-                                #
-                              </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                                Nom
-                              </th>
-                              <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                                Prénom
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-border">
-                            {filteredMembers.length > 0 ? (
-                              filteredMembers.map((member) => (
-                                <tr key={member.num} className="hover:bg-muted/50 transition-colors">
+                      {filteredMembers.length === 0 ? (
+                        <div className="p-6 text-center text-muted-foreground">
+                          {searchTerm
+                            ? `Aucun membre trouvé pour "${searchTerm}"`
+                            : 'Aucun membre enregistré'}
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full">
+                            <thead className="bg-muted/50">
+                              <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">
+                                  #
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                  Nom
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                  Prénom
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-border">
+                              {filteredMembers.map((member, index) => (
+                                <tr key={member.id} className="hover:bg-muted/50 transition-colors">
                                   <td className="px-6 py-4 whitespace-nowrap text-muted-foreground text-sm">
-                                    {member.num}
+                                    {index + 1}
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap font-medium">
-                                    {member.nom}
+                                    {member.lastName}
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap">
-                                    {member.prenom}
+                                    {member.firstName}
                                   </td>
                                 </tr>
-                              ))
-                            ) : (
-                              <tr>
-                                <td colSpan={3} className="px-6 py-8 text-center text-muted-foreground">
-                                  Aucun membre trouvé pour "{searchTerm}"
-                                </td>
-                              </tr>
-                            )}
-                          </tbody>
-                        </table>
-                      </div>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
@@ -354,4 +314,4 @@ export default function MembresPage() {
       </section>
     </>
   );
-} 
+}
