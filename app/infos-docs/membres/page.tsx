@@ -43,9 +43,19 @@ export default function MembresPage() {
       .filter((m) => m.status === 'archive')
       .sort((a, b) => a.ordre - b.ordre);
 
-    const active = members
+    // Tous les membres actifs (statut 'actif' ou 'conseil'), dédupliqués par nom+prénom
+    const activeAndConseil = members
       .filter((m) => (m.status === 'actif' || m.status === 'conseil') && m.isActive)
       .sort((a, b) => a.ordre - b.ordre || a.lastName.localeCompare(b.lastName));
+    
+    // Dédupliquer par nom + prénom (garder la première occurrence)
+    const seen = new Set<string>();
+    const active = activeAndConseil.filter((m) => {
+      const key = `${m.lastName.toUpperCase()}-${m.firstName.toUpperCase()}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
 
     return {
       conseilMembers: conseil,
