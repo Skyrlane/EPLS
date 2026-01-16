@@ -33,7 +33,7 @@ export default function AdminMembresPage() {
   } = useChurchMembers({ autoLoad: true });
   
   // Charger aussi les contacts pour afficher ceux avec isMember=true
-  const { contacts, loading: contactsLoading } = useContacts({ autoLoad: true });
+  const { contacts, loading: contactsLoading, updateContact } = useContacts({ autoLoad: true });
   
   // Fusionner les membres avec les contacts qui ont isMember=true
   const allMembers = useMemo(() => {
@@ -77,6 +77,43 @@ export default function AdminMembresPage() {
     
     return result;
   }, [members, contacts]);
+
+  // Helper pour détecter si un membre vient du carnet
+  const isFromCarnet = (memberId: string) => memberId.startsWith('contact-');
+  const getContactId = (memberId: string) => memberId.replace('contact-', '');
+
+  // Fonction wrapper pour supprimer/archiver un membre
+  const handleDelete = async (memberId: string) => {
+    if (isFromCarnet(memberId)) {
+      // Pour les membres du carnet, on retire le flag isMember
+      const contactId = getContactId(memberId);
+      await updateContact(contactId, { isMember: false });
+      toast({
+        title: 'Membre retiré',
+        description: 'Le contact n\'est plus marqué comme membre',
+      });
+    } else {
+      // Pour les vrais membres, on supprime
+      await deleteMember(memberId);
+    }
+  };
+
+  // Fonction wrapper pour toggle visibilité
+  const handleToggleActive = async (memberId: string, currentStatus: boolean) => {
+    if (isFromCarnet(memberId)) {
+      // Pour les membres du carnet, on retire le flag isMember quand on masque
+      const contactId = getContactId(memberId);
+      await updateContact(contactId, { isMember: !currentStatus });
+      toast({
+        title: currentStatus ? 'Membre masqué' : 'Membre visible',
+        description: currentStatus 
+          ? 'Le contact n\'est plus marqué comme membre' 
+          : 'Le contact est maintenant membre',
+      });
+    } else {
+      await toggleActive(memberId, currentStatus);
+    }
+  };
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingMember, setEditingMember] = useState<ChurchMember | null>(null);
@@ -147,7 +184,27 @@ export default function AdminMembresPage() {
     };
 
     if (editingMember) {
-      await updateMember(editingMember.id, memberData);
+      if (isFromCarnet(editingMember.id)) {
+        // Pour un membre du carnet, on crée un vrai ChurchMember
+        // et on retire le flag isMember du contact pour éviter les doublons
+        const contactId = getContactId(editingMember.id);
+        
+        // Créer le nouveau membre
+        await createMember({
+          ...memberData,
+          createdBy: user?.uid,
+        });
+        
+        // Retirer le flag isMember du contact
+        await updateContact(contactId, { isMember: false });
+        
+        toast({
+          title: 'Membre créé',
+          description: 'Le contact a été converti en membre officiel',
+        });
+      } else {
+        await updateMember(editingMember.id, memberData);
+      }
     } else {
       await createMember({
         ...memberData,
@@ -401,8 +458,8 @@ export default function AdminMembresPage() {
                   <ChurchMemberTable
                     members={filteredMembers}
                     onEdit={handleEdit}
-                    onDelete={deleteMember}
-                    onToggleActive={toggleActive}
+                    onDelete={handleDelete}
+                    onToggleActive={handleToggleActive}
                     showStatus={true}
                   />
                 )}
@@ -417,8 +474,8 @@ export default function AdminMembresPage() {
                   <ChurchMemberTable
                     members={filteredMembers}
                     onEdit={handleEdit}
-                    onDelete={deleteMember}
-                    onToggleActive={toggleActive}
+                    onDelete={handleDelete}
+                    onToggleActive={handleToggleActive}
                     showStatus={false}
                   />
                 )}
@@ -433,8 +490,8 @@ export default function AdminMembresPage() {
                   <ChurchMemberTable
                     members={filteredMembers}
                     onEdit={handleEdit}
-                    onDelete={deleteMember}
-                    onToggleActive={toggleActive}
+                    onDelete={handleDelete}
+                    onToggleActive={handleToggleActive}
                     showStatus={false}
                   />
                 )}
@@ -449,8 +506,8 @@ export default function AdminMembresPage() {
                   <ChurchMemberTable
                     members={filteredMembers}
                     onEdit={handleEdit}
-                    onDelete={deleteMember}
-                    onToggleActive={toggleActive}
+                    onDelete={handleDelete}
+                    onToggleActive={handleToggleActive}
                     showStatus={false}
                   />
                 )}

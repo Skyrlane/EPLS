@@ -21,7 +21,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Pencil, Trash2, Eye, EyeOff, Shield, User, Archive, BookUser } from 'lucide-react';
+import { Pencil, Trash2, Eye, EyeOff, Shield, User, Archive } from 'lucide-react';
 import type { ChurchMember } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 
@@ -125,20 +125,12 @@ export function ChurchMemberTable({
             {members.map((member, index) => {
               const statusConfig = STATUS_CONFIG[member.status];
               const StatusIcon = statusConfig.icon;
-              // Détecter si le membre vient du carnet d'adresses
-              const isFromCarnet = member.id.startsWith('contact-');
 
               return (
                 <TableRow key={member.id}>
-                  {/* Ordre */}
+                  {/* Ordre - Index continu pour tous les membres */}
                   <TableCell className="text-muted-foreground text-sm">
-                    {isFromCarnet ? (
-                      <span title="Provient du carnet d'adresses">
-                        <BookUser className="h-4 w-4 text-blue-500" />
-                      </span>
-                    ) : (
-                      member.ordre || index + 1
-                    )}
+                    {index + 1}
                   </TableCell>
 
                   {/* Nom complet */}
@@ -193,43 +185,37 @@ export function ChurchMemberTable({
 
                   {/* Actions */}
                   <TableCell className="text-right">
-                    {isFromCarnet ? (
-                      <span className="text-xs text-muted-foreground italic">
-                        Via carnet d&apos;adresses
-                      </span>
-                    ) : (
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleToggleActive(member)}
-                          title={member.isActive ? 'Masquer' : 'Rendre visible'}
-                        >
-                          {member.isActive ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onEdit(member)}
-                          title="Modifier"
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDeleteClick(member)}
-                          title="Supprimer"
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    )}
+                    <div className="flex justify-end gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleToggleActive(member)}
+                        title={member.isActive ? 'Masquer' : 'Rendre visible'}
+                      >
+                        {member.isActive ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onEdit(member)}
+                        title="Modifier"
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteClick(member)}
+                        title="Supprimer"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               );
