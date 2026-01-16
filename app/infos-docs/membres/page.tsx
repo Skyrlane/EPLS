@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
 import { useChurchMembers } from '@/hooks/use-church-members';
+import { useContacts } from '@/hooks/use-contacts';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -18,13 +19,34 @@ import {
   Archive,
   Search
 } from 'lucide-react';
-import type { ChurchMember } from '@/types';
+import type { ChurchMember, Contact } from '@/types';
 
 export default function MembresPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  const { members, loading: membersLoading } = useChurchMembers({ autoLoad: true });
+  const { members: churchMembers, loading: membersLoading } = useChurchMembers({ autoLoad: true });
+  const { contacts, loading: contactsLoading } = useContacts({ autoLoad: true });
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Fusionner les membres ChurchMember avec les contacts ayant isMember = true
+  const members = useMemo(() => {
+    // Transformer les contacts membres en format ChurchMember
+    const contactsAsMembers: ChurchMember[] = contacts
+      .filter((contact: Contact) => contact.isMember && contact.isActive)
+      .map((contact: Contact) => ({
+        id: `contact-${contact.id}`,
+        lastName: contact.lastName,
+        firstName: contact.firstName,
+        status: 'actif' as const,
+        ordre: 9999, // Les mettre après les membres manuels
+        isActive: true,
+        createdAt: contact.createdAt,
+        updatedAt: contact.updatedAt,
+      }));
+
+    // Combiner les deux listes
+    return [...churchMembers, ...contactsAsMembers];
+  }, [churchMembers, contacts]);
 
   // Redirect si non authentifié
   useEffect(() => {
@@ -76,7 +98,7 @@ export default function MembresPage() {
   }, [allActiveMembers, searchTerm]);
 
   // Loading state
-  if (authLoading || membersLoading) {
+  if (authLoading || membersLoading || contactsLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center gap-4">
