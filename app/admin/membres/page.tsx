@@ -9,10 +9,11 @@ import { Plus, Search, Users, Shield, Archive, Upload } from 'lucide-react';
 import { ChurchMemberFormDialog } from '@/components/admin/ChurchMemberFormDialog';
 import { ChurchMemberTable } from '@/components/admin/ChurchMemberTable';
 import { useChurchMembers } from '@/hooks/use-church-members';
+import { useContacts } from '@/hooks/use-contacts';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { CONSEIL_FUNCTIONS, type ChurchMember, type ChurchMemberStatus } from '@/types';
+import { CONSEIL_FUNCTIONS, type ChurchMember, type ChurchMemberStatus, type Contact } from '@/types';
 import { type ChurchMemberFormData } from '@/components/admin/ChurchMemberFormDialog';
 import { useToast } from '@/hooks/use-toast';
 
@@ -30,6 +31,52 @@ export default function AdminMembresPage() {
     toggleActive,
     importMembers,
   } = useChurchMembers({ autoLoad: true });
+  
+  // Charger aussi les contacts pour afficher ceux avec isMember=true
+  const { contacts, loading: contactsLoading } = useContacts({ autoLoad: true });
+  
+  // Fusionner les membres avec les contacts qui ont isMember=true
+  const allMembers = useMemo(() => {
+    // Transformer les contacts membres en format ChurchMember
+    const contactsAsMembers: ChurchMember[] = contacts
+      .filter((contact: Contact) => contact.isMember === true && contact.isActive !== false)
+      .map((contact: Contact) => ({
+        id: `contact-${contact.id}`,
+        lastName: contact.lastName,
+        firstName: contact.firstName,
+        status: 'actif' as ChurchMemberStatus,
+        ordre: 9999,
+        isActive: true,
+        createdAt: contact.createdAt,
+        updatedAt: contact.updatedAt,
+        // Marquer comme provenant du carnet d'adresses
+        fromCarnet: true,
+      } as ChurchMember & { fromCarnet?: boolean }));
+
+    // Dédupliquer par nom + prénom (garder les ChurchMember en priorité)
+    const seen = new Set<string>();
+    const result: ChurchMember[] = [];
+    
+    // D'abord les vrais membres
+    for (const member of members) {
+      const key = `${member.lastName.toUpperCase()}-${member.firstName.toUpperCase()}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        result.push(member);
+      }
+    }
+    
+    // Ensuite les contacts (seulement s'ils ne sont pas déjà présents)
+    for (const contact of contactsAsMembers) {
+      const key = `${contact.lastName.toUpperCase()}-${contact.firstName.toUpperCase()}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        result.push(contact);
+      }
+    }
+    
+    return result;
+  }, [members, contacts]);
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingMember, setEditingMember] = useState<ChurchMember | null>(null);
@@ -46,7 +93,7 @@ export default function AdminMembresPage() {
 
   // Filtrage des membres
   const filteredMembers = useMemo(() => {
-    let filtered = members;
+    let filtered = allMembers;
 
     // Filtre par recherche
     if (searchTerm) {
@@ -64,15 +111,15 @@ export default function AdminMembresPage() {
     }
 
     return filtered;
-  }, [members, searchTerm, activeTab]);
+  }, [allMembers, searchTerm, activeTab]);
 
   // Compteurs par catégorie
   const counts = useMemo(() => ({
-    all: members.length,
-    conseil: members.filter((m) => m.status === 'conseil').length,
-    actif: members.filter((m) => m.status === 'actif').length,
-    archive: members.filter((m) => m.status === 'archive').length,
-  }), [members]);
+    all: allMembers.length,
+    conseil: allMembers.filter((m) => m.status === 'conseil').length,
+    actif: allMembers.filter((m) => m.status === 'actif').length,
+    archive: allMembers.filter((m) => m.status === 'archive').length,
+  }), [allMembers]);
 
   const handleCreate = (status: ChurchMemberStatus = 'actif') => {
     setEditingMember(null);
@@ -346,7 +393,7 @@ export default function AdminMembresPage() {
               </TabsList>
 
               <TabsContent value="all">
-                {loading ? (
+                {(loading || contactsLoading) ? (
                   <div className="text-center py-8">
                     <p>Chargement des membres...</p>
                   </div>
@@ -362,7 +409,7 @@ export default function AdminMembresPage() {
               </TabsContent>
 
               <TabsContent value="conseil">
-                {loading ? (
+                {(loading || contactsLoading) ? (
                   <div className="text-center py-8">
                     <p>Chargement...</p>
                   </div>
@@ -378,7 +425,7 @@ export default function AdminMembresPage() {
               </TabsContent>
 
               <TabsContent value="actif">
-                {loading ? (
+                {(loading || contactsLoading) ? (
                   <div className="text-center py-8">
                     <p>Chargement...</p>
                   </div>
@@ -394,7 +441,7 @@ export default function AdminMembresPage() {
               </TabsContent>
 
               <TabsContent value="archive">
-                {loading ? (
+                {(loading || contactsLoading) ? (
                   <div className="text-center py-8">
                     <p>Chargement...</p>
                   </div>
