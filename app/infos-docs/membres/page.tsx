@@ -30,9 +30,17 @@ export default function MembresPage() {
 
   // Fusionner les membres ChurchMember avec les contacts ayant isMember = true
   const members = useMemo(() => {
+    // DEBUG: Affiche dans la console pour diagnostic
+    if (contacts.length > 0) {
+      const membersFromContacts = contacts.filter((c: Contact) => c.isMember === true);
+      console.log('📋 Contacts total:', contacts.length);
+      console.log('👥 Contacts avec isMember=true:', membersFromContacts.length, membersFromContacts.map((c: Contact) => `${c.firstName} ${c.lastName}`));
+    }
+    
     // Transformer les contacts membres en format ChurchMember
+    // Note: on utilise === true pour gérer le cas où isMember serait undefined
     const contactsAsMembers: ChurchMember[] = contacts
-      .filter((contact: Contact) => contact.isMember && contact.isActive)
+      .filter((contact: Contact) => contact.isMember === true && contact.isActive !== false)
       .map((contact: Contact) => ({
         id: `contact-${contact.id}`,
         lastName: contact.lastName,
