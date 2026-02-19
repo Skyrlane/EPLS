@@ -9,6 +9,24 @@ service cloud.firestore {
         (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true);
     }
+
+    // Convertit un role en niveau numerique pour comparaison hierarchique
+    // Hierarchie: ami(1) < membre(2) < conseil(3) < admin(4)
+    // Backward-compat: 'member' maps to 2 (same as membre), 'visitor' maps to 1 (same as ami)
+    function roleLevel(role) {
+      return role == 'admin' ? 4 :
+             role == 'conseil' ? 3 :
+             role == 'membre' ? 2 :
+             role == 'member' ? 2 :
+             role == 'ami' ? 1 :
+             role == 'visitor' ? 1 : 0;
+    }
+
+    // Verifie si l'utilisateur connecte a au moins le role minimum requis
+    function hasRole(minRole) {
+      let userRole = get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+      return request.auth != null && roleLevel(userRole) >= roleLevel(minRole);
+    }
     
     // ========================================
     // IMAGES DU SITE
@@ -139,8 +157,12 @@ service cloud.firestore {
     // Collection users - lecture authentifiée, écriture restreinte
     match /users/{userId} {
       allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId;
       allow create: if request.auth != null;
+      // Un utilisateur peut modifier son propre document SAUF le champ role
+      allow update: if request.auth != null && request.auth.uid == userId
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']));
+      // Un admin peut tout modifier (y compris le role)
+      allow update: if isAdmin();
     }
     
     // Autres collections - par défaut
