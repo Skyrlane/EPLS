@@ -13,30 +13,34 @@ export interface UserData {
   email: string;
   displayName: string;
   photoURL?: string;
-  role: 'admin' | 'member' | 'visitor';
+  role: 'ami' | 'membre' | 'conseil' | 'admin';
   createdAt?: Date;
   lastLogin?: Date;
 }
 
 /**
  * Normalise les valeurs de role depuis Firestore.
- * Les documents existants peuvent avoir 'Membre', 'Admin', 'Visiteur' (casse française).
- * Cette fonction convertit vers les valeurs canoniques attendues par le code applicatif.
+ * Les documents existants peuvent avoir 'Membre', 'Admin', 'Visiteur' (casse française),
+ * ou les anciennes valeurs 'member'/'visitor'. Cette fonction convertit vers les valeurs
+ * canoniques du nouveau système 4 niveaux : ami | membre | conseil | admin.
  */
-function normalizeRole(raw: unknown): 'admin' | 'member' | 'visitor' {
-  if (typeof raw !== 'string') return 'member'
+function normalizeRole(raw: unknown): 'ami' | 'membre' | 'conseil' | 'admin' {
+  if (typeof raw !== 'string') return 'ami'
   switch (raw.toLowerCase()) {
     case 'admin':
     case 'administrateur':
       return 'admin'
+    case 'conseil':
+      return 'conseil'
     case 'member':
     case 'membre':
-      return 'member'
+      return 'membre'
+    case 'ami':
     case 'visitor':
     case 'visiteur':
-      return 'visitor'
+      return 'ami'
     default:
-      return 'member'
+      return 'ami'
   }
 }
 
@@ -87,7 +91,7 @@ export function useUserData() {
             email: user.email || "",
             displayName: user.displayName || user.email?.split("@")[0] || "Utilisateur",
             photoURL: user.photoURL || undefined,
-            role: 'member', // Par défaut, membre
+            role: 'ami', // Par défaut, ami (niveau minimal)
           });
         }
         setLoading(false);
@@ -103,7 +107,7 @@ export function useUserData() {
           email: user.email || "",
           displayName: user.displayName || user.email?.split("@")[0] || "Utilisateur",
           photoURL: user.photoURL || undefined,
-          role: 'member',
+          role: 'ami',
         });
       }
     );

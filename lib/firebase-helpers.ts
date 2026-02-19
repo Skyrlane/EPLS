@@ -28,7 +28,7 @@ export interface UserProfile {
     email: string | null;
     displayName: string | null;
     photoURL: string | null;
-    role: 'member' | 'admin' | 'visitor';
+    role: 'ami' | 'membre' | 'conseil' | 'admin';
     createdAt: Date;
     updatedAt: Date;
     phoneNumber?: string;
@@ -123,7 +123,7 @@ export async function saveUserProfile(
                 email: user.email,
                 displayName: user.displayName,
                 photoURL: user.photoURL,
-                role: additionalData?.role ?? 'member',
+                role: additionalData?.role ?? 'ami',
                 isAdmin: deleteField(), // Nettoyage lazy — supprime l'ancien champ boolean
                 updatedAt: serverTimestamp(),
                 ...(userSnap.exists() ? {} : { createdAt: serverTimestamp() }),

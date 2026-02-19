@@ -262,7 +262,7 @@ export async function saveUserProfile(user: User, additionalData?: Record<string
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
-        role: additionalData?.role ?? 'member',
+        role: additionalData?.role ?? 'ami',
         updatedAt: serverTimestamp(),
         ...(userSnap.exists() ? {} : { createdAt: serverTimestamp() }),
         ...additionalData,

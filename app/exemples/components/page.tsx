@@ -202,8 +202,9 @@ export default function ComponentsExamplePage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="admin">Administrateur</SelectItem>
-                    <SelectItem value="member">Membre</SelectItem>
-                    <SelectItem value="visitor">Visiteur</SelectItem>
+                    <SelectItem value="conseil">Conseil</SelectItem>
+                    <SelectItem value="membre">Membre</SelectItem>
+                    <SelectItem value="ami">Ami</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
