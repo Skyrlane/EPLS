@@ -1,7 +1,7 @@
 import * as admin from "firebase-admin";
 
 // Configuration par défaut pour le développement
-const const defaultAppConfig = {
+const defaultAppConfig = {
   projectId: "fake-project",
   clientEmail: "fake@example.com",
   privateKey: "fake-key",
