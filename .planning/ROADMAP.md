@@ -30,8 +30,8 @@ Ce milestone transforme le site EPLS de son état actuel (auth fonctionnelle, pe
 Plans:
 - [x] 01-01-PLAN.md — Fix saveUserProfile (setDoc+merge) et unifier le système de rôles (role vs isAdmin)
 - [x] 01-02-PLAN.md — Fix deleteMessage (Admin SDK) et ajouter favicon
-- [ ] 01-03-PLAN.md — Fix cookie auth-token manquant (setAuthCookie dans login-form + onIdTokenChanged dans auth-provider)
-- [ ] 01-04-PLAN.md — Favicon réel (fichier utilisateur) + normalizeRole + nettoyage lazy isAdmin
+- [x] 01-03-PLAN.md — Fix cookie auth-token manquant (setAuthCookie dans login-form + onIdTokenChanged dans auth-provider)
+- [x] 01-04-PLAN.md — Favicon réel (fichier utilisateur) + normalizeRole + nettoyage lazy isAdmin
 
 ### Phase 2: RBAC Foundation
 **Goal**: Les 3 comptes partagés existent dans Firebase Auth avec leurs documents Firestore et le système de rôles est unifié et appliqué dans les règles
@@ -43,11 +43,11 @@ Plans:
   3. Le compte conseil07 peut se connecter et son rôle `conseil` est lisible dans Firestore
   4. Les règles Firestore refusent une modification du champ `role` par un utilisateur sur son propre document
   5. La fonction `hasRole(minRole)` est définie dans les règles Firestore et correspond à la hiérarchie ami < membre < conseil < admin
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: Créer les 3 comptes Firebase Auth + documents Firestore users avec champ role
-- [ ] 02-02: Mettre à jour firestore.rules avec hasRole() et protéger l'auto-modification du rôle
+- [ ] 02-01-PLAN.md — Créer les 3 comptes Firebase Auth + documents Firestore users + mettre à jour les types TypeScript pour la hiérarchie à 4 niveaux
+- [ ] 02-02-PLAN.md — Mettre à jour firestore.rules avec hasRole() et protéger l'auto-modification du rôle
 
 ### Phase 3: Route Protection & Polish
 **Goal**: Les pages /infos-docs protégées redirigent les rôles insuffisants et les images uploadées apparaissent sur le site
