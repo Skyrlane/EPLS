@@ -13,14 +13,14 @@ export interface UserData {
   email: string;
   displayName: string;
   photoURL?: string;
-  isAdmin: boolean;
+  role: 'admin' | 'member' | 'visitor';
   createdAt?: Date;
   lastLogin?: Date;
 }
 
 /**
  * Hook pour récupérer les données utilisateur depuis Firestore
- * Inclut le champ isAdmin pour différencier admins et membres
+ * isAdmin est dérivé du champ `role` (role === 'admin'), jamais lu directement depuis Firestore
  */
 export function useUserData() {
   const { user, loading: authLoading } = useAuth();
@@ -54,7 +54,7 @@ export function useUserData() {
             email: user.email || data.email || "",
             displayName: data.displayName || user.displayName || user.email?.split("@")[0] || "Utilisateur",
             photoURL: data.photoURL || user.photoURL,
-            isAdmin: data.isAdmin === true,
+            role: (data.role as 'admin' | 'member' | 'visitor') ?? 'member',
             createdAt: data.createdAt?.toDate?.() || undefined,
             lastLogin: data.lastLogin?.toDate?.() || undefined,
           });
@@ -65,7 +65,7 @@ export function useUserData() {
             email: user.email || "",
             displayName: user.displayName || user.email?.split("@")[0] || "Utilisateur",
             photoURL: user.photoURL || undefined,
-            isAdmin: false, // Par défaut, pas admin
+            role: 'member', // Par défaut, membre
           });
         }
         setLoading(false);
@@ -81,7 +81,7 @@ export function useUserData() {
           email: user.email || "",
           displayName: user.displayName || user.email?.split("@")[0] || "Utilisateur",
           photoURL: user.photoURL || undefined,
-          isAdmin: false,
+          role: 'member',
         });
       }
     );
@@ -89,8 +89,8 @@ export function useUserData() {
     return () => unsubscribe();
   }, [user, authLoading]);
 
-  // Valeurs calculées
-  const isAdmin = useMemo(() => userData?.isAdmin === true, [userData]);
+  // Valeurs calculées — isAdmin est dérivé du champ role, jamais lu directement depuis Firestore
+  const isAdmin = useMemo(() => userData?.role === 'admin', [userData]);
   const isMember = useMemo(() => !!user, [user]);
   const isAuthenticated = useMemo(() => !!user && !authLoading, [user, authLoading]);
 

@@ -95,8 +95,7 @@ export interface User {
   email: string;
   displayName: string;
   photoURL?: string;
-  roles: string[];
-  isAdmin?: boolean;
+  role: 'admin' | 'member' | 'visitor';
   isEmailVerified?: boolean;
   lastLogin?: Date;
   createdAt: Date;

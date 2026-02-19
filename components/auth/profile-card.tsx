@@ -84,11 +84,9 @@ export function ProfileCard({
           <h2 className="text-xl font-bold">{user.displayName}</h2>
           <p className="text-muted-foreground">{user.email}</p>
           <div className="flex justify-center gap-2 mt-2">
-            {user.roles.map((role, index) => (
-              <Badge key={index} variant="outline" className="capitalize">
-                {role}
-              </Badge>
-            ))}
+            <Badge variant="outline" className="capitalize">
+              {user.role}
+            </Badge>
           </div>
         </div>
       </CardHeader>
@@ -125,12 +123,12 @@ export function ProfileCard({
           )}
         </div>
       </CardContent>
-      {user.memberInfo?.ministries && user.memberInfo.ministries.length > 0 && (
+      {user.memberInfo?.ministry && user.memberInfo.ministry.length > 0 && (
         <CardFooter className="border-t px-6 py-4">
           <div className="w-full">
             <h3 className="text-sm font-medium mb-2">Ministères</h3>
             <div className="flex flex-wrap gap-2">
-              {user.memberInfo.ministries.map((ministry, index) => (
+              {user.memberInfo.ministry.map((ministry: string, index: number) => (
                 <Badge key={index} variant="secondary" className="capitalize">
                   {ministry}
                 </Badge>
