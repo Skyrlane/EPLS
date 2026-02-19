@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-02-19)
 ## Current Position
 
 Phase: 2 of 3 (RBAC Foundation)
-Plan: 1 of 2 in current phase — Plan 02-01 complete
-Status: In progress
-Last activity: 2026-02-19 — Completed plan 02-01 (4-level role types + shared test accounts created)
+Plan: 2 of 2 in current phase — Plan 02-02 complete (Phase 02 COMPLETE)
+Status: Phase 02 complete — ready for Phase 03
+Last activity: 2026-02-19 — Completed plan 02-02 (Firestore hasRole() rules deployed to production)
 
-Progress: [█████░░░░░] 55%
+Progress: [██████░░░░] 65%
 
 ## Performance Metrics
 
@@ -35,6 +35,8 @@ Progress: [█████░░░░░] 55%
 - Trend: 02-01 longer due to human-action checkpoint for account creation
 
 *Updated after each plan completion*
+
+| Phase 02-rbac-foundation P02 | 2min | 2 tasks | 1 file |
 
 ## Accumulated Context
 
@@ -61,6 +63,9 @@ Recent decisions affecting current work:
 - [02-01]: Script standalone (not from lib/firebase-admin.ts) to avoid Next.js module coupling when running via tsx
 - [02-01]: Idempotent account creation: catch email-already-exists + Firestore merge:true — safe to re-run
 - [02-01]: Shared accounts use 07 suffix to avoid conflicts with real community members
+- [Phase 02-rbac-foundation]: hasRole() defined but not applied to existing collections yet — Phase 3 will wire it up; avoids large refactor mid-phase
+- [Phase 02-rbac-foundation]: Backward-compat in roleLevel(): member=2, visitor=1 — prevents locking out existing Firestore user docs before role migration
+- [Phase 02-rbac-foundation]: Two separate allow update rules for users (self without role + admin) — Firestore ORs multiple allow rules so both work independently
 
 ### Pending Todos
 
@@ -74,5 +79,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-19
-Stopped at: Completed 02-01-PLAN.md (4-level role types + shared test accounts created in Firebase)
+Stopped at: Completed 02-02-PLAN.md (Firestore hasRole() rules + deployed to production — Phase 02 complete)
 Resume file: None
