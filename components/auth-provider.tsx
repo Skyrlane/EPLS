@@ -1,10 +1,11 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, useMemo } from "react";
-import { 
-  onAuthStateChanged, 
-  User, 
-  signInWithEmailAndPassword, 
+import {
+  onAuthStateChanged,
+  onIdTokenChanged,
+  User,
+  signInWithEmailAndPassword,
   signOut,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -12,6 +13,7 @@ import {
   Auth
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { setAuthCookie, clearAuthCookie } from "@/lib/auth/session";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import type { MockAuthInterface } from "@/lib/firebase";
@@ -66,7 +68,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Écouter les changements d'état d'authentification
+  // Écouter les changements d'état d'authentification et les renouvellements de token
   useEffect(() => {
     if (!isConfigured || !auth) {
       setIsLoading(false);
@@ -74,18 +76,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      // Au lieu d'utiliser un cast explicite, nous utilisons une protection par duck-typing
-      const authInstance = auth as any;
-      
-      if (typeof authInstance.onAuthStateChanged !== 'function') {
-        console.error("L'API d'authentification n'est pas disponible");
+      const unsubscribe = onIdTokenChanged(auth as Auth, async (firebaseUser: User | null) => {
+        setUser(firebaseUser);
         setIsLoading(false);
-        return;
-      }
-      
-      const unsubscribe = authInstance.onAuthStateChanged((user: User | null) => {
-        setUser(user);
-        setIsLoading(false);
+
+        if (firebaseUser) {
+          // Rafraîchir le cookie à chaque changement de token (connexion + renouvellement horaire)
+          const idToken = await firebaseUser.getIdToken();
+          await setAuthCookie(idToken);
+        } else {
+          // Utilisateur déconnecté — supprimer le cookie
+          await clearAuthCookie();
+        }
       });
 
       // Timeout de sécurité pour éviter un état de chargement infini
