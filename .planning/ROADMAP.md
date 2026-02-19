@@ -25,12 +25,11 @@ Ce milestone transforme le site EPLS de son état actuel (auth fonctionnelle, pe
   2. Un nouvel utilisateur peut créer son profil sans erreur (setDoc fonctionne sur document inexistant)
   3. Chaque document Firestore users/{uid} n'a qu'un seul champ de rôle (`role`) sans conflit avec `isAdmin`
   4. Le favicon apparaît dans l'onglet du navigateur sur toutes les pages
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: Corriger deleteMessage — remplacer client SDK par Admin SDK avec vérification token
-- [ ] 01-02: Corriger saveUserProfile (setDoc+merge), unifier role/isAdmin, sécuriser règles Firestore
-- [ ] 01-03: Ajouter app/favicon.ico
+- [ ] 01-01-PLAN.md — Fix saveUserProfile (setDoc+merge) et unifier le système de rôles (role vs isAdmin)
+- [ ] 01-02-PLAN.md — Fix deleteMessage (Admin SDK) et ajouter favicon
 
 ### Phase 2: RBAC Foundation
 **Goal**: Les 3 comptes partagés existent dans Firebase Auth avec leurs documents Firestore et le système de rôles est unifié et appliqué dans les règles
@@ -71,6 +70,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Bug Fixes & Hardening | 0/3 | Not started | - |
+| 1. Bug Fixes & Hardening | 0/2 | Planned | - |
 | 2. RBAC Foundation | 0/2 | Not started | - |
 | 3. Route Protection & Polish | 0/2 | Not started | - |
