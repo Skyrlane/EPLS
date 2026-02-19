@@ -69,26 +69,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FIX-01 | — | Pending |
-| FIX-02 | — | Pending |
-| FIX-03 | — | Pending |
-| RBAC-01 | — | Pending |
-| RBAC-02 | — | Pending |
-| RBAC-03 | — | Pending |
-| RBAC-04 | — | Pending |
-| RBAC-05 | — | Pending |
-| PROT-01 | — | Pending |
-| PROT-02 | — | Pending |
-| PROT-03 | — | Pending |
-| PROT-04 | — | Pending |
-| SITE-01 | — | Pending |
-| SITE-02 | — | Pending |
+| FIX-01 | Phase 1 | Pending |
+| FIX-02 | Phase 1 | Pending |
+| FIX-03 | Phase 1 | Pending |
+| SITE-01 | Phase 1 | Pending |
+| RBAC-01 | Phase 2 | Pending |
+| RBAC-02 | Phase 2 | Pending |
+| RBAC-03 | Phase 2 | Pending |
+| RBAC-04 | Phase 2 | Pending |
+| RBAC-05 | Phase 2 | Pending |
+| PROT-01 | Phase 3 | Pending |
+| PROT-02 | Phase 3 | Pending |
+| PROT-03 | Phase 3 | Pending |
+| PROT-04 | Phase 3 | Pending |
+| SITE-02 | Phase 3 | Pending |
 
 **Coverage:**
 - v1 requirements: 14 total
-- Mapped to phases: 0
-- Unmapped: 14 ⚠️
+- Mapped to phases: 14
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-02-19*
-*Last updated: 2026-02-19 after initial definition*
+*Last updated: 2026-02-19 after roadmap creation*
