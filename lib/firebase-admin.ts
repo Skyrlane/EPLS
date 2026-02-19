@@ -10,7 +10,7 @@ const defaultAppConfig = {
 // Vérifier si l'application est déjà initialisée
 if (!admin.apps.length) {
   try {
-    const projectId = process.env.FIREBASE_PROJECT_ID || defaultAppConfig.projectId;
+    const projectId = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || defaultAppConfig.projectId;
     const clientEmail = process.env.FIREBASE_CLIENT_EMAIL || defaultAppConfig.clientEmail;
     // Utiliser une clé privée factice en développement si non spécifiée
     const privateKey = process.env.FIREBASE_PRIVATE_KEY 
