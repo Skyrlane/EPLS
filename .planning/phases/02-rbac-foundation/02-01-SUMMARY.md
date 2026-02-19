@@ -57,10 +57,10 @@ completed: 2026-02-19
 
 ## Performance
 
-- **Duration:** ~15 min
+- **Duration:** ~45 min (including human-action checkpoint for account creation)
 - **Started:** 2026-02-19
-- **Completed:** 2026-02-19 (Tasks 1-2 auto-complete; Task 3 is human-action checkpoint)
-- **Tasks:** 2/3 auto-tasks complete (Task 3 = human-action, pending user execution)
+- **Completed:** 2026-02-19
+- **Tasks:** 3/3 complete (2 auto + 1 human-action checkpoint — all done)
 - **Files modified:** 6
 
 ## Accomplishments
@@ -68,6 +68,7 @@ completed: 2026-02-19
 - Updated role type from 3 levels (admin/member/visitor) to 4 levels (ami/membre/conseil/admin) across all relevant files
 - Rewrote normalizeRole with backward compatibility: old Firestore values (member, visitor, Membre, Visiteur) map correctly to new roles
 - Created idempotent script `scripts/create-shared-accounts.ts` to provision ami07, membre07, conseil07 accounts
+- All 3 shared accounts confirmed created in Firebase Auth and Firestore with correct role values
 
 ## Task Commits
 
@@ -75,7 +76,7 @@ Each task was committed atomically:
 
 1. **Task 1: Update TypeScript role types and normalizeRole** - `def16ba` (feat)
 2. **Task 2: Create Admin SDK script for shared accounts** - `abbd647` (feat)
-3. **Task 3: Run account creation script** - _pending human action_
+3. **Task 3: Run account creation script** - N/A (human-action checkpoint — no code commit, confirmed by user)
 
 ## Files Created/Modified
 
@@ -104,26 +105,21 @@ Pre-existing TypeScript errors exist in the codebase (unrelated to role changes)
 
 ## User Setup Required
 
-**Task 3 requires manual execution.** See checkpoint below.
+None - account creation completed. All 3 shared accounts are live in production Firebase.
 
-The user must run the account creation script:
+**Accounts created:**
 
-```bash
-npx tsx scripts/create-shared-accounts.ts
-```
-
-Requirements:
-- `.env.local` must contain `FIREBASE_SERVICE_ACCOUNT_BASE64` (base64-encoded service account JSON)
-- Alternatively: `FIREBASE_PROJECT_ID` + `FIREBASE_CLIENT_EMAIL` + `FIREBASE_PRIVATE_KEY`
-
-Then verify in Firebase Console:
-- Authentication tab: confirm `ami07@epls.fr`, `membre07@epls.fr`, `conseil07@epls.fr` exist
-- Firestore > users collection: confirm each has a document with correct `role` field
+| Email | UID | Role |
+|-------|-----|------|
+| ami07@epls.fr | w8eQc8yaaWSKSXQNyjBLUrDbPyc2 | ami |
+| membre07@epls.fr | QRzBpmfZyjdHDDsRsZ9pdrgUyS23 | membre |
+| conseil07@epls.fr | k3vv09VnskS6HTjeKyLWMY2khNI2 | conseil |
 
 ## Next Phase Readiness
 
-- Role types are ready for Plan 02 (Firestore security rules using role values)
-- Script must be executed before verifying the accounts exist
+- Role types are ready for Plan 02 (Firestore security rules using ami/membre/conseil/admin values)
+- 3 shared accounts available for UAT testing of role-based access
+- normalizeRole backward compat means no Firestore data migration needed for existing users
 - Pre-existing TS errors in codebase are unrelated to RBAC work and do not block Phase 02
 
 ---

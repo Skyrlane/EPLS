@@ -5,33 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-19)
 
 **Core value:** Les membres accèdent à leur espace avec le bon niveau de permissions, et l'admin gère le contenu sans erreurs.
-**Current focus:** Phase 1 — Bug Fixes & Hardening
+**Current focus:** Phase 2 — RBAC Foundation
 
 ## Current Position
 
-Phase: 1 of 3 (Bug Fixes & Hardening)
-Plan: 4 of 4 in current phase — PHASE COMPLETE
+Phase: 2 of 3 (RBAC Foundation)
+Plan: 1 of 2 in current phase — Plan 02-01 complete
 Status: In progress
-Last activity: 2026-02-19 — Completed plan 01-04 (favicon replacement + role normalization + isAdmin cleanup)
+Last activity: 2026-02-19 — Completed plan 02-01 (4-level role types + shared test accounts created)
 
-Progress: [████░░░░░░] 44%
+Progress: [█████░░░░░] 55%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
-- Average duration: ~9 min
-- Total execution time: 0.55 hours
+- Total plans completed: 5
+- Average duration: ~16 min
+- Total execution time: 1.3 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-bug-fixes-hardening | 4 | ~35 min | ~9 min |
+| 02-rbac-foundation | 1 | ~45 min | ~45 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01, 01-02, 01-03, 01-04
-- Trend: Consistent (~5-11 min per plan)
+- Last 5 plans: 01-01, 01-02, 01-03, 01-04, 02-01
+- Trend: 02-01 longer due to human-action checkpoint for account creation
 
 *Updated after each plan completion*
 
@@ -57,6 +58,9 @@ Recent decisions affecting current work:
 - [Phase 02-rbac-foundation]: 4-level role hierarchy: ami < membre < conseil < admin replaces old admin|member|visitor
 - [Phase 02-rbac-foundation]: Default role changed from member to ami — principle of least privilege
 - [Phase 02-rbac-foundation]: Backward compat in normalizeRole: member->membre, visitor->ami, visiteur->ami
+- [02-01]: Script standalone (not from lib/firebase-admin.ts) to avoid Next.js module coupling when running via tsx
+- [02-01]: Idempotent account creation: catch email-already-exists + Firestore merge:true — safe to re-run
+- [02-01]: Shared accounts use 07 suffix to avoid conflicts with real community members
 
 ### Pending Todos
 
@@ -70,5 +74,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-19
-Stopped at: Completed 01-04-PLAN.md (favicon replacement + role normalization + isAdmin cleanup)
+Stopped at: Completed 02-01-PLAN.md (4-level role types + shared test accounts created in Firebase)
 Resume file: None
