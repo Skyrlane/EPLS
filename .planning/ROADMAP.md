@@ -10,7 +10,7 @@ Ce milestone transforme le site EPLS de son état actuel (auth fonctionnelle, pe
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Bug Fixes & Hardening** - Corriger le bug PERMISSION_DENIED, unifier les rôles, sécuriser les règles Firestore et ajouter le favicon
+- [x] **Phase 1: Bug Fixes & Hardening** - Corriger le bug PERMISSION_DENIED, unifier les rôles, sécuriser les règles Firestore et ajouter le favicon (completed 2026-02-19)
 - [ ] **Phase 2: RBAC Foundation** - Créer les 3 comptes partagés, unifier le schéma de rôles dans Firestore et mettre à jour les règles avec hiérarchie
 - [ ] **Phase 3: Route Protection & Polish** - Câbler MemberGuard sur les pages protégées et intégrer les images uploadées
 
@@ -70,6 +70,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Bug Fixes & Hardening | 1/2 | In progress | - |
+| 1. Bug Fixes & Hardening | 2/2 | Complete   | 2026-02-19 |
 | 2. RBAC Foundation | 0/2 | Not started | - |
 | 3. Route Protection & Polish | 0/2 | Not started | - |

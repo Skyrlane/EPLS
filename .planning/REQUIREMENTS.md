@@ -9,7 +9,7 @@ Requirements for current milestone. Each maps to roadmap phases.
 
 ### Bug Fixes & Sécurité
 
-- [ ] **FIX-01**: Corriger la suppression de messages admin (remplacer client SDK par Admin SDK dans Server Action)
+- [x] **FIX-01**: Corriger la suppression de messages admin (remplacer client SDK par Admin SDK dans Server Action)
 - [x] **FIX-02**: Corriger `saveUserProfile()` pour utiliser `setDoc` avec merge au lieu de `updateDoc`
 - [x] **FIX-03**: Unifier le système de rôles (un seul champ `role` au lieu de `role` + `isAdmin`)
 
@@ -30,7 +30,7 @@ Requirements for current milestone. Each maps to roadmap phases.
 
 ### Site Polish
 
-- [ ] **SITE-01**: Ajouter le favicon au site (app/favicon.ico)
+- [x] **SITE-01**: Ajouter le favicon au site (app/favicon.ico)
 - [ ] **SITE-02**: Intégrer les images uploadées via /admin/images-site aux pages du site
 
 ## v2 Requirements
@@ -69,10 +69,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FIX-01 | Phase 1 | Pending |
+| FIX-01 | Phase 1 | Complete |
 | FIX-02 | Phase 1 | Complete (01-01) |
 | FIX-03 | Phase 1 | Complete (01-01) |
-| SITE-01 | Phase 1 | Pending |
+| SITE-01 | Phase 1 | Complete |
 | RBAC-01 | Phase 2 | Pending |
 | RBAC-02 | Phase 2 | Pending |
 | RBAC-03 | Phase 2 | Pending |

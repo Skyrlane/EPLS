@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-19)
 ## Current Position
 
 Phase: 1 of 3 (Bug Fixes & Hardening)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-19 — Completed plan 01-01 (saveUserProfile bug fix + role unification)
+Last activity: 2026-02-19 — Completed plan 01-02 (deleteMessage Admin SDK fix + favicon)
 
-Progress: [█░░░░░░░░░] 11%
+Progress: [██░░░░░░░░] 22%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: ~20 min
-- Total execution time: 0.33 hours
+- Total plans completed: 2
+- Average duration: ~11 min
+- Total execution time: 0.37 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-bug-fixes-hardening | 1 | ~20 min | ~20 min |
+| 01-bug-fixes-hardening | 2 | ~22 min | ~11 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01
-- Trend: —
+- Last 5 plans: 01-01, 01-02
+- Trend: Accelerating (01-02 was 2 min vs 20 min for 01-01)
 
 *Updated after each plan completion*
 
@@ -48,6 +48,8 @@ Recent decisions affecting current work:
 - [01-01]: setDoc avec merge choisi pour saveUserProfile — fonctionne pour les nouveaux et anciens documents sans split logique
 - [01-01]: isAdmin dérivé de role === 'admin' dans le code applicatif, jamais stocké dans Firestore
 - [01-01]: Règles Firestore avec double vérification (role == 'admin' OU isAdmin == true) pour transition sans interruption
+- [Phase 01-bug-fixes-hardening]: cookies() without await — consistent with Next.js 14.2.7 existing pattern
+- [Phase 01-bug-fixes-hardening]: Admin SDK null guard retained — graceful degradation when env vars missing
 
 ### Pending Todos
 
@@ -56,10 +58,10 @@ None yet.
 ### Blockers/Concerns
 
 - [Phase 1 risk]: Vérifier que `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY` sont bien configurés en production Vercel avant de considérer Phase 1 terminée
-- [Phase 1 risk]: Décider du mécanisme de vérification token dans Server Actions (cookie vs token param explicite) avant d'implémenter le fix deleteMessage
+- [Phase 1 risk, RESOLVED]: Mécanisme de vérification token dans Server Actions = cookie auth-token lu par cookies() côté serveur (pattern confirmé dans lib/auth/actions.ts)
 
 ## Session Continuity
 
 Last session: 2026-02-19
-Stopped at: Completed 01-01-PLAN.md (saveUserProfile bug fix + role unification)
+Stopped at: Completed 01-02-PLAN.md (deleteMessage Admin SDK fix + favicon)
 Resume file: None
