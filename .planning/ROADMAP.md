@@ -10,7 +10,7 @@ Ce milestone transforme le site EPLS de son état actuel (auth fonctionnelle, pe
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [x] **Phase 1: Bug Fixes & Hardening** - Corriger le bug PERMISSION_DENIED, unifier les rôles, sécuriser les règles Firestore et ajouter le favicon (completed 2026-02-19)
+- [ ] **Phase 1: Bug Fixes & Hardening** - Corriger le bug PERMISSION_DENIED, unifier les rôles, sécuriser les règles Firestore et ajouter le favicon (gap closure en cours)
 - [ ] **Phase 2: RBAC Foundation** - Créer les 3 comptes partagés, unifier le schéma de rôles dans Firestore et mettre à jour les règles avec hiérarchie
 - [ ] **Phase 3: Route Protection & Polish** - Câbler MemberGuard sur les pages protégées et intégrer les images uploadées
 
@@ -25,11 +25,13 @@ Ce milestone transforme le site EPLS de son état actuel (auth fonctionnelle, pe
   2. Un nouvel utilisateur peut créer son profil sans erreur (setDoc fonctionne sur document inexistant)
   3. Chaque document Firestore users/{uid} n'a qu'un seul champ de rôle (`role`) sans conflit avec `isAdmin`
   4. Le favicon apparaît dans l'onglet du navigateur sur toutes les pages
-**Plans**: 2 plans
+**Plans**: 4 plans
 
 Plans:
 - [x] 01-01-PLAN.md — Fix saveUserProfile (setDoc+merge) et unifier le système de rôles (role vs isAdmin)
-- [ ] 01-02-PLAN.md — Fix deleteMessage (Admin SDK) et ajouter favicon
+- [x] 01-02-PLAN.md — Fix deleteMessage (Admin SDK) et ajouter favicon
+- [ ] 01-03-PLAN.md — Fix cookie auth-token manquant (setAuthCookie dans login-form + onIdTokenChanged dans auth-provider)
+- [ ] 01-04-PLAN.md — Favicon réel (fichier utilisateur) + normalizeRole + nettoyage lazy isAdmin
 
 ### Phase 2: RBAC Foundation
 **Goal**: Les 3 comptes partagés existent dans Firebase Auth avec leurs documents Firestore et le système de rôles est unifié et appliqué dans les règles
@@ -70,6 +72,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Bug Fixes & Hardening | 2/2 | Complete   | 2026-02-19 |
+| 1. Bug Fixes & Hardening | 2/4 | In progress (gap closure) | - |
 | 2. RBAC Foundation | 0/2 | Not started | - |
 | 3. Route Protection & Polish | 0/2 | Not started | - |
