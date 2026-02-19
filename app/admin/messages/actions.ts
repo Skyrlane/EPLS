@@ -17,30 +17,31 @@ export async function deleteMessage(messageId: string) {
     return { success: false, error: 'Firebase Admin non configuré' };
   }
 
-  // Step 1: Get auth token from cookie
-  const cookieStore = cookies();
-  const token = cookieStore.get('auth-token')?.value;
-  if (!token) {
-    return { success: false, error: 'Non authentifié' };
-  }
-
-  // Step 2: Verify token (handles expiry gracefully)
-  let uid: string;
   try {
-    const decoded = await adminAuth.verifyIdToken(token);
-    uid = decoded.uid;
-  } catch {
-    return { success: false, error: 'Session expirée, veuillez vous reconnecter' };
-  }
+    // Step 1: Get auth token from cookie
+    const cookieStore = cookies();
+    const token = cookieStore.get('auth-token')?.value;
+    if (!token) {
+      return { success: false, error: 'Non authentifié' };
+    }
 
-  // Step 3: Verify caller is admin (uses unified role field from Plan 01-01)
-  const userSnap = await adminDb.collection('users').doc(uid).get();
-  if (userSnap.data()?.role !== 'admin') {
-    return { success: false, error: 'Permission refusée' };
-  }
+    // Step 2: Verify token
+    let uid: string;
+    try {
+      const decoded = await adminAuth.verifyIdToken(token);
+      uid = decoded.uid;
+    } catch {
+      return { success: false, error: 'Session expirée, veuillez vous reconnecter' };
+    }
 
-  // Step 4: Delete message
-  try {
+    // Step 3: Verify caller is admin (normalize role casing from Firestore)
+    const userSnap = await adminDb.collection('users').doc(uid).get();
+    const role = (userSnap.data()?.role || '').toString().toLowerCase();
+    if (role !== 'admin') {
+      return { success: false, error: 'Permission refusée' };
+    }
+
+    // Step 4: Delete message
     await adminDb.collection('messages').doc(messageId).delete();
     revalidatePath('/messages');
     revalidatePath('/');
