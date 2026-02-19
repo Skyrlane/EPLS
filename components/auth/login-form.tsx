@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { auth, firestore } from "@/lib/firebase";
+import { setAuthCookie } from "@/lib/auth/session";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -47,12 +48,16 @@ export function LoginForm() {
         password
       );
 
+      // Définir le cookie auth-token pour les Server Actions
+      const idToken = await userCredential.user.getIdToken()
+      await setAuthCookie(idToken)
+
       // Récupérer les infos utilisateur depuis Firestore
       const userDoc = await getDoc(doc(firestore, "users", userCredential.user.uid));
       const userData = userDoc.data();
 
       // Redirection intelligente selon le rôle
-      if (userData?.isAdmin) {
+      if (userData?.role === 'admin') {
         router.push("/admin");
       } else {
         router.push("/");
