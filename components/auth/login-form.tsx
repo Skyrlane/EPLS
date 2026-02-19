@@ -39,7 +39,7 @@ export function LoginForm() {
       // Logique hybride : détection automatique email vs identifiant
       const email = identifier.includes("@")
         ? identifier // C'est déjà un email
-        : `${identifier}@epls.local`; // C'est un identifiant → ajoute le domaine
+        : `${identifier}@epls.fr`; // C'est un identifiant → ajoute le domaine
 
       // Connexion Firebase
       const userCredential = await signInWithEmailAndPassword(
