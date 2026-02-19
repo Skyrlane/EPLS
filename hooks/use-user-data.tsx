@@ -19,6 +19,28 @@ export interface UserData {
 }
 
 /**
+ * Normalise les valeurs de role depuis Firestore.
+ * Les documents existants peuvent avoir 'Membre', 'Admin', 'Visiteur' (casse française).
+ * Cette fonction convertit vers les valeurs canoniques attendues par le code applicatif.
+ */
+function normalizeRole(raw: unknown): 'admin' | 'member' | 'visitor' {
+  if (typeof raw !== 'string') return 'member'
+  switch (raw.toLowerCase()) {
+    case 'admin':
+    case 'administrateur':
+      return 'admin'
+    case 'member':
+    case 'membre':
+      return 'member'
+    case 'visitor':
+    case 'visiteur':
+      return 'visitor'
+    default:
+      return 'member'
+  }
+}
+
+/**
  * Hook pour récupérer les données utilisateur depuis Firestore
  * isAdmin est dérivé du champ `role` (role === 'admin'), jamais lu directement depuis Firestore
  */
@@ -54,7 +76,7 @@ export function useUserData() {
             email: user.email || data.email || "",
             displayName: data.displayName || user.displayName || user.email?.split("@")[0] || "Utilisateur",
             photoURL: data.photoURL || user.photoURL,
-            role: (data.role as 'admin' | 'member' | 'visitor') ?? 'member',
+            role: normalizeRole(data.role),
             createdAt: data.createdAt?.toDate?.() || undefined,
             lastLogin: data.lastLogin?.toDate?.() || undefined,
           });

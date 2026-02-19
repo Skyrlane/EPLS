@@ -10,6 +10,7 @@ import {
     addDoc,
     setDoc,
     deleteDoc,
+    deleteField,
     serverTimestamp,
     Timestamp,
     limit,
@@ -123,6 +124,7 @@ export async function saveUserProfile(
                 displayName: user.displayName,
                 photoURL: user.photoURL,
                 role: additionalData?.role ?? 'member',
+                isAdmin: deleteField(), // Nettoyage lazy — supprime l'ancien champ boolean
                 updatedAt: serverTimestamp(),
                 ...(userSnap.exists() ? {} : { createdAt: serverTimestamp() }),
                 ...additionalData,

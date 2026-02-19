@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   authors: [{ name: "EPLS" }],
   creator: "EPLS",
   publisher: "EPLS",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
   openGraph: {
     type: "website",
     locale: "fr_FR",
