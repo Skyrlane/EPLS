@@ -28,7 +28,7 @@ Ce milestone transforme le site EPLS de son état actuel (auth fonctionnelle, pe
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Fix saveUserProfile (setDoc+merge) et unifier le système de rôles (role vs isAdmin)
+- [x] 01-01-PLAN.md — Fix saveUserProfile (setDoc+merge) et unifier le système de rôles (role vs isAdmin)
 - [ ] 01-02-PLAN.md — Fix deleteMessage (Admin SDK) et ajouter favicon
 
 ### Phase 2: RBAC Foundation
@@ -70,6 +70,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Bug Fixes & Hardening | 0/2 | Planned | - |
+| 1. Bug Fixes & Hardening | 1/2 | In progress | - |
 | 2. RBAC Foundation | 0/2 | Not started | - |
 | 3. Route Protection & Polish | 0/2 | Not started | - |

@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-02-19)
 ## Current Position
 
 Phase: 1 of 3 (Bug Fixes & Hardening)
-Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-02-19 — Roadmap created, phases derived from 14 v1 requirements
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-02-19 — Completed plan 01-01 (saveUserProfile bug fix + role unification)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 11%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: 0 hours
+- Total plans completed: 1
+- Average duration: ~20 min
+- Total execution time: 0.33 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-bug-fixes-hardening | 1 | ~20 min | ~20 min |
 
 **Recent Trend:**
-- Last 5 plans: —
+- Last 5 plans: 01-01
 - Trend: —
 
 *Updated after each plan completion*
@@ -45,6 +45,9 @@ Recent decisions affecting current work:
 - [Roadmap]: Rôles stockés dans Firestore `users/{uid}` (champ `role`), pas Firebase Custom Claims — zero nouvelle dépendance, coût de lecture négligeable pour 4 comptes
 - [Roadmap]: Server Actions doivent utiliser Admin SDK pour les mutations Firestore — client SDK n'a pas de contexte auth en `'use server'`
 - [Roadmap]: Phase 1 avant Phase 2 — le bug Admin SDK doit être confirmé corrigé avant de créer les comptes partagés
+- [01-01]: setDoc avec merge choisi pour saveUserProfile — fonctionne pour les nouveaux et anciens documents sans split logique
+- [01-01]: isAdmin dérivé de role === 'admin' dans le code applicatif, jamais stocké dans Firestore
+- [01-01]: Règles Firestore avec double vérification (role == 'admin' OU isAdmin == true) pour transition sans interruption
 
 ### Pending Todos
 
@@ -58,5 +61,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-19
-Stopped at: Roadmap créé, prêt à planifier Phase 1
+Stopped at: Completed 01-01-PLAN.md (saveUserProfile bug fix + role unification)
 Resume file: None

@@ -10,8 +10,8 @@ Requirements for current milestone. Each maps to roadmap phases.
 ### Bug Fixes & Sécurité
 
 - [ ] **FIX-01**: Corriger la suppression de messages admin (remplacer client SDK par Admin SDK dans Server Action)
-- [ ] **FIX-02**: Corriger `saveUserProfile()` pour utiliser `setDoc` avec merge au lieu de `updateDoc`
-- [ ] **FIX-03**: Unifier le système de rôles (un seul champ `role` au lieu de `role` + `isAdmin`)
+- [x] **FIX-02**: Corriger `saveUserProfile()` pour utiliser `setDoc` avec merge au lieu de `updateDoc`
+- [x] **FIX-03**: Unifier le système de rôles (un seul champ `role` au lieu de `role` + `isAdmin`)
 
 ### RBAC
 
@@ -70,8 +70,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FIX-01 | Phase 1 | Pending |
-| FIX-02 | Phase 1 | Pending |
-| FIX-03 | Phase 1 | Pending |
+| FIX-02 | Phase 1 | Complete (01-01) |
+| FIX-03 | Phase 1 | Complete (01-01) |
 | SITE-01 | Phase 1 | Pending |
 | RBAC-01 | Phase 2 | Pending |
 | RBAC-02 | Phase 2 | Pending |
