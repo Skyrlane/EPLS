@@ -8,7 +8,7 @@ import {
     query,
     where,
     addDoc,
-    updateDoc,
+    setDoc,
     deleteDoc,
     serverTimestamp,
     Timestamp,
@@ -105,6 +105,7 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
 
 /**
  * Cree ou met a jour un profil utilisateur dans Firestore
+ * Utilise setDoc avec merge pour fonctionner sur les documents inexistants (nouveaux utilisateurs)
  */
 export async function saveUserProfile(
     user: User,
@@ -114,29 +115,22 @@ export async function saveUserProfile(
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
 
-        const userData = {
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-            updatedAt: serverTimestamp(),
-            ...additionalData,
-        };
+        await setDoc(
+            userRef,
+            {
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                role: additionalData?.role ?? 'member',
+                updatedAt: serverTimestamp(),
+                ...(userSnap.exists() ? {} : { createdAt: serverTimestamp() }),
+                ...additionalData,
+            },
+            { merge: true }
+        );
 
-        if (!userSnap.exists()) {
-            // Creer un nouveau profil avec un role par defaut
-            await updateDoc(userRef, {
-                ...userData,
-                role: additionalData?.role || 'member',
-                createdAt: serverTimestamp(),
-            });
-
-            return userRef.id;
-        } else {
-            // Mettre a jour le profil existant
-            await updateDoc(userRef, userData);
-            return userRef.id;
-        }
+        return userRef.id;
     } catch (error) {
         console.error("Erreur lors de la sauvegarde du profil utilisateur:", error);
         throw error;
