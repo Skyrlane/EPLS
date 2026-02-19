@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-19)
 ## Current Position
 
 Phase: 1 of 3 (Bug Fixes & Hardening)
-Plan: 2 of 3 in current phase
+Plan: 3 of 4 in current phase
 Status: In progress
-Last activity: 2026-02-19 — Completed plan 01-02 (deleteMessage Admin SDK fix + favicon)
+Last activity: 2026-02-19 — Completed plan 01-03 (auth-token cookie fix via setAuthCookie + onIdTokenChanged)
 
-Progress: [██░░░░░░░░] 22%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: ~11 min
-- Total execution time: 0.37 hours
+- Total plans completed: 3
+- Average duration: ~10 min
+- Total execution time: 0.50 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-bug-fixes-hardening | 2 | ~22 min | ~11 min |
+| 01-bug-fixes-hardening | 3 | ~30 min | ~10 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01, 01-02
-- Trend: Accelerating (01-02 was 2 min vs 20 min for 01-01)
+- Last 5 plans: 01-01, 01-02, 01-03
+- Trend: Consistent (01-03 was 8 min)
 
 *Updated after each plan completion*
 
@@ -50,6 +50,10 @@ Recent decisions affecting current work:
 - [01-01]: Règles Firestore avec double vérification (role == 'admin' OU isAdmin == true) pour transition sans interruption
 - [Phase 01-bug-fixes-hardening]: cookies() without await — consistent with Next.js 14.2.7 existing pattern
 - [Phase 01-bug-fixes-hardening]: Admin SDK null guard retained — graceful degradation when env vars missing
+- [Phase 01-bug-fixes-hardening]: Separate session.ts from actions.ts to avoid next-safe-action bundling conflicts when importing from Client Components
+- [Phase 01-bug-fixes-hardening]: onIdTokenChanged replaces onAuthStateChanged — fires on hourly token renewals to keep auth-token cookie fresh
+- [Phase 01-bug-fixes-hardening]: normalizeRole at read boundary in use-user-data.tsx — handles French-cased Firestore docs without migration
+- [Phase 01-bug-fixes-hardening]: deleteField() with merge:true for lazy isAdmin cleanup — zero-cost for small user base, no batch migration needed
 
 ### Pending Todos
 
@@ -63,5 +67,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-19
-Stopped at: Completed 01-02-PLAN.md (deleteMessage Admin SDK fix + favicon)
+Stopped at: Completed 01-03-PLAN.md (auth-token cookie fix via setAuthCookie + onIdTokenChanged)
 Resume file: None
