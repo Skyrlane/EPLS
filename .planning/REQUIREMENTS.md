@@ -15,10 +15,10 @@ Requirements for current milestone. Each maps to roadmap phases.
 
 ### RBAC
 
-- [ ] **RBAC-01**: Créer le compte partagé Amis (ami07 / 1chemin9) avec role `ami`
-- [ ] **RBAC-02**: Créer le compte partagé Membres (membre07 / chemin67) avec role `membre`
-- [ ] **RBAC-03**: Créer le compte partagé Conseil (conseil07 / EPL18Lingo) avec role `conseil`
-- [ ] **RBAC-04**: Ajouter le champ `role` aux documents Firestore users avec hiérarchie (ami < membre < conseil < admin)
+- [x] **RBAC-01**: Créer le compte partagé Amis (ami07 / 1chemin9) avec role `ami`
+- [x] **RBAC-02**: Créer le compte partagé Membres (membre07 / chemin67) avec role `membre`
+- [x] **RBAC-03**: Créer le compte partagé Conseil (conseil07 / EPL18Lingo) avec role `conseil`
+- [x] **RBAC-04**: Ajouter le champ `role` aux documents Firestore users avec hiérarchie (ami < membre < conseil < admin)
 - [ ] **RBAC-05**: Mettre à jour les règles Firestore avec fonction `hasRole(minRole)`
 
 ### Route Protection
@@ -73,10 +73,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FIX-02 | Phase 1 | Complete (01-01) |
 | FIX-03 | Phase 1 | Complete (01-01) |
 | SITE-01 | Phase 1 | Complete |
-| RBAC-01 | Phase 2 | Pending |
-| RBAC-02 | Phase 2 | Pending |
-| RBAC-03 | Phase 2 | Pending |
-| RBAC-04 | Phase 2 | Pending |
+| RBAC-01 | Phase 2 | Complete |
+| RBAC-02 | Phase 2 | Complete |
+| RBAC-03 | Phase 2 | Complete |
+| RBAC-04 | Phase 2 | Complete |
 | RBAC-05 | Phase 2 | Pending |
 | PROT-01 | Phase 3 | Pending |
 | PROT-02 | Phase 3 | Pending |

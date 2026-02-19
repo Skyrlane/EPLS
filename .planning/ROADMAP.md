@@ -73,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Bug Fixes & Hardening | 4/4 | Complete    | 2026-02-19 |
-| 2. RBAC Foundation | 0/2 | Not started | - |
+| 2. RBAC Foundation | 1/2 | In Progress|  |
 | 3. Route Protection & Polish | 0/2 | Not started | - |

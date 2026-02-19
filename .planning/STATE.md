@@ -54,6 +54,9 @@ Recent decisions affecting current work:
 - [Phase 01-bug-fixes-hardening]: onIdTokenChanged replaces onAuthStateChanged — fires on hourly token renewals to keep auth-token cookie fresh
 - [Phase 01-bug-fixes-hardening]: normalizeRole at read boundary in use-user-data.tsx — handles French-cased Firestore docs without migration
 - [Phase 01-bug-fixes-hardening]: deleteField() with merge:true for lazy isAdmin cleanup — zero-cost for small user base, no batch migration needed
+- [Phase 02-rbac-foundation]: 4-level role hierarchy: ami < membre < conseil < admin replaces old admin|member|visitor
+- [Phase 02-rbac-foundation]: Default role changed from member to ami — principle of least privilege
+- [Phase 02-rbac-foundation]: Backward compat in normalizeRole: member->membre, visitor->ami, visiteur->ami
 
 ### Pending Todos
 
