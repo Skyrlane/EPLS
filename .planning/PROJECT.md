@@ -44,9 +44,9 @@ Les membres de l'église peuvent accéder à leur espace protégé avec le bon n
 ### Comptes partagés et rôles
 
 3 comptes partagés à créer dans Firebase Auth :
-- **Amis de l'EPLS** : login `ami07` / mdp `1chemin9`
-- **Membres de l'EPLS** : login `membre07` / mdp `chemin67`
-- **Conseil de l'EPLS** : login `conseil07` / mdp `EPL18Lingo`
+- **Amis de l'EPLS** : login `ami07` / mdp dans .env.local (EPLS_AMI_PASSWORD)
+- **Membres de l'EPLS** : login `membre07` / mdp dans .env.local (EPLS_MEMBRE_PASSWORD)
+- **Conseil de l'EPLS** : login `conseil07` / mdp dans .env.local (EPLS_CONSEIL_PASSWORD)
 
 ### Matrice de permissions
 

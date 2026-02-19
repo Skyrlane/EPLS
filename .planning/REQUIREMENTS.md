@@ -15,9 +15,9 @@ Requirements for current milestone. Each maps to roadmap phases.
 
 ### RBAC
 
-- [x] **RBAC-01**: Créer le compte partagé Amis (ami07 / 1chemin9) avec role `ami`
-- [x] **RBAC-02**: Créer le compte partagé Membres (membre07 / chemin67) avec role `membre`
-- [x] **RBAC-03**: Créer le compte partagé Conseil (conseil07 / EPL18Lingo) avec role `conseil`
+- [x] **RBAC-01**: Créer le compte partagé Amis (ami07) avec role `ami`
+- [x] **RBAC-02**: Créer le compte partagé Membres (membre07) avec role `membre`
+- [x] **RBAC-03**: Créer le compte partagé Conseil (conseil07) avec role `conseil`
 - [x] **RBAC-04**: Ajouter le champ `role` aux documents Firestore users avec hiérarchie (ami < membre < conseil < admin)
 - [x] **RBAC-05**: Mettre à jour les règles Firestore avec fonction `hasRole(minRole)`
 

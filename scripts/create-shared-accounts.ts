@@ -64,22 +64,27 @@ interface AccountDef {
   role: 'ami' | 'membre' | 'conseil';
 }
 
+// Passwords must be provided via environment variables (never hardcoded).
+// Set in .env.local:
+//   EPLS_AMI_PASSWORD=...
+//   EPLS_MEMBRE_PASSWORD=...
+//   EPLS_CONSEIL_PASSWORD=...
 const ACCOUNTS: AccountDef[] = [
   {
     email: 'ami07@epls.fr',
-    password: '1chemin9',
+    password: process.env.EPLS_AMI_PASSWORD || '',
     displayName: 'Ami EPLS',
     role: 'ami',
   },
   {
     email: 'membre07@epls.fr',
-    password: 'chemin67',
+    password: process.env.EPLS_MEMBRE_PASSWORD || '',
     displayName: 'Membre EPLS',
     role: 'membre',
   },
   {
     email: 'conseil07@epls.fr',
-    password: 'EPL18Lingo',
+    password: process.env.EPLS_CONSEIL_PASSWORD || '',
     displayName: 'Conseil EPLS',
     role: 'conseil',
   },

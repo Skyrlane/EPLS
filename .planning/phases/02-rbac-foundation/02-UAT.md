@@ -13,15 +13,15 @@ updated: 2026-02-19T22:15:00Z
 ## Tests
 
 ### 1. Connexion avec ami07@epls.fr
-expected: Aller sur /connexion. Saisir ami07@epls.fr / 1chemin9. La connexion réussit et l'utilisateur accède au site.
+expected: Aller sur /connexion. Saisir ami07@epls.fr / [REDACTED]. La connexion réussit et l'utilisateur accède au site.
 result: pass
 
 ### 2. Connexion avec membre07@epls.fr
-expected: Aller sur /connexion. Saisir membre07@epls.fr / chemin67. La connexion réussit et l'utilisateur accède au site.
+expected: Aller sur /connexion. Saisir membre07@epls.fr / [REDACTED]. La connexion réussit et l'utilisateur accède au site.
 result: pass
 
 ### 3. Connexion avec conseil07@epls.fr
-expected: Aller sur /connexion. Saisir conseil07@epls.fr / EPL18Lingo. La connexion réussit et l'utilisateur accède au site.
+expected: Aller sur /connexion. Saisir conseil07@epls.fr / [REDACTED]. La connexion réussit et l'utilisateur accède au site.
 result: pass
 
 ## Summary
