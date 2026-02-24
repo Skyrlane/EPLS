@@ -173,6 +173,13 @@ export function EchoArchivesPageSafe() {
                         className="border-l-4 border-primary pl-4 py-3 hover:bg-muted transition-colors rounded-r"
                       >
                         <div className="flex items-start justify-between gap-3">
+                          <div className="hidden sm:block flex-shrink-0 w-16 h-[90px] rounded overflow-hidden bg-muted">
+                            <img
+                              src={echo.coverImageUrl || echo.coverUrl || "/images/echo/default-cover.svg"}
+                              alt={`Couverture ${echo.title}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
                           <div className="flex-1">
                             <h4 className="font-semibold text-lg mb-1">{echo.title}</h4>
                             <p className="text-sm text-muted-foreground mb-2">

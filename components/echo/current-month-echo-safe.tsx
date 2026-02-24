@@ -107,17 +107,11 @@ export function CurrentMonthEchoSafe() {
             <div className="flex flex-col md:flex-row">
               {/* Image a gauche */}
               <div className="md:w-1/3">
-                {currentEcho.coverImageUrl ? (
-                  <img
-                    src={currentEcho.coverImageUrl}
-                    alt={currentEcho.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center min-h-[300px]">
-                    <FileTextIcon className="h-20 w-20 text-primary/30" />
-                  </div>
-                )}
+                <img
+                  src={currentEcho.coverImageUrl || currentEcho.coverUrl || "/images/echo/default-cover.svg"}
+                  alt={currentEcho.title}
+                  className="w-full h-full object-cover min-h-[300px]"
+                />
               </div>
 
               {/* Contenu a droite */}

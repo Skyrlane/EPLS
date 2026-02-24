@@ -16,20 +16,14 @@ export function EchoCard({ echo }: EchoCardProps) {
   return (
     <Card className="flex flex-col h-full overflow-hidden">
       <div className="relative aspect-[210/297] bg-gray-100">
-        {echo.coverUrl ? (
-          <Image 
-            src={echo.coverUrl}
-            alt={`Couverture de ${echo.title}`}
-            fill
-            className="object-cover object-top"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <FileText className="h-16 w-16 text-gray-300" />
-          </div>
-        )}
+        <Image
+          src={echo.coverUrl || echo.coverImageUrl || "/images/echo/default-cover.svg"}
+          alt={`Couverture de ${echo.title}`}
+          fill
+          className="object-cover object-top"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading="lazy"
+        />
       </div>
       
       <CardContent className="flex-grow py-4">
