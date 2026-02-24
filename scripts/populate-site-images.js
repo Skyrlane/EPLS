@@ -35,7 +35,7 @@ const imageUpdates = [
   // ===== HERO / DECORATIVE (Unsplash) =====
   {
     zone: 'notre-eglise-hero',
-    imageUrl: 'https://images.unsplash.com/photo-1465848059293-208e11dfea17?w=1920&h=800&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1759127481171-30a27de310ad?w=1920&h=800&fit=crop&q=80',
     source: 'unsplash',
   },
   {
@@ -81,7 +81,7 @@ const imageUpdates = [
   // ===== TIMELINE (Unsplash) =====
   {
     zone: 'histoire-1855',
-    imageUrl: 'https://images.unsplash.com/photo-1762995351138-0d1de58ac22b?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1749736147282-54b606b2c393?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
@@ -101,7 +101,7 @@ const imageUpdates = [
   },
   {
     zone: 'histoire-1995',
-    imageUrl: 'https://images.unsplash.com/photo-1541140969616-3736afe7c392?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1682263557065-192c50c79d30?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
@@ -111,7 +111,7 @@ const imageUpdates = [
   },
   {
     zone: 'histoire-today',
-    imageUrl: 'https://images.unsplash.com/photo-1719506076813-8dd1b38f064a?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1734314972095-e258e419eeaf?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
