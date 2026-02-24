@@ -59,11 +59,11 @@ Plans:
   3. Le compte membre07 peut accéder à /infos-docs/anniversaires et /infos-docs/carnet-adresses
   4. Le compte conseil07 peut accéder à /infos-docs/membres
   5. Les images uploadées via /admin/images-site apparaissent aux emplacements correspondants sur le site
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: Créer MemberGuard et l'appliquer aux 3 pages /infos-docs protégées
-- [ ] 03-02: Intégrer les images /admin/images-site aux pages du site
+- [ ] 03-01-PLAN.md — Créer MemberGuard avec minRole et l'appliquer aux 3 pages /infos-docs protégées
+- [ ] 03-02-PLAN.md — Fix admin images-site (setDoc) et vérifier le round-trip upload→affichage
 
 ## Progress
 
