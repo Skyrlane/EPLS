@@ -23,10 +23,10 @@ Requirements for current milestone. Each maps to roadmap phases.
 
 ### Route Protection
 
-- [ ] **PROT-01**: Créer composant `MemberGuard` avec vérification de rôle minimum
-- [ ] **PROT-02**: Protéger /infos-docs/membres (accès Conseil+ uniquement)
-- [ ] **PROT-03**: Protéger /infos-docs/anniversaires (accès Membres+ uniquement)
-- [ ] **PROT-04**: Protéger /infos-docs/carnet-adresses (accès Membres+ uniquement)
+- [x] **PROT-01**: Créer composant `MemberGuard` avec vérification de rôle minimum
+- [x] **PROT-02**: Protéger /infos-docs/membres (accès Conseil+ uniquement)
+- [x] **PROT-03**: Protéger /infos-docs/anniversaires (accès Membres+ uniquement)
+- [x] **PROT-04**: Protéger /infos-docs/carnet-adresses (accès Membres+ uniquement)
 
 ### Site Polish
 
@@ -78,10 +78,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | RBAC-03 | Phase 2 | Complete |
 | RBAC-04 | Phase 2 | Complete |
 | RBAC-05 | Phase 2 | Complete |
-| PROT-01 | Phase 3 | Pending |
-| PROT-02 | Phase 3 | Pending |
-| PROT-03 | Phase 3 | Pending |
-| PROT-04 | Phase 3 | Pending |
+| PROT-01 | Phase 3 | Complete |
+| PROT-02 | Phase 3 | Complete |
+| PROT-03 | Phase 3 | Complete |
+| PROT-04 | Phase 3 | Complete |
 | SITE-02 | Phase 3 | Pending |
 
 **Coverage:**

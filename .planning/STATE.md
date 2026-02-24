@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-19)
 
 **Core value:** Les membres accèdent à leur espace avec le bon niveau de permissions, et l'admin gère le contenu sans erreurs.
-**Current focus:** Phase 2 — RBAC Foundation
+**Current focus:** Phase 3 — Route Protection Polish
 
 ## Current Position
 
-Phase: 2 of 3 (RBAC Foundation)
-Plan: 2 of 2 in current phase — Plan 02-02 complete (Phase 02 COMPLETE)
-Status: Phase 02 complete — ready for Phase 03
-Last activity: 2026-02-19 — Completed plan 02-02 (Firestore hasRole() rules deployed to production)
+Phase: 3 of 3 (Route Protection Polish)
+Plan: 1 of 2 in current phase — Plan 03-01 complete
+Status: Phase 03 in progress — Plan 03-01 complete
+Last activity: 2026-02-24 — Completed plan 03-01 (MemberGuard component + 3 protected infos-docs pages)
 
-Progress: [██████░░░░] 65%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -37,6 +37,7 @@ Progress: [██████░░░░] 65%
 *Updated after each plan completion*
 
 | Phase 02-rbac-foundation P02 | 2min | 2 tasks | 1 file |
+| Phase 03-route-protection-polish P01 | 3min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,10 @@ Recent decisions affecting current work:
 - [Phase 02-rbac-foundation]: hasRole() defined but not applied to existing collections yet — Phase 3 will wire it up; avoids large refactor mid-phase
 - [Phase 02-rbac-foundation]: Backward-compat in roleLevel(): member=2, visitor=1 — prevents locking out existing Firestore user docs before role migration
 - [Phase 02-rbac-foundation]: Two separate allow update rules for users (self without role + admin) — Firestore ORs multiple allow rules so both work independently
+- [03-01]: MemberGuard uses useUserData() not useAuth() — combined loading flag avoids premature redirects before Firestore doc fetch completes
+- [03-01]: Insufficient-role redirect goes to /acces-refuse, not / — explicit access denied page for better UX
+- [03-01]: ROLE_LEVEL map duplicated client-side from Firestore roleLevel() — zero-dependency, works in React components
+- [03-01]: Inner component pattern for membres/page.tsx — page logic in MembresPageContent, default export wraps with MemberGuard
 
 ### Pending Todos
 
@@ -78,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-19
-Stopped at: Completed 02-02-PLAN.md (Firestore hasRole() rules + deployed to production — Phase 02 complete)
+Last session: 2026-02-24
+Stopped at: Completed 03-01-PLAN.md (MemberGuard component + 3 protected infos-docs pages)
 Resume file: None
