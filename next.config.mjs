@@ -10,58 +10,13 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        // Autoriser toutes les images HTTPS (logos partenaires, Unsplash, Firebase, etc.)
         protocol: "https",
-        hostname: "placehold.co",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "replicate.com",
-      },
-      {
-        protocol: "https",
-        hostname: "replicate.delivery",
-      },
-      {
-        protocol: "https",
-        hostname: "firebasestorage.googleapis.com",
-      },
-      {
-        protocol: "https",
-        hostname: "**.firebasestorage.app",
-      },
-      {
-        protocol: "https",
-        hostname: "**.googleapis.com",
-      },
-      {
-        protocol: "https",
-        hostname: "**.airtableusercontent.com",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "source.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "img.youtube.com",
-        pathname: "/vi/**",
-      },
-      {
-        protocol: "https",
-        hostname: "i.ytimg.com",
-        pathname: "/vi/**",
+        hostname: "**",
       },
     ],
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; img-src 'self' data: https://img.youtube.com https://i.ytimg.com https://*.googleusercontent.com https://*.firebasestorage.app https://images.unsplash.com; sandbox;",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; img-src 'self' data: https:; sandbox;",
   },
   async rewrites() {
     return [

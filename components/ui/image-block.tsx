@@ -72,13 +72,13 @@ export const IMAGE_BLOCK_PRESETS = {
 
 // Image de fallback par défaut pour chaque type
 const DEFAULT_FALLBACKS = {
-  hero: "/images/placeholder/hero-placeholder.jpg",
-  content: "/images/placeholder/content-placeholder.jpg",
-  card: "/images/placeholder/card-placeholder.jpg",
-  avatar: "/images/placeholder/avatar-placeholder.jpg",
-  thumbnail: "/images/placeholder/thumbnail-placeholder.jpg",
-  gallery: "/images/placeholder/gallery-placeholder.jpg",
-  section: "/images/placeholder/section-placeholder.jpg",
+  hero: "/images/placeholder.svg",
+  content: "/images/placeholder.svg",
+  card: "/images/placeholder.svg",
+  avatar: "/images/placeholder-person.svg",
+  thumbnail: "/images/placeholder.svg",
+  gallery: "/images/placeholder.svg",
+  section: "/images/placeholder.svg",
 }
 
 /**
