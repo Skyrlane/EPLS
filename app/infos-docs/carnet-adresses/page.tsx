@@ -1,49 +1,20 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ContactsSection } from "@/components/infos-docs/ContactsSection"
-import { useAuth } from '@/hooks/use-auth';
+import { MemberGuard } from '@/components/auth/member-guard';
 import Sidebar from '../components/Sidebar';
 import { PageHeader } from "@/components/ui/page-header";
 import { BreadcrumbItem } from "@/components/ui/breadcrumbs";
 
 export default function CarnetAdressesPage() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-
-  // Redirect si non authentifié
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/connexion?redirect=/infos-docs/carnet-adresses');
-    }
-  }, [user, loading, router]);
-
-  // Loading state
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="flex flex-col items-center gap-4">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-          <p className="text-sm text-muted-foreground">Chargement...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Si non authentifié (ne devrait jamais arriver grâce au useEffect)
-  if (!user) {
-    return null;
-  }
-
   const breadcrumbItems: BreadcrumbItem[] = [
     { label: "Infos & Docs", href: "/infos-docs" },
     { label: "Carnet d'adresses", href: "/infos-docs/carnet-adresses", isCurrent: true },
   ];
 
   return (
-    <>
+    <MemberGuard minRole="membre">
       <PageHeader
         title="Carnet d'Adresses"
         breadcrumbs={breadcrumbItems}
@@ -86,6 +57,6 @@ export default function CarnetAdressesPage() {
           </div>
         </div>
       </section>
-    </>
+    </MemberGuard>
   )
 }

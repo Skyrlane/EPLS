@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/use-auth';
+import { useState, useMemo } from 'react';
 import { useChurchMembers } from '@/hooks/use-church-members';
 import { useContacts } from '@/hooks/use-contacts';
+import { MemberGuard } from '@/components/auth/member-guard';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -21,9 +20,7 @@ import {
 } from 'lucide-react';
 import type { ChurchMember, Contact } from '@/types';
 
-export default function MembresPage() {
-  const { user, loading: authLoading } = useAuth();
-  const router = useRouter();
+function MembresPageContent() {
   const { members: churchMembers, loading: membersLoading } = useChurchMembers({ autoLoad: true });
   const { contacts, loading: contactsLoading } = useContacts({ autoLoad: true });
   const [searchTerm, setSearchTerm] = useState('');
@@ -49,13 +46,6 @@ export default function MembresPage() {
     return [...churchMembers, ...contactsAsMembers];
   }, [churchMembers, contacts]);
 
-  // Redirect si non authentifié
-  useEffect(() => {
-    if (!authLoading && !user) {
-      router.push('/connexion?redirect=/infos-docs/membres');
-    }
-  }, [user, authLoading, router]);
-
   // Séparer les membres par catégorie
   const { conseilMembers, archivedMembers, allActiveMembers } = useMemo(() => {
     const conseil = members
@@ -70,7 +60,7 @@ export default function MembresPage() {
     const activeAndConseil = members
       .filter((m) => (m.status === 'actif' || m.status === 'conseil') && m.isActive)
       .sort((a, b) => a.ordre - b.ordre || a.lastName.localeCompare(b.lastName));
-    
+
     // Dédupliquer par nom + prénom (garder la première occurrence)
     const seen = new Set<string>();
     const active = activeAndConseil.filter((m) => {
@@ -99,7 +89,7 @@ export default function MembresPage() {
   }, [allActiveMembers, searchTerm]);
 
   // Loading state
-  if (authLoading || membersLoading || contactsLoading) {
+  if (membersLoading || contactsLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="flex flex-col items-center gap-4">
@@ -108,11 +98,6 @@ export default function MembresPage() {
         </div>
       </div>
     );
-  }
-
-  // Si non authentifié (ne devrait jamais arriver grâce au useEffect)
-  if (!user) {
-    return null;
   }
 
   const breadcrumbItems: BreadcrumbItem[] = [
@@ -346,5 +331,13 @@ export default function MembresPage() {
         </div>
       </section>
     </>
+  );
+}
+
+export default function MembresPage() {
+  return (
+    <MemberGuard minRole="conseil">
+      <MembresPageContent />
+    </MemberGuard>
   );
 }
