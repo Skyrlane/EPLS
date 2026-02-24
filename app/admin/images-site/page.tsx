@@ -13,7 +13,7 @@ import {
   collection,
   onSnapshot,
   doc,
-  updateDoc,
+  setDoc,
   Timestamp,
   query,
   orderBy
@@ -147,14 +147,14 @@ export default function AdminImagesPage() {
       const downloadURL = await getDownloadURL(storageRef);
 
       // Update Firestore
-      await updateDoc(doc(firestore, 'site_images', zone), {
+      await setDoc(doc(firestore, 'site_images', zone), {
         imageUrl: downloadURL,
         storagePath,
         isActive: true,
         updatedAt: Timestamp.now(),
         updatedBy: user?.uid,
         updatedByName: user?.displayName || user?.email || 'Admin',
-      });
+      }, { merge: true });
 
       toast({
         title: 'Succès',
@@ -183,14 +183,14 @@ export default function AdminImagesPage() {
       }
 
       // Update Firestore
-      await updateDoc(doc(firestore, 'site_images', image.id), {
+      await setDoc(doc(firestore, 'site_images', image.id), {
         imageUrl: null,
         storagePath: null,
         isActive: false,
         updatedAt: Timestamp.now(),
         updatedBy: user?.uid,
         updatedByName: user?.displayName || user?.email || 'Admin',
-      });
+      }, { merge: true });
 
       toast({
         title: 'Succès',
