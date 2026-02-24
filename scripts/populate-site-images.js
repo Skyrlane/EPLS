@@ -35,115 +35,115 @@ const imageUpdates = [
   // ===== HERO / DECORATIVE (Unsplash) =====
   {
     zone: 'notre-eglise-hero',
-    imageUrl: 'https://images.unsplash.com/photo-nZSTr5RTUd8?w=1920&h=800&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1465848059293-208e11dfea17?w=1920&h=800&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'cultes-hero',
-    imageUrl: 'https://images.unsplash.com/photo-bJnndmmymW8?w=896&h=384&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1510384742052-1abcb6282645?w=896&h=384&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-hero',
-    imageUrl: 'https://images.unsplash.com/photo-Gvd-ZKXtqZM?w=600&h=400&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1760872752928-c986c1f27e4e?w=600&h=400&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-union-hero',
-    imageUrl: 'https://images.unsplash.com/photo-Un97RJl6CNg?w=600&h=400&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1476445704028-a36e0c798192?w=600&h=400&fit=crop&q=80',
     source: 'unsplash',
   },
 
   // ===== EVE PROJECTS (Unsplash) =====
   {
     zone: 'eve-projet-burkina',
-    imageUrl: 'https://images.unsplash.com/photo-nyyCd5M7tnc?w=600&h=400&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1473649085228-583485e6e4d7?w=600&h=400&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'eve-projet-togo',
-    imageUrl: 'https://images.unsplash.com/photo-jEEYZsaxbH4?w=600&h=400&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1497375638960-ca368c7231e4?w=600&h=400&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'eve-projet-local',
-    imageUrl: 'https://images.unsplash.com/photo-I9vlikD7RxM?w=600&h=400&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1609139003551-ee40f5f73ec0?w=600&h=400&fit=crop&q=80',
     source: 'unsplash',
   },
 
   // ===== UEEL SYNOD (Unsplash) =====
   {
     zone: 'ueel-synod',
-    imageUrl: 'https://images.unsplash.com/photo-TcvZEb8cSJI?w=800&h=400&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1700975461387-5054352bca57?w=800&h=400&fit=crop&q=80',
     source: 'unsplash',
   },
 
   // ===== TIMELINE (Unsplash) =====
   {
     zone: 'histoire-1855',
-    imageUrl: 'https://images.unsplash.com/photo-GHEKT3aH5kM?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1762995351138-0d1de58ac22b?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-1872',
-    imageUrl: 'https://images.unsplash.com/photo-X1exjxxBho4?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1634540271793-9109c81fcd52?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-1920',
-    imageUrl: 'https://images.unsplash.com/photo-THSm4Qud_6k?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1473177104440-ffee2f376098?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-1968',
-    imageUrl: 'https://images.unsplash.com/photo-waYEa5iRsw4?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1497548637115-d2bc86a3c716?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-1995',
-    imageUrl: 'https://images.unsplash.com/photo-q_m-T4W50Z4?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1541140969616-3736afe7c392?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-2010',
-    imageUrl: 'https://images.unsplash.com/photo-fm4B1xWEIsU?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1609234656388-0ff363383899?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-today',
-    imageUrl: 'https://images.unsplash.com/photo-VLIf9G4ZycI?w=300&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1719506076813-8dd1b38f064a?w=300&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-archives',
-    imageUrl: 'https://images.unsplash.com/photo-X1exjxxBho4?w=400&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1473755504818-b72b6dfdc226?w=400&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-union',
-    imageUrl: 'https://images.unsplash.com/photo-GHEKT3aH5kM?w=400&h=200&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1729809420427-1760e7a457da?w=400&h=200&fit=crop&q=80',
     source: 'unsplash',
   },
 
   // ===== HISTOIRE UNION (Unsplash) =====
   {
     zone: 'histoire-union-origines',
-    imageUrl: 'https://images.unsplash.com/photo-Un97RJl6CNg?w=800&h=500&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1757771675517-e6fc7b120f85?w=800&h=500&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-union-principes',
-    imageUrl: 'https://images.unsplash.com/photo-aAxn9pYE8L0?w=800&h=500&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1624753366058-882c02233174?w=800&h=500&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-union-evolution',
-    imageUrl: 'https://images.unsplash.com/photo-X48hkTT1qQc?w=800&h=500&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=500&fit=crop&q=80',
     source: 'unsplash',
   },
   {
     zone: 'histoire-union-aujourdhui',
-    imageUrl: 'https://images.unsplash.com/photo-Z8BZx5fq_y8?w=800&h=500&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1697490251908-5a364a6b5e0a?w=800&h=500&fit=crop&q=80',
     source: 'unsplash',
   },
 
