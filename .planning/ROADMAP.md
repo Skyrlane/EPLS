@@ -12,7 +12,7 @@ Ce milestone transforme le site EPLS de son état actuel (auth fonctionnelle, pe
 
 - [x] **Phase 1: Bug Fixes & Hardening** - Corriger le bug PERMISSION_DENIED, unifier les rôles, sécuriser les règles Firestore et ajouter le favicon (gap closure en cours) (completed 2026-02-19)
 - [x] **Phase 2: RBAC Foundation** - Créer les 3 comptes partagés, unifier le schéma de rôles dans Firestore et mettre à jour les règles avec hiérarchie (completed 2026-02-19)
-- [ ] **Phase 3: Route Protection & Polish** - Câbler MemberGuard sur les pages protégées et intégrer les images uploadées
+- [x] **Phase 3: Route Protection & Polish** - Câbler MemberGuard sur les pages protégées et intégrer les images uploadées (completed 2026-02-24)
 
 ## Phase Details
 
@@ -74,4 +74,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Bug Fixes & Hardening | 4/4 | Complete    | 2026-02-19 |
 | 2. RBAC Foundation | 2/2 | Complete   | 2026-02-19 |
-| 3. Route Protection & Polish | 1/2 | In Progress|  |
+| 3. Route Protection & Polish | 2/2 | Complete   | 2026-02-24 |

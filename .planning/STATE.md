@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-02-19)
 
 **Core value:** Les membres accèdent à leur espace avec le bon niveau de permissions, et l'admin gère le contenu sans erreurs.
-**Current focus:** Phase 3 — Route Protection Polish
+**Current focus:** All phases complete — Milestone delivered
 
 ## Current Position
 
 Phase: 3 of 3 (Route Protection Polish)
-Plan: 1 of 2 in current phase — Plan 03-01 complete
-Status: Phase 03 in progress — Plan 03-01 complete
-Last activity: 2026-02-24 — Completed plan 03-01 (MemberGuard component + 3 protected infos-docs pages)
+Plan: 2 of 2 in current phase — Plan 03-02 complete
+Status: ALL PHASES COMPLETE — Milestone delivered
+Last activity: 2026-02-24 — Completed plan 03-02 (setDoc fix + site images population)
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -38,6 +38,7 @@ Progress: [████████░░] 80%
 
 | Phase 02-rbac-foundation P02 | 2min | 2 tasks | 1 file |
 | Phase 03-route-protection-polish P01 | 3min | 2 tasks | 4 files |
+| Phase 03-route-protection-polish P02 | 30 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,8 @@ Recent decisions affecting current work:
 - [03-01]: Insufficient-role redirect goes to /acces-refuse, not / — explicit access denied page for better UX
 - [03-01]: ROLE_LEVEL map duplicated client-side from Firestore roleLevel() — zero-dependency, works in React components
 - [03-01]: Inner component pattern for membres/page.tsx — page logic in MembresPageContent, default export wraps with MemberGuard
+- [Phase 03-route-protection-polish]: setDoc+merge:true for admin image writes — works on non-existent documents, no pre-seeding required
+- [Phase 03-route-protection-polish]: 52/87 zones seeded (21 Unsplash + 31 official logos); 18 portrait/logo zones deferred for manual upload
 
 ### Pending Todos
 
@@ -84,5 +87,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-24
-Stopped at: Completed 03-01-PLAN.md (MemberGuard component + 3 protected infos-docs pages)
+Stopped at: Completed 03-02-PLAN.md (setDoc fix + site images population — Phase 03 and full milestone complete)
 Resume file: None
